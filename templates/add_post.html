@@ -1,0 +1,600 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Add Post{% endblock %}
+
+{% block content %}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .form-container form {
+        width: 100%;
+    }
+
+    .form-container .form-group {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-container .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-container .form-control {
+        width: 100%;
+        height: auto;
+    }
+
+    .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+    .tag {
+        background-color: #f0f0f0;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    .close-button {
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+<style>
+            .custom-button {
+          border: none;
+          outline: none;
+          background-color: rgb(24, 22, 22);
+          padding: 10px;
+          border-radius: 10px;
+          color: #fff;
+          font-size: 16px;
+          transform: .3s ease;
+          text-decoration: none;
+        }
+
+        .custom-button:hover {
+          background-color: rgb(21, 19, 19);
+        }
+
+        .final-button {
+            border: none;
+            outline: none;
+            background-color: royalblue;
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px; /* Optional: Adjust font size if needed */
+            transform: .3s ease;
+            text-decoration: none;
+            display: block; /* Make it a block element to apply margin auto */
+            margin: auto; /* Center the button horizontally */
+            width: fit-content; /* Adjust width to fit content */
+            margin-top: 20px; /* Optional: Adjust vertical positioning */
+            margin-bottom: 20px; /* Optional: Adjust vertical spacing below the button */
+        }
+
+        .final-button:hover {
+          background-color: rgb(56, 90, 194);
+        }
+
+
+        .field {
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select,
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-check input {
+            margin-right: 5px;
+        }
+
+        .form-check-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<form method="post" action="{{ url_for('add_post') }}" id="postForm">
+    {{ form.hidden_tag() }}
+    <aside class="control-sidebar control-sidebar-light">
+        <div class="p-3">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h6><strong>Publish Job</strong></h6>
+            </div>
+            <div class="form-group">
+                {{ form.publish(class="btn btn-primary w-100 mb-3") }}
+                {{ form.save_draft(class="btn btn-outline-primary w-100 mb-3") }}
+            </div>
+                <div class="form-group">
+            {{ form.target_date.label }}
+            {{ form.target_date(class="form-control", id="target_date", required=True) }}
+        </div>
+                        <div class="form-group">
+            {{ form.opening_date.label }}
+            {{ form.opening_date(class="form-control", id="opening_date", required=True) }}
+        </div>
+            <div class="form-group">
+            {{ form.job_opening_status.label }}
+            {{ form.job_opening_status(class="form-control", id="job_opening_status", required=True) }}
+        </div>
+        </div>
+    </aside>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Job Opening</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="form-group">
+            {{ form.job_title.label }}
+            {{ form.job_title(class="form-control", placeholder="Position", required=True) }}
+        </div>
+                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+
+        <div class="w-50 mr-3">
+            {{ form.salary.label }}
+            {{ form.salary(class="form-control", id="salary", required=True) }}
+        </div>
+        <div class="w-50">
+            {{ form.work_experience.label }}
+            {{ form.work_experience(class="form-control", id="work_experience", required=True) }}
+        </div>
+
+                    </div>
+    <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+
+        <div class="w-50 mr-3">
+            {{ form.job_type.label }}
+            {{ form.job_type(class="form-control", id="job_type", required=True) }}
+        </div>
+                <div class="w-50">
+            {{ form.industry.label }}
+            {{ form.industry(class="form-control", id="industry", required=True) }}
+        </div>
+</div>
+            <div class="form-group">
+                {{ form.address_country.label }}
+            {{ form.address_country(class="form-control", placeholder="Country", required=True) }}
+        </div>
+        <div class="form-group">
+            {{ form.address_province.label }}
+            {{ form.address_province(class="form-control", placeholder="Province", required=True) }}
+        </div>
+            <div class="form-group">
+                {{ form.address_city.label }}
+            {{ form.address_city(class="form-control", placeholder="City", required=True) }}
+        </div>
+            <div class="form-group">
+                {{ form.address_postal_code.label }}
+            {{ form.address_postal_code(class="form-control", placeholder="Postal Code", required=True) }}
+        </div>
+
+
+
+        <div class="form-group">
+            {{ form.job_description.label }}
+            {{ form.job_description(class="form-control", id="job_description") }}
+        </div>
+            <div class="form-group">
+            {{ form.job_requirements.label }}
+            {{ form.job_requirements(class="form-control", id="job_requirements") }}
+        </div>
+            <div class="form-group">
+            {{ form.job_benefits.label }}
+            {{ form.job_benefits(class="form-control", id="job_benefits") }}
+        </div>
+
+    </div>
+
+</form>
+
+<!-- Media Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Media Library</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="userMediaTable" class="table table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Media</th>
+                            <th>Created Date</th>
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in result %}
+                        <tr style="max-height: 100px; overflow-y: auto; ">
+                            <td class="py-1">{{ loop.index }}</td>
+                            <td class="py-1">
+                                <img src="{{ root_url + data.file_url }}" alt="Media Thumbnail" style="max-height: 6rem; width: auto; margin-top: 10px">
+                            </td>
+                            <td class="py-1">{{ data.uploaded_at.split('T')[0] }} {{ data.uploaded_at.split('T')[1][:8] }}</td>
+                            <td><input type="checkbox" class="media-checkbox" value="{{ data.id }}" data-url="{{ root_url + data.file_url }}"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSelectionButton">Save Selection</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="formsModal" tabindex="-1" aria-labelledby="formsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formsModalLabel">Forms Library</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="userFormsTable" class="table table-hover" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in forms_result %}
+                        <tr style="max-height: 100px; overflow-y: auto; " onclick="insertFormHtml('{{ data.form_html }}')">
+                            <td class="py-1">
+                                {{ data.form_name }}
+                            </td>
+                            <td class="py-1">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% block scripts %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.control-sidebar').ControlSidebar('show');
+  $('#job_description').summernote({
+  height: 400,                 // set editor height
+  minHeight: null,             // set minimum height of editor
+  maxHeight: null             // set maximum height of editor
+});
+ $('#job_requirements').summernote({
+  height: 400,                 // set editor height
+  minHeight: null,             // set minimum height of editor
+  maxHeight: null             // set maximum height of editor
+});
+ $('#job_benefits').summernote({
+  height: 400,                 // set editor height
+  minHeight: null,             // set minimum height of editor
+  maxHeight: null             // set maximum height of editor
+});
+
+    new DataTable('#userMediaTable');
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const categoryElement = document.getElementById('category');
+    const subcategoryElement = document.getElementById('subcategory');
+
+    categoryElement.addEventListener('change', function () {
+        const selectedCategoryId = this.value;
+
+        if (selectedCategoryId) {
+            fetch(`/user/subcategories/${selectedCategoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched subcategories:', data); // Debugging line
+                    // Clear existing subcategory options
+                    subcategoryElement.innerHTML = '<option value="">Select a subcategory</option>';
+                    data.subcategories.forEach(subcategory => {
+                        const option = document.createElement('option');
+                        option.value = subcategory.id;
+                        option.textContent = subcategory.subcategory;
+                        subcategoryElement.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching subcategories:', error));
+        } else {
+            subcategoryElement.innerHTML = '<option value="">Select a subcategory</option>';
+        }
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var tagsInput = document.getElementById('tagsInput');
+    var tagsContainer = document.querySelector('.tags-container');
+    var removeAllTagsButton = document.getElementById('removeAllTags');
+    var remainingTagsSpan = document.getElementById('remainingTags');
+    var tags = []; // Array to hold the tags
+
+    // Function to display tags
+    function displayTags() {
+        tagsContainer.innerHTML = ''; // Clear existing tags
+        tags.forEach(tag => {
+            var tagElement = document.createElement('span');
+            tagElement.textContent = tag;
+            tagElement.classList.add('tag');
+            tagElement.addEventListener('click', function () {
+                removeTag(tag);
+            });
+            tagsContainer.appendChild(tagElement);
+        });
+    }
+
+    // Function to add a tag
+    function addTag(value) {
+        if (value.length > 1 && !tags.includes(value)) {
+            if (tags.length < 10) {
+                tags.push(value);
+                displayTags();
+            }
+        }
+    }
+
+    // Function to remove a tag
+    function removeTag(tagToRemove) {
+        var index = tags.indexOf(tagToRemove);
+        if (index !== -1) {
+            tags.splice(index, 1);
+            displayTags();
+        }
+    }
+
+    // Listen for keyup events on the tags input
+    tagsInput.addEventListener('keyup', function (e) {
+        var inputValue = e.target.value;
+        var tagsArray = inputValue.split(/,\s?|\s+/).map(String.trim);
+
+        remainingTagsSpan.textContent = tagsArray.length > 10 ? '10' : tagsArray.length;
+
+        // Add tags based on the input value
+        tagsArray.forEach(tag => addTag(tag));
+
+        // Focus back to the input field
+        tagsInput.focus();
+    });
+
+    // Listen for click events on the Remove All button
+    removeAllTagsButton.addEventListener('click', function () {
+        tags = [];
+        displayTags();
+        tagsInput.value = '';
+        remainingTagsSpan.textContent = '10';
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle the preview button click
+    document.getElementById('previewPostButton').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+        var formErrors = [];
+
+        // Check for errors in the tags field
+        var tagsInput = document.getElementById('tags');
+        if (!tagsInput.value || tagsInput.value.trim().split(',').length > 5) {
+            formErrors.push('A maximum of 5 tags are allowed.');
+        }
+
+        // If there are any errors, display them and stop the navigation
+        if (formErrors.length > 0) {
+            var errorParagraph = document.getElementById('errorMessages');
+            errorParagraph.innerHTML = '';
+            formErrors.forEach(function(errorMessage) {
+                var p = document.createElement('p');
+                p.className = 'text-danger';
+                p.textContent = errorMessage;
+                errorParagraph.appendChild(p);
+            });
+            return;
+        }
+
+        // Collect all form data
+        const formData = new FormData(document.getElementById('postForm'));
+        console.log("Collected Form Data:", Object.fromEntries(formData.entries()));
+
+        // Convert FormData to JSON
+        const jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+        console.log("jsonData:", jsonData);
+
+        // Save the JSON data to Local Storage
+        localStorage.setItem('postPreview', JSON.stringify(jsonData));
+        try {
+            const storedData = JSON.parse(localStorage.getItem('postPreview'));
+            console.log("Stored Data:", storedData);
+        } catch (error) {
+            console.error("Failed to retrieve data from Local Storage:", error);
+        }
+
+        // Optionally, redirect to the preview page
+        window.location.href = '/posts/preview-post';
+    });
+
+    // Handle the save selection button click
+
+});
+</script>
+
+<script>
+    // Global flag to ensure the event listener is only added once
+    window.isMediaSelectionInitialized = false;
+
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.isMediaSelectionInitialized) {
+                console.log('Media selection script already initialized.');
+                return;
+            }
+
+            console.log('Initializing media selection script.');
+
+            // Handle the save selection button click event
+            document.getElementById('saveSelectionButton').addEventListener('click', function() {
+                console.log('Save Selection Button clicked');
+
+                // Initialize an array to collect new media URLs
+                let selectedMediaUrls = [];
+
+                // Collect selected media URLs
+                document.querySelectorAll('.media-checkbox:checked').forEach(checkbox => {
+                    const mediaUrl = checkbox.dataset.url; // URL should be retrieved from the checkbox's data attribute
+                    selectedMediaUrls.push(mediaUrl);
+                });
+
+                console.log('Selected Media URLs:', selectedMediaUrls);
+
+                // Get the Summernote editor instance
+                const summernoteEditor = $('#content');
+
+                // Insert selected media into Summernote content area
+                selectedMediaUrls.forEach(mediaUrl => {
+                    // Create an HTML string for the media
+                    const mediaHtml = `<img src="${mediaUrl}" alt="Media" style="max-height: 300px; width: auto;">`;
+                    // Insert the media HTML at the current cursor position
+                    summernoteEditor.summernote('pasteHTML', mediaHtml);
+                });
+
+                // Close the modal
+                $('#mediaModal').modal('hide');
+            });
+
+            // Set the flag to true after initializing the script
+            window.isMediaSelectionInitialized = true;
+        });
+    })();
+</script>
+
+<script>
+    let isProcessingFiles = false;
+
+// Handle the select from device button click
+document.getElementById('selectFromDeviceButton').addEventListener('click', function() {
+    document.getElementById('deviceMediaInput').click();
+});
+
+// Handle the device media input change
+document.getElementById('deviceMediaInput').addEventListener('change', function(event) {
+    if (isProcessingFiles) return;
+
+    isProcessingFiles = true;
+    const files = event.target.files;
+    const summernoteEditor = $('#content');
+
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const mediaHtml = `<img src="${e.target.result}" alt="${file.name}" style="max-height: 300px; width: auto;">`;
+            summernoteEditor.summernote('pasteHTML', mediaHtml);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Reset the input and open the file selector again
+    setTimeout(() => {
+        document.getElementById('deviceMediaInput').value = '';
+        isProcessingFiles = false;
+        document.getElementById('deviceMediaInput').click();
+    }, 500);
+});
+</script>
+
+<script>
+    new DataTable('#userFormsTable');
+</script>
+
+<script>
+function insertFormHtml(formHtml) {
+    const summernoteEditor = $('#content');
+    summernoteEditor.summernote('pasteHTML', formHtml);
+    $('#formsModal').modal('hide');
+}
+</script>
+
+
+{% endblock %}
+{% endblock %}

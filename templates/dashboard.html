@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+<link rel="stylesheet" href="url_for('static', filename='assets/plugins/select2/css/select2.min.css')">
+<link rel="stylesheet" href="url_for('static', filename='assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')">
+
+
+{% block content %}
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div><!-- /.col --><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+<div>
+            <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ post_count }}</h3>
+
+                <p>Posts</p>
+              </div>
+              <div class="icon">
+                <i class="fas bi bi-pin-fill"></i>
+              </div>
+              <a href="{{ url_for('user_all_post') }}" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ subscriber_count }}</h3>
+
+                <p>Subscribers</p>
+              </div>
+              <div class="icon">
+                <i class="bi bi-bell-fill"></i>
+              </div>
+              <a href="{{ url_for('newsletter_subscribers') }}" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>{{ feedback_count }}</h3>
+
+                <p>Feedback</p>
+              </div>
+              <div class="icon">
+                <i class="fas bi bi-chat-right-text"></i>
+              </div>
+              <a href="{{ url_for('user_feedbacks') }}" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+</div>
+
+{% endblock %}
+

@@ -1,0 +1,104 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+            <div class="row">
+
+
+              <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
+                <div class="card">
+                  <div class="card-body" style="overflow-x: auto;">
+                      <div style="display:flex; justify-content:space-between;">
+                    <h4 class="card-title">User Details</h4>
+                      <div style="display: flex; justify-content: space-between;">
+                                      <a class="btn btn-info" href="{{ url_for('add_user') }}" style="padding: 6px 30px 6px 30px;">
+                <span class="menu-title">Add user</span>
+              </a>
+                          </div>
+                          </div>
+                      <br>
+                      <br>
+                <table id="userTable" class="hover">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Site</th>
+                    <th>Company Name</th>
+                    <th>Creation Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+        {% for row in result|reverse %}
+
+            <tr>
+<!--              <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}">-->
+                <td><input type="checkbox" class="select-checkbox"></td>
+                 <td class="clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')" style="text-transform: capitalize;"> <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}"> {{ row.username }} </a></td>
+
+                <td class="clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')">
+                    {{ row.email }}
+                </td>
+
+                <td class="clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')" style="text-transform: capitalize;"> {{ row.role }} </td>
+                <td><a href=""> /{{row.username}}/posts </a></td>
+
+                <td class="py-1 clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')">
+                    {% if row["company"] %}
+                       <a href="{{ url_for('company_details', company_id=row['company'][0]['id']) }}"> {{ row["company"][0]["name"] }}
+                    </a>
+                           {% else %}
+                        Not Registered
+                    {% endif %}
+
+                </td>
+
+                <td class="clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')">{{ row.created_datetime.split('T')[0] }}&nbsp; &nbsp;{{ row.created_datetime.split('T')[1][:8] }} </td>
+                <td class="clickable text-center" onclick="redirectToPage('{{ url_for('admin_view_user_profile', user_id=row.id) }}')" style="text-transform: capitalize;"> {{ row.status }} </td>
+                <td>
+    <a href="{{ url_for('admin_edit_user_profile', user_id=row.id) }}" style="margin-right: 1rem;"><i class="bi bi-pen" style="color:#0b4647; font-size: 1.5rem"></i></a>
+    <a data-bs-toggle="modal" data-bs-target="#deleteModal_{{ row.id }}"><i class="bi bi-trash3-fill " style="color:#6b1313; font-size: 1.5rem"></i></a>
+
+    <!-- Modal for delete button -->
+    <div class="modal fade" id="deleteModal_{{ row.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ row.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel_{{ row.id }}">Delete User</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a type="button" class="btn btn-danger" href="{{ url_for('admin_trash_user', user_id=row.id) }}">Move to Trash</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
+
+<!--                </a>-->
+            </tr>
+
+        {% endfor %} <!-- Your table body content here -->
+            </tbody>
+
+        </table>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          <!-- content-wrapper ends -->
+
+{% endblock %}

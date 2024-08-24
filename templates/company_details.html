@@ -1,0 +1,97 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Companies{% endblock %}
+
+{% block content %}
+
+<style>
+.container {
+    position: relative; /* Add this to position the .text-overlay relative to the container */
+    height: 40vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.text-overlay {
+    position: absolute;
+    bottom: 10px; /* Adjust this value to position the text closer to or further from the bottom */
+    left: 10px; /* Adjust this value to position the text closer to or further from the left */
+    font-size: 24px;
+    color: white;
+    padding: 10px;
+    text-transform: capitalize; /* Ensures the first letter of each word is capitalized */
+}
+
+.about .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stack the content vertically */
+    height: 100%; /* Ensure it takes up the full height */
+}
+
+.group.list-group-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#hero {
+    position: relative;
+    top: -10px; /* Adjust this value as needed */
+}
+
+@media (max-width: 768px) {
+    .container {
+        height: 80vh; /* Adjust the height when the sidebar is closed */
+    }
+}
+</style>
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex align-items-center" style="display:fit-content; background-color:black;">
+    <div class="container" style="height:40vh; margin: 0; padding: 0; overflow: hidden;">
+        <img class="group list-group-image" src="/static/images/company.jpg" style="opacity:0.5;" />
+        <div class="text-overlay">
+            <h1>{{ name }}</h1>
+            <h3><i class="fa fa-map-marker-alt" style="color:red"></i> {{ location }}</h3>
+        </div>
+    </div>
+</section>
+<!-- End Hero -->
+
+<main id="main">
+<br>
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title align-items-center" style="">
+                <h2>About Us</h2>
+            </div>
+
+            <div class="row content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque magnam minima molestias mollitia nemo.
+                    Ab ad asperiores autem consectetur cumque deleniti eligendi eos expedita iste itaque laudantium maiores nemo
+                    non nostrum qui quidem quis repudiandae rerum similique, soluta tempore, temporibus voluptate voluptatem. Ab
+                    ad aliquam architecto at blanditiis corporis distinctio doloremque earum eos eveniet in laboriosam maxime,
+                    modi nulla odio officia quis, repellat saepe sed tenetur ullam vel voluptatem voluptatum? Ab
+                    ad aliquid amet consectetur culpa cum dicta dolores earum esse excepturi, exercitationem hic id in incidunt
+                    laboriosam laudantium mollitia, nesciunt nisi nobis nulla odit officiis omnis perferendis perspiciatis
+                    praesentium quae quaerat quis quisquam quod recusandae repellendus repudiandae tempora vel vero voluptas
+                    voluptate voluptatem. Animi commodi cumque distinctio dolorem ea molestiae nostrum quidem quisquam. Atque
+                    cumque dolores error esse magnam nisi porro soluta vitae? Aliquam laudantium reiciendis similique sint
+                    voluptate! Accusantium deleniti, doloremque. Culpa est iusto minima quae reprehenderit, vitae. Ab aliquid at
+                    beatae consequatur debitis deleniti dolore eaque enim eos facilis fuga illo impedit inventore, ipsum, iusto
+                    libero minus nam neque nihil numquam obcaecati odio quaerat quidem suscipit tempore tenetur voluptate
+                    voluptates voluptatibus!</p>
+
+            </div>
+
+        </div>
+    </section><!-- End About Us Section -->
+
+</main><!-- End #main -->
+
+{% endblock %}

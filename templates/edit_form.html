@@ -1,0 +1,135 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<style>
+
+    .mb-3{
+        width:70%;
+        margin:auto;
+    }
+</style>
+<link href="https://cdn.datatables.net/2.0.0/css/dataTables.dataTables.css" rel="stylesheet">
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6" style="width:75%;">
+                <div class="card border-0">
+                    <!-- Add a card header "Register" -->
+                    <div class="card-header bg-white text-black text-center">
+                        <h2>Profile</h2>
+                    </div>
+
+                    <div class="card-body">
+
+                       <form method="post" action="{{ url_for('admin_edit_user_profile', user_id=user_id) }}">
+                        {{ form.hidden_tag() }}
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label visually-hidden">Username:</label>
+                            {{ form.username(class="form-control", placeholder=username, required=True) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Role" class="form-label">Select Role :</label>
+                            {{ form.role(class="form-select", required=True) }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Select status :</label>
+                            {{ form.status(class="form-select", required=True) }}
+                        </div>
+                              <div class="mb-3 text-center">
+                            {{ form.submit(class="btn btn-dark btn-lg") }}
+                        </div>
+
+ </form>
+                        <form method="post" action="{{ url_for('admin_edit_user_profile', user_id=user_id) }}">
+                        {{ form.hidden_tag() }}
+<div class="page-header"></div>
+{% if all_service %}
+    <div class="row">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card" style="overflow-x:auto;">
+                <div class="card-body" style="padding: 2rem;">
+                    <h4 class="card-title">Services</h4>
+                    <br>
+                    <br>
+                    <table id="serviceTable" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllCheckbox"></th>
+                                <th>Sr. No.</th>
+                                <th>Service</th>
+                                <th>Description</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in all_service %}
+                                <tr style="max-height: 100px; overflow-y: auto;">
+                                    <td><input type="checkbox" name="services" value="{{ data.service_id }}" class="select-checkbox"></td>
+                                    <td class="py-1">{{ loop.index }}</td>
+                                    <td class="py-1">{{ data.name }}</td>
+                                    <td class="py-1">{{ data.description }}</td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+{% else %}
+    <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+        <p>No Service</p>
+    </div>
+{% endif %}
+
+
+
+
+                        <div class="mb-3 text-center">
+                            {{ service_form.submit(class="btn btn-dark btn-lg") }}
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script>new DataTable('#serviceTable');</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the list of service IDs that are already associated with the user
+        var userServices = [];
+        {% if user_services %}
+            userServices = [
+                {% for service in user_services %}
+                    "{{ service.service_id }}",
+                {% endfor %}
+            ];
+            // Log the userServices array to the console for debugging
+            console.log(userServices);
+        {% endif %}
+
+        // Iterate over each checkbox
+        var checkboxes = document.querySelectorAll('.select-checkbox');
+        checkboxes.forEach(function(checkbox) {
+            // Check if the service ID is in the userServices list
+            if (userServices.includes(checkbox.value)) {
+                checkbox.checked = true; // If yes, mark the checkbox as checked
+            }
+        });
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Register Company{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card border-0">
+                    <!-- Add a card header "Register" -->
+                    <div class="card-header bg-white text-black text-center">
+                        <h2>Register Company</h2>
+                    </div>
+
+                    <div class="card-body">
+
+
+                        <form method="post" action="{{ url_for('company_register') }}">
+                            {{ form.hidden_tag() }}
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label visually-hidden">Company Name:</label>
+                                {{ form.name(class="form-control", placeholder="Company Name", required=True) }}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="website_url" class="form-label visually-hidden">Website:</label>
+                                {{ form.website_url(class="form-control", placeholder="Website", required=True) }}
+                            </div>
+
+
+                            <div class="mb-3 text-center">
+                                {{ form.submit(class="btn btn-dark btn-lg") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

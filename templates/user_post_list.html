@@ -1,0 +1,400 @@
+{% extends 'jobseeker/jobseeker_base.html' %}
+
+{% block title %} Jobs {% endblock %}
+
+{% block content %}
+<style>
+    #search-input {
+    width: 80%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    display: block;
+}
+
+    #categories-container {
+        overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent buttons from wrapping to the next line */
+    }
+
+    .category-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-right: 10px;
+        background-color: #eaeaea;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .category-button:hover {
+        background-color: #ddd;
+    }
+
+/* Hide scrollbar for Chrome, Safari, and Opera */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge (non-Chromium) */
+    body, html, #categories-container {
+        -ms-overflow-style: none;  /* IE and Edge */
+    }
+
+    /* Hide scrollbar for Firefox */
+    body, #categories-container {
+        scrollbar-width: none;  /* Firefox */
+    }
+
+
+    #selected-category {
+        font-size: 30px; /* Big font size */
+        font-weight: bold; /* Bold font weight */
+        margin: auto; /* Add margin from top and bottom and center horizontally */
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    #post-count {
+        font-size: 16px;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 30px;
+
+    .card {
+            border-radius: 10px; /* Adjust the border-radius as needed */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Optional: Adds shadow for depth */
+            transition: 0.3s;
+            width: 100%; /* Ensures the card takes up the full width of its container */
+        }
+    }
+
+</style>
+    <!-- Main Content-->
+    <div class="container px-4 px-lg-5">
+        <div id="categories-container">
+            {% for data in response %}
+            <button class="category-button" onclick="selectCategory('{{ data.category }}', '{{ data.id }}')">{{ data.category }}</button>
+            {% endfor %}
+        </div>
+
+        <div id="selected-category" style="display: none;"></div>
+        <div id="post-count" style="display: none;"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <input type="text" id="search-input" placeholder="Search Jobs" style="margin-right: auto; margin-left: 20px;">
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-12">
+                <div class="row" id="posts-container">
+                    <!-- Post preview-->
+    {% for data in result %}
+    <div class="col-md-4 mb-4 post-preview"> <!-- Adjusts to show max 3 items per row on medium screens and larger -->
+        <div class="container-fluid card "> <!-- Added flex-fill to make each card fill the available space equally -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col mb-2">
+                        <form action="{{ url_for('get_post_by_username_and_slug', username=data.author_name, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" method="POST">
+                            <input type="hidden" name="post_id" value="{{ data.id }}">
+                            <a href="#" class="card-title" style="text-decoration: none; color: inherit;"> <!-- Makes the title clickable -->
+                                <h5 class="mb-0">{{ data.job_title }}</h5>
+                            </a>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex"> <i class="bi bi-currency-rupee mr-1" ></i> <p style="font-size:0.9rem;">{{ data.salary }}</p> </div>
+                    <div class="col d-flex"> <i class="bi bi-briefcase mr-1" ></i> <p style="font-size:0.9rem;">{{ data.work_experience }}</p> </div>
+                </div>
+                <div class="row">
+                    <div class="col d-flex"> <i class="bi bi-clock mr-1"></i> <p style="font-size:0.9rem;">{{ data.job_type }}</p> </div>
+                    <div class="col d-flex"> <i class="bi bi-buildings mr-1"></i> <p style="font-size:0.9rem;">{{ data.industry }}</p> </div>
+                </div>
+                <div class="d-grid gap-2">
+                <a class="btn btn-primary mt-2" href="{{ url_for('get_post_by_username_and_slug', username=data.author_name, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}">Apply</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+                </div>
+                <!-- Divider-->
+                <hr class="my-4" />
+                <!-- Post preview-->
+                <div class="d-flex justify-content-between mb-4">
+                    <button id="load-newer" class="btn btn-primary text-uppercase" style="display: none;">← Newer Posts</button>
+                    <button id="load-more" class="btn btn-primary text-uppercase">Older Posts →</button>
+                </div>
+            </div>
+        </div>
+<div class="newsletter">
+    <h5 style="margin-top: 2rem;">Subscribe to Newsletter</h5>
+    <form method="post" action="{{ url_for('user_post_list', username=username) }}">
+        {{ form.hidden_tag() }}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            {{ form.name(class="form-control", placeholder="Name", aria_label="Name", required=True) }}
+            <span class="input-group-text text-danger" id="basic-addon1"><i class="bi bi-envelope"></i></span>
+            {{ form.email(class="form-control", placeholder="Email", aria_label="Email", required=True) }}
+            {{ form.submit(class="btn btn-outline-dark", id="submitSubscribeButton") }}
+        </div>
+    </form>
+</div>
+
+        <div class="contact-form">
+            <h5 style="margin-top: 2rem;" class=" w-100 mb-3">Contact Us</h5>
+            <form method="post" action="{{ url_for('user_contact_form', username=username) }}">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="lastName">LastName</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+  </div>
+  <div class="form-group">
+    <label for="message"> Message </label>
+      <textarea type="text" rows="4" class="form-control" id="message" name="message"placeholder="Write Message"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary w-100 mb-3">Send</button>
+</form>
+
+        </div>
+    </div>
+
+
+
+  <div class="container mt-5">
+    <!-- Success Toast -->
+      <div  class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" id="successToast" style="display:none;">
+      <div class="toast-header">
+        <strong class="mr-auto">Notification</strong>
+        <small>Just now</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Subscription successful
+      </div>
+    </div>
+          </div>
+
+    <!-- Error Toast -->
+            <div  class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" id="errorToast" style="display:none;">
+      <div class="toast-header">
+        <strong class="mr-auto">Notification</strong>
+        <small>Just now</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;&nbsp;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        You are already a subscriber.
+      </div>
+    </div>
+      </div>
+
+
+    <!-- Contact Toast -->
+            <div  class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="5000" id="contactToast" style="display:none;">
+      <div class="toast-header">
+        <strong class="mr-auto">Notification</strong>
+        <small>Just now</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;&nbsp;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Your message has been sent!
+      </div>
+    </div>
+      </div>
+  </div>
+
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2000">
+      <div class="toast-header">
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        Your action was successful!
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- Footer-->
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let selectedCategoryId = null;
+    let currentPage = 0;
+    const postsPerPage = 7;
+
+    function filterPosts() {
+        const query = document.getElementById('search-input').value.trim().toLowerCase();
+        let visiblePosts = 0;
+        let totalPostsInCategory = 0;
+        const posts = document.querySelectorAll('.post-preview');
+
+        posts.forEach((post, index) => {
+            const title = post.querySelector('.post-title').textContent.toLowerCase();
+            const categoryId = post.getAttribute('data-category-id');
+            const isVisible = title.includes(query) && (!selectedCategoryId || selectedCategoryId === categoryId);
+
+            if (isVisible && visiblePosts >= currentPage * postsPerPage && visiblePosts < (currentPage + 1) * postsPerPage) {
+                post.style.display = 'block';
+            } else {
+                post.style.display = 'none';
+            }
+            if (isVisible) {
+                visiblePosts++;
+            }
+            if (selectedCategoryId === categoryId) {
+                totalPostsInCategory++;
+            }
+        });
+
+        const loadMoreButton = document.getElementById('load-more');
+        const loadNewerButton = document.getElementById('load-newer');
+
+        // Hide the loadMoreButton if there are no more posts to show
+        if (visiblePosts <= (currentPage + 1) * postsPerPage) {
+            loadMoreButton.style.display = 'none';
+        } else {
+            loadMoreButton.style.display = 'block';
+        }
+
+        // Show the loadNewerButton if we are not on the first page
+        if (currentPage > 0) {
+            loadNewerButton.style.display = 'block';
+        } else {
+            loadNewerButton.style.display = 'none';
+        }
+
+        // Update the post count
+         const postCountElement = document.getElementById('post-count');
+        if (selectedCategoryId) {
+            if (totalPostsInCategory <= 1) {
+                postCountElement.textContent = `${totalPostsInCategory} Post`;
+            } else {
+                postCountElement.textContent = `${totalPostsInCategory} Posts`;
+            }
+            postCountElement.style.display = 'block';
+        } else {
+            postCountElement.style.display = 'none';
+        }
+    }
+
+    function selectCategory(category, categoryId) {
+        selectedCategoryId = categoryId;
+        currentPage = 0;
+        filterPosts();
+        document.getElementById('selected-category').innerText = category;
+        document.getElementById('selected-category').style.display = 'block';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize the first page
+        filterPosts();
+
+        // Adjust search input width based on user role
+        const searchInput = document.getElementById('search-input');
+        if ('{{ current_user.role }}' === 'user') {
+            searchInput.style.width = '80%';
+        } else {
+            searchInput.style.width = '96%';
+        }
+
+        // Event listeners for load more and load newer buttons
+        document.getElementById('load-more').addEventListener('click', function () {
+            currentPage++;
+            filterPosts();
+        });
+
+        document.getElementById('load-newer').addEventListener('click', function () {
+            if (currentPage > 0) {
+                currentPage--;
+                filterPosts();
+            }
+        });
+
+        // Event listener for search input
+        searchInput.addEventListener('input', filterPosts);
+    });
+</script>
+
+
+<!--<script>-->
+<!--$(document).ready(function() {-->
+<!--  // Show success toast if flag is 'success'-->
+<!--  const queryParams = new URLSearchParams(window.location.search);-->
+<!--  let toast = queryParams.get('toast'); // Changed variable name to 'toast'-->
+
+<!--  if (toast === 'new_sub') {-->
+<!--    $('#successToast').toast('show');-->
+<!--  }-->
+<!--  // Show error toast if flag is 'error'-->
+<!--  else if (toast === 'already_sub') {-->
+<!--    $('#errorToast').toast('show');-->
+<!--  }-->
+<!--});-->
+<!--</script>-->
+<!--<script>-->
+<!--    $(document).ready(function() {-->
+<!--  // Example condition to show the toast-->
+<!--const toastTrigger = document.getElementById('liveToastBtn')-->
+<!--const toastLiveExample = document.getElementById('successToast')-->
+
+<!--if (toastTrigger) {-->
+<!--  const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)-->
+<!--  toastTrigger.addEventListener('click', () => {-->
+<!--    toastBootstrap.show()-->
+<!--  })-->
+<!--}-->
+
+<!--});-->
+<!--</script>-->
+
+  <script>
+    $(document).ready(function() {
+      function getQueryParameter(name) {
+        let urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+      }
+
+      var toastType = getQueryParameter('toast');
+      if (toastType === 'new_sub') {
+        var toastEl = $('#successToast');
+        toastEl.show();  // Ensure the toast element is visible
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      } else if (toastType === 'already_sub') {
+        var toastEl = $('#errorToast');
+        toastEl.show();  // Ensure the toast element is visible
+        var toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+    });
+  </script>
+
+{% endblock %}
+

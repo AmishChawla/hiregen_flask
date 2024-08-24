@@ -1,0 +1,208 @@
+{% extends 'jobseeker/jobseeker_base.html' %}
+
+{% block title %}{{ job_details.job_title }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+
+<style>
+            .custom-button {
+          border: none;
+          outline: none;
+          background-color: rgb(24, 22, 22);
+          padding: 10px;
+          border-radius: 10px;
+          color: #fff;
+          font-size: 16px;
+          transform: .3s ease;
+          text-decoration: none;
+        }
+
+        .custom-button:hover {
+          background-color: rgb(21, 19, 19);
+        }
+
+        .final-button {
+            border: none;
+            outline: none;
+            background-color: royalblue;
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px; /* Optional: Adjust font size if needed */
+            transform: .3s ease;
+            text-decoration: none;
+            display: block; /* Make it a block element to apply margin auto */
+            margin: auto; /* Center the button horizontally */
+            width: fit-content; /* Adjust width to fit content */
+            margin-top: 20px; /* Optional: Adjust vertical positioning */
+            margin-bottom: 20px; /* Optional: Adjust vertical spacing below the button */
+        }
+
+        .final-button:hover {
+          background-color: rgb(56, 90, 194);
+        }
+
+
+        .field {
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select,
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-check input {
+            margin-right: 5px;
+        }
+
+        .form-check-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+</style>
+
+<div class="col-md-10 ml-0 mb-4 pt-3">
+    <header class="masthead">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-left">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="post-heading">
+                        <h2 class=" display-5 subheading">{{ job_details.job_title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr>
+    <br>
+    <br>
+    <!-- Post Content -->
+    <article class="mb-1">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-left">
+
+                    <div style="display:flex;" class="row">
+                    <div class="col" style="color:grey;">
+                        <i class="bi bi-currency-rupee" style="color:#104a18;" ></i> {{ job_details.salary }} | <i class="bi bi-briefcase-fill mr-1" style="color:#0e2345;"></i> {{ job_details.work_experience }} | <i class="bi bi-buildings-fill mr-1" style="color:#5c410c;"></i> {{ job_details.industry }} | <i class="bi bi-clock mr-1"></i> {{ job_details.job_type }} <br>
+                        <i class="bi bi-geo-alt-fill" style="color:#610d14;"></i> {{ job_details.address_city }}, {{ job_details.address_province}}, {{ job_details.address_country }} , {{ job_details.address_postal_code }}
+                    </div>
+                <div class="col-2">
+                <a class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#applyModal">Apply</a>
+                </div>
+                    </div>
+
+                <h5 class="mt-4 px-3 display-6">Job Description</h5>
+                <div class="mt-1">
+                    {{ job_details.job_description | safe }}
+                </div>
+                <h5 class="mt-4 px-3 display-6">Job Requirements</h5>
+                <div class="mt-1">
+                    {{ job_details.job_requirements | safe }}
+                </div>
+                <h5 class="mt-4 px-3 display-6">Job Benefits</h5>
+                <div class="mt-1">
+                    {{ job_details.job_benefits | safe }}
+                </div>
+
+            </div>
+        </div>
+    </article>
+    <hr>
+    <br>
+    <br>
+
+
+</div>
+
+<div class="modal fade" id="applyModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Apply</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+          <form method="POST" enctype="multipart/form-data" action="{{ url_for('get_post_by_username_and_slug', username=job_details.author_name, job_date=job_date, job_slug=job_slug) }}">
+      <div class="modal-body">
+        {{ form.hidden_tag() }}
+        {{ form.job_id() }}
+        <div>
+            <label for="{{ form.resume.id }}">Select Resume from My Resumes:</label>
+            {{ form.resume(class="form-select") }}
+        </div>
+        <div>
+            <label for="{{ form.upload_resume.id }}">Or Upload Resume:</label>
+            {{ form.upload_resume(class="form-control-file") }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        {{ form.apply(class="btn btn-primary", id="final_apply") }}
+      </div>
+          </form>
+    </div>
+</div>
+</div>
+
+<div class="toast" id="applyToast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    Applied
+    <small>Just now</small>
+    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  <div class="toast-body">
+    Your application has been submitted successfully!
+  </div>
+</div>
+
+
+
+
+<!-- Footer -->
+<!-- Bootstrap core JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var applyButton = document.getElementById('final_apply');
+  var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+  var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl);
+  });
+
+  applyButton.onclick = function () {
+    var toast = toastList[0]; // Assuming you only have one toast
+    if (!toast._isShown) {
+      toast.show();
+    }
+  };
+});
+</script>
+
+<!-- Core theme JS -->
+<script src="js/scripts.js"></script>
+{% endblock %}

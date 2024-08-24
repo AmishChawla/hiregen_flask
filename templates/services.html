@@ -1,0 +1,81 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+            <div class="page-header"></div>
+            {% if result %}
+                <div class="row">
+                    <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="card" style="overflow-x:auto;">
+                            <div class="card-body" style="padding: 2rem;">
+                                <div style="display:flex; justify-content:space-between;">
+                                    <h4 class="card-title">Services:</h4>
+                                       <div style="display: flex; justify-content: space-between;">
+                                          <a class="btn btn-info" href="{{ url_for('add_service') }}" style="padding: 6px 30px 6px 30px;">
+                                          <span class="menu-title">Add service</span>
+                                          </a>
+                                       </div>
+                                 </div>
+
+                                <br>
+                                <br>
+                                <table id="serviceTable" class="display" style="width:100%; ">
+                                    <thead>
+                                        <tr>
+                                            <th> Service </th>
+                                            <th> Description </th>
+                                            <th> Action </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in result %}
+                                            <tr style="max-height: 100px; overflow-y: auto; ">
+                                                <td class="py-1">{{ data.name }}</td>
+                                                <td class="py-1">{{ data.description }}</td>
+                                                 <td style="display: flex">
+    <a style="margin-right: 1rem;" href=" {{url_for('admin_edit_service', service_id=data.service_id)}} "><i class="bi bi-pen" style="color:#0b4647; font-size: 1.5rem"></i></a>
+    <a data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.service_id }}"><i class="bi bi-trash3-fill " style="color:#6b1313; font-size: 1.5rem"></i></a>
+
+    <!-- Modal for delete button -->
+    <div class="modal fade" id="deleteModal_{{ data.service_id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ data.service_id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel_{{ data.service_id }}">Delete Service</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a type="button" class="btn btn-danger" href="{{ url_for('admin_delete_service', service_id=data.service_id) }}">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</td>
+
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+            {% else %}
+                <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
+                    <p>No Service</p>
+                </div>
+            {% endif %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<script>new DataTable('#serviceTable');</script>
+{% endblock %}

@@ -1,0 +1,353 @@
+{% extends 'base.html' %}
+
+
+{% block title %}New Page{% endblock %}
+
+{% block content %}
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .form-container form {
+        width: 100%;
+    }
+
+    .form-container .form-group {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .form-container .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-container .form-control {
+        width: 100%;
+        height: auto;
+    }
+
+    .close-button {
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+<style>
+            .custom-button {
+          border: none;
+          outline: none;
+          background-color: rgb(24, 22, 22);
+          padding: 10px;
+          border-radius: 10px;
+          color: #fff;
+          font-size: 16px;
+          transform: .3s ease;
+          text-decoration: none;
+        }
+
+        .custom-button:hover {
+          background-color: rgb(21, 19, 19);
+        }
+
+        .final-button {
+            border: none;
+            outline: none;
+            background-color: royalblue;
+            padding: 15px 25px; /* Increased padding */
+            border-radius: 10px;
+            color: #fff;
+            font-size: 18px; /* Optional: Adjust font size if needed */
+            transform: .3s ease;
+            text-decoration: none;
+            display: block; /* Make it a block element to apply margin auto */
+            margin: auto; /* Center the button horizontally */
+            width: fit-content; /* Adjust width to fit content */
+            margin-top: 20px; /* Optional: Adjust vertical positioning */
+            margin-bottom: 20px; /* Optional: Adjust vertical spacing below the button */
+        }
+
+        .final-button:hover {
+          background-color: rgb(56, 90, 194);
+        }
+
+
+        .field {
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select,
+        input[type="date"],
+        input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .form-check input {
+            margin-right: 5px;
+        }
+
+        .form-check-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<form method="post" action="{{ url_for('add_page') }}" id="pageForm">
+    {{ form.hidden_tag() }}
+    <aside class="control-sidebar control-sidebar-light">
+        <div class="p-3">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h6><strong>New Page</strong></h6>
+            </div>
+            <div class="form-group">
+                {{ form.publish(class="btn btn-primary w-100 mb-3") }}
+                {{ form.save_draft(class="btn btn-outline-primary w-100 mb-3") }}
+            </div>
+            <div style="display: flex; align-items: center;">
+                Status
+                <p style="margin-left:1rem; margin-top: 1rem; color:#1d277d; font-size: 0.9rem;"> Draft </p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                Author
+                <p style="margin-left:1rem; margin-top: 1rem; color:#1d277d; font-size: 0.9rem;"> {{ current_user.username }} </p>
+            </div>
+            <div style="display: flex; align-items: center;">
+                Template
+                <p style="margin-left:1rem; margin-top: 1rem; color:#1d277d; font-size: 0.9rem;"> Pages </p>
+            </div>
+
+        </div>
+    </aside>
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+
+                    <h1 class="m-0">
+                        <div class="form-group">
+            {{ form.title(class="form-control form-control-lg form-control-border border-width-2", placeholder="Title", required=True) }}
+        </div>
+                    </h1>
+
+            </div>
+        </div>
+    </div>
+    <div class="form-container">
+<div class="form-group">
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#mediaModal">Select Media</button>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#formsModal">Select Form</button>
+
+
+
+    </div>
+        <div class="form-group">
+            {{ form.content(class="form-control", id="content") }}
+        </div>
+        </div>
+    </form>
+
+
+<div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Media Library</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="userMediaTable" class="table table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Sr. No.</th>
+                            <th>Media</th>
+
+                            <th>Created Date</th>
+
+                            <th>Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in result %}
+                        <tr style="max-height: 100px; overflow-y: auto; ">
+                            <td class="py-1">{{ loop.index }}</td>
+                            <td class="py-1">
+                                <img src="{{ root_url + data.file_url }}" alt="Media Thumbnail" style="max-height: 6rem; width: auto; margin-top: 10px">
+                            </td>
+
+                            <td class="py-1">{{ data.uploaded_at.split('T')[0] }} {{ data.uploaded_at.split('T')[1][:8] }}</td>
+
+                            <td><input type="checkbox" class="media-checkbox" value="{{ data.id }}" data-url="{{ root_url + data.file_url }}"></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveSelectionButton">Save Selection</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="formsModal" tabindex="-1" aria-labelledby="formsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="formsModalLabel">Forms Library</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="userFormsTable" class="table table-hover" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in forms_result %}
+                        <tr style="max-height: 100px; overflow-y: auto; " onclick="insertFormHtml('{{ data.form_html }}')">
+                            <td class="py-1">
+                                {{ data.form_name }}
+                            </td>
+                            <td class="py-1">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script>
+$(document).ready(function() {
+$('.control-sidebar').ControlSidebar('show');
+    $('#content').summernote({
+        height: 400,
+        minHeight: null,
+        maxHeight: null,
+        focus: true,
+        allowList: ['form']
+    });
+     new DataTable('#userMediaTable');
+});
+</script>
+
+<script>
+    // Global flag to ensure the event listener is only added once
+    window.isMediaSelectionInitialized = false;
+
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.isMediaSelectionInitialized) {
+                console.log('Media selection script already initialized.');
+                return;
+            }
+
+            console.log('Initializing media selection script.');
+
+            // Handle the save selection button click event
+            document.getElementById('saveSelectionButton').addEventListener('click', function() {
+                console.log('Save Selection Button clicked');
+
+                // Initialize an array to collect new media URLs
+                let selectedMediaUrls = [];
+
+                // Collect selected media URLs
+                document.querySelectorAll('.media-checkbox:checked').forEach(checkbox => {
+                    const mediaUrl = checkbox.dataset.url; // URL should be retrieved from the checkbox's data attribute
+                    selectedMediaUrls.push(mediaUrl);
+                });
+
+                console.log('Selected Media URLs:', selectedMediaUrls);
+
+                // Get the Summernote editor instance
+                const summernoteEditor = $('#content');
+
+                // Insert selected media into Summernote content area
+                selectedMediaUrls.forEach(mediaUrl => {
+                    // Create an HTML string for the media
+                    const mediaHtml = `<img src="${mediaUrl}" alt="Media" style="max-height: 300px; width: auto;">`;
+                    // Insert the media HTML at the current cursor position
+                    summernoteEditor.summernote('pasteHTML', mediaHtml);
+                });
+
+                // Close the modal
+                $('#mediaModal').modal('hide');
+            });
+
+            // Set the flag to true after initializing the script
+            window.isMediaSelectionInitialized = true;
+        });
+    })();
+</script>
+
+<script>
+    new DataTable('#userFormsTable');
+</script>
+
+<script>
+function insertFormHtml(formHtml) {
+    const summernoteEditor = $('#content');
+    console.log(formHtml);
+    summernoteEditor.summernote('pasteHTML', formHtml);
+    $('#formsModal').modal('hide');
+}
+</script>
+
+
+
+{% endblock %}
+{% endblock %}
