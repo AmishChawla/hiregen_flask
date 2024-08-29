@@ -972,7 +972,7 @@ def job_applicants(job_id):
     if result is None:
         result = []  # Set result to an empty list
 
-    return render_template('cms/job_openings/job_applicants.html', result=result)
+    return render_template('cms/job_openings/job_applicants_2.html', result=result)
 
 
 @app.route('/<username>/jobs', methods=['GET', 'POST'])
@@ -2788,6 +2788,18 @@ def jobseeker_applications():
         result = []  # Set result to an empty list
 
     return render_template('jobseeker/job_applications.html', result=result)
+
+
+@app.route('/update-application-status', methods=['GET','POST'])
+@requires_any_permission("manage_posts")
+@login_required
+def update_application_status():
+    item_id = request.json['id']
+    new_status = request.json['newStatus']
+    print(item_id, new_status)
+
+    result = api_calls.update_application_status(application_id=item_id, new_status=new_status)
+    return jsonify(result)
 
 
 

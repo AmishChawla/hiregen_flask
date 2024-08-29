@@ -230,8 +230,6 @@ def admin_get_any_user(access_token: str, user_id: int):
         response = requests.get(constants.BASE_URL + f'/admin/view-user/{user_id}', headers=headers)
         if response.status_code == 200:
             return response.json()
-        else:
-            abort(response.status_code)
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -915,7 +913,6 @@ def get_user_all_job_openings(access_token):
 
         else:
             print("API Error:", response.text)
-            abort(response.status_code)
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -938,7 +935,7 @@ def get_job_applicants(access_token, job_id):
 
         else:
             print("API Error:", response.text)
-            abort(response.status_code)
+
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -2441,7 +2438,31 @@ def get_jobseeker_applications(access_token):
 
         else:
             print("API Error:", response.text)
-            abort(response.status_code)
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def update_application_status(application_id, new_status):
+    try:
+        data = {
+            "id": application_id,
+            "new_status": new_status
+        }
+        response = requests.post(constants.BASE_URL + f'/update-job-application-status', json=data)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+
+        else:
+            print("API Error:", response.text)
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
