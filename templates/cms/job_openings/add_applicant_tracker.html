@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Create Tracker {% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+
+          <div class="row mb-4">
+            <div class="col-md-8">
+              <h2 class="mb-1 mt-1 display-6">Create</h2>
+            </div>
+          </div>
+
+
+<form method="post" action="{{ url_for('create_applicant_tracker') }}">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{form.name.label(class="lead")}}
+        {{ form.name(class="form-control", placeholder="Name", required=True) }}
+    </div>
+
+    <div class="mb-3">
+        {{form.description.label(class="lead")}}
+        {{ form.description(class="form-control", placeholder="Description", required=True) }}
+    </div>
+    <div class="mb-3 ml-4">
+        {{ form.on_apply(class="form-check-input") }} {{ form.on_apply.label() }}
+    </div>
+
+    <div class="mb-3">
+        {{form.job_status.label(class="lead")}}
+        {{ form.job_status(class="form-control", placeholder="Job Status", required=True) }}
+    </div>
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const nameInput = document.getElementById('name');
+  const jobStatusInput = document.getElementById('job_status');
+
+  if (nameInput && jobStatusInput) {
+    nameInput.addEventListener('input', function() {
+      const nameValue = this.value.toLowerCase().replace(/\s+/g, '_');
+      jobStatusInput.value = nameValue;
+    });
+  }
+});
+
+</script>
+
+{% endblock %}

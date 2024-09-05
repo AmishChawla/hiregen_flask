@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<style>
+.profile-hover-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-hover-wrapper:hover .hover-btn {
+  display: inline-block;
+}
+
+.hover-btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -25px;
+  cursor: pointer;
+}
+
+.hover-btn i {
+  font-size: 16px;
+  color: grey;
+}
+
+.profile-user-img img:hover + .hover-btn {
+  display: inline-block;
+}
+
+</style>
+
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+              <div class="mt-4 box-profile">
+                <div class="text-center">
+                  <div class="">
+                    {% if profile_info.profile_picture %}
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{ profile_info.profile_picture }}"
+                       alt="User profile picture">
+                    {% else %}
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{{ url_for('static', filename='images/man.png') }}"
+                       alt="User profile picture">
+                    {% endif %}
+
+                </div>
+                </div>
+
+
+                <h3 class="text-center profile-username" style="text_overflow: hidden;">
+                  {{ profile_info.name }}
+                </h3>
+
+                <p class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem; ">
+                  <div class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem;">
+                  {{ profile_info.email }}
+                  </div>
+                <div class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem;">
+                  {% if profile_info.phone_number  %}
+                  {{ profile_info.phone_number }}
+                  {% else %}
+                  No Contact Number
+                  {% endif %}
+                </div>
+                </p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+  <li class="list-group-item">
+    <a href="#profileSummary" class="link-dark">Profile Summary</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#resume" class="link-dark">Resume</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#education" class="link-dark">Education</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#experience" class="link-dark">Experience</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#internships" class="link-dark">Internships</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#projects" class="link-dark">Projects</a>
+  </li>
+  <li class="list-group-item">
+    <a href="#accomplishments" class="link-dark">Accomplishments</a>
+  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+          </div>
+          <div class="col-md-9">
+            <div class="card card-outline card-primary" id="profileSummary">
+  <div class="card-header">
+    <h3 class="card-title">About </h3>
+    <!-- /.card-tools -->
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    {% if profile_info.profile_summary %}
+    {{ profile_info.profile_summary.content }}
+    {% endif %}
+
+
+  </div>
+
+  <!-- /.card-body -->
+</div>
+
+            <div class="card card-outline card-primary" id="education">
+  <div class="card-header">
+    <h3 class="card-title">Education </h3>
+    <!-- /.card-tools -->
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+        {% for data in profile_info.education %}
+    <div class="container-fluid mb-2">
+      <div style="font-size: 0.9rem;">
+        {{ data.degree }} in {{ data.field_of_study }} from {{ data.institution_name }}
+      </div>
+      <div style="color: grey; font-size: 0.8rem;">
+        {% if data.is_ongoing %}
+        {{ data.start_date }} - Present
+        {% else %}
+        {{ data.start_date }} - {{ data.end_date }}
+        {% endif %}
+      </div>
+    </div>
+        {% endfor %}
+  </div>
+  <!-- /.card-body -->
+</div>
+            <div class="card card-outline card-primary" id="experience">
+  <div class="card-header">
+    <h3 class="card-title">Experience </h3>
+    <!-- /.card-tools -->
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+        {% for data in profile_info.experiences %}
+    <div class="container-fluid mb-2">
+      <div style="font-size: 0.9rem; font-weight:bold;">
+        {{ data.position }}
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.company_name }}
+      </div>
+      <div style="color: grey; font-size: 0.8rem;">
+        {% if data.is_ongoing %}
+        {{ data.start_date }} - Present
+        {% else %}
+        {{ data.start_date }} - {{ data.end_date }}
+        {% endif %}
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.responsibilities }}
+      </div>
+    </div>
+
+        {% endfor %}
+  </div>
+  <!-- /.card-body -->
+</div>
+            <div class="card card-outline card-primary" id="internships">
+<div class="card-header">
+<h3 class="card-title">Internships </h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+        {% for data in profile_info.internships %}
+    <div class="container-fluid mb-2">
+      <div style="font-size: 0.9rem; font-weight:bold;">
+        {{ data.position.capitalize() }}
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.company_name.capitalize() }}
+      </div>
+      <div style="color: grey; font-size: 0.8rem;">
+        {% if data.is_ongoing %}
+        {{ data.start_date }} - Present
+        {% else %}
+        {{ data.start_date }} - {{ data.end_date }}
+        {% endif %}
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.job_description }}
+      </div>
+    </div>
+        {% endfor %}
+</div>
+<!-- /.card-body -->
+</div>
+            <div class="card card-outline card-primary" id="projects">
+<div class="card-header">
+<h3 class="card-title">Projects </h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+        {% for data in profile_info.projects %}
+    <div class="container-fluid mb-2">
+      <div style="font-size: 0.9rem; font-weight:bold;">
+        {{ data.title }}
+      </div>
+      <div style="color: grey; font-size: 0.9rem;">
+         <a href="{{ data.project_url }}" style="color: grey;">{{ data.project_url }}</a>
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.description }}
+      </div>
+    </div>
+        {% endfor %}
+</div>
+<!-- /.card-body -->
+</div>
+            <div class="card card-outline card-primary" id="accomplishments">
+<div class="card-header">
+<h3 class="card-title">Accomplishments </h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+        {% for data in profile_info.accomplishments %}
+    <div class="container-fluid mb-2">
+      <div style="font-size: 0.9rem; font-weight:bold;">
+        {{ data.title }}
+      </div>
+      <div style="color: grey; font-size: 0.9rem;">
+         <a href="{{ data.project_url }}" style="color: grey;">{{ data.achievement_date }}</a>
+      </div>
+      <div style="font-size: 0.9rem;">
+        {{ data.description }}
+      </div>
+    </div>
+
+        {% endfor %}
+</div>
+<!-- /.card-body -->
+</div>
+          </div>
+<!-- /.card -->
+</div>
+        </div>
+    </section>
+<!-- Bootstrap and jQuery scripts for modals -->
+
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

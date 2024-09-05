@@ -28,6 +28,9 @@ login_manager.login_view = 'login'
 
 uploads_folder = 'uploads'
 media_folder = 'media'
+profile_pictures_folder = 'profile_pictures/'
+os.makedirs(profile_pictures_folder, exist_ok=True)
+
 password_reset_token = ""
 
 ####################### GEMINI MODEL CONFIG #########################
@@ -180,7 +183,7 @@ def login():
             email = data.get('email')
             company = data.get('company', {})
             group = data.get('group', {})
-            profile_picture = f"{ROOT_URL}/{data['profile_picture']}"
+            profile_picture = data['profile_picture']
 
             user = User(id=id, user_id=token, role=role, username=username, email=email, company=company,
                         group=group, profile_picture=profile_picture)
@@ -292,7 +295,7 @@ def register():
                 email = data.get('email')
                 company = data.get('company', {})
                 group = data.get('group', {})
-                profile_picture = f"{ROOT_URL}/{data['profile_picture']}"
+                profile_picture = data['profile_picture']
 
                 user = User(id=id,user_id=token, role=role, username=username, email=email,
                             company=company,group=group,
@@ -969,10 +972,71 @@ def user_all_post():
 @login_required
 def job_applicants(job_id):
     result = api_calls.get_job_applicants(access_token=current_user.id, job_id=job_id)
+    statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
     if result is None:
         result = []  # Set result to an empty list
+    if statuses is None:
+        return render_template('cms/job_openings/job_applicants_2.html', result=result)
 
-    return render_template('cms/job_openings/job_applicants_2.html', result=result)
+    return render_template('cms/job_openings/job_applicants_3.html', result=result, statuses=statuses)
+
+
+@app.route('/applicant-tracking')
+@requires_any_permission("manage_posts")
+@login_required
+def all_applicants():
+    result = api_calls.get_all_applicants(access_token=current_user.id)
+    statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+    if statuses is None:
+        statuses = [
+            {
+                "id": 1,
+                "name": "Applied",
+                "description": "applied",
+                "job_status": "applied",
+                "on_jobseeker_apply": True
+            },
+            {
+                "id": 2,
+                "name": "Shortlisted",
+                "description": "shortlisted",
+                "job_status": "shortlisted",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 3,
+                "name": "Assessment",
+                "description": "assessment",
+                "job_status": "assessment",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 4,
+                "name": "Interview",
+                "description": "interview",
+                "job_status": "interview",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 5,
+                "name": "Rejected",
+                "description": "rejected",
+                "job_status": "rejected",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 6,
+                "name": "Selected",
+                "description": "selected",
+                "job_status": "selected",
+                "on_jobseeker_apply": False
+            }
+        ]
+
+
+    return render_template('cms/job_openings/job_applicants.html', result=result, statuses=statuses)
 
 
 @app.route('/<username>/jobs', methods=['GET', 'POST'])
@@ -2690,7 +2754,7 @@ def jobseeker_login():
             email = data.get('email')
             company = {}
             group = data.get('group', {})
-            profile_picture = f"{ROOT_URL}/{data['profile_picture']}"
+            profile_picture = data['profile_picture']
 
             user = User(id=id, user_id=token, role=role, username=username, email=email, company=company,
                         group=group, profile_picture=profile_picture)
@@ -2802,10 +2866,220 @@ def update_application_status():
     return jsonify(result)
 
 
+@app.route('/setup-applicant-tracking')
+@requires_any_permission("manage_posts")
+@login_required
+def applicant_tracking():
+    result = api_calls.get_board_columns(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+
+    return render_template('cms/job_openings/applicant_tracking_setup.html', result=result)
+
+
+@app.route('/setup-applicant-tracking/create', methods=['GET', 'POST'])
+@requires_any_permission("manage_posts")
+@login_required
+def create_applicant_tracker():
+    form = forms.AddTrackers()
+    print("outside validate on submit")
+    if form.validate_on_submit():
+        name = form.name.data
+        description = form.description.data
+        job_status = form.job_status.data
+        on_apply = form.on_apply.data
+        print("sending request to add plan")
+        result = api_calls.create_application_tracker(name=name, description=description, job_status=job_status, on_apply=on_apply, access_token=current_user.id)
+        if result:
+            return redirect(url_for('applicant_tracking'))
+    else:
+        print(form.errors)
+
+    return render_template('cms/job_openings/add_applicant_tracker.html', form=form)
+
+@app.route('/setup-applicant-tracking/delete/<id>', methods=['GET', 'POST'])
+@requires_any_permission("manage_posts")
+@login_required
+def delete_applicant_tracker(id):
+    result = api_calls.delete_application_tracker(tracker_id=id, access_token=current_user.id)
+    if result:
+        return redirect(url_for('applicant_tracking'))
 
 
 
+@app.route('/jobseeker/profile', methods=['GET', 'POST'])
+@requires_any_permission("applicants")
+@login_required
+def jobseeker_profile():
+    root_url = constants.ROOT_URL + '/'
+    about_form = forms.AboutForm()
+    education_form = forms.EducationForm()
+    experience_form = forms.ExperienceForm()
+    internship_form = forms.InternshipForm()
+    project_form = forms.ProjectForm()
+    accomplishment_form = forms.AccomplishmentForm()
+    name_form = forms.CollectNameForm()
+    email_form  = forms.CollectEmailForm()
+    phone_form = forms.CollectPhoneForm()
+    profile_picture_form = forms.CollectProfilePictureForm()
 
+    profile_info = api_calls.get_jobseeker_profile(access_token=current_user.id)
+    resumes = api_calls.get_user_all_medias(access_token=current_user.id)
+
+    if request.method == 'POST':
+        if about_form.validate_on_submit():
+            content = about_form.about.data
+            res = api_calls.add_about_profile(content=content, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+        if education_form.validate_on_submit():
+            education = {
+                "institution_name": education_form.institution_name.data,
+                "degree": education_form.degree.data,
+                "field_of_study": education_form.field_of_study.data,
+                "start_date": str(education_form.start_date.data),
+                "end_date": str(education_form.end_date.data),
+                "is_ongoing": education_form.ongoing.data
+            }
+            res = api_calls.add_education_profile(education=education, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+        if experience_form.validate_on_submit():
+            experience = {
+                "company_name": experience_form.company_name.data,
+                "position": experience_form.position.data,
+                "responsibilities": experience_form.responsibilities.data,
+                "start_date": str(experience_form.start_date.data),
+                "end_date": str(experience_form.end_date.data),
+                "is_ongoing": experience_form.ongoing.data
+            }
+            res = api_calls.add_experience_profile(experience=experience, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+        if internship_form.validate_on_submit():
+            internships = {
+                "company_name": internship_form.company_name.data,
+                "position": internship_form.position.data,
+                "job_description": internship_form.job_description.data,
+                "start_date": str(internship_form.start_date.data),
+                "end_date": str(internship_form.end_date.data),
+                "is_ongoing": internship_form.ongoing.data
+            }
+            res = api_calls.add_internships_profile(internships=internships, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+    return render_template('jobseeker/jobseeker_manage_profile.html', root_url=root_url, about_form=about_form,
+                           education_form=education_form, experience_form=experience_form,
+                           internship_form=internship_form, project_form=project_form, name_form=name_form,
+                           email_form=email_form, phone_form=phone_form, accomplishment_form=accomplishment_form,
+                           profile_picture_form=profile_picture_form,resumes=resumes, profile_info=profile_info)
+
+
+
+@app.route('/jobseeker/add-accomplishment', methods=['GET', 'POST'])
+@requires_any_permission("applicants")
+@login_required
+def jobseeker_add_accomplishment():
+    accomplishment_form = forms.AccomplishmentForm()
+
+    if request.method == 'POST':
+        if accomplishment_form.validate_on_submit():
+            accomplishments = {
+                "title": accomplishment_form.title.data,
+                "description": accomplishment_form.description.data,
+                "achievement_date": str(accomplishment_form.achievement_date.data)
+            }
+            res = api_calls.add_accomplishments_profile(accomplishments=accomplishments, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+
+
+@app.route('/jobseeker/add-project', methods=['GET', 'POST'])
+@requires_any_permission("applicants")
+@login_required
+def jobseeker_add_project():
+    project_form = forms.ProjectForm()
+
+    if request.method == 'POST':
+        if project_form.validate_on_submit():
+            projects = {
+                "title": project_form.title.data,
+                "description": project_form.description.data,
+                "project_url": project_form.project_url.data,
+            }
+            res = api_calls.add_projects_profile(projects=projects, access_token=current_user.id)
+            return redirect(url_for('jobseeker_profile'))
+
+
+@app.route('/collect_jobseeker_name', methods=['GET', 'POST'])
+@login_required
+def collect_jobseeker_name():
+    form = forms.CollectNameForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        res = api_calls.update_basic_info(name=name, access_token=current_user.id)
+        return redirect(url_for('jobseeker_profile'))
+
+
+@app.route('/collect_jobseeker_email', methods=['GET', 'POST'])
+@login_required
+def collect_jobseeker_email():
+    form = forms.CollectEmailForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        res = api_calls.update_basic_info(email=email, access_token=current_user.id)
+        return redirect(url_for('jobseeker_profile'))
+
+@app.route('/collect_jobseeker_phone', methods=['GET', 'POST'])
+@login_required
+def collect_jobseeker_phone():
+    form = forms.CollectPhoneForm()
+    if form.validate_on_submit():
+        phone_number = form.phone_number.data
+        res = api_calls.update_basic_info(phone_number=phone_number, access_token=current_user.id)
+        return redirect(url_for('jobseeker_profile'))
+
+@app.route('/collect_jobseeker_profile_picture', methods=['GET', 'POST'])
+@login_required
+def collect_jobseeker_profile_picture():
+    print("ok")
+    form = forms.CollectProfilePictureForm()
+    if form.validate_on_submit():
+        empty_folder(profile_pictures_folder)
+        file = form.profile_picture.data
+
+        filename = secure_filename(file.filename)
+        # Save the file to a designated folder
+        file_path = profile_pictures_folder + filename
+        print(file_path)
+        file.save(file_path)
+        payload = {'profile_picture': (filename, open(file_path, 'rb'))}
+
+        res = api_calls.update_basic_info(profile_picture=payload, access_token=current_user.id)
+        return redirect(url_for('jobseeker_profile'))
+    else:
+        print(form.errors)
+
+
+@app.route('/delete-jobseeker-profile-info/<type>/<id>', methods=['GET', 'POST'])
+@login_required
+def delete_jobseeker_profile_info(type, id):
+    try:
+        res = api_calls.delete_jobseeker_profile_info(id=id,type=type, access_token=current_user.id)
+        return redirect(url_for('jobseeker_profile'))
+    except Exception as e:
+        print(e)
+
+
+@app.route('/view-jobseeker/<jobseeker_id>', methods=['GET', 'POST'])
+@requires_any_permission("manage_posts")
+@login_required
+def employer_view_jobseeker_profile(jobseeker_id):
+    root_url = constants.ROOT_URL + '/'
+
+    profile_info = api_calls.employer_view_jobseeker(access_token=current_user.id, jobseeker_id=jobseeker_id)
+
+    return render_template('cms/job_openings/employer_view_jobseeker_profile.html', root_url=root_url,profile_info=profile_info)
 
 
 

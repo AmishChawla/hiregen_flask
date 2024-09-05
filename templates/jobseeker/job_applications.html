@@ -26,21 +26,7 @@
               {% for data in result %}
               <tr style="max-height: 100px; overflow-y: auto;">
                 <td class="py-1"> {{ data.job_title }} </td>
-                {% if data.job_application_status == 'applied' %}
-                <td class="py-1 text-truncate"><span class="badge bg-warning text-dark">APPLIED</span></td>
-                {% elif data.job_application_status == 'shortlisted' %}
-                <td class="py-1 text-truncate"><span class="badge bg-success text-white">SHORTLISTED</span></td>
-                {% elif data.job_application_status == 'assessment' %}
-                <td class="py-1 text-truncate"><span class="badge bg-info text-white">ASSESSMENT</span></td>
-                {% elif data.job_application_status == 'interview' %}
-                <td class="py-1 text-truncate"><span class="badge bg-primary text-white">INTERVIEW</span></td>
-                {% elif data.job_application_status == 'rejected' %}
-                <td class="py-1 text-truncate"><span class="badge bg-danger text-white">REJECTED</span></td>
-                {% elif data.job_application_status == 'selected' %}
-                <td class="py-1 text-truncate"><span class="badge bg-success text-white">SELECTED</span></td>
-                {% else %}
-                <td class="py-1 text-truncate"><span class="badge bg-secondary text-white">PENDING</span></td>
-                {% endif %}
+                <td class="py-1 text-truncate"><span>{{data.job_application_status.capitalize()}}</span></td>
                 <td class="py-1 text-truncate">{{ data.application_date.split('T')[0]}}</td>
                 <td class="py-1 text-truncate"> <a href="{{ data.resume }}">Resume</a></td>
                 <td class="py-1 text-truncate"> <a href="{{ data.url }}">Job</a></td>

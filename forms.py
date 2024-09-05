@@ -4,7 +4,7 @@ from wtforms import MultipleFileField, StringField, SelectMultipleField, Integer
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 import email_validator
-from wtforms.validators import DataRequired, Optional, ValidationError
+from wtforms.validators import DataRequired, Optional, ValidationError, URL
 
 import api_calls
 
@@ -503,4 +503,78 @@ class ApplyToJob(FlaskForm):
             return [('', 'Select Resume from My Resumes')] + [(res['id'], res['filename']) for res in resumes]
         except:
             return []
+
+class AddTrackers(FlaskForm):
+    name = StringField('Name', validators=[validators.DataRequired()])
+    description = TextAreaField('Description')
+    on_apply = BooleanField('On Apply')
+    job_status = StringField('Status')
+    submit = SubmitField('Create Tracker')
+
+################################################# JOBSEEKER FORMS ########################################################
+
+class AboutForm(FlaskForm):
+    about = TextAreaField('About', validators=[validators.DataRequired()])
+    submit = SubmitField('Add About Me')
+
+class EducationForm(FlaskForm):
+    institution_name = StringField('Institution Name', validators=[DataRequired()])
+    degree = StringField('Degree', validators=[DataRequired()])
+    field_of_study = StringField('Field of Study', validators=[Optional()])
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
+    ongoing = BooleanField('Ongoing')
+    submit = SubmitField('Add Education')
+
+
+class ExperienceForm(FlaskForm):
+    company_name = StringField('Company Name', validators=[DataRequired()])
+    position = StringField('Position', validators=[DataRequired()])
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
+    ongoing = BooleanField('Ongoing')
+    responsibilities = TextAreaField('Responsibilities', validators=[DataRequired()])
+    submit = SubmitField('Add Experience')
+
+
+class InternshipForm(FlaskForm):
+    company_name = StringField('Company Name', validators=[DataRequired()])
+    position = StringField('Position', validators=[DataRequired()])
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
+    ongoing = BooleanField('Ongoing')
+    job_description = TextAreaField('Job Description', validators=[Optional()])
+    submit = SubmitField('Add Internship')
+
+class ProjectForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[Optional()])
+    project_url = StringField('Project URL', validators=[Optional()])
+    submit = SubmitField('Add Project')
+
+class AccomplishmentForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[Optional()])
+    achievement_date = DateField('Achievement Date', format='%Y-%m-%d', validators=[Optional()])
+    submit = SubmitField('Add Accomplishment')
+
+
+class CollectNameForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Change Name')
+
+
+class CollectEmailForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    submit = SubmitField('Change Email')
+
+
+class CollectPhoneForm(FlaskForm):
+    phone_number = StringField('Mobile', validators=[DataRequired()])
+    submit = SubmitField('Change Mobile')
+
+class CollectProfilePictureForm(FlaskForm):
+    ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png']
+    profile_picture = FileField('Profile Picture', validators=[FileRequired(),FileAllowed(ALLOWED_EXTENSIONS, 'Only JPEG, PNG, and JPG files are allowed!')])
+    submit = SubmitField('Upload Picture')
 

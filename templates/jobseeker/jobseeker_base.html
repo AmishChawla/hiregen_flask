@@ -38,13 +38,10 @@
        {% endif %}
 
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('index',role=role)}}" class="nav-link">Home</a>
+        <a href="{{ url_for('jobseeker_dashboard')}}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('index',role=role)}}" class="nav-link">About</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('user_view_plan')}}" class="nav-link">Pricing</a>
+        <a href="{{ url_for('jobseeker_applications')}}" class="nav-link">My Applications</a>
       </li>
     </ul>
 
@@ -65,7 +62,9 @@
                         <span class="menu-title">{{ current_user.username }}</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <a class="dropdown-item" href="{{ url_for('jobseeker_profile') }}" style="display: flex; justify-content: space-between;">Profile <i class="mdi mdi-logout menu-icon" style="margin-left:10px"></i></a>
             <a class="dropdown-item" href="{{ url_for('jobseeker_logout') }}" style="display: flex; justify-content: space-between;">Logout <i class="mdi mdi-logout menu-icon" style="margin-left:10px"></i></a>
+
         </div>
       </li>
       {% else %}

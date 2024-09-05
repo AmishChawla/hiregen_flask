@@ -152,6 +152,12 @@
               </li>
             </ul>
               </li>
+              <li class="nav-item">
+                <a href="{{ url_for('all_applicants') }}" class="nav-link {% if request.endpoint == 'all_applicants' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Applicant Tracking</p>
+                </a>
+              </li>
               <li class="nav-item {% if request.endpoint == 'user_all_pages' or request.endpoint == 'add_page' %} menu-open {% endif %}">
                 <a href="#" class="nav-link">
                   <i class="far bi bi-window-stack nav-icon"></i>
