@@ -327,16 +327,15 @@ def register():
 @app.route("/dashboard")
 @login_required
 def user_dashboard():
-    response = api_calls.get_user_profile(access_token=current_user.id)
-    if response.status_code == 200:
-        result = response.json()
     stats = api_calls.get_stats(access_token=current_user.id)
-    post_count = stats["total_posts"]
-    subscriber_count = stats["total_newsletter_subscribers"]
-    feedback_count = stats["total_feedbacks"]
+    total_jobs = stats["total_jobs"]
+    total_views = stats["total_views"]
+    applicants_count = stats["applicants_count"]
+    in_progress_jobs = stats["in_progress_jobs"]
+    statuses = stats["statuses"]
 
 
-    return render_template('dashboard.html', post_count=post_count, subscriber_count=subscriber_count, feedback_count=feedback_count)
+    return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses)
 
 
 @app.route("/admin/admin-dashboard")
