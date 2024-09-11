@@ -63,17 +63,19 @@
   }
 }
 </style>
+
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card border-0">
                     <!-- Add a card header "Login" -->
                     <div class="card-header bg-white text-black text-center">
-                        <h2>Login</h2>
+                        <h2>Employer Login</h2>
                     </div>
 
                     <!-- Center the image, add padding, and resize -->
                     <div class="card-img-top text-center my-3">
-                        <img src="static/images/login.png" alt="Login Image" style="max-width: 300px; width: 5rem; height: 5rem;" class="img-fluid">
+                        <img src="{{ url_for('static', filename='images/login.png') }}" alt="Login Image" style="max-width: 300px; width: 5rem; height: 5rem;" class="img-fluid">
                     </div>
 
                     <div class="card-body">
@@ -105,9 +107,11 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 text-center">
-                                {{ form.submit(class="btn btn-dark btn-lg") }}
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                {{ form.submit(class="btn btn-primary mt-2") }}
                             </div>
+
+
 
 
                             <p class="text-center"><a href="{{url_for('forgot_password')}}" class="text-muted">Forgot Password?</a></p>
@@ -125,5 +129,6 @@
                 </div>
             </div>
         </div>
+    </div>
 
 {% endblock %}

@@ -2790,4 +2790,33 @@ def delete_jobseeker_profile_info(access_token,type, id):
         print(f"An unexpected error occurred: {err}")
 
 
+def get_jobseeker_stats(access_token: str):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + '/jobseeker/stats', headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
 
+
+def get_jobseeker_recommendations(jobs_count, access_token: str):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + f'/jobseeker/recommendations/{jobs_count}', headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")

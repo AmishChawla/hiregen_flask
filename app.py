@@ -158,7 +158,7 @@ def empty_folder(folder):
             print(f"Error deleting file {file_path}: {e}")
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/employer/login", methods=['GET', 'POST'])
 def login():
     session.pop('_flashes', None)
     print('trying')
@@ -2729,7 +2729,15 @@ def delete_security_group(group_id):
 @requires_any_permission("applicants")
 @login_required
 def jobseeker_dashboard():
-    return render_template('jobseeker/jobseeker_dashboard.html')
+    stats = api_calls.get_jobseeker_stats(access_token=current_user.id)
+
+    total_resumes = stats["total_resumes"]
+    total_applications = stats["applications_count"]
+    profile_completion_percentage = stats["profile_completion_percentage"]
+    recommendations = api_calls.get_jobseeker_recommendations(jobs_count=5, access_token=current_user.id)
+
+    return render_template('jobseeker/jobseeker_dashboard.html', total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations)
+
 
 @app.route('/jobseeker/login', methods=['GET', 'POST'])
 def jobseeker_login():
@@ -2804,7 +2812,7 @@ def jobseeker_register():
                 email = data.get('email')
                 company = {}
                 group = data.get('group', {})
-                profile_picture = f"{ROOT_URL}/{data['profile_picture']}"
+                profile_picture = data['profile_picture']
 
                 user = User(id=id, user_id=token, role=role, username=username, email=email,
                             company=company, group=group,

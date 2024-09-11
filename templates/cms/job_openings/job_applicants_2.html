@@ -169,6 +169,15 @@
 }
 
 
+.applicant-image {
+width: 25px;
+height: 25px;
+margin-right:10px;
+border-radius:50%;
+}
+
+
+
 @media (max-width: 768px) {
     .offcanvas {
         width: 80%;
@@ -209,9 +218,15 @@
                 {% if data.application_status == status %}
                     <li class="list-group-item draggable-item" data-id="{{ data.application_id }}">
                         <div class="row">
-                            <div class="col lead" style="font-size:0.9rem; overflow: hidden; text-overflow: ellipsis;">{{ data.applicant_name | capitalize }}</div>
-                            <div class="col-2 mr-1" onclick="viewApplicantDetails('{{ data.application_id }}','{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}')" style="font-size:0.9rem;"><i class="bi bi-chevron-right"></i></div>
+                            <div class="col-sm-2 mr-1"> {% if data.applicant_profile_picture %} <img class="applicant-image" src="{{ data.applicant_profile_picture }}"> {% else %} <img class="applicant-image" src="{{ url_for('static', filename='images/man.png') }}"> {% endif %}</div>
+                            <div class="col-sm lead" style="font-size:0.9rem; overflow: hidden; text-overflow: ellipsis;">
+                                <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="link-dark link-underline link-underline-opacity-0">
+                                {{ data.applicant_name }}
+                                </a>
+                            </div>
+                            <div class="col-sm-2 mr-1" onclick="viewApplicantDetails('{{ data.application_id }}','{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}')" style="font-size:0.9rem;"><i class="bi bi-chevron-right"></i></div>
                         </div>
+
                     </li>
                 {% endif %}
             {% endfor %}
@@ -247,7 +262,14 @@
             <tbody>
               {% for data in result %}
               <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"> {{ data.applicant_name }} </td>
+                <td class="row py-1">
+                    <div class="col-sm-2"> {% if data.applicant_profile_picture %} <img class="applicant-image" src="{{ data.applicant_profile_picture }}"> {% else %} <img class="applicant-image" src="{{ url_for('static', filename='images/man.png') }}"> {% endif %}</div>
+                    <div class="col-sm">
+                        <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="link-dark link-underline link-underline-opacity-0">
+                        {{ data.applicant_name }}
+                        </a>
+                    </div>
+                </td>
                 <td class="py-1 text-truncate">{{ data.applicant_email }}</td>
                 <td class="py-1 text-truncate">{{ data.application_date }}</td>
                 <td class="py-1 text-truncate">{{ data.application_status.capitalize() }}</td>

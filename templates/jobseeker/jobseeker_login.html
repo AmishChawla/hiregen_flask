@@ -63,6 +63,7 @@
   }
 }
 </style>
+<div class="container mt-5"></div>
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card border-0">
@@ -73,7 +74,7 @@
 
                     <!-- Center the image, add padding, and resize -->
                     <div class="card-img-top text-center my-3">
-                        <img src="static/images/login.png" alt="Login Image" style="max-width: 300px; width: 5rem; height: 5rem;" class="img-fluid">
+                        <img src="{{ url_for('static', filename='images/login.png') }}" alt="Login Image" style="max-width: 300px; width: 5rem; height: 5rem;" class="img-fluid">
                     </div>
 
                     <div class="card-body">
@@ -105,9 +106,10 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3 text-center">
-                                {{ form.submit(class="btn btn-dark btn-lg") }}
+                            <div class="d-grid gap-2 col-6 mx-auto mb-3">
+                                {{ form.submit(class="btn btn-primary mt-2") }}
                             </div>
+
 
                             <p class="text-center">Don't have an account? <a href="{{ url_for('jobseeker_register') }}" class="text-muted">SignUp here</a></p>
 
@@ -123,5 +125,6 @@
                 </div>
             </div>
         </div>
+</div>
 
 {% endblock %}
