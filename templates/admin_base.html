@@ -147,9 +147,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li class="nav-item">
                 <a href="{{ url_for('list_of_users') }}" class="nav-link {% if request.endpoint == 'list_of_users' %} active {% endif %}">
                   <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Users</p>
+                  <p>Employers</p>
                 </a>
               </li>
+
+          <li class="nav-item">
+                <a href="{{ url_for('admin_all_jobseekers') }}" class="nav-link {% if request.endpoint == 'admin_all_jobseekers' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Jobseekers</p>
+                </a>
+              </li>
+
+
+          <li class="nav-item">
+                <a href="{{ url_for('admin_all_jobs') }}" class="nav-link {% if request.endpoint == 'admin_all_jobs' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Jobs</p>
+                </a>
+              </li>
+
+          <li class="nav-item">
+                <a href="{{ url_for('all_applicants_for_admin') }}" class="nav-link {% if request.endpoint == 'all_applicants_for_admin' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Applicants</p>
+                </a>
+              </li>
+
             <li class="nav-item">
                 <a href="{{ url_for('list_of_sites') }}" class="nav-link {% if request.endpoint == 'list_of_sites' %} active {% endif %}">
                   <i class="far bi bi-window-stack nav-icon"></i>
@@ -181,14 +204,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <i class="far bi bi-gear nav-icon"></i>
               <p>
                 Settings
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'services' %}active{% endif %}" href="{{ url_for('services') }}">
-              <i class="far bi bi-gear nav-icon"></i>
-              <p>
-                Services
               </p>
             </a>
           </li>

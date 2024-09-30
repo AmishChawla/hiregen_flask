@@ -1,6 +1,6 @@
 {% extends 'admin_base.html' %}
 
-{% block title %}Users{% endblock %}
+{% block title %}Employer{% endblock %}
 
 {% block content %}
 
@@ -11,12 +11,10 @@
                 <div class="card">
                   <div class="card-body" style="overflow-x: auto;">
                       <div style="display:flex; justify-content:space-between;">
-                    <h4 class="card-title">User Details</h4>
-                      <div style="display: flex; justify-content: space-between;">
-                                      <a class="btn btn-info" href="{{ url_for('add_user') }}" style="padding: 6px 30px 6px 30px;">
-                <span class="menu-title">Add user</span>
-              </a>
-                          </div>
+                    <h2 class="">Employers</h2>
+                                      <a class="btn btn-info" href="{{ url_for('add_user') }}">
+                                     <span> Add User </span>
+                                     </a>
                           </div>
                       <br>
                       <br>

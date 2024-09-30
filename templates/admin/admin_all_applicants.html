@@ -1,0 +1,192 @@
+{% extends 'admin_base.html' %}
+
+{% block title %} Applicant Tracking{% endblock %}
+
+{% block content %}
+<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+<style>
+  .offcanvas {
+    width: 300px; /* Adjust this value as needed */
+    max-width: 90%; /* Ensures the off-canvas doesn't exceed 90% of the screen width */
+    transition: transform 0.3s ease-in-out;
+}
+
+.offcanvas.show {
+    transform: translateX(0);
+}
+
+.offcanvas-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 1rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.offcanvas-header h5 {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.offcanvas-body {
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.offcanvas-body p {
+    margin-bottom: 1rem;
+}
+
+</style>
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
+      <div class="card">
+        <div class="card-body" style="overflow-x: auto;">
+          <div class="mb-4" style="display:flex; justify-content:space-between;">
+            <h2 class="">Applicant Tracking</h2>
+          </div>
+          <table id="applicantTable" class="hover row-border" style="width:100%">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in result %}
+              <tr style="overflow-y: auto;">
+                <td class="py-1 col-6">
+                  <div class="d-flex flex-row">
+                  <div class="" style="padding:0">
+                  {% if data.job_seeker_profile_picture %}
+                    <img src="{{ data.job_seeker_profile_picture }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
+                  {% else %}
+                    <img src="{{ url_for('static', filename='images/man.png') }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
+                  {% endif %}
+                  </div>
+                    <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.job_seeker_id) }}" class="link-dark" style="padding:0;">{{ data.applicant_name }}</a>
+                  </div>
+                  {% if data.job_seeker_current_job  %}
+                  <div class="row text-secondary" style="font-size:0.8rem; margin-left:2.2vw;">{{ data.job_seeker_current_job.position }}</div>
+                  <div class="row text-secondary" style="font-size:0.8rem; margin-left:2.2vw;">{{ data.job_seeker_current_job.company_name }}</div>
+                  {% endif %}
+                  <div class="row" style="font-size:0.8rem; margin-left:2.2vw;"> <a href="mailto:{{ data.applicant_email }}" style="padding:0;">{{ data.applicant_email }} </a>  </div>
+                </td>
+                <td class="py-1 text-truncate col-2"><div class="row"><a href="{{ data.job_url }}" style="padding-left:0;">{{ data.job_title }} </a></div></td>
+
+                <td class="py-1 text-truncate col-3">
+                  <div class="mb-3">
+                  <select class="form-select" id="status-select-{{data.id}}" aria-label="Change Status" onchange="updateApplicationStatus('{{data.id}}')">
+                    {% for s in statuses %}
+                        <option value="{{ s.job_status }}" {% if data.application_status == s.job_status %} selected {% else %} {{ None }} {% endif %} >{{ s.name.capitalize() }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+
+                </td>
+                <td class="py-1 text-truncate col">{{ data.application_date }}</td>
+                <td class="py-1 text-truncate col-2">
+                <div onclick="viewApplicantDetails('{{ data.id }}','{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}')" style="font-size:0.9rem;"><i class="bi bi-chevron-right"></i></div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="h5" style="font-size:1.5rem; font-weight:lighter;" id="offcanvasRightLabel">Applicant Details</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Content will be populated here -->
+    </div>
+  </div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<script>
+new DataTable('#applicantTable');
+</script>
+
+<script>
+  function viewApplicantDetails(application_id, name, status, email, applicationDate, resume) {
+    const offCanvas = document.getElementById('offcanvasRight');
+    const offCanvasContent = offCanvas.querySelector('.offcanvas-body');
+    offCanvasContent.innerHTML = `
+      <h5 class="offcanvas-title lead py-3">${name.charAt(0).toUpperCase() + name.slice(1)} (${status.charAt(0).toUpperCase() + status.slice(1)})</h5>
+      <div class="row mb-1">
+      <div class="col-4" style="font-size:0.9rem;">Email:</div> <div class="col" style="font-size:0.9rem;">${email}</div>
+      </div>
+      <div class="row mb-1">
+      <div class="col-4" style="font-size:0.9rem;">Applied On:</div> <div class="col" style="font-size:0.9rem;">${applicationDate}</div>
+      </div>
+      <div class="row mb-3">
+      <div class="col-4" style="font-size:0.9rem;">Resume</div> <a href="${resume}" class="text-link col" style="font-size:0.9rem;">View</a>
+      </div>
+
+      <div class="mb-3">
+        <strong for="status-select-offcanvas-${application_id}" class="mb-3" style="font-size:0.9rem;">Change Status</strong>
+        <select class="form-select" id="status-select-offcanvas-${application_id}" aria-label="Change Status" onchange="updateApplicationStatusOffCanvas('${application_id}')">
+          {% for s in statuses %}
+              <option value="{{ s.job_status }}" ${status === '{{ s.job_status }}' ? 'selected' : ''} >{{ s.name.capitalize() }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+    `;
+    const offcanvasInstance = new bootstrap.Offcanvas(offCanvas);
+    offcanvasInstance.show();
+  }
+
+</script>
+<script>
+      function updateApplicationStatus(application_id) {
+    const statusSelect = document.getElementById(`status-select-${application_id}`);
+    const newStatus = statusSelect.value;
+    console.log(newStatus);
+
+    fetch(`/update-application-status`, {
+      method: 'POST',
+      body: JSON.stringify({ id: application_id, newStatus: newStatus }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Status updated:', data);
+      window.location.reload();// Reload the page after updating the status
+    })
+    .catch(error => console.error('Error updating status:', error));
+  }
+
+        function updateApplicationStatusOffCanvas(application_id) {
+    const statusSelect = document.getElementById(`status-select-offcanvas-${application_id}`);
+    const newStatus = statusSelect.value;
+    console.log(newStatus);
+
+    fetch(`/update-application-status`, {
+      method: 'POST',
+      body: JSON.stringify({ id: application_id, newStatus: newStatus }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Status updated:', data);
+      window.location.reload(); // Reload the page after updating the status
+    })
+    .catch(error => console.error('Error updating status:', error));
+  }
+
+</script>
+{% endblock %}

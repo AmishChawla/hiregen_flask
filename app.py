@@ -956,6 +956,18 @@ def all_post():
     return render_template('all_posts.html', result=result)
 
 ####################################### POSTS #####################################################################
+@app.route('/admin/job-openings')
+@requires_any_permission("manage_user")
+@login_required
+def admin_all_jobs():
+    result = api_calls.get_all_job_openings_for_admin(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+
+    return render_template('admin/admin_all_jobs.html', result=result)
+
+
+
 @app.route('/user/job-openings')
 @requires_any_permission("manage_posts")
 @login_required
@@ -1036,6 +1048,77 @@ def all_applicants():
 
 
     return render_template('cms/job_openings/job_applicants.html', result=result, statuses=statuses)
+
+
+
+@app.route('/admin/applicant-tracking')
+@requires_any_permission("manage_user")
+@login_required
+def all_applicants_for_admin():
+    result = api_calls.get_all_applicants_for_admin(access_token=current_user.id)
+    statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+    if statuses is None:
+        statuses = [
+            {
+                "id": 1,
+                "name": "Applied",
+                "description": "applied",
+                "job_status": "applied",
+                "on_jobseeker_apply": True
+            },
+            {
+                "id": 2,
+                "name": "Shortlisted",
+                "description": "shortlisted",
+                "job_status": "shortlisted",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 3,
+                "name": "Assessment",
+                "description": "assessment",
+                "job_status": "assessment",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 4,
+                "name": "Interview",
+                "description": "interview",
+                "job_status": "interview",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 5,
+                "name": "Rejected",
+                "description": "rejected",
+                "job_status": "rejected",
+                "on_jobseeker_apply": False
+            },
+            {
+                "id": 6,
+                "name": "Selected",
+                "description": "selected",
+                "job_status": "selected",
+                "on_jobseeker_apply": False
+            }
+        ]
+
+
+    return render_template('admin/admin_all_applicants.html', result=result, statuses=statuses)
+
+
+@app.route('/admin/jobseekers')
+@requires_any_permission("manage_user")
+@login_required
+def admin_all_jobseekers():
+    result = api_calls.get_all_jobseekers_for_admin(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+
+    return render_template('admin/admin_all_jobseekers.html', result=result)
+
 
 
 @app.route('/<username>/jobs', methods=['GET', 'POST'])
