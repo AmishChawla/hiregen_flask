@@ -455,17 +455,17 @@ def list_of_sites():
     ITEMS_PER_PAGE = 5
     # Fetch all users
 
-    response = api_calls.get_all_users(
+    response = api_calls.get_admin_all_sites(
         current_user.id,
     )
 
     if response.status_code == 200:
-        users = response.json()
+        sites = response.json()
 
     else:
         abort(response.status_code)
 
-    return render_template('list_of_sites.html', result=users)
+    return render_template('list_of_sites.html', result=sites)
 
 
 @app.route("/admin/login", methods=['GET', 'POST'])

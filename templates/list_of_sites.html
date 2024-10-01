@@ -21,6 +21,9 @@
                 <tr>
                     <th>Name</th>
                     <th>Site</th>
+                    <th>Plan</th>
+                    <th>Last Published</th>
+                    <th>Views</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,7 +36,9 @@
 
 
                 <td><a href="{{ url_for('user_post_list', username=row.username) }}" style="font-size: 0.9rem;"> /{{row.username}}/jobs </a></td>
-
+                <td style="font-size: 0.9rem;"> {{row.plan_type_name}} </td>
+                <td style="font-size: 0.9rem;"> {{row.latest_job_opening_date}} </td>
+                <td style="font-size: 0.9rem;"> {% if row.total_job_views %} {{row.total_job_views}} {% else %} 0 {% endif %}</td>
                 <td>
     <a href="{{ url_for('user_post_list', username=row.username) }}"><i class="bi bi-box-arrow-right" style="color:#0b4647; font-size: 0.9rem;"></i></a>
                 </td>
@@ -57,5 +62,25 @@
           <!-- content-wrapper ends -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script>new DataTable('#sitesTable');</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script>$(document).ready(function() {
+    $('#sitesTable').DataTable({
+        "columnDefs": [
+            {
+                "targets": 3,
+                "render": function(data, type, row) {
+                    if (data && data != 'None') {
+                        console.log(data);
+                        var formattedDate = moment(data).format("MMM D, YYYY");
+                        return '<span title="' + data + '">' + formattedDate + '</span>';
+                    }
+                    return '-';
+                },
+                "orderable": false
+            }
+        ]
+    });
+});
+</script>
 {% endblock %}
