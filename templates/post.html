@@ -1,4 +1,12 @@
+{% if current_user.role == 'jobseeker'   %}
+
 {% extends 'jobseeker/jobseeker_base.html' %}
+
+{%else%}
+
+{% extends 'base.html' %}
+
+{% endif %}
 
 {% block title %}{{ job_details.job_title }}{% endblock %}
 
@@ -112,9 +120,15 @@
                         <i class="bi bi-currency-rupee" style="color:#104a18;" ></i> {{ job_details.salary }} | <i class="bi bi-briefcase-fill mr-1" style="color:#0e2345;"></i> {{ job_details.work_experience }} | <i class="bi bi-buildings-fill mr-1" style="color:#5c410c;"></i> {{ job_details.industry }} | <i class="bi bi-clock mr-1"></i> {{ job_details.job_type }} <br>
                         <i class="bi bi-geo-alt-fill" style="color:#610d14;"></i> {{ job_details.address_city }}, {{ job_details.address_province}}, {{ job_details.address_country }} , {{ job_details.address_postal_code }}
                     </div>
+                        {% if current_user.role == 'jobseeker' %}
                 <div class="col-2">
-                <a class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#applyModal">Apply</a>
+                <a class="btn btn-primary w-100" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#applyModal">Apply</a>
                 </div>
+                        {% else %}
+                <div class="col-2">
+                <a class="btn btn-primary w-100" style="font-weight:bold;" href="{{ url_for('jobseeker_logout') }}">Login to Apply</a>
+                </div>
+                        {% endif %}
                     </div>
 
                 <h5 class="mt-4 px-3 display-6">Job Description</h5>

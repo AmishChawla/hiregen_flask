@@ -1,5 +1,14 @@
 
+{% if current_user.role == 'jobseeker'   %}
+
+{% extends 'jobseeker/jobseeker_base.html' %}
+
+{%else%}
+
 {% extends 'base.html' %}
+
+{% endif %}
+
 {% block content %}
         <h2>Unsubscribe Newsletter</h2>
         <form method="post" action="{{ url_for('unsubscribe_newsletter', username=username) }}">

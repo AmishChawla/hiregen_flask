@@ -1,3 +1,5 @@
+import datetime
+
 from wtforms import MultipleFileField, StringField, SelectMultipleField, IntegerField, PasswordField, SubmitField, DateField, \
     HiddenField, validators, SelectField, BooleanField, \
     TextAreaField
@@ -63,9 +65,22 @@ class AdminRegisterForm(FlaskForm):
 
 
 class CompanyRegisterForm(FlaskForm):
-    name = StringField('Name')
-    website_url = StringField('Website URL')
-    submit = SubmitField('Submit')
+    company_logo = FileField('Company Logo', validators=[
+        FileRequired(message="Logo file is required")
+    ])
+    name = StringField('Name', validators=[DataRequired()])
+    website_url = StringField('Website URL', validators=[DataRequired()])
+    location = StringField('Location',  validators=[DataRequired(message='This field is required.')])
+    description = TextAreaField('Descripton')
+    submit = SubmitField('Register')
+
+    def validate_company_name(self, field):
+        if not field.data:
+            raise ValidationError("Company name cannot be empty")
+
+    def validate_website_url(self, field):
+        if not field.data:
+            raise ValidationError("Website URL cannot be empty")
 
 
 class AdminAddUserForm(FlaskForm):
@@ -213,21 +228,21 @@ class AddPost(FlaskForm):
 
 
 class AddJobOpening(FlaskForm):
-    job_title = StringField('Position', validators=[DataRequired()])
-    target_date = DateField('Target Date', validators=[DataRequired()])
-    opening_date = DateField('Opening Date', validators=[DataRequired()])
-    job_type = SelectField('Job Type', validators=[DataRequired()], choices=[('', 'Select Type'), ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Training', 'Training'), ('Freelance', 'Freelance'), ('Seasonal', 'Seasonal'), ('Contract', 'Contract'), ('Temporary', 'Temporary')])
-    work_experience= SelectField('Work Experience', validators=[DataRequired()], choices=[('', 'Select Experience'),('Fresher', 'Fresher'),('0-1 years', '0-1 years'),('1-3 years', '1-3 years'), ('3-5 years', '3-5 years'), ('5+ years', '5+ years')])
-    industry= SelectField('Industry', validators=[DataRequired()])
-    salary= StringField('Salary', validators=[DataRequired()])
-    address_city= StringField('City', validators=[DataRequired()])
-    address_country= StringField('Country', validators=[DataRequired()])
-    address_province= StringField('Province', validators=[DataRequired()])
-    address_postal_code= StringField('Postal Code', validators=[DataRequired()])
-    job_description= TextAreaField('Job Description', validators=[DataRequired()], render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
-    job_requirements= TextAreaField('Job Requirements', validators=[DataRequired()], render_kw={'rows': 30, 'cols': 30, 'id': 'job_requirements'})
-    job_benefits= TextAreaField('Job Benefits', validators=[DataRequired()], render_kw={'rows': 30, 'cols': 30, 'id': 'job_benefits'})
-    job_opening_status = SelectField('Job Opening Status', validators=[DataRequired()], choices=[('', 'Select status'), ('In-Progress', 'In-Progress'), ('On-Hold', 'On-Hold'), ('Filled', 'Filled'), ('Canceled', 'Canceled')])
+    job_title = StringField('Position')
+    target_date = DateField('Target Date', default=lambda: (datetime.datetime.now() + datetime.timedelta(days=60)))
+    opening_date = DateField('Opening Date', default=datetime.datetime.now())
+    job_type = SelectField('Job Type', default='Full Time',choices=[('', 'Select Type'), ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Training', 'Training'), ('Freelance', 'Freelance'), ('Seasonal', 'Seasonal'), ('Contract', 'Contract'), ('Temporary', 'Temporary')])
+    work_experience= SelectField('Work Experience', choices=[('', 'Select Experience'),('Fresher', 'Fresher'),('0-1 years', '0-1 years'),('1-3 years', '1-3 years'), ('3-5 years', '3-5 years'), ('5+ years', '5+ years')])
+    industry= SelectField('Industry')
+    salary= StringField('Salary')
+    address_city= StringField('City')
+    address_country= StringField('Country')
+    address_province= StringField('Province')
+    address_postal_code= StringField('Postal Code')
+    job_description= TextAreaField('Job Description', render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
+    job_requirements= TextAreaField('Job Requirements', render_kw={'rows': 30, 'cols': 30, 'id': 'job_requirements'})
+    job_benefits= TextAreaField('Job Benefits', render_kw={'rows': 30, 'cols': 30, 'id': 'job_benefits'})
+    job_opening_status = SelectField('Job Opening Status', default='Active', choices=[('', 'Select status'),('Active', 'Active')])
     publish = SubmitField('Publish Post')
     save_draft = SubmitField('Save Draft')
     preview = SubmitField('Preview')

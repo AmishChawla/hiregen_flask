@@ -110,6 +110,7 @@
     </div>
 <div>
     <div class="row">
+    {% if recommendations %}
     {% for job, similarity_score in recommendations %}
     <div class="col-lg-6">
         <a href="{{ url_for('get_post_by_username_and_slug', username=job.author_name, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}">
@@ -137,6 +138,9 @@
         </a>
     </div>
     {% endfor %}
+    {% else %}
+        <p class="text-secondary ml-3"> Complete profile to get recommendations </p>
+    {% endif %}
     </div>
   </div>
 

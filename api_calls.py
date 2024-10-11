@@ -405,7 +405,7 @@ def get_companies():
 
 def get_company_details(company_id: int):
     try:
-        response = requests.get(constants.BASE_URL + f'/companies/{company_id}')
+        response = requests.get(constants.BASE_URL + f'/company/{company_id}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -418,16 +418,49 @@ def get_company_details(company_id: int):
         print(f"An unexpected error occurred: {err}")
 
 
-def company_register(name, website_url, access_token):
+def get_company_details_by_slug(company_slug: str):
+    try:
+        response = requests.get(constants.BASE_URL + f'/companies/{company_slug}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_jobs_by_company_id(company_id: int):
+    try:
+        response = requests.get(constants.BASE_URL + f'/job_openings/company/{company_id}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def company_register(name, website_url, logo, description, location, access_token):
     print('trying3')
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
         "name": name,
         "website_url": website_url,
-
+    }
+    data = {
+        "location": location,
+        "description": description
     }
     try:
-        response = requests.post(constants.BASE_URL + f'/companies/create-company', params=params, headers=headers)
+        response = requests.post(constants.BASE_URL + f'/companies/create-company',data=data, params=params,files=logo, headers=headers)
         print(response.text)
         return response
     except requests.exceptions.HTTPError as errh:
@@ -1569,7 +1602,7 @@ def is_service_access_allowed(access_token):
         response = requests.get(constants.BASE_URL + "/subscriptions/is-service-allowed", headers=headers)
         if response.status_code == 200:
             is_allowed = response.json()
-            print(is_allowed)
+            print('IS ALLOWED TO POST JOB')
             return is_allowed
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")

@@ -312,7 +312,7 @@ def register():
                     'profile_picture': profile_picture
                 }
             flash('Registration Successful', category='info')
-            return redirect(url_for('user_view_plan'))
+            return redirect((url_for('create_subscription', plan_id=1)))  # Hardcoded value for free plan
         elif response.status_code == 400:
             result = response.json()
             message = result["detail"]
@@ -761,9 +761,23 @@ def company_register():
     form = forms.CompanyRegisterForm()
     print("outside")
     if form.validate_on_submit():
+
         name = form.name.data
         website_url = form.website_url.data
-        response = api_calls.company_register(name, website_url, access_token=current_user.id)
+        location = form.location.data
+        description = form.description.data
+
+        empty_folder(uploads_folder)
+        file = form.company_logo.data
+
+        filename = secure_filename(file.filename)
+        # Save the file to a designated folder
+        file_path = 'uploads/' + filename
+        print(file_path)
+        file.save(file_path)
+        payload = {'company_logo': (filename, open(file_path, 'rb'))}
+
+        response = api_calls.company_register(name, website_url,logo=payload,location=location, description=description, access_token=current_user.id)
         print("inside")
 
         if (response.status_code == 200):
@@ -783,8 +797,22 @@ def company_details(company_id):
 
     name = result["name"]
     location = result["location"]
+    description = result["description"]
+    website_url = result["website_url"]
 
-    return render_template('company_details.html', name=name, website_url=website_url)
+    return render_template('company_details.html', name=name, location=location, description=description, website_url=website_url)
+
+
+
+@app.route('/companies/<company_slug>', methods=['GET', 'POST'])
+def company_details_by_company_slug(company_slug):
+    result = api_calls.get_company_details_by_slug(company_slug=company_slug)
+
+    company_id = result["id"]
+    jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
+
+    return render_template('company_details.html', company=result, job_posts=jobs_by_company)
+
 
 ######################################## resume history ##########################################################################
 @app.route("/admin/resume-history", methods=['GET', 'POST'])
@@ -1184,6 +1212,7 @@ def add_post():
     form = forms.AddJobOpening()
 
     if form.validate_on_submit():
+        print('inside form.validate_on_submit')
         job_title = form.job_title.data
         target_date = form.target_date.data
         opening_date = form.opening_date.data
@@ -1201,19 +1230,10 @@ def add_post():
         job_opening_status = form.job_opening_status.data
 
 
-        if form.preview.data:
-            # session['post_preview'] = {
-            #     'title': form.title.data,
-            #     'content': form.content.data,
-            #     'category': form.category.data,
-            #     'subcategory': form.subcategory.data,
-            #     'tags': form.tags.data,
-            #     'selected_media': selected_media
-            # }
-            # Redirect to the preview route with form data
-            return redirect(url_for('preview_post'))
+        print(form.data)
+        print(form.publish.data)
 
-        elif form.save_draft.data:
+        if form.save_draft.data:
             job_details = {
                 "job_title": job_title,
                 "target_date": str(target_date),
@@ -1247,6 +1267,7 @@ def add_post():
             except Exception as e:
                 flash(f"Error creating post: {e}", "danger")
         elif form.publish.data:
+            print('trying to publish job')
             job_details = {
                 "job_title": job_title,
                 "target_date": str(target_date),
@@ -1300,13 +1321,13 @@ def add_post():
         print(form.errors)
 
     root_url = constants.ROOT_URL + '/'
-    media_result = api_calls.get_user_all_medias(access_token=current_user.id)
-    if media_result is None:
-        media_result = []  # Set result to an empty list
+    # media_result = api_calls.get_user_all_medias(access_token=current_user.id)
+    # if media_result is None:
+    media_result = []  # Set result to an empty list
 
-    forms_result = api_calls.get_user_all_forms(access_token=current_user.id)
-    if forms_result is None:
-        forms_result = []  # Set result to an empty list
+    # forms_result = api_calls.get_user_all_forms(access_token=current_user.id)
+    # if forms_result is None:
+    forms_result = []  # Set result to an empty list
 
     if current_user.role == 'user':
         is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
@@ -2925,11 +2946,11 @@ def jobseeker_register():
 
 
 @app.route('/jobseeker/logout')
-@login_required
 def jobseeker_logout():
-    logout_user()
-    session.clear()
-    flash('Logout successful!', 'success')
+    if current_user:
+        logout_user()
+        session.clear()
+        flash('Logout successful!', 'success')
     return redirect(url_for('jobseeker_login'))
 
 

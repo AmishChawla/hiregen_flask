@@ -79,13 +79,22 @@
                     </div>
 
                     <div class="card-body">
+                        {% if form.errors %}
+                            <div class="alert" role="alert">
+                                <div>
+                                    {% for field, errors in form.errors.items() %}
+                                        <p class="text-danger">{{ errors[0] }}</p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
                         {% with messages = get_flashed_messages() %}
                             {% if messages %}
-                                <ul class="flashes alert alert-danger" style="list-style-type: none;">
+                                <div class="flashes alert">
                                 {% for message in messages %}
-                                    <li>{{ message }}</li>
+                                    <p class="text-danger">{{ message }}</p>
                                 {% endfor %}
-                                </ul>
+                                </div>
                             {% endif %}
                         {% endwith %}
                         <form method="post" action="{{ url_for('login') }}">

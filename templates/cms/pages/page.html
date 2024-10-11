@@ -1,5 +1,12 @@
+{% if current_user.role == 'jobseeker'   %}
+
 {% extends 'jobseeker/jobseeker_base.html' %}
 
+{%else%}
+
+{% extends 'base.html' %}
+
+{% endif %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}

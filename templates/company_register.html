@@ -15,23 +15,44 @@
 
                     <div class="card-body">
 
-
-                        <form method="post" action="{{ url_for('company_register') }}">
+                        <form method="post" action="{{ url_for('company_register') }}" enctype="multipart/form-data">
                             {{ form.hidden_tag() }}
 
-                            <div class="mb-3">
-                                <label for="name" class="form-label visually-hidden">Company Name:</label>
-                                {{ form.name(class="form-control", placeholder="Company Name", required=True) }}
-                            </div>
 
                             <div class="mb-3">
-                                <label for="website_url" class="form-label visually-hidden">Website:</label>
-                                {{ form.website_url(class="form-control", placeholder="Website", required=True) }}
+                                <label for="company_logo" class="form-label">Company Logo:</label>
+                                {{ form.company_logo(class="form-control", placeholder="Company Logo", required=True) }}
                             </div>
+                            <small class="text-danger">{{ form.company_logo.errors[0] }}</small>
 
 
-                            <div class="mb-3 text-center">
-                                {{ form.submit(class="btn btn-dark btn-lg") }}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Company Name:</label>
+                                {{ form.name(class="form-control", placeholder="Google", required=True) }}
+                            </div>
+                            <small class="text-danger">{{ form.name.errors[0] }}</small>
+
+                            <div class="mb-3">
+                                <label for="website_url" class="form-label">Website URL:</label>
+                                {{ form.website_url(class="form-control", placeholder="google.com", required=True) }}
+                            </div>
+                            <small class="text-danger">{{ form.website_url.errors[0] }}</small>
+
+                             <div class="mb-3">
+                                <label for="location" class="form-label">Location:</label>
+                                {{ form.location(class="form-control", placeholder="New Delhi, India", required=True) }}
+                            </div>
+                            <small class="text-danger">{{ form.location.errors[0] }}</small>
+
+                             <div class="mb-3">
+                                <label for="description" class="form-label">Description:</label>
+                                {{ form.description(class="form-control", placeholder="Write in brief", required=True) }}
+                            </div>
+                            <small class="text-danger">{{ form.description.errors[0] }}</small>
+
+
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                {{ form.submit(class="btn btn-primary mt-2") }}
                             </div>
                         </form>
                     </div>
