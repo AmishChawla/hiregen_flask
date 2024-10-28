@@ -1,191 +1,153 @@
-<!-- profile.html -->
 {% extends 'base.html' %}
 
+{% block title %}Profile{% endblock %}
 
-{% block title %}profile{% endblock %}
-
-{% block content %}
-<style>
-.capitalize {
-    text-transform: capitalize;
-}
-.custom-file-upload {
-position: relative;
-display: inline-block;
-}
-
-.custom-file-upload-label {
-    padding: 6px 12px;
-    cursor: pointer;
-    background-color: #4CAF50; /* Change the background color */
-    color: white; /* Change the text color */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Add border radius */
-}
-
-.custom-file-upload-label:hover {
-    background-color: #45a049; /* Change the background color on hover */
-}
-.plan-details {
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-}
-.plan-details h5 {
-    margin-bottom: 15px;
-}
-.plan-details p {
-    margin-bottom: 10px;
-}
-</style>
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card border-0">
-                <div class="card-header bg-white text-black text-center">
-                    <h2>Profile</h2>
-                </div>
-
-
-
-
-
-
-
-                <form method="post" action="{{ url_for('profile') }}" enctype="multipart/form-data">
-                    {{ form.hidden_tag() }}
-
-                     <div class="card-img-top text-center my-3">
-                    {% if current_user.profile_picture %}
-                         <img id="profileImage" src="{{ current_user.profile_picture }}" alt="Profile Image" style="max-width: 300px; width: 5rem; height: 5rem; border-radius: 50%;" class="img-fluid">
-                    {% else %}
-                         <img id="profileImage" src="static/images/man.png" alt="Default Profile Image" style="max-width: 300px; width: 5rem; height: 5rem; border-radius: 50%;" class="img-fluid">
-                    {% endif %}
-
-                          <div style="margin-left:100px;">
-                    <label for="profile_picture_input"></label>
-                    <i id="edit_profile_picture" class="fa fa-pencil" style="cursor: pointer;"></i>
-                    {{ form.profile_picture(style="display: none;") }}
-                </div>
-                     </div>
-
-
-
-
-                    <div class="mb-3">
-                        <label for="username" class="form-label visually-hidden">Username :</label>
-                        <div class="input-group">
-                            {{ form.username(class="form-control", placeholder=username, required=True) }}
-                            <i class="fa fa-pencil" id="editUsername" style="margin-top:14px; margin-right:30px;margin-left:-45px;z-index:2"></i>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label visually-hidden">Email :</label>
-                        <div class="input-group">
-                            {{ form.email(class="form-control", placeholder=email, required=True) }}
-                            <i class="fa fa-pencil" id="editEmail" style="margin-top:14px; margin-right:30px;margin-left:-45px;z-index:2"></i>
-                        </div>
-                    </div>
-
-                    {% if current_user.role == "user" %}
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text text-secondary" style="width:100%"><i class="bi bi-building" style="margin-right:20px"></i>{{ company.name }}</span>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <div class="mb-3 text-center">
-                        {{ form.submit(class="btn btn-dark btn-lg") }}
-                    </div>
-                </form>
-
-
-
-                <!-- Center the image, add padding, and resize -->
-
-                <div class="card-img-top text-center my-3">
-                    <a href="{{ url_for('user_password_update',role=role)}}">Update Password</a>
-                </div>
-
-                <div class="mb-3">
-                    <h3 class="mb-3">Current Plans</h3>
-                    <div class="row" id="plansContainer">
-                         {% for plan in current_plans %}
-                    <div class="col-md-8 mb-4"> <!-- Adjusted col-md-8 instead of col-md-6 -->
-                        <div class="card border-0 shadow">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ plan.plan_name }}</h5>
-                                <p class="card-text">
-                                    <strong>Status:</strong> <span class="capitalize"> {{ plan.status }}</span><br>
-                                    {% if plan.cancel_at_period_end %}
-                                        <div class="alert alert-warning" role="alert">
-                                                Subscription ends after this billing cycle
-                                        </div>
-                                    {% endif %}
-                                    <strong>Next Billing Date:</strong> {{ plan.next_billing_date }}
-                                </p>
-                                {% if plan.stripe_subscription_id %}
-                                {% if plan.cancel_at_period_end %}
-                                    <a href="{{ url_for('resume_subscription', subscription_id = plan.stripe_subscription_id) }}" class="btn btn-info">Resume Subscription</a>
-                                {% else %}
-                                    <a href="{{ url_for('cancel_subscription', subscription_id = plan.stripe_subscription_id) }}" class="btn btn-danger">Cancel Subscription</a>
-                                {% endif %}
-                                {% endif %}
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    // Add JavaScript to handle edit button clicks for username field
-    document.getElementById('editUsername').addEventListener('click', function() {
-        var usernameField = document.querySelector('input[name="username"]');
-        if (usernameField.hasAttribute('readonly')) {
-            usernameField.removeAttribute('readonly');
-        } else {
-            usernameField.setAttribute('readonly', 'readonly');
+{% block styles %}
+    <style>
+        .profile-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 900px;
         }
-    });
-
-    // Add JavaScript to handle edit button clicks for email field
-    document.getElementById('editEmail').addEventListener('click', function() {
-        var emailField = document.querySelector('input[name="email"]');
-        if (emailField.hasAttribute('readonly')) {
-            emailField.removeAttribute('readonly');
-        } else {
-            emailField.setAttribute('readonly', 'readonly');
+        .profile-img, .company-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ddd;
         }
-    });
-</script>
-
-
-<script>
-    document.getElementById('edit_profile_picture').addEventListener('click', function() {
-        document.getElementById('profile_picture_input').click();
-    });
-
-    document.getElementById('profile_picture_input').addEventListener('change', function(e) {
-        var reader = new FileReader();
-        reader.onload = function(event) {
-            // Update the src attribute of the profileImage img tag
-            document.getElementById('profileImage').src = event.target.result;
+        .btn-edit {
+            margin-top: 20px;
         }
-        reader.readAsDataURL(e.target.files[0]);
-    });
-</script>
-
+        .img-upload {
+            position: relative;
+            display: inline-block;
+        }
+        .img-upload input {
+            display: none;
+        }
+        .img-upload:hover .edit-icon {
+            display: block;
+        }
+        .edit-icon {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+    </style>
 {% endblock %}
 
+{% block content %}
+
+    <div class="container">
+        <div class="profile-card">
+            <form method="POST" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="text-right">
+                    <button type="button" class="btn btn-light btn-edit" id="editBtn"><i class="bi bi-pen"></i></button>
+                </div>
+
+
+                <div class="text-center">
+                    <div class="img-upload">
+                        <img src="{{ profile_picture or 'default-profile.png' }}" alt="Profile Picture" class="profile-img">
+                        {{ form.profile_picture.label(class="edit-icon fas fa-camera") }}
+                        {{ form.profile_picture(class="d-none") }}
+                    </div>
+                </div>
+                <hr>
+
+                <h5 class="mb-3">Personal Details</h5>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.firstname.label() }}
+                        {{ form.firstname(class="form-control", disabled=True) }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.lastname.label() }}
+                        {{ form.lastname(class="form-control", disabled=True) }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.username.label() }}
+                        {{ form.username(class="form-control", disabled=True) }}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.email.label() }}
+                        {{ form.email(class="form-control", disabled=True) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.phone_number.label() }}
+                    {{ form.phone_number(class="form-control", disabled=True) }}
+                </div>
+
+                <h5 class="mb-3">Company Details</h5>
+                <div class="text-center">
+                    <div class="img-upload">
+                        <img src="{{ company['company_logo'] or 'default-company.png' }}" alt="Company Logo" class="company-logo">
+                        {{ form.company_logo.label(class="edit-icon fas fa-camera") }}
+                        {{ form.company_logo(class="d-none") }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form.company_name.label() }}
+                    {{ form.company_name(class="form-control", disabled=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.company_location.label() }}
+                    {{ form.company_location(class="form-control", disabled=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.company_website.label() }}
+                    {{ form.company_website(class="form-control", disabled=True) }}
+                </div>
+                <div class="form-group">
+                    {{ form.company_description.label() }}
+                    {{ form.company_description(class="form-control", disabled=True, rows=10) }}
+                </div>
+
+                <hr>
+                <h5 class="mb-3">Plan Details</h5>
+                <p><strong>Current Plan:</strong> {{ current_plans[0]['plan_name'] }}</p>
+                <p><strong>Plan Status:</strong> {{ current_plans[0]['status'] }}</p>
+
+                {{ form.submit(class="btn btn-success d-none", id="saveBtn") }}
+                {{ form.cancel(class="btn btn-secondary d-none", id="cancelBtn") }}
+            </form>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        document.getElementById('editBtn').addEventListener('click', function() {
+            var fields = document.querySelectorAll('input, textarea');
+            fields.forEach(function(field) {
+                field.disabled = false;
+            });
+            document.getElementById('editBtn').classList.add('d-none');
+            document.getElementById('saveBtn').classList.remove('d-none');
+            document.getElementById('cancelBtn').classList.remove('d-none');
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            var fields = document.querySelectorAll('input, textarea');
+            fields.forEach(function(field) {
+                field.disabled = true;
+            });
+            document.getElementById('editBtn').classList.remove('d-none');
+            document.getElementById('saveBtn').classList.add('d-none');
+            document.getElementById('cancelBtn').classList.add('d-none');
+        });
+    </script>
+{% endblock %}
 

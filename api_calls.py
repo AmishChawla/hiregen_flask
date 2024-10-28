@@ -38,10 +38,13 @@ def dashboard(file_list, access_token: str):
         print(f"Error: {e}")
 
 
-def user_register(username, email, password):
+def user_register(firstname, lastname, phone_number, username, email, password):
     print('trying3')
     headers = {'Content-Type': 'application/json'}
     data = {
+        "firstname": firstname,
+        "lastname": lastname,
+        "phone_number": phone_number,
         "username": username,
         "email": email,
         "password": password,
@@ -359,33 +362,53 @@ def admin_edit_any_user(access_token: str, user_id: int, username, role, status)
         print(f"An unexpected error occurred: {err}")
 
 
-def user_update_profile(access_token: str, username, email, profile_picture):
-    print("working")
-    headers = {'Authorization': f'Bearer {access_token}'}
+def update_user_profile(
+        token,
+        firstname=None,
+        lastname=None,
+        phone_number=None,
+        username=None,
+        email=None,
+        company_name=None,
+        company_location=None,
+        company_website=None,
+        company_description=None,
+        profile_picture=None,
+        company_logo=None,
+        password=None
+):
 
-    data = {
-
+    # Prepare the data to be sent
+    form_data = {
+        "firstname": firstname,
+        "lastname": lastname,
+        "phone_number": phone_number,
         "username": username,
         "email": email,
-
+        "company_name": company_name,
+        "company_location": company_location,
+        "company_website": company_website,
+        "company_description": company_description,
+        "password": password
     }
 
-    files = {
-        "profile_picture": profile_picture
+    # Prepare the headers with the authorization token
+    headers = {
+        "Authorization": f"Bearer {token}"
     }
 
-    try:
-        print("try")
-        response = requests.put(constants.BASE_URL + f'/update-profile', files=files, headers=headers, data=data)
-        return response
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
-    except requests.exceptions.RequestException as err:
-        print(f"An unexpected error occurred: {err}")
+    # Prepare the files for profile picture and company logo
+    files = {}
+    if profile_picture:
+        files["profile_picture"] = profile_picture
+    if company_logo:
+        files["company_logo"] = company_logo
+
+    # Send POST request to FastAPI
+    response = requests.put(constants.BASE_URL + f'/update-profile', data=form_data, files=files, headers=headers)
+
+    return response
+
 
 
 def get_companies():
@@ -951,10 +974,13 @@ def get_all_posts():
         print(f"An unexpected error occurred: {err}")
 
 
-def get_user_all_job_openings(access_token):
+def get_user_all_job_openings(access_token, maximum_posts: int = None):
     headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "maximum_posts": maximum_posts
+    }
     try:
-        response = requests.get(constants.BASE_URL + f'/user-all-job_openings', headers=headers)
+        response = requests.get(constants.BASE_URL + f'/user-all-job_openings', params=params, headers=headers)
         print("Response Status Code:", response.status_code)  # Debug: Print status code
         if response.status_code == 200:
             result = response.json()
@@ -2507,11 +2533,13 @@ def jobseeker_login(email, password):
         print(f"An unexpected error occurred: {err}")
 
 
-def jobseeker_register(username, email, password):
+def jobseeker_register(firstname,lastname,phone_number, email, password):
     print('trying3')
     headers = {'Content-Type': 'application/json'}
     data = {
-        "username": username,
+        "firstname": firstname,
+        "lastname": lastname,
+        "phone_number": phone_number,
         "email": email,
         "password": password,
         "role": "user",
@@ -2721,11 +2749,11 @@ def get_jobseeker_profile(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def employer_view_jobseeker(access_token, jobseeker_id):
-    headers = {'Authorization': f'Bearer {access_token}'}
+def employer_view_jobseeker(jobseeker_id):
+    # headers = {'Authorization': f'Bearer {access_token}'}
 
     try:
-        response = requests.get(constants.BASE_URL + f'/get-jobseeker-profile-for-employer/{jobseeker_id}', headers=headers)
+        response = requests.get(constants.BASE_URL + f'/get-jobseeker-profile-for-employer/{jobseeker_id}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -2845,13 +2873,16 @@ def add_accomplishments_profile(accomplishments, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def update_basic_info(access_token, name=None, email=None, phone_number=None, profile_picture=None):
+def update_basic_info(access_token, firstname=None, lastname=None, email=None, phone_number=None, profile_picture=None):
     headers = {'Authorization': f'Bearer {access_token}'}
     data = {}
 
-    if name:
-        print(name)
-        data['name'] = name
+    if firstname:
+        print(firstname)
+        data['firstname'] = firstname
+    if lastname:
+        print(lastname)
+        data['lastname'] = lastname
 
     if email:
         data['email'] = email
@@ -2928,6 +2959,133 @@ def get_jobseeker_recommendations(jobs_count, access_token: str):
     headers = {'Authorization': f'Bearer {access_token}'}
     try:
         response = requests.get(constants.BASE_URL + f'/jobseeker/recommendations/{jobs_count}', headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_filtered_jobs(country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None):
+    params = {
+        'keyword': keyword,
+        'address_country': country,
+        'address_province': state,
+        'job_type': job_type,
+        'industry': industry,
+        'date_filter': date_filter
+    }
+    try:
+        response = requests.get(constants.BASE_URL + f'/jobs/filter/', params=params)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_filtered_applicants(params):
+    try:
+        response = requests.get(constants.BASE_URL + f'/applicants/filter', params=params)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+def get_filtered_applicants_for_employer(params, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    try:
+        response = requests.get(constants.BASE_URL + f'/employer/applicants/filter', params=params, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_filtered_jobseekers(jobseeker_id=None, name=None, email=None, phone_no=None):
+    print('inside filter jobseeker api call')
+    params = {
+        'jobseeker_id': jobseeker_id,
+        'name': name,
+        'email': email,
+        'phone_number': phone_no
+    }
+    try:
+        response = requests.get(constants.BASE_URL + f'/jobseeker/filter/', params=params)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_admin_stats():
+    print('inside admin_stats api call')
+    try:
+        response = requests.get(constants.BASE_URL + f'/admin/stats')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_employer_reports(access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    print('inside admin_stats api call')
+    try:
+        response = requests.get(constants.BASE_URL + f'/employer/reports', headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def update_jobseeker_profile(profile_data, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    try:
+        response = requests.post(constants.BASE_URL + '/jobseeker/update-jobseeker-profile',json=profile_data, headers=headers)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

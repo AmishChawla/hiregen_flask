@@ -1,7 +1,5 @@
 {% extends 'jobseeker/jobseeker_base.html' %}
 
-
-
 {% block content %}
 <style>
 .profile-hover-wrapper {
@@ -31,12 +29,113 @@
   display: inline-block;
 }
 
+
+.list-group-item {
+    border: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}
+
+.list-group-item i {
+    font-size: 1.2rem;
+}
+
+.list-group-item a {
+    font-size: 0.9rem;
+}
+
+.list-group-item a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
 </style>
+<style>
+  /* General styling for card */
+  .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #f8f9fa;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  .card-tools a {
+    font-size: 0.85rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .card-tools a:hover {
+    text-decoration: underline;
+  }
+
+  .card-body {
+    padding: 16px;
+    background-color: #fff;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  /* Styling for table inside Resume card */
+  #userResumeTable .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  #userResumeTable td.clickable a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  /* Styling for items inside each section */
+  .container-fluid {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .container-fluid:last-child {
+    border-bottom: none;
+  }
+
+  .container-fluid div {
+    line-height: 1.4;
+  }
+
+  /* Modal styling */
+  .modal .modal-content {
+    border-radius: 8px;
+  }
+
+  /* Trash icon */
+  .float-sm-right a i {
+    transition: color 0.3s ease;
+  }
+
+  .float-sm-right a i:hover {
+    color: #d9534f;
+  }
+</style>
+
 
 <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-3">
 
             <!-- Profile Image -->
               <div class="mt-4 box-profile">
@@ -88,36 +187,52 @@
                 </div>
                 </p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-  <li class="list-group-item">
-    <a href="#profileSummary" class="link-dark">Profile Summary</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#resume" class="link-dark">Resume</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#education" class="link-dark">Education</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#experience" class="link-dark">Experience</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#internships" class="link-dark">Internships</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#projects" class="link-dark">Projects</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#accomplishments" class="link-dark">Accomplishments</a>
-  </li>
-                </ul>
               </div>
               <!-- /.card-body -->
+        <div class="row">
+          <div class="col-md-3">
+<ul class="list-group mb-3">
+  <li class="list-group-item">
+    <a href="#profileSummary" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-person-circle me-2"></i> Profile Summary
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#resume" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-file-earmark-text me-2"></i> Resume
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#education" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-book me-2"></i> Education
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#experience" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-briefcase me-2"></i> Experience
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#internships" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-building me-2"></i> Internships
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#projects" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-folder2-open me-2"></i> Projects
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#accomplishments" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-trophy me-2"></i> Accomplishments
+    </a>
+  </li>
+</ul>
           </div>
           <div class="col-md-9">
-            <div class="card card-outline card-primary" id="profileSummary">
+            <div class="card card-outline" id="profileSummary">
   <div class="card-header">
-    <h3 class="card-title">About </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">About </h3>
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -138,9 +253,9 @@
 
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="resume">
+            <div class="card card-outline" id="resume">
   <div class="card-header">
-    <h3 class="card-title">Resume </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Resume </h3>
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -192,9 +307,9 @@
   </div>
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="education">
+            <div class="card card-outline" id="education">
   <div class="card-header">
-    <h3 class="card-title">Education </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Education </h3>
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -223,9 +338,9 @@
   </div>
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="experience">
+            <div class="card card-outline" id="experience">
   <div class="card-header">
-    <h3 class="card-title">Experience </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Experience </h3>
     <div class="card-tools">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
@@ -260,9 +375,9 @@
   </div>
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="internships">
+            <div class="card card-outline" id="internships">
 <div class="card-header">
-<h3 class="card-title">Internships </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Internships </h3>
 <div class="card-tools">
 <!-- Buttons, labels, and many other things can be placed here! -->
 <!-- Here is a label for example -->
@@ -298,9 +413,9 @@
 </div>
 <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="projects">
+            <div class="card card-outline" id="projects">
 <div class="card-header">
-<h3 class="card-title">Projects </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Projects </h3>
 <div class="card-tools">
 <!-- Buttons, labels, and many other things can be placed here! -->
 <!-- Here is a label for example -->
@@ -328,9 +443,9 @@
 </div>
 <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="accomplishments">
+            <div class="card card-outline" id="accomplishments">
 <div class="card-header">
-<h3 class="card-title">Accomplishments </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Accomplishments </h3>
 <div class="card-tools">
 <!-- Buttons, labels, and many other things can be placed here! -->
 <!-- Here is a label for example -->
@@ -626,10 +741,17 @@
       <div class="modal-body">
         <form action="{{ url_for('collect_jobseeker_name') }}" method="POST">
           {{ name_form.hidden_tag() }}
-          <div class="mb-3">
-            {{ name_form.name.label }}
-            {{ name_form.name(class="form-control") }}
+          <div class="d-flex">
+          <div class="w-50 mb-3">
+            {{ name_form.firstname.label }}
+            {{ name_form.firstname(class="form-control") }}
           </div>
+          <div class="w-50 mb-3">
+            {{ name_form.lastname.label }}
+            {{ name_form.lastname(class="form-control") }}
+          </div>
+          </div>
+
         <div class="d-grid gap-2 col-6 mx-auto">
         {{ name_form.submit(class="btn btn-primary") }}
         </div>

@@ -17,9 +17,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
   <style>
-    body {
-    height:100vh;
-    min-height: 100vh;
+  body {
+   font-family: 'Roboto', sans-serif;
+   height:100vh;
+   min-height: 100vh;
     }
     .content-wrapper {
       background-color: #ffffff;
@@ -43,12 +44,8 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
        {% endif %}
-
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('jobseeker_dashboard')}}" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('jobseeker_applications')}}" class="nav-link">My Applications</a>
+        <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ url_for('jobs_filter')}}" class="nav-link">Search Jobs</a>
       </li>
     </ul>
 
@@ -153,6 +150,16 @@
         </li>
     </ul>
 </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'jobs_filter' %}active{% endif %}" href="{{ url_for('jobs_filter') }}">
+              <i class="nav-icon far bi bi-briefcase">
+              </i>
+              <p>
+                Search Jobs
+              </p>
+            </a>
+          </li>
+
 
         </ul>
       </nav>

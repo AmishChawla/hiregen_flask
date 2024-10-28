@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobseeker Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .applicant-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .applicant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .card-body {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 2px solid #007bff;
+        }
+
+        .applicant-info {
+            flex: 1;
+        }
+
+        .applicant-info h5 {
+            margin: 0;
+            font-weight: 600;
+            color: #007bff;
+        }
+
+        .applicant-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .resume-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .resume-link:hover {
+            text-decoration: underline;
+        }
+
+        .status-badge {
+            font-size: 0.9em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card-body {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .profile-picture {
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if jobseekers %}
+            <div class="row g-4">
+                {% for jobseeker in jobseekers %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card applicant-card" onclick="window.location.href='{{ url_for('employer_view_jobseeker_profile', jobseeker_id=jobseeker.id) }}'">
+                            <div class="card-body">
+                                <img src="{{ jobseeker.profile_picture }}" alt="{{ jobseeker.name }}'s Profile Picture" class="profile-picture">
+                                <div class="applicant-info">
+                                    <h5>{{ jobseeker.name }}</h5>
+                                    <p><strong>Email:</strong> {{ jobseeker.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center" role="alert">
+                No jobseekers found matching the criteria.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS and dependencies (Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

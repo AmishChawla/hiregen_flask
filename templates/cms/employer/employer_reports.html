@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Reports{% endblock %}
 
 
 <link rel="stylesheet" href="url_for('static', filename='assets/plugins/select2/css/select2.min.css')">
@@ -29,7 +29,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Reports</h1>
           </div><!-- /.col --><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -134,67 +134,36 @@
               </a>
             </div>
 </div>
-              <div class="card widget-card">
+    <div class="row mt-4">
+    <div class="col-lg-6">
+        <div class="card widget-card">
             <div class="card-body">
-             <div class="lead">
-               Latest Jobs
-               </div>
-                <table id="latestpostTable" class="table table-hover" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Salary</th>
-                <th>Job Status</th>
-                <th>Visibility</th>
-                <th>Views</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
-                <th>Applicants</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in latest_jobs %}
-              {% if data.JobOpening.status == 'published' %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}"> {{ data.JobOpening.job_title }}</a></td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.salary }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-                <td class="py-1" style="display: flex">
-
-                  <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
-                  <a  data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.JobOpening.id }}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash3-fill text-muted" style="font-size: 0.9rem"></i></a>
-
-                  <!-- Modal for delete button -->
-                  <div class="modal fade" id="deleteModal_{{ data.JobOpening.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ data.JobOpening.id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title fs-5" id="deleteModalLabel_{{ data.JobOpening.id }}">Delete Post</h4>
-                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you want to delete this post?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <a type="button" class="btn btn-danger" href="{{ url_for('user_delete_job', job_id=data.JobOpening.id) }}">Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
+                <div class="lead">Top Industries by Job Openings</div>
+                <canvas id="industryChart" class="mt-3"></canvas>
             </div>
-          </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card widget-card">
+            <div class="card-body">
+                <div class="lead">Top Jobs by Views</div>
+                <canvas id="viewsChart" class="mt-3"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="row mt-4">
+    <div class="col-lg-6">
+        <div class="card widget-card">
+            <div class="card-body">
+                <div class="lead">Top Jobs by Applicants</div>
+                <canvas id="applicantsTopJobsChart" class="mt-3"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -341,9 +310,160 @@
         plugins: [ChartDataLabels] // Add ChartDataLabels plugin
     });
 </script>
+<script>
+    var industryCtx = document.getElementById('industryChart').getContext('2d');
+var industryChart = new Chart(industryCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for industry in jobs_by_industry %}
+                '{{ industry.industry or 'Unknown' }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Number of Jobs',
+            data: [
+                {% for industry in jobs_by_industry %}
+                    {{ industry.job_count }},
+                {% endfor %}
+            ],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#FFC107', '#FF5722'],
+            borderColor: ['#4CAF50', '#2196F3', '#FF9800', '#FFC107', '#FF5722'],
+            borderWidth: 1,
+            barPercentage: 0.7,
+            categoryPercentage: 0.6,
+            borderRadius: 10,
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                grid: { display: false },
+                ticks: { font: { size: 17 } },
+            },
+            y: {
+                grid: { display: false },
+                beginAtZero: true,
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true },
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                color: '#000',
+                font: { size: 17 },
+                formatter: value => value
+            }
+        }
+    }
+});
 
+</script>
+<script>
+    var viewsCtx = document.getElementById('viewsChart').getContext('2d');
+var viewsChart = new Chart(viewsCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for job in jobs_by_views %}
+                '{{ job.job_title }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Views Count',
+            data: [
+                {% for job in jobs_by_views %}
+                    {{ job.job_opening_views }},
+                {% endfor %}
+            ],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FF9800'],
+            borderColor: ['#4CAF50', '#2196F3', '#FF9800'],
+            borderWidth: 1,
+            barPercentage: 0.7,
+            categoryPercentage: 0.6,
+            borderRadius: 10,
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                grid: { display: false },
+                ticks: { font: { size: 17 } },
+            },
+            y: {
+                grid: { display: false },
+                beginAtZero: true,
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true },
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                color: '#000',
+                font: { size: 17 },
+                formatter: value => value
+            }
+        }
+    }
+});
 
+</script>
+<script>
+    // Top Jobs by Applicants Chart
+var applicantsTopJobsCtx = document.getElementById('applicantsTopJobsChart').getContext('2d');
+var applicantsTopJobsChart = new Chart(applicantsTopJobsCtx, {
+    type: 'bar',
+    data: {
+        labels: [
+            {% for job in jobs_by_applicants %}
+                '{{ job.JobOpening.job_title }}',
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Applicants Count',
+            data: [
+                {% for job in jobs_by_applicants %}
+                    {{ job.applicants_count }},
+                {% endfor %}
+            ],
+            backgroundColor: ['#4CAF50', '#2196F3', '#FF9800'],
+            borderColor: ['#4CAF50', '#2196F3', '#FF9800'],
+            borderWidth: 1,
+            barPercentage: 0.7,
+            categoryPercentage: 0.6,
+            borderRadius: 10,
+        }]
+    },
+    options: {
+        scales: {
+            x: {
+                grid: { display: false },
+                ticks: { font: { size: 17 } },
+            },
+            y: {
+                grid: { display: false },
+                beginAtZero: true,
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true },
+            datalabels: {
+                anchor: 'end',
+                align: 'top',
+                color: '#000',
+                font: { size: 17 },
+                formatter: value => value
+            }
+        }
+    }
+});
 
+</script>
 
 
 {% endblock %}

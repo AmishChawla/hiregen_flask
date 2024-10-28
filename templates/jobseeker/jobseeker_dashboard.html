@@ -120,6 +120,9 @@
                     <div class="col-md mb-2">
                         <h5 class="mb-0 text-dark">{{ job.job_title }}</h5>
                     </div>
+                    <div class="col-md-2">
+                        <small class="text-dark" style="font-weight:bold;">{{ similarity_score }}% match</small>
+                    </div>
                 </div>
 
                 <div class="d-flex"> <i class="bi bi-geo-alt-fill mr-2 text-muted small"></i> <span class="text-muted" style="font-size:0.8rem;">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span> </div>
@@ -130,9 +133,6 @@
                 <div class="d-flex"> <i class="bi bi-clock ml-3 text-muted small"></i> <span class="text-muted small ml-1">{{ job.job_type }}</span> </div>
                 <div class="d-flex"> <i class="bi bi-buildings ml-3 text-muted small"></i> <span class="text-muted small ml-1">{{ job.industry }}</span> </div>
               </div>
-                  <div class="d-grid gap-2">
-            <a class="btn btn-primary mt-2" href="{{ url_for('get_post_by_username_and_slug', username=job.author_name, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}">Apply</a>
-            </div>
             </div>
       </div>
         </a>

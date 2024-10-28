@@ -16,6 +16,7 @@ import uuid
 import constants
 import forms
 import api_calls
+import static_dropdowns
 from constants import ROOT_URL
 import google.generativeai as genai
 import openai
@@ -47,6 +48,8 @@ def load_user(user_id):
         user = User(id=user_from_session.get('id'),
                     user_id=user_from_session.get('user_id'),
                     role=user_from_session.get('role'),
+                    firstname=user_from_session.get('firstname'),
+                    lastname=user_from_session.get('lastname'),
                     username=user_from_session.get('username'),
                     email=user_from_session.get('email'),
                     company=user_from_session.get('company'),
@@ -58,10 +61,12 @@ def load_user(user_id):
 
 
 class User(UserMixin):
-    def __init__(self, id, user_id, role, username, email, company, group, profile_picture):
+    def __init__(self, id, user_id, role, username, email, company, group, profile_picture, firstname=None, lastname=None):
         self.user_id = id
         self.id = user_id
         self.role = role
+        self.firstname = firstname or ''
+        self.lastname = lastname or ''
         self.username = username
         self.email = email
         self.company = company
@@ -179,19 +184,23 @@ def login():
             id = data.get('id')
             token = data.get('access_token')
             role = data.get('role')
+            firstname = data.get('firstname')
+            lastname = data.get('lastname')
             username = data.get('username')
             email = data.get('email')
             company = data.get('company', {})
             group = data.get('group', {})
             profile_picture = data['profile_picture']
 
-            user = User(id=id, user_id=token, role=role, username=username, email=email, company=company,
+            user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
                         group=group, profile_picture=profile_picture)
             login_user(user)
             session['user'] = {
                 'id': id,
                 'user_id': token,
                 'role': role,
+                'firstname': firstname,
+                'lastname': lastname,
                 'username': username,
                 'email': email,
                 'company': company,
@@ -245,6 +254,8 @@ def callback():
     id = data.get('id')
     token = data.get('access_token')
     role = data.get('role')
+    firstname = data.get('firstname')
+    lastname = data.get('lastname')
     username = data.get('username')
     email = data.get('email')
     profile_picture = data.get('profile_picture')
@@ -252,13 +263,15 @@ def callback():
     company = data.get('company', {})
     group = data.get('group', {})
 
-    user = User(id=id, user_id=token, role=role, username=username, email=email, company=company,
+    user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
                 group=group, profile_picture=profile_picture)
     login_user(user)
     session['user'] = {
         'id': id,
         'user_id': token,
         'role': role,
+        'firstname': firstname,
+        'lastname': lastname,
         'username': username,
         'email': email,
         'company': company,
@@ -279,10 +292,13 @@ def register():
     form = forms.RegisterForm()
     print("outside")
     if form.validate_on_submit():
+        firstname= form.firstname.data
+        lastname = form.lastname.data
+        phone_number = form.phone_number.data
         username = form.username.data
         email = form.email.data
         password = form.password.data
-        response = api_calls.user_register(username, email, password)
+        response = api_calls.user_register(firstname, lastname, phone_number, username, email, password)
         print("inside")
         if response.status_code == 200:
             response = api_calls.user_login(email, password)
@@ -291,13 +307,15 @@ def register():
                 token = data.get('access_token')
                 id=data.get('id')
                 role = data.get('role')
+                firstname = data.get('firstname')
+                lastname = data.get('lastname')
                 username = data.get('username')
                 email = data.get('email')
                 company = data.get('company', {})
                 group = data.get('group', {})
                 profile_picture = data['profile_picture']
 
-                user = User(id=id,user_id=token, role=role, username=username, email=email,
+                user = User(id=id,user_id=token, firstname=firstname, lastname=lastname,role=role, username=username, email=email,
                             company=company,group=group,
                             profile_picture=profile_picture)
                 login_user(user)
@@ -305,6 +323,8 @@ def register():
                     'id': id,
                     'user_id': token,
                     'role': role,
+                    'firstname': firstname,
+                    'lastname': lastname,
                     'username': username,
                     'email': email,
                     'company': company,
@@ -334,8 +354,10 @@ def user_dashboard():
     in_progress_jobs = stats["in_progress_jobs"]
     statuses = stats["statuses"]
 
+    latest_jobs = api_calls.get_user_all_job_openings(maximum_posts=5, access_token=current_user.id)
 
-    return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses)
+
+    return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses, latest_jobs=latest_jobs)
 
 
 @app.route("/admin/admin-dashboard")
@@ -379,43 +401,76 @@ def result():
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
-    form = forms.UserEditUserForm()
+    empty_folder(uploads_folder)
+    empty_folder(profile_pictures_folder)
+
+    form = forms.EmployerProfileForm()
+
+    # Get user data from API or database
     response = api_calls.get_user_profile(current_user.id)
     result = response.json()
-    username = result["username"]
-    email = result["email"]
-    company = result.get('company', {})
-    role = result.get('role', '')
-    profile_picture = f"{ROOT_URL}/{result['profile_picture']}"
-    current_plans = result.get('current_plans', [])
-    print(current_plans)
 
+    # Populate the fields with data
+    if request.method == 'GET':
+        form.firstname.data = result["firstname"]
+        form.lastname.data = result["lastname"]
+        form.phone_number.data = result['phone_number']
+        form.username.data = result["username"]
+        form.email.data = result["email"]
+
+        company = result.get('company', {})
+        form.company_name.data = company.get('name', '')
+        form.company_location.data = company.get('location', '')
+        form.company_website.data = company.get('company_website', '')
+        form.company_description.data = company.get('company_description', '')
+
+    # On form submit, process the data
     if form.validate_on_submit():
-        # Update user information
-        new_profile_picture = form.profile_picture.data
-        if new_profile_picture:
-            # Assuming the API call expects the file as part of the request
-            new_username = form.username.data
-            new_email = form.email.data
-            # Ensure the file is included in the request
-            response = api_calls.user_update_profile(access_token=current_user.id,
-                                                     username=new_username, email=new_email,
-                                                     profile_picture=new_profile_picture)
-            if response.status_code == 200:
-                return redirect(url_for('profile'))
-            else:
-                # Handle error, e.g., flash a message
-                pass
+        # Update user and company details
+        profile_data = {
+            'firstname': form.firstname.data,
+            'lastname': form.lastname.data,
+            'phone_number': form.phone_number.data,
+            'username': form.username.data,
+            'email': form.email.data,
+            'profile_picture': form.profile_picture.data,
+            'company_name': form.company_name.data,
+            'company_location': form.company_location.data,
+            'company_website': form.company_website.data,
+            'company_description': form.company_description.data,
+            'company_logo': form.company_logo.data,
+        }
+
+        profile_picture = form.profile_picture.data or None
+        if profile_picture:
+            profile_picture_filename = secure_filename(profile_picture.filename)
+            # Save the file to a designated folder
+            profile_picture_path = 'profile_pictures/' + profile_picture_filename
+            print(profile_picture_path)
+            profile_picture.save(profile_picture_path)
+            profile_picture = (profile_picture_filename, open(profile_picture_path, 'rb'))
+
+
+        company_logo = form.company_logo.data or None
+        if company_logo:
+            company_logo_filename = secure_filename(company_logo.filename)
+            # Save the file to a designated folder
+            company_logo_path = 'uploads/' + company_logo_filename
+            print(company_logo_path)
+            company_logo.save(company_logo_path)
+            company_logo = (company_logo_filename, open(company_logo_path, 'rb'))
+
+
+        response = api_calls.update_user_profile(token=current_user.id, firstname=profile_data.get('firstname'),lastname=profile_data.get('lastname'),phone_number=profile_data.get('phone_number'),username=profile_data.get('username'),email=profile_data.get('email'),profile_picture=profile_picture,company_name=profile_data.get('company_name'),company_location=profile_data.get('company_location'),company_website=profile_data.get('company_website'),company_description=profile_data.get('company_description'),company_logo=company_logo)
+
+        if response.status_code == 200:
+            flash('Profile updated successfully!', 'success')
+            return redirect(url_for('profile'))
         else:
-            # Handle case where no file is uploaded
-            pass
+            flash('Failed to update profile. Please try again.', 'danger')
 
-    # Prefill the form fields with user information
-    form.username.data = username
-    form.email.data = email
-
-    return render_template('profile.html', username=username, form=form, company=company, role=role,
-                           profile_picture=profile_picture, current_plans=current_plans)
+    return render_template('profile.html', form=form, current_plans=result.get('current_plans', []),
+                           profile_picture=result.get('profile_picture'), company=result.get('company'))
 
 
 @app.route("/admin/users")
@@ -1024,6 +1079,8 @@ def job_applicants(job_id):
 @requires_any_permission("manage_posts")
 @login_required
 def all_applicants():
+    job_types = static_dropdowns.job_types
+    industries = static_dropdowns.industries
     result = api_calls.get_all_applicants(access_token=current_user.id)
     statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
     if result is None:
@@ -1075,7 +1132,7 @@ def all_applicants():
         ]
 
 
-    return render_template('cms/job_openings/job_applicants.html', result=result, statuses=statuses)
+    return render_template('cms/job_openings/job_applicants.html', result=result, statuses=statuses, job_types=job_types, industries=industries)
 
 
 
@@ -1858,6 +1915,7 @@ def media():
         files = request.files.getlist('files')
         print(files)
         file_list = []
+        file_path_list = []
 
         # Ensure the media directory exists
         media_folder = 'media'
@@ -1871,16 +1929,29 @@ def media():
             file_url = os.path.join(media_folder, filename)
             print(file_url)
             file.save(file_url)
+            file_path_list.append(file_url)
             file_list.append(('files', (filename, open(file_url, 'rb'))))
 
         access_token = current_user.id  # Replace with the actual method to get the access token
+        parsed_resumes = parse_multiple_resumes(file_path_list)
+        profile_data = {
+            'education': parsed_resumes[0].get('Education', []),
+            'experience': parsed_resumes[0].get('Experience', []),
+            'internships': parsed_resumes[0].get('Internship', []),
+            'projects': parsed_resumes[0].get('Projects', []),
+            'profile_summary': {'content': parsed_resumes[0].get('ProfileSummary')},
+            'skills': parsed_resumes[0].get('Skills', []),
+            'accomplishments': parsed_resumes[0].get('Accomplishment', [])
+        }
+        update_profile = api_calls.update_jobseeker_profile(profile_data=profile_data, access_token=current_user.id)
+
 
         # Handle file uploads using a helper function (assuming api_calls.upload_medias is properly defined)
         response = api_calls.upload_medias(file_list, access_token)
 
         if response and response.status_code == 200:
             empty_folder(media_folder)
-            return jsonify({"message": "Media added successfully", "redirect": url_for('user_all_medias')}), 200
+            return jsonify({"message": "Media added successfully", "redirect": url_for('jobseeker_profile')}), 200
         else:
             return jsonify({"message": "Some problem occurred"}), response.status_code if response else 500
 
@@ -2658,8 +2729,12 @@ def parse_single_resume(resume_text):
     - Address
     - Email
     - Phone
-    - Education (Degree, University, Year)
-    - Experience (Position, Company, Duration, Responsibilities)
+    - Education (institution_name, degree, field_of_study, start_date, end_date, is_ongoing)
+    - Experience (position, company_name, responsibilities(String), start_date, end_date, is_ongoing)
+    - Project (title, description, project_url)
+    - Internship (company_name, position, start_date, end_date, job_description, is_ongoing)
+    - Accomplishment (title, description, achievement_date)
+    - ProfileSummary (content)
     - Skills
     
     Note: Please generate a response that does not exceed 4096 tokens to ensure completeness.
@@ -2750,8 +2825,10 @@ def resume_parser():
 
         parsed_resumes = parse_multiple_resumes(file_list)
 
+
         try:
             resume_submission = api_calls.add_new_resume_collection(resumes=parsed_resumes, access_token=current_user.id)
+
         except Exception as e:
             raise e
 
@@ -2861,19 +2938,23 @@ def jobseeker_login():
             id = data.get('id')
             token = data.get('access_token')
             role = data.get('role')
+            firstname = data.get('firstname')
+            lastname = data.get('lastname')
             username = data.get('username')
             email = data.get('email')
             company = {}
             group = data.get('group', {})
             profile_picture = data['profile_picture']
 
-            user = User(id=id, user_id=token, role=role, username=username, email=email, company=company,
+            user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
                         group=group, profile_picture=profile_picture)
             login_user(user)
             session['user'] = {
                 'id': id,
                 'user_id': token,
                 'role': role,
+                'firstname': firstname,
+                'lastname':lastname,
                 'username': username,
                 'email': email,
                 'company': company,
@@ -2897,13 +2978,15 @@ def jobseeker_login():
 def jobseeker_register():
     session.pop('_flashes', None)
 
-    form = forms.RegisterForm()
+    form = forms.JobseekerRegisterForm()
     print("outside")
     if form.validate_on_submit():
-        username = form.username.data
+        firstname = form.firstname.data
+        lastname = form.lastname.data
+        phone_number = form.phone_number.data
         email = form.email.data
         password = form.password.data
-        response = api_calls.jobseeker_register(username, email, password)
+        response = api_calls.jobseeker_register(firstname,lastname,phone_number, email, password)
         print("inside")
         if response.status_code == 200:
             response = api_calls.jobseeker_login(email, password)
@@ -2912,13 +2995,15 @@ def jobseeker_register():
                 token = data.get('access_token')
                 id = data.get('id')
                 role = data.get('role')
+                firstname= data.get('firstname')
+                lastname = data.get('lastname')
                 username = data.get('username')
                 email = data.get('email')
                 company = {}
                 group = data.get('group', {})
                 profile_picture = data['profile_picture']
 
-                user = User(id=id, user_id=token, role=role, username=username, email=email,
+                user = User(id=id, user_id=token, role=role, username=username, email=email, firstname=firstname, lastname=lastname,
                             company=company, group=group,
                             profile_picture=profile_picture)
                 login_user(user)
@@ -2926,6 +3011,8 @@ def jobseeker_register():
                     'id': id,
                     'user_id': token,
                     'role': role,
+                    'firstname': firstname,
+                    'lastname': lastname,
                     'username': username,
                     'email': email,
                     'company': company,
@@ -3127,8 +3214,9 @@ def jobseeker_add_project():
 def collect_jobseeker_name():
     form = forms.CollectNameForm()
     if form.validate_on_submit():
-        name = form.name.data
-        res = api_calls.update_basic_info(name=name, access_token=current_user.id)
+        firstname = form.firstname.data
+        lastname = form.lastname.data
+        res = api_calls.update_basic_info(firstname=firstname,lastname=lastname, access_token=current_user.id)
         return redirect(url_for('jobseeker_profile'))
 
 
@@ -3183,16 +3271,624 @@ def delete_jobseeker_profile_info(type, id):
 
 
 @app.route('/view-jobseeker/<jobseeker_id>', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
-@login_required
 def employer_view_jobseeker_profile(jobseeker_id):
     root_url = constants.ROOT_URL + '/'
 
-    profile_info = api_calls.employer_view_jobseeker(access_token=current_user.id, jobseeker_id=jobseeker_id)
+    profile_info = api_calls.employer_view_jobseeker(jobseeker_id=jobseeker_id)
 
     return render_template('cms/job_openings/employer_view_jobseeker_profile.html', root_url=root_url,profile_info=profile_info)
 
 
+
+@app.route('/jobs/search', methods=['GET', 'POST'])
+def jobs_search():
+    countries = ['United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 'France', 'India', 'China',
+                 'Japan', 'Brazil', 'South Africa']
+    job_types = [
+        ('Full Time', 'Full Time'),
+        ('Part Time', 'Part Time'),
+        ('Training', 'Training'),
+        ('Freelance', 'Freelance'),
+        ('Seasonal', 'Seasonal'),
+        ('Contract', 'Contract'),
+        ('Temporary', 'Temporary')
+    ]
+
+    industries = [
+            ('', 'Select Industry'),
+            ('Accounting', 'Accounting'),
+            ('Airlines/Aviation', 'Airlines/Aviation'),
+            ('Alternative Dispute Resolution', 'Alternative Dispute Resolution'),
+            ('Alternative Medicine', 'Alternative Medicine'),
+            ('Animation', 'Animation'),
+            ('Apparel & Fashion', 'Apparel & Fashion'),
+            ('Architecture & Planning', 'Architecture & Planning'),
+            ('Arts & Crafts', 'Arts & Crafts'),
+            ('Automotive', 'Automotive'),
+            ('Aviation & Aerospace', 'Aviation & Aerospace'),
+            ('Banking', 'Banking'),
+            ('Biotechnology', 'Biotechnology'),
+            ('Broadcast Media', 'Broadcast Media'),
+            ('Building Materials', 'Building Materials'),
+            ('Business Supplies & Equipment', 'Business Supplies & Equipment'),
+            ('Capital Markets', 'Capital Markets'),
+            ('Chemicals', 'Chemicals'),
+            ('Civic & Social Organization', 'Civic & Social Organization'),
+            ('Civil Engineering', 'Civil Engineering'),
+            ('Commercial Real Estate', 'Commercial Real Estate'),
+            ('Computer & Network Security', 'Computer & Network Security'),
+            ('Computer Games', 'Computer Games'),
+            ('Computer Hardware', 'Computer Hardware'),
+            ('Computer Networking', 'Computer Networking'),
+            ('Computer Software', 'Computer Software'),
+            ('Construction', 'Construction'),
+            ('Consumer Electronics', 'Consumer Electronics'),
+            ('Consumer Goods', 'Consumer Goods'),
+            ('Consumer Services', 'Consumer Services'),
+            ('Cosmetics', 'Cosmetics'),
+            ('Dairy', 'Dairy'),
+            ('Defense & Space', 'Defense & Space'),
+            ('Design', 'Design'),
+            ('Education Management', 'Education Management'),
+            ('E-learning', 'E-learning'),
+            ('Electrical & Electronic Manufacturing', 'Electrical & Electronic Manufacturing'),
+            ('Entertainment', 'Entertainment'),
+            ('Environmental Services', 'Environmental Services'),
+            ('Events Services', 'Events Services'),
+            ('Executive Office', 'Executive Office'),
+            ('Facilities Services', 'Facilities Services'),
+            ('Farming', 'Farming'),
+            ('Financial Services', 'Financial Services'),
+            ('Fine Art', 'Fine Art'),
+            ('Fishery', 'Fishery'),
+            ('Food & Beverages', 'Food & Beverages'),
+            ('Food Production', 'Food Production'),
+            ('Fundraising', 'Fundraising'),
+            ('Furniture', 'Furniture'),
+            ('Gambling & Casinos', 'Gambling & Casinos'),
+            ('Glass, Ceramics & Concrete', 'Glass, Ceramics & Concrete'),
+            ('Government Administration', 'Government Administration'),
+            ('Government Relations', 'Government Relations'),
+            ('Graphic Design', 'Graphic Design'),
+            ('Health, Wellness & Fitness', 'Health, Wellness & Fitness'),
+            ('Higher Education', 'Higher Education'),
+            ('Hospital & Health Care', 'Hospital & Health Care'),
+            ('Hospitality', 'Hospitality'),
+            ('Human Resources', 'Human Resources'),
+            ('Import & Export', 'Import & Export'),
+            ('Individual & Family Services', 'Individual & Family Services'),
+            ('Industrial Automation', 'Industrial Automation'),
+            ('Information Services', 'Information Services'),
+            ('Information Technology & Services', 'Information Technology & Services'),
+            ('Insurance', 'Insurance'),
+            ('International Affairs', 'International Affairs'),
+            ('International Trade & Development', 'International Trade & Development'),
+            ('Internet', 'Internet'),
+            ('Investment Banking/Venture', 'Investment Banking/Venture'),
+            ('Investment Management', 'Investment Management'),
+            ('Judiciary', 'Judiciary'),
+            ('Law Enforcement', 'Law Enforcement'),
+            ('Law Practice', 'Law Practice'),
+            ('Legal Services', 'Legal Services'),
+            ('Legislative Office', 'Legislative Office'),
+            ('Leisure & Travel', 'Leisure & Travel'),
+            ('Libraries', 'Libraries'),
+            ('Logistics & Supply Chain', 'Logistics & Supply Chain'),
+            ('Luxury Goods & Jewelry', 'Luxury Goods & Jewelry'),
+            ('Machinery', 'Machinery'),
+            ('Management Consulting', 'Management Consulting'),
+            ('Maritime', 'Maritime'),
+            ('Marketing & Advertising', 'Marketing & Advertising'),
+            ('Market Research', 'Market Research'),
+            ('Mechanical or Industrial Engineering', 'Mechanical or Industrial Engineering'),
+            ('Media Production', 'Media Production'),
+            ('Medical Device', 'Medical Device'),
+            ('Medical Practice', 'Medical Practice'),
+            ('Mental Health Care', 'Mental Health Care'),
+            ('Military', 'Military'),
+            ('Mining & Metals', 'Mining & Metals'),
+            ('Motion Pictures & Film', 'Motion Pictures & Film'),
+            ('Museums & Institutions', 'Museums & Institutions'),
+            ('Music', 'Music'),
+            ('Nanotechnology', 'Nanotechnology'),
+            ('Newspapers', 'Newspapers'),
+            ('Nonprofit Organization Management', 'Nonprofit Organization Management'),
+            ('Oil & Energy', 'Oil & Energy'),
+            ('Online Publishing', 'Online Publishing'),
+            ('Outsourcing/Offshoring', 'Outsourcing/Offshoring'),
+            ('Package/Freight Delivery', 'Package/Freight Delivery'),
+            ('Packaging & Containers', 'Packaging & Containers'),
+            ('Paper & Forest Products', 'Paper & Forest Products'),
+            ('Performing Arts', 'Performing Arts'),
+            ('Pharmaceuticals', 'Pharmaceuticals'),
+            ('Philanthropy', 'Philanthropy'),
+            ('Photography', 'Photography'),
+            ('Plastics', 'Plastics'),
+            ('Political Organization', 'Political Organization'),
+            ('Primary/Secondary', 'Primary/Secondary'),
+            ('Printing', 'Printing'),
+            ('Professional Training', 'Professional Training'),
+            ('Program Development', 'Program Development'),
+            ('Public Policy', 'Public Policy'),
+            ('Public Relations', 'Public Relations'),
+            ('Public Safety', 'Public Safety'),
+            ('Publishing', 'Publishing'),
+            ('Railroad Manufacture', 'Railroad Manufacture'),
+            ('Ranching', 'Ranching'),
+            ('Real Estate', 'Real Estate'),
+            ('Recreational', 'Recreational'),
+            ('Facilities & Services', 'Facilities & Services'),
+            ('Religious Institutions', 'Religious Institutions'),
+            ('Renewables & Environment', 'Renewables & Environment'),
+            ('Research', 'Research'),
+            ('Restaurants', 'Restaurants'),
+            ('Retail', 'Retail'),
+            ('Security & Investigations', 'Security & Investigations'),
+            ('Semiconductors', 'Semiconductors'),
+            ('Shipbuilding', 'Shipbuilding'),
+            ('Sporting Goods', 'Sporting Goods'),
+            ('Sports', 'Sports'),
+            ('Staffing & Recruiting', 'Staffing & Recruiting'),
+            ('Supermarkets', 'Supermarkets'),
+            ('Telecommunications', 'Telecommunications'),
+            ('Textiles', 'Textiles'),
+            ('Think Tanks', 'Think Tanks'),
+            ('Tobacco', 'Tobacco'),
+            ('Translation & Localization', 'Translation & Localization'),
+            ('Transportation/Trucking/Railroad', 'Transportation/Trucking/Railroad'),
+            ('Utilities', 'Utilities'),
+            ('Venture Capital', 'Venture Capital'),
+            ('Veterinary', 'Veterinary'),
+            ('Warehousing', 'Warehousing'),
+            ('Wholesale', 'Wholesale'),
+            ('Wine & Spirits', 'Wine & Spirits'),
+            ('Wireless', 'Wireless'),
+            ('Writing & Editing', 'Writing & Editing')
+    ]
+
+    jobs=[]
+
+
+    if request.method == 'GET':
+        # Extract query parameters
+        country = request.args.get('country')
+        state = request.args.get('state')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        date_filter = request.args.get('date_filter')
+        keyword = request.args.get('keyword')
+
+        if country or state or job_type or industry or date_filter or keyword:
+            jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
+
+    return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs)
+
+
+
+@app.route('/jobs/filter', methods=['GET', 'POST'])
+def jobs_filter():
+    countries = ['United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 'France', 'India', 'China',
+                 'Japan', 'Brazil', 'South Africa']
+    job_types = [
+        ('Full Time', 'Full Time'),
+        ('Part Time', 'Part Time'),
+        ('Training', 'Training'),
+        ('Freelance', 'Freelance'),
+        ('Seasonal', 'Seasonal'),
+        ('Contract', 'Contract'),
+        ('Temporary', 'Temporary')
+    ]
+
+    industries = [
+            ('', 'Select Industry'),
+            ('Accounting', 'Accounting'),
+            ('Airlines/Aviation', 'Airlines/Aviation'),
+            ('Alternative Dispute Resolution', 'Alternative Dispute Resolution'),
+            ('Alternative Medicine', 'Alternative Medicine'),
+            ('Animation', 'Animation'),
+            ('Apparel & Fashion', 'Apparel & Fashion'),
+            ('Architecture & Planning', 'Architecture & Planning'),
+            ('Arts & Crafts', 'Arts & Crafts'),
+            ('Automotive', 'Automotive'),
+            ('Aviation & Aerospace', 'Aviation & Aerospace'),
+            ('Banking', 'Banking'),
+            ('Biotechnology', 'Biotechnology'),
+            ('Broadcast Media', 'Broadcast Media'),
+            ('Building Materials', 'Building Materials'),
+            ('Business Supplies & Equipment', 'Business Supplies & Equipment'),
+            ('Capital Markets', 'Capital Markets'),
+            ('Chemicals', 'Chemicals'),
+            ('Civic & Social Organization', 'Civic & Social Organization'),
+            ('Civil Engineering', 'Civil Engineering'),
+            ('Commercial Real Estate', 'Commercial Real Estate'),
+            ('Computer & Network Security', 'Computer & Network Security'),
+            ('Computer Games', 'Computer Games'),
+            ('Computer Hardware', 'Computer Hardware'),
+            ('Computer Networking', 'Computer Networking'),
+            ('Computer Software', 'Computer Software'),
+            ('Construction', 'Construction'),
+            ('Consumer Electronics', 'Consumer Electronics'),
+            ('Consumer Goods', 'Consumer Goods'),
+            ('Consumer Services', 'Consumer Services'),
+            ('Cosmetics', 'Cosmetics'),
+            ('Dairy', 'Dairy'),
+            ('Defense & Space', 'Defense & Space'),
+            ('Design', 'Design'),
+            ('Education Management', 'Education Management'),
+            ('E-learning', 'E-learning'),
+            ('Electrical & Electronic Manufacturing', 'Electrical & Electronic Manufacturing'),
+            ('Entertainment', 'Entertainment'),
+            ('Environmental Services', 'Environmental Services'),
+            ('Events Services', 'Events Services'),
+            ('Executive Office', 'Executive Office'),
+            ('Facilities Services', 'Facilities Services'),
+            ('Farming', 'Farming'),
+            ('Financial Services', 'Financial Services'),
+            ('Fine Art', 'Fine Art'),
+            ('Fishery', 'Fishery'),
+            ('Food & Beverages', 'Food & Beverages'),
+            ('Food Production', 'Food Production'),
+            ('Fundraising', 'Fundraising'),
+            ('Furniture', 'Furniture'),
+            ('Gambling & Casinos', 'Gambling & Casinos'),
+            ('Glass, Ceramics & Concrete', 'Glass, Ceramics & Concrete'),
+            ('Government Administration', 'Government Administration'),
+            ('Government Relations', 'Government Relations'),
+            ('Graphic Design', 'Graphic Design'),
+            ('Health, Wellness & Fitness', 'Health, Wellness & Fitness'),
+            ('Higher Education', 'Higher Education'),
+            ('Hospital & Health Care', 'Hospital & Health Care'),
+            ('Hospitality', 'Hospitality'),
+            ('Human Resources', 'Human Resources'),
+            ('Import & Export', 'Import & Export'),
+            ('Individual & Family Services', 'Individual & Family Services'),
+            ('Industrial Automation', 'Industrial Automation'),
+            ('Information Services', 'Information Services'),
+            ('Information Technology & Services', 'Information Technology & Services'),
+            ('Insurance', 'Insurance'),
+            ('International Affairs', 'International Affairs'),
+            ('International Trade & Development', 'International Trade & Development'),
+            ('Internet', 'Internet'),
+            ('Investment Banking/Venture', 'Investment Banking/Venture'),
+            ('Investment Management', 'Investment Management'),
+            ('Judiciary', 'Judiciary'),
+            ('Law Enforcement', 'Law Enforcement'),
+            ('Law Practice', 'Law Practice'),
+            ('Legal Services', 'Legal Services'),
+            ('Legislative Office', 'Legislative Office'),
+            ('Leisure & Travel', 'Leisure & Travel'),
+            ('Libraries', 'Libraries'),
+            ('Logistics & Supply Chain', 'Logistics & Supply Chain'),
+            ('Luxury Goods & Jewelry', 'Luxury Goods & Jewelry'),
+            ('Machinery', 'Machinery'),
+            ('Management Consulting', 'Management Consulting'),
+            ('Maritime', 'Maritime'),
+            ('Marketing & Advertising', 'Marketing & Advertising'),
+            ('Market Research', 'Market Research'),
+            ('Mechanical or Industrial Engineering', 'Mechanical or Industrial Engineering'),
+            ('Media Production', 'Media Production'),
+            ('Medical Device', 'Medical Device'),
+            ('Medical Practice', 'Medical Practice'),
+            ('Mental Health Care', 'Mental Health Care'),
+            ('Military', 'Military'),
+            ('Mining & Metals', 'Mining & Metals'),
+            ('Motion Pictures & Film', 'Motion Pictures & Film'),
+            ('Museums & Institutions', 'Museums & Institutions'),
+            ('Music', 'Music'),
+            ('Nanotechnology', 'Nanotechnology'),
+            ('Newspapers', 'Newspapers'),
+            ('Nonprofit Organization Management', 'Nonprofit Organization Management'),
+            ('Oil & Energy', 'Oil & Energy'),
+            ('Online Publishing', 'Online Publishing'),
+            ('Outsourcing/Offshoring', 'Outsourcing/Offshoring'),
+            ('Package/Freight Delivery', 'Package/Freight Delivery'),
+            ('Packaging & Containers', 'Packaging & Containers'),
+            ('Paper & Forest Products', 'Paper & Forest Products'),
+            ('Performing Arts', 'Performing Arts'),
+            ('Pharmaceuticals', 'Pharmaceuticals'),
+            ('Philanthropy', 'Philanthropy'),
+            ('Photography', 'Photography'),
+            ('Plastics', 'Plastics'),
+            ('Political Organization', 'Political Organization'),
+            ('Primary/Secondary', 'Primary/Secondary'),
+            ('Printing', 'Printing'),
+            ('Professional Training', 'Professional Training'),
+            ('Program Development', 'Program Development'),
+            ('Public Policy', 'Public Policy'),
+            ('Public Relations', 'Public Relations'),
+            ('Public Safety', 'Public Safety'),
+            ('Publishing', 'Publishing'),
+            ('Railroad Manufacture', 'Railroad Manufacture'),
+            ('Ranching', 'Ranching'),
+            ('Real Estate', 'Real Estate'),
+            ('Recreational', 'Recreational'),
+            ('Facilities & Services', 'Facilities & Services'),
+            ('Religious Institutions', 'Religious Institutions'),
+            ('Renewables & Environment', 'Renewables & Environment'),
+            ('Research', 'Research'),
+            ('Restaurants', 'Restaurants'),
+            ('Retail', 'Retail'),
+            ('Security & Investigations', 'Security & Investigations'),
+            ('Semiconductors', 'Semiconductors'),
+            ('Shipbuilding', 'Shipbuilding'),
+            ('Sporting Goods', 'Sporting Goods'),
+            ('Sports', 'Sports'),
+            ('Staffing & Recruiting', 'Staffing & Recruiting'),
+            ('Supermarkets', 'Supermarkets'),
+            ('Telecommunications', 'Telecommunications'),
+            ('Textiles', 'Textiles'),
+            ('Think Tanks', 'Think Tanks'),
+            ('Tobacco', 'Tobacco'),
+            ('Translation & Localization', 'Translation & Localization'),
+            ('Transportation/Trucking/Railroad', 'Transportation/Trucking/Railroad'),
+            ('Utilities', 'Utilities'),
+            ('Venture Capital', 'Venture Capital'),
+            ('Veterinary', 'Veterinary'),
+            ('Warehousing', 'Warehousing'),
+            ('Wholesale', 'Wholesale'),
+            ('Wine & Spirits', 'Wine & Spirits'),
+            ('Wireless', 'Wireless'),
+            ('Writing & Editing', 'Writing & Editing')
+    ]
+
+    if request.method == 'GET':
+        # Extract query parameters
+        country = request.args.get('country')
+        state = request.args.get('state')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        date_filter = request.args.get('date_filter')
+        keyword= request.args.get('keyword')
+
+        if country or state or job_type or industry or date_filter or keyword:
+            jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
+            return redirect(url_for('job_search'))
+
+    return render_template('jobseeker/jobs_search_1.html', countries=countries, job_types=job_types, industries=industries)
+
+
+
+@app.route('/applicants/filter', methods=['GET', 'POST'])
+def applicants_filter():
+    job_types = static_dropdowns.job_types
+    industries = static_dropdowns.industries
+    companies = api_calls.admin_get_all_companies()
+    if companies.status_code == 200:
+        companies = companies.json()
+    else:
+        companies = []
+
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        company = request.args.get('company')
+        job_title =request.args.get('job_title')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        start_date = request.args.get('application_start_date')
+        end_date = request.args.get('application_end_date')
+
+
+        if name or email or job_type or industry or company or job_title or job_type or start_date or end_date:
+            return redirect(url_for('applicants_search',
+                                    name=name,
+                                    email=email,
+                                    company=company,
+                                    job_title=job_title,
+                                    job_type=job_type,
+                                    industry=industry,
+                                    application_start_date=start_date,
+                                    application_end_date=end_date))
+
+
+
+
+    return render_template('admin/applicant_search.html', job_types=job_types, companies=companies, industries=industries)
+
+@app.route('/applicants/search', methods=['GET', 'POST'])
+def applicants_search():
+    job_types = static_dropdowns.job_types
+    industries = static_dropdowns.industries
+    companies = api_calls.admin_get_all_companies()
+    if companies.status_code == 200:
+        companies = companies.json()
+    else:
+        companies = []
+
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        company = request.args.get('company')
+        job_title =request.args.get('job_title')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        start_date = request.args.get('application_start_date')
+        end_date = request.args.get('application_end_date')
+
+        applicants=[]
+
+        params = {}
+        if name:
+            params['name'] = name
+        if email:
+            params['email'] = email
+        if company:
+            params['company'] = company
+        if job_title:
+            params['job_title'] = job_title
+        if job_type:
+            params['job_type'] = job_type
+        if industry:
+            params['industry'] = industry
+        if start_date:
+            params['application_start_date'] = start_date
+        if end_date:
+            params['application_end_date'] = end_date
+
+
+        if name or email or job_type or industry or company or job_title or job_type or start_date or end_date:
+
+            applicants = api_calls.get_filtered_applicants(params = params)
+            print(applicants)
+
+    return render_template('admin/applicant_results.html', job_types=job_types, companies=companies, industries=industries, applicants=applicants)
+
+
+@app.route('/employer/applicants/filter', methods=['GET', 'POST'])
+def employer_applicants_filter():
+    job_types = static_dropdowns.job_types
+    industries = static_dropdowns.industries
+
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        job_title =request.args.get('job_title')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        start_date = request.args.get('application_start_date')
+        end_date = request.args.get('application_end_date')
+
+
+        if name or email or job_type or industry or job_title or job_type or start_date or end_date:
+            return redirect(url_for('employer_applicants_search',
+                                    name=name,
+                                    email=email,
+                                    job_title=job_title,
+                                    job_type=job_type,
+                                    industry=industry,
+                                    application_start_date=start_date,
+                                    application_end_date=end_date))
+
+
+
+
+    return render_template('cms/employer/applicant_search.html', job_types=job_types, industries=industries)
+
+
+@app.route('/employer/applicants/search', methods=['GET', 'POST'])
+def employer_applicants_search():
+    job_types = static_dropdowns.job_types
+    industries = static_dropdowns.industries
+    statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
+    if statuses is None:
+        statuses = static_dropdowns.statuses
+
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        job_title =request.args.get('job_title')
+        job_type = request.args.get('job_type')
+        industry = request.args.get('industry')
+        start_date = request.args.get('application_start_date')
+        end_date = request.args.get('application_end_date')
+
+        applicants=[]
+
+        params = {}
+        if name:
+            params['name'] = name
+        if email:
+            params['email'] = email
+        if job_title:
+            params['job_title'] = job_title
+        if job_type:
+            params['job_type'] = job_type
+        if industry:
+            params['industry'] = industry
+        if start_date:
+            params['application_start_date'] = start_date
+        if end_date:
+            params['application_end_date'] = end_date
+
+
+        if name or email or job_type or industry or job_title or job_type or start_date or end_date:
+
+            applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
+
+    return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
+
+
+
+@app.route('/jobseeker/filter', methods=['GET', 'POST'])
+def jobseekers_filter():
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        jobseeker_id = request.args.get('jobseeker_id')
+        phone_no = request.args.get('phone_no')
+
+
+
+        if name or email or jobseeker_id or phone_no:
+            return redirect(url_for('jobseekers_search',
+                                    name=name,
+                                    email=email,
+                                    jobseeker_id=jobseeker_id,
+                                    phone_no=phone_no
+                                    ))
+
+    return render_template('admin/jobseeker_search.html')
+
+
+@app.route('/jobseeker/search', methods=['GET', 'POST'])
+def jobseekers_search():
+    if request.method == 'GET':
+        # Extract query parameters
+        name = request.args.get('name')
+        email = request.args.get('email')
+        jobseeker_id = int(request.args.get('jobseeker_id')) if request.args.get('jobseeker_id') != '' else None
+        phone_no = request.args.get('phone_no')
+        print(name)
+        print(email)
+        print(jobseeker_id)
+        print(phone_no)
+        print('inside if request method get')
+
+
+        jobseekers = []
+        if name or email or jobseeker_id or phone_no:
+            print('going to make api call')
+            jobseekers= api_calls.get_filtered_jobseekers(name=name,email=email,jobseeker_id=jobseeker_id,phone_no=phone_no)
+
+    return render_template('admin/jobseeker_search_results.html', jobseekers=jobseekers)
+
+
+
+
+@app.route('/admin/stats')
+@requires_any_permission("manage_user")
+@login_required
+def admin_stats():
+    data = api_calls.get_admin_stats() or {}
+    return render_template('admin/admin_stats_reports.html', data=data)
+
+
+@app.route('/reports')
+@requires_any_permission("manage_posts")
+@login_required
+def employer_reports():
+    stats = api_calls.get_employer_reports(access_token=current_user.id) or {}
+    total_jobs = stats["total_jobs"]
+    total_views = stats["total_views"]
+    applicants_count = stats["applicants_count"]
+    in_progress_jobs = stats["in_progress_jobs"]
+    statuses = stats["statuses"]
+
+    # Add these new fields
+    jobs_by_industry = stats["jobs_by_industry"]
+    jobs_by_views = stats["jobs_by_views"]
+    jobs_by_applicants = stats["jobs_by_applicants"]
+
+    return render_template('cms/employer/employer_reports.html',
+                           total_jobs=total_jobs, total_views=total_views,
+                           applicants_count=applicants_count, in_progress_jobs=in_progress_jobs,
+                           statuses=statuses, jobs_by_industry=jobs_by_industry,
+                           jobs_by_views=jobs_by_views, jobs_by_applicants=jobs_by_applicants)
 
 
 #####################################################################################################################################

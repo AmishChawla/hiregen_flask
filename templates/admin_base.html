@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}SaaS CMS Boilerplate{% endblock %}</title>
+  <title>{% block title %}HirGen{% endblock %}</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -28,6 +28,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
   <style>
+    body {
+   font-family: 'Roboto', sans-serif;
+   height:100vh;
+   min-height: 100vh;
+    }
+
     .content-wrapper {
       background-color: #ffffff;
     }
@@ -112,7 +118,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class=" main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#index3.html" class="brand-link">
+    <a  class="brand-link">
       <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">SaaS CMS</span>
     </a>
@@ -145,52 +151,101 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'get_all_subscriptions' %}active{% endif %}" href="{{ url_for('get_all_subscriptions') }}">
+              <i class="far fa fa-history nav-icon"></i>
+              <p>
+                Orders
+              </p>
+            </a>
+
+          <ul class="nav nav-treeview">
+
+               <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'get_all_subscriptions' %}active{% endif %}" href="{{ url_for('get_all_subscriptions') }}">
+                  <i class="far fa fa-history nav-icon"></i>
+                  <p>
+                    Subscriptions
+                  </p>
+                </a>
+
+              </li>
+
+            <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'list_of_plans' %}active{% endif %}" href="{{ url_for('list_of_plans') }}">
+              <i class="far bi bi-currency-rupee nav-icon"></i>
+              <p>
+                Plans Config
+              </p>
+            </a>
+          </li>
+
+          </ul>
+
+
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('list_of_sites') }}" class="nav-link {% if request.endpoint == 'list_of_sites' %} active {% endif %}">
+              <i class="far bi bi-window-stack nav-icon"></i>
+              <p>Sites</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('list_of_companies') }}" class="nav-link {% if request.endpoint == 'list_of_companies' %} active {% endif %}">
+              <i class="far bi bi-building nav-icon"></i>
+              <p>Companies</p>
+            </a>
+          </li>
+          <li class="nav-item">
                 <a href="{{ url_for('list_of_users') }}" class="nav-link {% if request.endpoint == 'list_of_users' %} active {% endif %}">
                   <i class="far fa-thin fa-newspaper nav-icon"></i>
                   <p>Employers</p>
                 </a>
               </li>
-
           <li class="nav-item">
                 <a href="{{ url_for('admin_all_jobseekers') }}" class="nav-link {% if request.endpoint == 'admin_all_jobseekers' %} active {% endif %}">
                   <i class="far fa-thin fa-newspaper nav-icon"></i>
                   <p>Jobseekers</p>
                 </a>
               </li>
-
-
           <li class="nav-item">
                 <a href="{{ url_for('admin_all_jobs') }}" class="nav-link {% if request.endpoint == 'admin_all_jobs' %} active {% endif %}">
                   <i class="far fa-thin fa-newspaper nav-icon"></i>
                   <p>Jobs</p>
                 </a>
               </li>
-
           <li class="nav-item">
                 <a href="{{ url_for('all_applicants_for_admin') }}" class="nav-link {% if request.endpoint == 'all_applicants_for_admin' %} active {% endif %}">
                   <i class="far fa-thin fa-newspaper nav-icon"></i>
                   <p>Applicants</p>
                 </a>
               </li>
+          <li class="nav-item">
+    <a href="{{ url_for('jobs_filter') }}" class="nav-link {% if request.endpoint == 'jobs_filter' %} active {% endif %}">
+      <i class="far fa-thin fa-newspaper nav-icon"></i>
+      <p>Search</p>
+    </a>
+        <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                <a href="{{ url_for('jobs_filter') }}" class="nav-link {% if request.endpoint == 'jobs_filter' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Search Jobs</p>
+                </a>
+              </li>
+          <li class="nav-item">
+                <a href="{{ url_for('applicants_filter') }}" class="nav-link {% if request.endpoint == 'applicants_filter' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Search Applicants</p>
+                </a>
+              </li>
+          <li class="nav-item">
+                <a href="{{ url_for('jobseekers_filter') }}" class="nav-link {% if request.endpoint == 'jobseekers_filter' %} active {% endif %}">
+                  <i class="far fa-thin fa-newspaper nav-icon"></i>
+                  <p>Search JobSeekers</p>
+                </a>
+              </li>
 
-            <li class="nav-item">
-                <a href="{{ url_for('list_of_sites') }}" class="nav-link {% if request.endpoint == 'list_of_sites' %} active {% endif %}">
-                  <i class="far bi bi-window-stack nav-icon"></i>
-                  <p>Sites</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url_for('list_of_companies') }}" class="nav-link {% if request.endpoint == 'list_of_companies' %} active {% endif %}">
-                  <i class="far bi bi-building nav-icon"></i>
-                  <p>Companies</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ url_for('resume_history') }}" class="nav-link {% if request.endpoint == 'resume_history' %} active {% endif %}">
-                  <i class="far  bi bi-file-code nav-icon"></i>
-                  <p>Resume Parsing</p>
-                </a>
-              </li>
+        </ul>
+  </li>
           <li class="nav-item">
             <a class="nav-link {% if request.endpoint == 'trash' %}active{% endif %}" href="{{ url_for('trash') }}">
                 <i class="nav-icon far bi bi-trash3-fill"></i>
@@ -200,20 +255,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'setting' %}active{% endif %}" href="{{ url_for('setting') }}">
-              <i class="far bi bi-gear nav-icon"></i>
-              <p>
-                Settings
-              </p>
-            </a>
-          </li>
+<a class="nav-link {% if request.endpoint == 'admin_stats' %}active{% endif %}" href="{{ url_for('admin_stats') }}">
+    <i class="nav-icon far bi bi-trash3-fill"></i>
+  <p>
+    Stats
+  </p>
+</a>
+</li>
           <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'get_all_subscriptions' %}active{% endif %}" href="{{ url_for('get_all_subscriptions') }}">
-              <i class="far fa fa-history nav-icon"></i>
-              <p>
-                Order History
-              </p>
-            </a>
+              <a class="nav-link">
+              <i class="nav-icon far bi bi-gear-fill"></i>
+            <p> Settings </p>
+              </a>
+            <ul class="nav nav-treeview">
+
+               <li class="nav-item">
+                <a class="nav-link {% if request.endpoint == 'admin_email_setup' %}active{% endif %}" href="{{ url_for('admin_email_setup') }}">
+                  <i class="far bi bi-envelope nav-icon"></i>
+                  <p>
+                    Email Config
+                  </p>
+                </a>
+              </li>
+          </ul>
+
           </li>
         </ul>
       </nav>
@@ -254,67 +319,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
        {% endblock %}
   </div>
   <!-- /.content-wrapper -->
-
-
-
-  <!-- Main Footer -->
-<footer id="footer" class="py-5 bg-light" style="margin-top: 25vh;width:100%">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>SaaS CMS</h3>
-            <p>
-              Shalimar Bagh  <br>
-               New Delhi 110088<br>
-              India <br><br>
-              <strong>Phone:</strong> 9810336906<br>
-              <strong>Email:</strong> info@aynsoft.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-         <div class="col-lg-3 col-md-6 footer-links">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter bx-md"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook bx-md"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram bx-md"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype bx-md"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin bx-md"></i></a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-
-  </footer>
 
 </div>
 <!-- ./wrapper -->
@@ -437,4 +441,14 @@ function redirectToPage(pageUrl) {
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 

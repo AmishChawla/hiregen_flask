@@ -1,47 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ company.name }} - Company Details</title>
+
+{% if current_user %}
+    {% if current_user.role =='user' %}
+        {% extends 'base.html' %}
+    {% elif current_user.role == jobseeker %}
+        {% extends 'jobseeker/jobseeker_base.html' %}
+    {% endif %}
+{% elif current_user == None %}
+    {% extends 'base.html' %}
+{% endif %}
+{% block title %}{{company.name}}{% endblock %}
+
+{% block content %}
+
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Google Fonts - Roboto -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f4f6f9;
-            font-family: 'Roboto', sans-serif;
-            padding: 40px 20px;
-        }
+        /* Global Styles */
         .container-flex {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column; /* Stack vertically */
             gap: 30px;
+            margin-top: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .card-flex {
+        .merged-card {
             background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            flex: 1 1 45%;
-            min-width: 300px;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            min-height: 90vh; /* Fixed height for both cards */
-            height: 90vh;
         }
+        /* Company Details Styles */
         .company-card {
             text-align: center;
-            overflow: hidden; /* Hide any overflow */
+            overflow: hidden;
+            margin-bottom: 30px;
         }
-        .custom-link {
-            text-decoration: none;
-            color: #007bff;
-        }
-
         .company-logo {
             max-width: 150px;
             max-height: 150px;
@@ -51,6 +56,10 @@
             border: 2px solid #e9ecef;
             padding: 10px;
             background-color: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+        .company-logo:hover {
+            transform: scale(1.05);
         }
         .company-name {
             font-size: 2rem;
@@ -66,9 +75,9 @@
             justify-content: center;
             align-items: center;
         }
-        .info-icon {
+        .danger-icon {
             margin-right: 10px;
-            color: #dc3545; /* Reddish color for location icon */
+            color: red; /* Primary color for consistency */
             font-size: 1.2rem;
         }
         .company-description {
@@ -78,40 +87,43 @@
             margin-bottom: 25px;
             text-align: left;
             flex-grow: 1; /* Allows description to take available space */
-            max-height: 30vh; /* Collapse to 100px */
+            max-height: 200px; /* Initial collapsed height */
             overflow: hidden; /* Hide overflow for collapsed state */
-            transition: max-height 0.3s ease; /* Smooth transition */
+            transition: max-height 0.3s ease;
         }
         .company-description.expanded {
-            max-height: 50vh; /* Adjust max-height when expanded */
+            max-height: 500px; /* Expanded height */
             overflow-y: auto; /* Allow scrolling */
         }
+        .read-more {
+            cursor: pointer;
+            color: #0d6efd;
+            font-weight: bold;
+            text-align: left;
+            align-self: flex-start;
+            margin-bottom: 10px;
+        }
+        /* Job Posts Styles */
         .job-posts {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            width: 100%;
+        }
+        .job-posts h4 {
+            color: #343a40;
+            margin-bottom: 20px;
         }
         .job-posts-content {
             overflow-y: auto; /* Scroll if content overflows */
             flex-grow: 1; /* Take available space */
         }
         .job-title {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: bold;
             color: #0d6efd;
             margin-bottom: 5px;
+            text-decoration: none;
         }
-        .job-description {
-            font-size: 1rem;
-            color: #6c757d;
-            margin-bottom: 15px;
-        }
-        .apply-button {
-            margin-bottom: 15px;
+        .job-title:hover {
+            text-decoration: underline;
         }
         .no-jobs {
             font-size: 1.1rem;
@@ -119,113 +131,190 @@
             text-align: center;
             margin-top: 50px;
         }
-        .read-more {
-            cursor: pointer;
-            color: #0d6efd;
-            font-weight: bold;
-            text-align: left;
+
+        #companysocial {
+            padding: 20px 0;
+            background-color: #f8f9fa; /* Light grey background */
         }
 
+        #companysocial a {
+            color: #6c757d; /* Default color */
+            margin: 0 10px;
+            font-size: 24px; /* Size of the icons */
+            transition: color 0.3s ease;
+        }
+
+        #companysocial a:hover {
+            color: #343a40; /* Darker hover color */
+        }
+
+        /* Specific colors for each social icon */
+        #companysocial a:nth-child(1) i { /* LinkedIn */
+            color: #0077b5;
+        }
+
+        #companysocial a:nth-child(2) i { /* Google Maps */
+            color: #db4437;
+        }
+
+        #companysocial a:nth-child(3) i { /* Twitter */
+            color: black;
+        }
+
+        #companysocial a:nth-child(4) i { /* Instagram */
+            color: #e4405f;
+        }
+
+        /* Ensure the social icons are displayed in a row and centered */
+        #companysocial {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Make it responsive for mobile screens */
+        @media (max-width: 576px) {
+            #companysocial {
+                flex-direction: column;
+            }
+            #companysocial a {
+                margin: 10px 0;
+            }
+        }
+
+        /* Responsive Adjustments */
         @media (max-width: 992px) {
             .container-flex {
                 flex-direction: column;
                 align-items: center;
             }
-            .card-flex {
+            .merged-card {
                 width: 100%;
-                height: auto; /* Allow height to adjust on smaller screens */
-            }
-            .company-description, .job-posts-content {
-                max-height: 300px; /* Adjust max-height for smaller screens */
             }
         }
     </style>
-</head>
-<body>
-<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
 
+    <!-- Main Container -->
     <div class="container container-flex">
-        <!-- Left Column: Company Details -->
-        <div class="card-flex company-card">
-            <!-- Company Logo -->
-            {% if company.company_logo %}
-                <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="company-logo img-fluid">
-            {% else %}
-                <img src="https://via.placeholder.com/150" alt="Default Logo" class="company-logo img-fluid">
-            {% endif %}
-
-            <!-- Company Name -->
-            <div class="company-name">{{ company.name }}</div>
-
-            <!-- Location -->
-            <div class="company-info">
-                <i class="bi bi-geo-alt-fill info-icon"></i>
-                {{ company.location }}
-            </div>
-
-            <!-- Company Description -->
-            <div id="companyDescription" class="company-description">
-                {{ company.description }}
-            </div>
-            <div id="readMoreBtn" class="read-more">Read more...</div>
-            <!-- Note: Website URL and "Visit Website" Button Removed -->
-        </div>
-
-        <!-- Right Column: Job Posts -->
-        <div class="card-flex job-posts">
-            <h4 class="mb-4">Job Openings</h4>
-            <div class="job-posts-content">
-                {% if job_posts and job_posts|length > 0 %}
-                <table id="jobs_table" class="table table-hover table-lg" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Posted On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in job_posts %}
-              {% if data.job_opening_status == 'Active' and data.status == 'published' %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a style="text-decoration:none; font-size:0.9rem; font-weight: bold;" href="{{ url_for('get_post_by_username_and_slug', username=data.author_name, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="text-primary"> {{ data.job_title }}</a></td>
-                <td class="py-1 date-cell text-secondary" style="font-size:0.9rem;" > {{data.created_at.split('T')[0]}}</td>
-              </tr>
-              {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
+        <!-- Merged Company Details and Job Posts Card -->
+        <div class="merged-card">
+            <!-- Company Details -->
+            <div class="company-card" id="company">
+                <!-- Company Logo -->
+                {% if company.company_logo %}
+                    <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="company-logo img-fluid">
                 {% else %}
-                    <div class="no-jobs">No Job Openings right now.</div>
+                    <img src="https://via.placeholder.com/150" alt="Default Logo" class="company-logo img-fluid">
                 {% endif %}
+
+                <!-- Company Name -->
+                <div class="company-name">{{ company.name }}</div>
+
+                <!-- Location -->
+                <div class="company-info">
+                    <i class="bi bi-geo-alt-fill danger-icon" aria-hidden="true"></i>
+                    <span>{{ company.location }}</span>
+                </div>
+
+                <!-- Company Description -->
+                <div id="companyDescription" class="company-description">
+                    {{ company.description }}
+                </div>
+                <div id="readMoreBtn" class="read-more" tabindex="0" role="button" aria-expanded="false" aria-controls="companyDescription">
+                    Read more...
+                </div>
             </div>
+
+            <!-- Job Posts -->
+            <div class="job-posts" id="jobs">
+                <h4>Job Openings</h4>
+                <div class="job-posts-content">
+                    {% if job_posts and job_posts|length > 0 %}
+                        <table id="jobs_table" class="table table-hover table-lg" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Posted On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for data in job_posts %}
+                                    {% if data.job_opening_status == 'Active' and data.status == 'published' %}
+                                        <tr>
+                                            <td>
+                                                <a href="{{ url_for('get_post_by_username_and_slug', username=data.author_name, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+                                                   class="job-title" aria-label="Job Title: {{ data.job_title }}">
+                                                    {{ data.job_title }}
+                                                </a>
+                                            </td>
+                                            <td class="date-cell text-secondary" style="font-size: 0.9rem;">{{ data.created_at.split('T')[0] }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="no-jobs">No Job Openings right now.</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="companysocial" class="text-center d-flex">
+                <a href="{{company.linkedin_url}}"><i class="bi bi-linkedin"></i></a>
+                <a href="{{company.google_map_url}}"><i class="bi bi-geo-alt-fill"></i></a>
+                <a href="{{company.twitter_url}}"><i class="bi bi-twitter-x"></i></a>
+                <a href="{{company.instagram_url}}"><i class="bi bi-instagram"></i></a>
+            </div>
+
         </div>
     </div>
 
+    <!-- JavaScript -->
+    <!-- jQuery (required for DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/2.0.3/js/jquery.dataTables.min.js"></script>
+    <!-- Bootstrap JS and dependencies (Popper.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Read More / Show Less Toggle
         document.getElementById('readMoreBtn').addEventListener('click', function() {
             const description = document.getElementById('companyDescription');
             const isExpanded = description.classList.toggle('expanded'); // Toggle the 'expanded' class
             this.textContent = isExpanded ? 'Show less' : 'Read more...';
+            this.setAttribute('aria-expanded', isExpanded);
+        });
+
+        // Format Date to a more readable format
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateCells = document.querySelectorAll('.date-cell');
+
+            dateCells.forEach(cell => {
+                const originalDate = cell.textContent.trim();
+                const dateObj = new Date(originalDate);
+                if (!isNaN(dateObj)) {
+                    const formattedDate = dateObj.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    cell.textContent = formattedDate;
+                }
+            });
+
+            // Initialize DataTables
+            $('#jobs_table').DataTable({
+                "paging": true,
+                "searching": true,
+                "info": false,
+                "language": {
+                    "emptyTable": "No Job Openings right now."
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": 0 }, // Disable ordering on the Position column if needed
+                    { "type": "date", "targets": 1 } // Ensure correct sorting for dates
+                ]
+            });
         });
     </script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const dateCells = document.querySelectorAll('.date-cell');
-
-  dateCells.forEach(cell => {
-    const originalDate = cell.textContent.trim();
-    const formattedDate = new Date(originalDate).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-    cell.textContent = formattedDate;
-  });
-});
-</script>
-
-
-    <!-- Bootstrap JS and dependencies (Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

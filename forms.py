@@ -31,7 +31,28 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    firstname = StringField('First Name')
+    lastname = StringField('Last Name')
+    phone_number = StringField('Mobile')
     username = StringField('Username', validators=[validators.Length(min=4, max=25), validators.DataRequired()])
+    email = StringField('Email', validators=[validators.Email(), validators.DataRequired()])
+    password = PasswordField('Password', validators=[
+        validators.DataRequired(),
+        validators.Length(min=6),
+        validators.Regexp(
+            regex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]",
+            message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+        )
+    ])
+    confirm_password = PasswordField('Confirm Password', validators=[
+        validators.EqualTo('password', message='Passwords must match.')
+    ])
+    submit = SubmitField('Register')
+
+class JobseekerRegisterForm(FlaskForm):
+    firstname = StringField('First Name')
+    lastname = StringField('Last Name')
+    phone_number = StringField('Mobile')
     email = StringField('Email', validators=[validators.Email(), validators.DataRequired()])
     password = PasswordField('Password', validators=[
         validators.DataRequired(),
@@ -184,12 +205,40 @@ class AdminEditCompanyForm(FlaskForm):
     submit = SubmitField('Update Company')
 
 
+class EmployerProfileForm(FlaskForm):
+    # Personal Details
+    firstname = StringField('First Name', validators=[DataRequired()])
+    lastname = StringField('Last Name', validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), validators.Email()])
+    phone_number = StringField('Phone Number', validators=[DataRequired()])
+    profile_picture = FileField('Profile Picture')
+
+    # Company Details
+    company_name = StringField('Company Name', validators=[DataRequired()])
+    company_location = StringField('Location', validators=[DataRequired()])
+    company_website = StringField('Company Website', validators=[DataRequired()])
+    company_description = TextAreaField('Company Description', validators=[DataRequired()])
+    company_logo = FileField('Company Logo')
+
+    # Submit buttons
+    submit = SubmitField('Save Changes')
+    cancel = SubmitField('Cancel')
+
 class UserEditUserForm(FlaskForm):
     profile_picture = FileField('Profile Picture', render_kw={"id": "profile_picture_input", "style": "display: none;"})
     username = StringField('Username', validators=[validators.Length(min=4, max=25), validators.DataRequired()],
                            render_kw={"readonly": True})
     email = StringField('Email', validators=[validators.Email(), validators.DataRequired()],
                         render_kw={"readonly": True})
+    company_name = StringField('Username', validators=[validators.DataRequired()],
+                           render_kw={"readonly": True})
+    company_location = StringField('Username', validators=[validators.DataRequired()],
+                           render_kw={"readonly": True})
+    company_description = TextAreaField('Description',render_kw={"readonly": True})
+    company_website = StringField('Website', validators=[validators.DataRequired()],
+                                   render_kw={"readonly": True})
+    company_logo = FileField('Company Logo', render_kw={"id": "company_logo", "style": "display: none;"})
     submit = SubmitField('Save')
 
 
@@ -228,7 +277,7 @@ class AddPost(FlaskForm):
 
 
 class AddJobOpening(FlaskForm):
-    job_title = StringField('Position')
+    job_title = StringField('Position', validators=[DataRequired(message='This field is required')])
     target_date = DateField('Target Date', default=lambda: (datetime.datetime.now() + datetime.timedelta(days=60)))
     opening_date = DateField('Opening Date', default=datetime.datetime.now())
     job_type = SelectField('Job Type', default='Full Time',choices=[('', 'Select Type'), ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Training', 'Training'), ('Freelance', 'Freelance'), ('Seasonal', 'Seasonal'), ('Contract', 'Contract'), ('Temporary', 'Temporary')])
@@ -243,7 +292,7 @@ class AddJobOpening(FlaskForm):
     job_requirements= TextAreaField('Job Requirements', render_kw={'rows': 30, 'cols': 30, 'id': 'job_requirements'})
     job_benefits= TextAreaField('Job Benefits', render_kw={'rows': 30, 'cols': 30, 'id': 'job_benefits'})
     job_opening_status = SelectField('Job Opening Status', default='Active', choices=[('', 'Select status'),('Active', 'Active')])
-    publish = SubmitField('Publish Post')
+    publish = SubmitField('Publish Job')
     save_draft = SubmitField('Save Draft')
     preview = SubmitField('Preview')
 
@@ -575,7 +624,9 @@ class AccomplishmentForm(FlaskForm):
 
 
 class CollectNameForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+
+    firstname = StringField('First Name', validators=[DataRequired()])
+    lastname = StringField('Last Name', validators=[DataRequired()])
     submit = SubmitField('Change Name')
 
 

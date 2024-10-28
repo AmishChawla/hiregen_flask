@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}User's all posts{% endblock %}
+{% block title %}Job Opening{% endblock %}
 
 {% block content %}
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+
+   {% if current_user.company == None %}
+    <div class="alert alert-warning mt-1" role="alert">
+        <i class="bi bi-exclamation-triangle-fill mr-1"></i>
+        Register company to start posting jobs  <a href="{{url_for('company_register')}}" class="alert-link ml-1" style="text-decoration:none;">here</a>
+    </div>
+    {% endif %}
+
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
       <div class="card">
         <div class="card-body" style="overflow-x: auto;">
           <div style="display:flex; justify-content:space-between;">
-            <h2 class="m-0">My Posts</h2>
+            <h2 class="m-0">Jobs</h2>
             <div style="display: flex; justify-content: space-between;">
               <a href="{{ url_for('company_details_by_company_slug', company_slug=current_user.company['company_slug']) }}" class="d-block" style="margin-right:0.5rem; margin-top:6px; font-weight:bolder; font-size:1.1rem;">Visit Site</a>
 
               <a class="btn btn-info" href="{{ url_for('add_post')}}" style="padding: 6px 30px 6px 30px;">
-                <span class="menu-title">Write new Post</span>
+                <span class="menu-title">Create Job</span>
               </a>
             </div>
           </div>

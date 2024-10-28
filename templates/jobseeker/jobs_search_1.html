@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search - HireGen</title>
+    <!-- Google Fonts - Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Select2 Bootstrap 4 Theme -->
+    <link href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@1.5.2/dist/select2-bootstrap4.min.css" rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <style>
+        /* Apply Roboto font to the entire page */
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .job-search-container {
+            background-color: #ffffff; /* Background color for the card */
+            padding: 40px;
+            border-bottom: 1px solid #dee2e6; /* Subtle border to separate from content */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: subtle shadow */
+            max-width: 600px; /* Set a max-width for better centering */
+            margin: 50px auto; /* Center the container horizontally and add top margin */
+            border-radius: 10px; /* Rounded corners for aesthetics */
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, border-color 0.3s;
+            font-weight: bold; /* Bold text on button */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Select2 Styles */
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            text-align: left; /* Left-align the selected text */
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single {
+            text-align: left; /* Ensure the container aligns text to the left */
+        }
+
+        .select2-container .select2-selection--single {
+            height: 38px;
+            display: flex;
+            align-items: center; /* Center the text vertically */
+        }
+
+        .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+            line-height: 38px; /* Match the height of the selection box */
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 50%; /* Center the arrow vertically */
+            transform: translateY(-50%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .job-search-container {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Job Search Form -->
+    <div class="job-search-container">
+        <div class="container">
+            <!-- Heading "HireGen" -->
+            <div class="d-flex align-items-center mb-4">
+                <i class="bi bi-briefcase-fill me-2" style="font-size: 1.5rem; color: #007bff;"></i>
+                <h1 class="h4 mb-0">HireGen</h1>
+            </div>
+            <form method="GET" action="{{ url_for('jobs_search') }}">
+                <!-- Keyword Input Field -->
+                <div class="mb-3">
+                    <label for="keyword" class="form-label">
+                        <i class="bi bi-search"></i> Keyword
+                    </label>
+                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter keyword (e.g., job title, company name, etc.)">
+                </div>
+
+                <div class="mb-3">
+                    <!-- Country Dropdown -->
+                    <label for="country" class="form-label">
+                        <i class="bi bi-geo-alt-fill"></i> Country
+                    </label>
+                    <select name="country" id="country" class="form-select searchable-dropdown" data-placeholder="Select Country">
+                        <option value="">Select Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country }}">{{ country }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <!-- State Input -->
+                    <label for="state" class="form-label">
+                        <i class="bi bi-map-fill"></i> State
+                    </label>
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+                </div>
+
+                <div class="mb-3">
+                    <!-- Job Type Dropdown -->
+                    <label for="job_type" class="form-label">
+                        <i class="bi bi-briefcase-fill"></i> Job Type
+                    </label>
+                    <select name="job_type" id="job_type" class="form-select searchable-dropdown" data-placeholder="Select Job Type">
+                        <option value="">Select Job Type</option>
+                        {% for value, label in job_types %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <!-- Industry Dropdown -->
+                    <label for="industry" class="form-label">
+                        <i class="bi bi-building-fill"></i> Industry
+                    </label>
+                    <select name="industry" id="industry" class="form-select searchable-dropdown" data-placeholder="Select Industry">
+                        <option value="">Select Industry</option>
+                        {% for value, label in industries %}
+                            <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <!-- Posted On Dropdown -->
+                    <label for="posted_on" class="form-label">
+                        <i class="bi bi-calendar-event-fill"></i> Posted On
+                    </label>
+                    <select name="date_filter" id="posted_on" class="form-select searchable-dropdown" data-placeholder="Select Date Range">
+                        <option value="">Select Date Range</option>
+                        <option value="last_24_hours">Last 24 hours</option>
+                        <option value="last_week">Last Week</option>
+                        <option value="last_month">Last Month</option>
+                    </select>
+                </div>
+
+                <!-- Search Button -->
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-search"></i> Search Jobs
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            $('.searchable-dropdown').select2({
+                placeholder: function(){
+                    return $(this).data('placeholder') || "Select an option";
+                },
+                allowClear: true,
+                width: '100%',
+                theme: 'bootstrap4',
+                // Optional: Customize more Select2 options here
+            });
+        });
+    </script>
+</body>
+</html>

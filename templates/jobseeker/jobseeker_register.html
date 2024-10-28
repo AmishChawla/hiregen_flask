@@ -35,16 +35,26 @@
 
                         <form method="post" action="{{ url_for('jobseeker_register') }}" id="registeration_form">
     {{ form.hidden_tag() }}
-
-    <div class="mb-3">
-        <label for="username" class="form-label visually-hidden" name="username">Username:</label>
-        {{ form.username(class="form-control", placeholder="Username", required=True) }}
+<div class="d-flex">
+    <div class="mb-3 w-50 mr-2">
+        <label for="firstname" class="form-label visually-hidden" name="firstname">Firstname:</label>
+        {{ form.firstname(class="form-control", placeholder="John", required=True) }}
     </div>
+    <div class="mb-3 w-50">
+        <label for="lastname" class="form-label visually-hidden" name="lastname">Lastname:</label>
+        {{ form.lastname(class="form-control", placeholder="Doe", required=True) }}
+    </div>
+</div>
 
     <div class="mb-3">
         <label for="email" class="form-label visually-hidden" name="email">Email:</label>
-        {{ form.email(class="form-control", placeholder="Email", required=True) }}
+        {{ form.email(class="form-control", placeholder="johndoe@exampe.com", required=True) }}
     </div>
+    <div class="mb-3">
+        <label for="phone_number" class="form-label visually-hidden" name="phone_number">Mobile:</label>
+        {{ form.phone_number(class="form-control", placeholder="Mobile", required=True) }}
+    </div>
+
 
     <div class="mb-3">
         <label for="password" class="form-label visually-hidden" name="password">Password:</label>

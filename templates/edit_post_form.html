@@ -84,15 +84,15 @@
 
                 <div class="form-group">
             {{ form.target_date.label }}
-            {{ form.target_date(class="form-control", id="target_date", required=True) }}
+            {{ form.target_date(class="form-control", id="target_date")}}
         </div>
                         <div class="form-group">
             {{ form.opening_date.label }}
-            {{ form.opening_date(class="form-control", id="opening_date", required=True) }}
+            {{ form.opening_date(class="form-control", id="opening_date") }}
         </div>
             <div class="form-group">
             {{ form.job_opening_status.label }}
-            {{ form.job_opening_status(class="form-control", id="job_opening_status", required=True) }}
+            {{ form.job_opening_status(class="form-control", id="job_opening_status") }}
         </div>
 
 
@@ -118,17 +118,20 @@
 
         <div class="form-group">
             {{ form.job_title.label }}
-            {{ form.job_title(class="form-control", placeholder="Position", required=True) }}
+            {{ form.job_title(class="form-control", placeholder="Position") }}
+            {% if form.job_title.errors %}
+            <small class="text-danger">{{ form.job_title.errors[0] }}</small>
+            {% endif %}
         </div>
                 <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
 
         <div class="w-50 mr-3">
             {{ form.salary.label }}
-            {{ form.salary(class="form-control", id="salary", required=True) }}
+            {{ form.salary(class="form-control", id="salary") }}
         </div>
         <div class="w-50">
             {{ form.work_experience.label }}
-            {{ form.work_experience(class="form-control", id="work_experience", required=True) }}
+            {{ form.work_experience(class="form-control", id="work_experience") }}
         </div>
 
                     </div>
@@ -136,28 +139,28 @@
 
         <div class="w-50 mr-3">
             {{ form.job_type.label }}
-            {{ form.job_type(class="form-control", id="job_type", required=True) }}
+            {{ form.job_type(class="form-control", id="job_type") }}
         </div>
                 <div class="w-50">
             {{ form.industry.label }}
-            {{ form.industry(class="form-control", id="industry", required=True) }}
+            {{ form.industry(class="form-control", id="industry") }}
         </div>
 </div>
             <div class="form-group">
                 {{ form.address_country.label }}
-            {{ form.address_country(class="form-control", placeholder="Country", required=True) }}
+            {{ form.address_country(class="form-control", placeholder="Country") }}
         </div>
         <div class="form-group">
             {{ form.address_province.label }}
-            {{ form.address_province(class="form-control", placeholder="Province", required=True) }}
+            {{ form.address_province(class="form-control", placeholder="Province") }}
         </div>
             <div class="form-group">
                 {{ form.address_city.label }}
-            {{ form.address_city(class="form-control", placeholder="City", required=True) }}
+            {{ form.address_city(class="form-control", placeholder="City") }}
         </div>
             <div class="form-group">
                 {{ form.address_postal_code.label }}
-            {{ form.address_postal_code(class="form-control", placeholder="Postal Code", required=True) }}
+            {{ form.address_postal_code(class="form-control", placeholder="Postal Code") }}
         </div>
 
 

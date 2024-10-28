@@ -37,7 +37,7 @@
   <header id="header" class="fixed-top ">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html"><img src="/static/images/logo.png" alt="Logo" height="30" class="d-inline-block align-top">
+      <h1 class="logo me-auto"><a href="index.html" style="text-decoration:none;"><img src="/static/images/logo.png" alt="Logo" height="30" class="d-inline-block align-top">
                 HireGen</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -45,7 +45,6 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="#features">Features</a></li>
-          <li><a class="nav-link scrollto" href="#faq">FAQs</a></li>
                         <li class="nav-link dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="ai" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         AI
@@ -60,10 +59,7 @@
 
                     </ul>
                 </li>
-          <li><a class="nav-link scrollto" href="https://github.com/AmishChawla/saas_cms_flask/blob/main/README.md">Documentation</a></li>
-          <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
           <li><a class="nav-link scrollto" href="{{ url_for('register') }}">Demo</a></li>
-          <li><a class="nav-link scrollto" href="https://github.com/AmishChawla/saas_cms_flask">Github</a></li>
 
           {% if current_user.is_authenticated %}
               <li class="nav-link dropdown">

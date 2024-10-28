@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 
-{% block title %}Add Post{% endblock %}
+{% block title %}Add Job{% endblock %}
 
 {% block content %}
 <style>
@@ -176,11 +176,18 @@
         </div>
         </div>
     </aside>
+   {% if current_user.company == None %}
+    <div class="alert alert-warning mt-1" role="alert">
+        <i class="bi bi-exclamation-triangle-fill mr-1"></i>
+        Register company to start posting jobs  <a href="{{url_for('company_register')}}" class="alert-link ml-1" style="text-decoration:none;">here</a>
+    </div>
+   {% endif %}
+
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Job Opening</h1>
+                    <h1 class="m-0">Job</h1>
                 </div>
             </div>
         </div>
