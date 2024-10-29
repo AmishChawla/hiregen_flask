@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-
-
 {% block content %}
 <style>
 .profile-hover-wrapper {
@@ -31,12 +29,203 @@
   display: inline-block;
 }
 
+
+.list-group-item {
+    border: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}
+
+.list-group-item i {
+    font-size: 1.2rem;
+}
+
+.list-group-item a {
+    font-size: 0.9rem;
+}
+
+.list-group-item a:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
 </style>
+<style>
+  /* General styling for card */
+  .card {
+    border: none;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  .card-tools a {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .card-tools a:hover {
+    color: #007bfb
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .card-body {
+    padding: 16px;
+    background-color: #fff;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  /* Styling for table inside Resume card */
+  #userResumeTable .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  #userResumeTable td.clickable a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  /* Styling for items inside each section */
+  .container-fluid {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .container-fluid:last-child {
+    border-bottom: none;
+  }
+
+  .container-fluid div {
+    line-height: 1.4;
+  }
+
+  /* Modal styling */
+  .modal .modal-content {
+    border-radius: 8px;
+  }
+
+  /* Trash icon */
+  .float-sm-right a i {
+    transition: color 0.3s ease;
+  }
+
+  .float-sm-right a i:hover {
+    color: #d9534f;
+  }
+</style>
+<style>
+    .upload-resume-card {
+        border: 2px dashed #ccc;
+        padding: 0;
+        text-align: center;
+        position: relative;
+        margin-bottom: 0;
+
+    }
+
+    .upload-resume-card.dragover {
+        border-color: #000;
+    }
+
+    .file-input {
+        position: absolute;
+        left: -9999px;
+    }
+
+    .btn-select, .btn-upload {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .btn-select:hover, .btn-upload:hover {
+        background-color: #0056b3;
+    }
+
+    .file-list {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .file-list p {
+        margin: 0;
+        padding: 5px;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+    }
+
+    .disclaimer {
+        font-size: 14px;
+        color: #555;
+    }
+
+
+.loader {
+  width: 100%;
+  height: 4.8px;
+  display: none;
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+.loader::after {
+  content: '';
+  width: 192px;
+  height: 4.8px;
+  background: #0d6efd;
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  100% {
+    left: 100%;
+    transform: translateX(0%);
+  }
+}
+
+</style>
+
+
 
 <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-3">
 
             <!-- Profile Image -->
               <div class="mt-4 box-profile">
@@ -68,47 +257,64 @@
                   {% if profile_info.phone_number  %}
                   {{ profile_info.phone_number }}
                   {% else %}
-                  No Contact Number
+                  No Mobile Number
                   {% endif %}
                 </div>
                 </p>
 
-                <ul class="list-group list-group-unbordered mb-3">
-  <li class="list-group-item">
-    <a href="#profileSummary" class="link-dark">Profile Summary</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#resume" class="link-dark">Resume</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#education" class="link-dark">Education</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#experience" class="link-dark">Experience</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#internships" class="link-dark">Internships</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#projects" class="link-dark">Projects</a>
-  </li>
-  <li class="list-group-item">
-    <a href="#accomplishments" class="link-dark">Accomplishments</a>
-  </li>
-                </ul>
               </div>
               <!-- /.card-body -->
+        <div class="row">
+          <div class="col-md-3">
+<ul class="list-group mb-3">
+  <li class="list-group-item">
+    <a href="#profileSummary" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-person-circle me-2"></i> Profile Summary
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#resume" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-file-earmark-text me-2"></i> Resume
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#education" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-book me-2"></i> Education
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#experience" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-briefcase me-2"></i> Experience
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#internships" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-building me-2"></i> Internships
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#projects" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-folder2-open me-2"></i> Projects
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a href="#accomplishments" class="text-decoration-none link-dark d-flex align-items-center">
+      <i class="bi bi-trophy me-2"></i> Accomplishments
+    </a>
+  </li>
+</ul>
           </div>
           <div class="col-md-9">
-            <div class="card card-outline card-primary" id="profileSummary">
+            <div class="card card-outline" id="profileSummary">
   <div class="card-header">
-    <h3 class="card-title">About </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">About </h3>
     <!-- /.card-tools -->
   </div>
   <!-- /.card-header -->
   <div class="card-body">
     {% if profile_info.profile_summary %}
     {{ profile_info.profile_summary.content }}
+
     {% endif %}
 
 
@@ -116,10 +322,46 @@
 
   <!-- /.card-body -->
 </div>
-
-            <div class="card card-outline card-primary" id="education">
+            <div class="card card-outline" id="resume">
   <div class="card-header">
-    <h3 class="card-title">Education </h3>
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Resume </h3>
+    <div class="card-tools">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+    </div>
+    <!-- /.card-tools -->
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table id="userResumeTable" class="table table-hover">
+            <tbody>
+        {% for row in resumes %}
+
+            <tr>
+<!--              <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}">-->
+                 <td class="clickable"> <a href="{{ root_url + row.file_url }}" style="text-overflow: hidden;"> {{ row.filename }} </a></td>
+
+                <td>
+</td>
+
+<!--                </a>-->
+            </tr>
+
+        {% endfor %} <!-- Your table body content here -->
+            </tbody>
+
+        </table>
+
+  </div>
+  <!-- /.card-body -->
+</div>
+            <div class="card card-outline" id="education">
+  <div class="card-header">
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Education </h3>
+    <div class="card-tools">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+    </div>
     <!-- /.card-tools -->
   </div>
   <!-- /.card-header -->
@@ -137,24 +379,24 @@
         {% endif %}
       </div>
     </div>
+
         {% endfor %}
   </div>
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="experience">
+            <div class="card card-outline" id="experience">
   <div class="card-header">
-    <h3 class="card-title">Experience </h3>
-    <!-- /.card-tools -->
+    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Experience </h3><!-- /.card-tools -->
   </div>
   <!-- /.card-header -->
   <div class="card-body">
         {% for data in profile_info.experiences %}
     <div class="container-fluid mb-2">
       <div style="font-size: 0.9rem; font-weight:bold;">
-        {{ data.position }}
+        {{ data.position.capitalize() }}
       </div>
       <div style="font-size: 0.9rem;">
-        {{ data.company_name }}
+        {{ data.company_name.capitalize() }}
       </div>
       <div style="color: grey; font-size: 0.8rem;">
         {% if data.is_ongoing %}
@@ -172,9 +414,14 @@
   </div>
   <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="internships">
+            <div class="card card-outline" id="internships">
 <div class="card-header">
-<h3 class="card-title">Internships </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Internships </h3>
+<div class="card-tools">
+<!-- Buttons, labels, and many other things can be placed here! -->
+<!-- Here is a label for example -->
+</div>
+<!-- /.card-tools -->
 </div>
 <!-- /.card-header -->
 <div class="card-body">
@@ -197,13 +444,19 @@
         {{ data.job_description }}
       </div>
     </div>
+
         {% endfor %}
 </div>
 <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="projects">
+            <div class="card card-outline" id="projects">
 <div class="card-header">
-<h3 class="card-title">Projects </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Projects </h3>
+<div class="card-tools">
+<!-- Buttons, labels, and many other things can be placed here! -->
+<!-- Here is a label for example -->
+</div>
+<!-- /.card-tools -->
 </div>
 <!-- /.card-header -->
 <div class="card-body">
@@ -218,14 +471,16 @@
       <div style="font-size: 0.9rem;">
         {{ data.description }}
       </div>
+
     </div>
         {% endfor %}
 </div>
 <!-- /.card-body -->
 </div>
-            <div class="card card-outline card-primary" id="accomplishments">
+            <div class="card card-outline" id="accomplishments">
 <div class="card-header">
-<h3 class="card-title">Accomplishments </h3>
+<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Accomplishments </h3>
+<!-- /.card-tools -->
 </div>
 <!-- /.card-header -->
 <div class="card-body">
@@ -251,7 +506,6 @@
 </div>
         </div>
     </section>
-<!-- Bootstrap and jQuery scripts for modals -->
 
 {% endblock %}
 

@@ -104,7 +104,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-left">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="post-heading">
-                        <h2 class=" display-5 subheading">{{ job_details.job_title }}</h2>
+                        <h2 class="subheading">{{ job_details.job_title }}</h2>
                     </div>
                 </div>
             </div>
@@ -127,22 +127,24 @@
                 <div class="col-2">
                 <a class="btn btn-primary w-100" style="font-weight:bold;" data-bs-toggle="modal" data-bs-target="#applyModal">Apply</a>
                 </div>
-                        {% elif current_user == None %}
+                        {% elif current_user.role == 'user' %}
+                        <div></div>
+                        {% else %}
                 <div class="col-2">
                 <a class="btn btn-primary w-100" style="font-weight:bold;" href="{{ url_for('jobseeker_logout') }}">Login to Apply</a>
                 </div>
                         {% endif %}
                     </div>
 
-                <h5 class="mt-4 px-3 display-6">Job Description</h5>
+                <h5 class="mt-4 px-3">Job Description</h5>
                 <div class="mt-1">
                     {{ job_details.job_description | safe }}
                 </div>
-                <h5 class="mt-4 px-3 display-6">Job Requirements</h5>
+                <h5 class="mt-4 px-3">Job Requirements</h5>
                 <div class="mt-1">
                     {{ job_details.job_requirements | safe }}
                 </div>
-                <h5 class="mt-4 px-3 display-6">Job Benefits</h5>
+                <h5 class="mt-4 px-3">Job Benefits</h5>
                 <div class="mt-1">
                     {{ job_details.job_benefits | safe }}
                 </div>
@@ -172,10 +174,10 @@
             <label for="{{ form.resume.id }}">Select Resume from My Resumes:</label>
             {{ form.resume(class="form-select") }}
         </div>
-        <div>
-            <label for="{{ form.upload_resume.id }}">Or Upload Resume:</label>
-            {{ form.upload_resume(class="form-control-file") }}
-        </div>
+<!--        <div>-->
+<!--            <label for="{{ form.upload_resume.id }}">Or Upload Resume:</label>-->
+<!--            {{ form.upload_resume(class="form-control-file") }}-->
+<!--        </div>-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

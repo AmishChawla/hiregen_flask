@@ -1668,6 +1668,25 @@ def upload_medias(file_list, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
+def jobseeker_delete_media(access_token: str, media_id: int):
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    try:
+        response = requests.delete(constants.BASE_URL + f'/delete-media/{media_id}', headers=headers)
+        print(response.text)
+        if response.status_code ==200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+
 def subscribe_to_newsletter(name, email, username):
     print("inside api call")
 
@@ -3085,7 +3104,7 @@ def update_jobseeker_profile(profile_data, access_token):
     headers = {'Authorization': f'Bearer {access_token}'}
 
     try:
-        response = requests.post(constants.BASE_URL + '/jobseeker/update-jobseeker-profile',json=profile_data, headers=headers)
+        response = requests.post(constants.BASE_URL + '/jobseeker/create-jobseeker-profile',json=profile_data, headers=headers)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

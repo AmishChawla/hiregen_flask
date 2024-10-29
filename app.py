@@ -1971,6 +1971,12 @@ def user_all_medias():
     return render_template('user_all_media.html', result=result, root_url=root_url)
 
 
+@app.route("/jobseeker/delete_resume/<media_id>", methods=['GET', 'POST'])
+@login_required
+def delete_media(media_id):
+    result = api_calls.jobseeker_delete_media(media_id=media_id, access_token=current_user.id)
+    return redirect(url_for('jobseeker_profile'))
+
 
 
 
@@ -2736,6 +2742,7 @@ def parse_single_resume(resume_text):
     - Accomplishment (title, description, achievement_date)
     - ProfileSummary (content)
     - Skills
+    - Score (Score the resume from 0 to 100 based on your asessment)
     
     Note: Please generate a response that does not exceed 4096 tokens to ensure completeness.
 

@@ -58,8 +58,8 @@
                 <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
                 <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
                 <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+                <td class="py-1" data-created="{{ data.JobOpening.created_at }}">{{ data.JobOpening.created_at.split('T')[0] }}</td>
+                <td class="py-1" data-updated="{{ data.JobOpening.updated_at }}">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
                 <td class="py-1" style="display: flex">
 
                   <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
@@ -114,8 +114,8 @@
                 <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
                 <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
                 <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+                <td class="py-1" data-created="{{ data.JobOpening.created_at }}">{{ data.JobOpening.created_at.split('T')[0] }}</td>
+                <td class="py-1" data-updated="{{ data.JobOpening.updated_at }}">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
                 <td class="py-1" style="display: flex">
 
                   <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
@@ -155,7 +155,46 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 <script>
-new DataTable('#userpostTable');
-new DataTable('#draftpostTable');
+// Function to format date as "Oct 22, 2024"
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString('en-US', options);
+}
+
+// Initialize DataTables
+$(document).ready(function() {
+    const userPostTable = new DataTable('#userpostTable', {
+        // Use the 'createdRow' callback to format date on row creation
+        order: [],
+        createdRow: function(row, data, dataIndex) {
+            const createdDateCell = $(row).find('td[data-created]');
+            const updatedDateCell = $(row).find('td[data-updated]');
+
+            // Format and update the date cells
+            const createdDate = createdDateCell.data('created');
+            const updatedDate = updatedDateCell.data('updated');
+
+            createdDateCell.text(formatDate(createdDate));
+            updatedDateCell.text(formatDate(updatedDate));
+        }
+    });
+
+    const draftPostTable = new DataTable('#draftpostTable', {
+        // Use the 'createdRow' callback to format date on row creation
+        order: [],
+        createdRow: function(row, data, dataIndex) {
+            const createdDateCell = $(row).find('td[data-created]');
+            const updatedDateCell = $(row).find('td[data-updated]');
+
+            // Format and update the date cells
+            const createdDate = createdDateCell.data('created');
+            const updatedDate = updatedDateCell.data('updated');
+
+            createdDateCell.text(formatDate(createdDate));
+            updatedDateCell.text(formatDate(updatedDate));
+        }
+    });
+});
 </script>
 {% endblock %}

@@ -117,10 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function addFiles(newFiles) {
         const allowedTypes = [
-        'image/jpeg', 'image/png', 'image/gif',
-        'video/mp4', 'video/avi', 'video/mov',
-        'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
+        'application/pdf', 'application/msword'];
         newFiles.forEach(file => {
             if (allowedTypes.includes(file.type)) {
                 if (file.size <= 2 * 1024 * 1024) {
@@ -130,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     errorMessage.textContent = 'Some files were not added because they exceed the 2MB size limit.';
                 }
             } else {
-                errorMessage.textContent = 'Some files were not added because they are not valid photo or video files.';
+                errorMessage.textContent = 'Some files were not added because they are not of valid type.';
             }
         });
         updateFileList();
