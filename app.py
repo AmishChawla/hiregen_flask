@@ -3944,4 +3944,4 @@ def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=443)

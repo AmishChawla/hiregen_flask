@@ -3,8 +3,8 @@ from flask.cli import load_dotenv
 
 
 # MY ROOT URL
-# MY_ROOT_URL = 'http://127.0.0.1:5000'
-MY_ROOT_URL = 'http://44.229.59.198:5000'
+MY_ROOT_URL = 'http://127.0.0.1:5000'
+MY_ROOT_URL = 'http://44.229.59.198:443'
 
 
 
