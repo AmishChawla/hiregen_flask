@@ -4,7 +4,7 @@ from flask.cli import load_dotenv
 
 # MY ROOT URL
 # MY_ROOT_URL = 'http://127.0.0.1:443'
-MY_ROOT_URL = 'http://44.229.59.198:443'
+MY_ROOT_URL = 'http://44.229.59.198'
 
 
 
@@ -12,8 +12,8 @@ MY_ROOT_URL = 'http://44.229.59.198:443'
 # BASE_URL = 'http://127.0.0.1:8000/api'
 # ROOT_URL = 'http://127.0.0.1:8000'
 
-ROOT_URL = 'http://44.229.59.198:8000'
-BASE_URL = 'http://44.229.59.198:8000/api'
+ROOT_URL = 'http://44.229.59.198/api'
+BASE_URL = 'http://44.229.59.198/api/api'
 
 
 
