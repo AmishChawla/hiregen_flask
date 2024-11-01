@@ -1,520 +1,495 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>SaaS Boilerplate</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="../static/assets/images/favicon.png" rel="icon">
-
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="../static/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="../static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="../static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="../static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="../static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="../static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="../static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="../static/assets/css/style1.css" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireGen | Simplify Your Hiring Process with AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9fc;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #6c63ff;
+        }
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 80px;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+        }
+        .nav-menu a {
+            margin: 0 15px;
+            font-weight: 500;
+            color: #555;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 5px;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            font-size: 16px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .burger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 20px;
+        }
+        .burger .line {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            border-radius: 3px;
+        }
+        .nav-menu.active {
+            display: block;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 10px 20px;
+                width: 100%;
+                border-bottom: 1px solid #ddd;
+                margin: 0;
+            }
+        }
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 80px;
+            background-color: #fff;
+            border-bottom: 5px solid #6c63ff;
+        }
+        .hero-text {
+            max-width: 50%;
+        }
+        .hero h2 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .hero button {
+            background-color: #6c63ff;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .hero button:hover {
+            background-color: #5750d6;
+            transform: translateY(-3px);
+        }
+        .hero img {
+            max-width: 45%;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 20px;
+            }
+            .hero img {
+                max-width: 100%;
+                margin-top: 20px;
+            }
+            .hero h2 {
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .hero button {
+                font-size: 16px;
+                padding: 10px 30px;
+            }
+        }
+        /* Features Section */
+        .features {
+            padding: 60px 80px;
+            background-color: #fff;
+        }
+        .features h3 {
+            text-align: center;
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #f9f9fc;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .feature-icon {
+            font-size: 50px;
+            margin-right: 20px;
+            color: #6c63ff;
+        }
+        .feature-content h4 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .feature-content p {
+            font-size: 18px;
+            color: #555;
+        }
+        @media (max-width: 768px) {
+            .features {
+                padding: 40px 20px;
+            }
+            .features h3 {
+                font-size: 28px;
+            }
+            .feature {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .feature-icon {
+                font-size: 40px;
+                margin-bottom: 10px;
+            }
+            .feature-content h4 {
+                font-size: 20px;
+            }
+            .feature-content p {
+                font-size: 16px;
+            }
+        }
+        /* FAQs Section */
+        .faqs {
+            padding: 60px 80px;
+            background-color: #f1f3f8;
+        }
+        .faqs h3 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+        .faq-item h4 {
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #333;
+        }
+        .faq-item p {
+            display: none;
+            font-size: 18px;
+            margin-top: 10px;
+            color: #555;
+        }
+        .faq-item.active p {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .faqs {
+                padding: 40px 20px;
+            }
+            .faqs h3 {
+                font-size: 28px;
+            }
+            .faq-item h4 {
+                font-size: 20px;
+            }
+            .faq-item p {
+                font-size: 16px;
+            }
+        }
+        /* Contact Form */
+        .contact-form {
+            padding: 60px 80px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin: 40px 80px;
+        }
+        .contact-form h3 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            background-color: #6c63ff;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .contact-form button:hover {
+            background-color: #5750d6;
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 40px 20px;
+                margin: 20px 20px;
+            }
+            .contact-form h3 {
+                font-size: 28px;
+            }
+            .contact-form input,
+            .contact-form textarea {
+                font-size: 14px;
+            }
+            .contact-form button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+        /* Footer */
+        footer {
+            padding: 40px 80px;
+            background-color: #ffffff;
+            color: #333;
+            text-align: center;
+        }
+        footer a {
+            color: #6c63ff;
+        }
+        @media (max-width: 768px) {
+            footer {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <header>
+        <h1>HireGen</h1>
+        <nav id="nav-menu" class="nav-menu">
+            <a href="#features">Features</a>
+            <a href="{{ url_for('user_view_plan') }}">Pricing</a>
+            <a href="#contact">Contact</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">Resources</a>
+                <div class="dropdown-content">
+                    <a href="#">Blog</a>
+                    <a href="#faqs">FAQ's</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Solutions</a>
+                </div>
+            </div>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        </nav>
+        <div class="burger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </header>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
-    <div class="container d-flex align-items-center">
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Simplify Your Hiring Process with AI</h2>
+            <p>HireGen.com transforms the way you attract, evaluate, and hire top talent. Our AI recruitment software is designed to streamline your hiring process, saving you time and ensuring you find the perfect candidates for your organization.</p>
+            <button>Get Started</button>
+        </div>
+        <img src="{{ url_for('static', filename='images/recruitment_process_illustration.jpeg') }}" alt="Recruitment AI">
+    </section>
 
-      <h1 class="logo me-auto"><a href="index.html" style="text-decoration:none;"><img src="/static/images/logo.png" alt="Logo" height="30" class="d-inline-block align-top">
-                HireGen</a></h1>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a class="nav-link scrollto" href="#features">Features</a></li>
-                        <li class="nav-link dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="ai" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        AI
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="aiDropdown" style="position:absolute;left:-50px">
-                      <li>
-                          <a class="dropdown-item" href="{{ url_for('chatbot') }}" onMouseOver="this.style.color='blue'" onMouseOut="this.style.color='grey'" style="display: flex; justify-content: space-between;">Chat<i class="mdi mdi-account-edit menu-icon" style="margin-left:10px"></i></a>
-                     </li>
-                      <li>
-                            <a class="dropdown-item" href="{{ url_for('resume_parser') }}" onmouseover="this.style.color='blue'" onmouseout="this.style.color='grey'" style="display: flex; justify-content: space-between;">Parse Resume<i class="mdi mdi-account-edit menu-icon" style="margin-left:10px"></i></a>
-                        </li>
-
-                    </ul>
-                </li>
-          <li><a class="nav-link scrollto" href="{{ url_for('register') }}">Demo</a></li>
-
-          {% if current_user.is_authenticated %}
-              <li class="nav-link dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="updatePasswordDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {% if current_user.profile_picture %}
-                            <img src="{{ current_user.profile_picture }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                         {% else %}
-                            <img src="/static/images/man.png" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                        {% endif %}
-                        <span class="menu-title">{{ current_user.username }}</span>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="updatePasswordDropdown" style="position:absolute;left:-50px">
-                      <li>
-                        {% if current_user.role != 'admin' %}
-                          <a class="dropdown-item" href="{{ url_for('user_dashboard') }}" onMouseOver="this.style.color='blue'" onMouseOut="this.style.color='grey'" style="display: flex; justify-content: space-between;">Dashboard<i class="mdi mdi-account-edit menu-icon" style="margin-left:10px"></i></a>
-                        {% else %}
-                          <a class="dropdown-item" href="{{ url_for('admin_dashboard') }}" onMouseOver="this.style.color='blue'" onMouseOut="this.style.color='grey'" style="display: flex; justify-content: space-between;">Dashboard<i class="mdi mdi-account-edit menu-icon" style="margin-left:10px"></i></a>
-                        {% endif %}
-                     </li>
-                      <li>
-                            <a class="dropdown-item" href="#" onmouseover="this.style.color='blue'" onmouseout="this.style.color='grey'" style="display: flex; justify-content: space-between;">Edit Profile<i class="mdi mdi-account-edit menu-icon" style="margin-left:10px"></i></a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ url_for('user_password_update') }}" onmouseover="this.style.color='blue'" onmouseout="this.style.color='grey'" style="display: flex; justify-content: space-between;">Update Password <i class="mdi mdi-lock-reset menu-icon" style="margin-left:10px"></i></a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ url_for('logout') }}" onmouseover="this.style.color='blue'" onmouseout="this.style.color='grey'" style="display: flex; justify-content: space-between;">Logout <i class="mdi mdi-logout menu-icon" style="margin-left:10px"></i></a>
-                        </li>
-                    </ul>
-                </li>
-
-        {% else %}
-            <li><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-            <li><a class="nav-link" href="{{ url_for('register') }}">SignUp</a></li>
-        {% endif %}
-
-
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle"></i>
-      </nav><!-- .navbar -->
-
-    </div>
-  </header><!-- End Header -->
-
-  <!-- ======= Hero Section ======= -->
-  <section id="hero" class="d-flex align-items-center">
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-            <h1>Simplify Your Hiring Process with AI</h1>
-            <h2>
-                HireGen.com transforms the way you attract, evaluate, and hire top talent.
-                Our AI recruitment software is designed to streamline your hiring process,
-                saving you time and ensuring you find the perfect candidates for your organization.
-            </h2>
-            <h2>Free 30-day Trial – No Credit Card Required</h2>
-            <div class="d-flex justify-content-center justify-content-lg-start">
-                <!-- You can add buttons or other elements here -->
+    <section class="features" id="features">
+        <h3>Features</h3>
+        <div class="feature">
+            <div class="feature-icon">🤖</div>
+            <div class="feature-content">
+                <h4>Advanced AI Technology</h4>
+                <p>Leverage the latest in AI to enhance every stage of your recruitment process. Automatically rank and shortlist candidates based on their skills, experience, and fit for the role.</p>
             </div>
         </div>
-        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200" style="margin-top: 2rem;">
-            <img src="{{ url_for('static', filename='images/kanban_img.png') }}" alt="Kanban Board" class="img-fluid" style="border-radius:20px;" />
-        </div>
-    </div>
-</div>
-
-  </section><!-- End Hero -->
-
-  <main id="main">
-
-
-
-
-    <!-- ======= About Us Section ======= -->
-<!-- ======= Features Section ======= -->
-<section id="features" class="faq section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Features</h2>
-          <p>
-            Advanced AI Technology
-          </p>
-        </div>
-
-        <div class="faq-list">
-          <ul>
-            <li data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-help-circle icon-help"></i> <a class="collapse" data-bs-target="#faq-list-1">FastAPI Integration </a>
-              <div id="faq-list-1" class="show" data-bs-parent=".faq-list">
-                <p>
-Leverage the latest in AI to enhance every stage of your recruitment process. Automatically rank and shortlist candidates based on their skills, experience, and fit for the role. Reduce time-to-hire and enhance the quality of your hires with intelligent automation.
-
-                </p>
-
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="200">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-2" class="collapsed">Applicant Tracking System (ATS)
- </a>
-              <div id="faq-list-2" class="show" data-bs-parent=".faq-list">
-                <p>
-Efficiently manage your candidate pipeline with our robust ATS. Track applications, schedule interviews, and communicate with candidates all in one place.
-
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-3" class="collapsed">Resume Parsing </a>
-              <div id="faq-list-3" class="show" data-bs-parent=".faq-list">
-                <p>
-Save time with our advanced resume parsing technology. Automatically extract and organize candidate information for easy review and comparison.
-
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-4" class="collapsed">Customizable Career Pages
- </a>
-              <div id="faq-list-4" class="show" data-bs-parent=".faq-list">
-                <p>
-Create attractive and professional career pages that reflect your brand. Showcase your company culture and attract top talent.
-
-              </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-5" class="collapsed">Candidate Relationship Management (CRM)
- </a>
-              <div id="faq-list-5" class="show" data-bs-parent=".faq-list">
-                <p>
-Build and maintain a talent pool with our CRM features. Keep track of potential candidates and nurture relationships for future openings.
-
-            </p>
-              </div>
-            </li>
-                        <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-5" class="collapsed">Interview Scheduling
- </a>
-              <div id="faq-list-5" class="show" data-bs-parent=".faq-list">
-                <p>
-Simplify interview scheduling with automated invitations and reminders. Ensure a seamless interview process for both candidates and recruiters.
-
-                </p>
-              </div>
-            </li>
-
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-5" class="collapsed">Analytics & Reporting </a>
-              <div id="faq-list-5" class="show" data-bs-parent=".faq-list">
-                <p>
-Make data-driven decisions with our comprehensive analytics and reporting tools. Monitor key metrics and optimize your recruitment strategy.
-
-               </p>
-              </div>
-            </li>
-
-               <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-target="#faq-list-5" class="collapsed">Automated Screening & Assessments </a>
-              <div id="faq-list-5" class="show" data-bs-parent=".faq-list">
-                <p>
-Streamline your screening process with AI-powered assessments. Our software evaluates candidates using customized tests and questionnaires, providing you with detailed insights into their skills and cultural fit.
-
-               </p>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-
-      </div>
-    </section><!-- End Features Section -->
-    <!-- ======= Frequently Asked Questions Section ======= -->
-    <section id="faq" class="faq section-bg">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Frequently Asked Questions</h2>
-        </div>
-
-        <div class="faq-list">
-          <ul>
-            <li data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">What is the Open Source SaaS Boilerplate? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                <p>
-Our Open Source SaaS Boilerplate is a foundational framework designed to
-help you quickly build and deploy SaaS applications.
-It is developed using Python, Flask and FastAPI, offering a high-performance,
-scalable, and modular solution for your software development needs.
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="200">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Who is the Open Source SaaS Boilerplate for? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-                <p>
-This boilerplate is ideal for developers, startups, and enterprises looking to
-accelerate their SaaS application development.
-Whether you are a seasoned developer or just starting, our boilerplate
-provides a robust foundation to build upon.
-                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="300">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">Is the SaaS Boilerplate really free to use?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-                <p>
-Yes, our SaaS Boilerplate is open source and free to use.
-You can access the source code, contribute to its development, and customize
-it to fit your specific needs.                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="400">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">What technologies are used in the SaaS Boilerplate? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
-                <p>
-The boilerplate is built using Python, Flask and FastAPI, leveraging the
-strengths of these technologies to deliver high performance and scalability.
-It also includes integration with popular databases like PostgreSQL, MySQL,
-and SQLite.                </p>
-              </div>
-            </li>
-
-            <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Can I customize the boilerplate to suit my needs?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
-                <p>
-Absolutely!
-The boilerplate is designed with modularity in mind, allowing you to easily
-customize and extend its functionalities to match your project requirements.                </p>
-              </div>
-            </li>
-                        <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-6" class="collapsed">How do I get started with the SaaS Boilerplate?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-6" class="collapse" data-bs-parent=".faq-list">
-                <p>
-To get started, visit our <a href="https://github.com/AmishChawla/saas_cms_flask">GitHub</a> to download the source code.
-You can also refer to our <a href="https://github.com/AmishChawla/saas_cms_flask">Documentation</a> for detailed setup instructions and
-tutorials.               </p>
-              </div>
-            </li>
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-7" class="collapsed">What features are included in the SaaS Boilerplate?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-7" class="collapse" data-bs-parent=".faq-list">
-                <p>
-The boilerplate includes a range of essential features such as:
- FastAPI Integration
- Asynchronous Support
- User Authentication and Authorization
- Database Integration
- Auto-generated API Documentation with Swagger UI
- Built-in Testing Framework   </p>
-              </div>
-            </li>
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-8" class="collapsed">Can I use the boilerplate for commercial projects?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-8" class="collapse" data-bs-parent=".faq-list">
-                <p>
-Yes, you can use the SaaS Boilerplate for both personal and commercial
-projects.
-Being open source, it provides the flexibility to adapt and use it as needed.               </p>
-              </div>
-            </li>
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-9" class="collapsed">How can I contribute to the project?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-9" class="collapse" data-bs-parent=".faq-list">
-                <p>
-We welcome contributions from the community!
-You can contribute by submitting pull requests, reporting issues, or
-participating in discussions on our <a href="https://github.com/AmishChawla/saas_cms_flask">GitHub</a></p>
-              </div>
-            </li>
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-10" class="collapsed">Where can I find support if I encounter issues?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-10" class="collapse" data-bs-parent=".faq-list">
-                <p>
-A: For support, you can refer to our <a href="https://github.com/AmishChawla/saas_cms_flask">Documentation</a>, join our community
-forums, or reach out to us via our <a href="#contact">Contact Us</a> page.
-Our community and team are here to help you.            </p>
-              </div>
-            </li>
-                                    <li data-aos="fade-up" data-aos-delay="500">
-              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-11" class="collapsed">How can I contact you for more information?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-              <div id="faq-list-11" class="collapse" data-bs-parent=".faq-list">
-                <p>
-You can contact us through our <a href="#contact">Contact Us</a> page for any inquiries,
-feedback, or support requests.
-We are here to assist you and provide any additional information you may
-need.              </p>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-
-      </div>
-    </section><!-- End Frequently Asked Questions Section -->
-
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-          <h2>Contact</h2>
-          <p>For more information, Please contact us</p>
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-5 d-flex align-items-stretch">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>Shalimar Bagh, Delhi</p>
-              </div>
-
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>info@aynsoft.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>+91 9810 336 906</p>
-              </div>
-
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+        <div class="feature">
+            <div class="feature-icon">📋</div>
+            <div class="feature-content">
+                <h4>Applicant Tracking System (ATS)</h4>
+                <p>Efficiently manage your candidate pipeline with our robust ATS. Track applications, schedule interviews, and communicate with candidates all in one place.</p>
             </div>
-
-          </div>
-
-          <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="form-group col-md-6">
-                  <label for="name">Your Name</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="name">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="name">Subject</label>
-                <input type="text" class="form-control" name="subject" id="subject" required>
-              </div>
-              <div class="form-group">
-                <label for="name">Message</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div>
-
         </div>
+        <div class="feature">
+            <div class="feature-icon">📄</div>
+            <div class="feature-content">
+                <h4>Resume Parsing</h4>
+                <p>Save time with our advanced resume parsing technology. Automatically extract and organize candidate information for easy review and comparison.</p>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🌐</div>
+            <div class="feature-content">
+                <h4>Customizable Career Pages</h4>
+                <p>Create attractive and professional career pages that reflect your brand. Showcase your company culture and attract top talent.</p>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">💬</div>
+            <div class="feature-content">
+                <h4>Candidate Relationship Management</h4>
+                <p>Build and maintain a talent pool with our CRM features. Keep track of potential candidates and nurture relationships for future openings.</p>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">⏰</div>
+            <div class="feature-content">
+                <h4>Interview Scheduling</h4>
+                <p>Simplify interview scheduling with automated invitations and reminders. Ensure a seamless interview process for both candidates and recruiters.</p>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📊</div>
+            <div class="feature-content">
+                <h4>Analytics & Reporting</h4>
+                <p>Make data-driven decisions with our comprehensive analytics and reporting tools. Monitor key metrics and optimize your recruitment strategy.</p>
+            </div>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📝</div>
+            <div class="feature-content">
+                <h4>Automated Screening & Assessments</h4>
+                <p>Streamline your screening process with AI-powered assessments. Our software evaluates candidates using customized tests and questionnaires.</p>
+            </div>
+        </div>
+    </section>
 
-      </div>
-    </section><!-- End Contact Section -->
+    <section class="faqs" id="faqs">
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+            <h4>What services do you offer?</h4>
+            <p>We offer advanced AI recruitment tools including an ATS, resume parsing, customizable career pages, and more to streamline your hiring process.</p>
+        </div>
+        <div class="faq-item">
+            <h4>How can I get started with HireGen?</h4>
+            <p>Simply click the "Get Started" button on our homepage to sign up for a free 30-day trial. No credit card is required.</p>
+        </div>
+        <div class="faq-item">
+            <h4>What sets HireGen apart from competitors?</h4>
+            <p>Our advanced AI technology and user-friendly interface make recruitment efficient and effective, helping you attract, evaluate, and hire top talent seamlessly.</p>
+        </div>
+        <div class="faq-item">
+            <h4>Can I customize my career pages?</h4>
+            <p>Yes, HireGen provides customizable career page options to showcase your brand and company culture, attracting the best talent.</p>
+        </div>
+    </section>
 
-  </main><!-- End #main -->
+    <section class="contact-form" id="contact">
+        <h3>Contact Us</h3>
+        <form action="#" method="post">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
 
-  <!-- ======= Footer ======= -->
-<!--  <footer id="footer">-->
+    <footer>
+        <p>&copy; 2024 HireGen. All rights reserved. | <a href="#features">Features</a> | <a href="#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
 
-<!--    <div class="footer-top">-->
-<!--      <div class="container">-->
-<!--        <div class="row">-->
-
-<!--          <div class="col-lg-3 col-md-6 footer-contact">-->
-<!--            <h3>SaaS Boilerplate</h3>-->
-<!--          </div>-->
-
-<!--          <div class="col-lg-3 col-md-6 footer-links">-->
-<!--              Features-->
-<!--          </div>-->
-
-<!--          <div class="col-lg-3 col-md-6 footer-links">-->
-<!--              FAQs-->
-<!--          </div>-->
-
-<!--          <div class="col-lg-3 col-md-6 footer-links">-->
-<!--              Documentation-->
-<!--          </div>-->
-<!--                      <div class="col-lg-3 col-md-6 footer-links">-->
-<!--              Contact Us-->
-<!--          </div>-->
-<!--                      <div class="col-lg-3 col-md-6 footer-links">-->
-<!--              Github-->
-<!--          </div>-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
-<!--    <div class="container footer-bottom clearfix">-->
-<!--      <div class="copyright">-->
-<!--        &copy; Copyright <strong><span>SaaS Boilerplate</span></strong>. All Rights Reserved-->
-<!--      </div>-->
-<!--      <div class="credits">-->
-<!--        &lt;!&ndash; All the links in the footer should remain intact. &ndash;&gt;-->
-<!--        &lt;!&ndash; You can delete the links only if you purchased the pro version. &ndash;&gt;-->
-<!--        &lt;!&ndash; Licensing information: https://bootstrapmade.com/license/ &ndash;&gt;-->
-<!--        &lt;!&ndash; Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ &ndash;&gt;-->
-
-<!--      </div>-->
-<!--    </div>-->
-<!--  </footer>&lt;!&ndash; End Footer &ndash;&gt;-->
-
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <p class="col-md-4 mb-0 text-muted">© 2024 SaaS Boilerplate, Inc</p>
-
-
-
-    <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-      <li class="nav-item"><a href="#features" class="nav-link px-2 text-muted">Features</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-      <li class="nav-item"><a href="#faq" class="nav-link px-2 text-muted">FAQs</a></li>
-        <li class="nav-item"><a href="https://github.com/AmishChawla/saas_cms_flask/blob/main/README.md" class="nav-link px-2 text-muted">Documentation</a></li>
-        <li class="nav-item"><a href="https://github.com/AmishChawla/saas_cms_flask" class="nav-link px-2 text-muted">Github</a></li>
-    </ul>
-  </footer>
-
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="../static/assets/vendor/aos/aos.js"></script>
-  <script src="../static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../static/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="../static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="../static/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="../static/assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="../static/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="../static/assets/js/main.js"></script>
-
+    <script>
+        function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+        // JavaScript for FAQs toggle functionality
+        document.querySelectorAll('.faq-item h4').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentNode.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
-
 </html>
