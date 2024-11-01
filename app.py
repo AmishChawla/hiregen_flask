@@ -1701,7 +1701,7 @@ def preview_post():
 @requires_any_permission("manage_posts")
 def admin_edit_post(job_id):
     job_opening = api_calls.get_job(job_id=job_id)
-    date_format = '%Y-%m-%dT%H:%M:%S'
+    date_format = '%Y-%m-%dT%H:%M:%S%z'
 
     if 'target_date' in job_opening:
         # Parse the target_date string with the adjusted format
@@ -3944,4 +3944,4 @@ def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
 if __name__ == '__main__':
-    app.run(port=443)
+    app.run()
