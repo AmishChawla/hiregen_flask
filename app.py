@@ -3898,6 +3898,23 @@ def employer_reports():
                            jobs_by_views=jobs_by_views, jobs_by_applicants=jobs_by_applicants)
 
 
+@app.route('/homepage_contact_form_submission', methods=['POST'])
+def homepage_contactus_submission():
+    try:
+        data = request.get_json()
+
+        # Extract form fields
+        name = data.get('name')
+        email = data.get('email')
+        message = data.get('message')
+
+        result = api_calls.homepage_contact_form_submission(name=name, email=email, message=message)
+
+        return jsonify({'message': 'Form submitted successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': 'An error occurred while processing the form'}), 500
+
+
 #####################################################################################################################################
 
 #####################################################################################################################################

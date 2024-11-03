@@ -3115,3 +3115,24 @@ def update_jobseeker_profile(profile_data, access_token):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+
+def homepage_contact_form_submission(name, email, message):
+    data = {
+        'name': name,
+        'email': email,
+        'message': message
+    }
+
+    try:
+        response = requests.post(constants.BASE_URL + '/homepage_contact_form_submission', json=data)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
