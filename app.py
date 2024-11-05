@@ -2655,8 +2655,8 @@ def get_page_by_username_and_slug(username, page_slug):
 ###################################################### CHATBOT ####################################################################
 
 @app.route('/chatbot')
-@requires_any_permission("access_chatbot")
-@login_required
+# @requires_any_permission("access_chatbot")
+# @login_required
 def chatbot():
     try:
         all_chats = api_calls.get_user_all_chats(access_token=current_user.id)
@@ -2667,7 +2667,7 @@ def chatbot():
 
 
 @app.route('/send_message', methods=['POST'])
-@requires_any_permission("access_chatbot")
+# @requires_any_permission("access_chatbot")
 def send_message():
 
     user_input = request.form['user_input']
@@ -2813,7 +2813,7 @@ def parse_multiple_resumes(file_paths):
 
 
 @app.route('/resume-parser', methods=['GET', 'POST'])
-@requires_any_permission("access_resume_parser")
+# @requires_any_permission("access_resume_parser")
 @login_required
 def resume_parser():
     form = forms.UploadForm()

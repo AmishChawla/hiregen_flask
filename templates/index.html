@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HireGen | Simplify Your Hiring Process with AI</title>
+    <title>HireGen | AI Recruitment Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* General Styles */
@@ -74,6 +74,19 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .get-started {
+            background-color: #6c63ff;
+            color: white;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+
         .burger {
             display: none;
             cursor: pointer;
@@ -83,7 +96,7 @@
         }
         .burger .line {
             width: 25px;
-            height: 3px;
+            height: 4px;
             background-color: #333;
             border-radius: 3px;
         }
@@ -118,7 +131,6 @@
             justify-content: space-between;
             padding: 100px 80px;
             background-color: #fff;
-            border-bottom: 5px solid #6c63ff;
         }
         .hero-text {
             max-width: 50%;
@@ -138,19 +150,17 @@
             padding: 15px 40px;
             font-size: 18px;
             border: none;
-            border-radius: 50px;
+            border-radius: 20px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         .hero button:hover {
             background-color: #5750d6;
             transform: translateY(-3px);
         }
-        .hero img {
+        .hero video {
             max-width: 45%;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         @media (max-width: 768px) {
             .hero {
@@ -158,7 +168,7 @@
                 text-align: center;
                 padding: 40px 20px;
             }
-            .hero img {
+            .hero video {
                 max-width: 100%;
                 margin-top: 20px;
             }
@@ -358,6 +368,14 @@
             <a href="#features">Features</a>
             <a href="{{ url_for('user_view_plan') }}">Pricing</a>
             <a href="#contact">Contact</a>
+
+            <div class="dropdown">
+                <a href="#" class="dropbtn">AI</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('chatbot')}}">Chatbot</a>
+                    <a href="{{url_for('resume_parser')}}">Resume Parsing</a>
+                </div>
+            </div>
             <div class="dropdown">
                 <a href="#" class="dropbtn">Resources</a>
                 <div class="dropdown-content">
@@ -368,7 +386,7 @@
                 </div>
             </div>
             <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('register') }}">Register</a>
+            <button onclick="window.location.href='{{ url_for('register') }}'" class="get-started">Try for Free</button>
         </nav>
         <div class="burger" onclick="toggleMenu()">
             <div class="line"></div>
@@ -381,10 +399,12 @@
         <div class="hero-text">
             <h2>Simplify Your Hiring Process with AI</h2>
             <p>HireGen.com transforms the way you attract, evaluate, and hire top talent. Our AI recruitment software is designed to streamline your hiring process, saving you time and ensuring you find the perfect candidates for your organization.</p>
-            <p>Free Trial - No Credit Card Required</p>
-            <button  onclick="window.location.href='{{ url_for('register') }}'">Get Started</button>
+            <button  onclick="window.location.href='{{ url_for('register') }}'">Free Trial - No Credit Card Required</button>
         </div>
-        <img src="{{ url_for('static', filename='images/recruitment_process_illustration.jpeg') }}" alt="Recruitment AI">
+        <video autoplay loop muted>
+            <source src="{{ url_for('static', filename='videos/homepage-animation.mp4') }}" type="video/mp4">
+                Your browser does not support the video tag.
+        </video>
     </section>
 
     <section class="features" id="features">
