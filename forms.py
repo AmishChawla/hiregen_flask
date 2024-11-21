@@ -34,7 +34,7 @@ class RegisterForm(FlaskForm):
     firstname = StringField('First Name')
     lastname = StringField('Last Name')
     phone_number = StringField('Mobile')
-    username = StringField('Username', validators=[validators.Length(min=4, max=25), validators.DataRequired()])
+    username = StringField('Username')
     email = StringField('Email', validators=[validators.Email(), validators.DataRequired()])
     password = PasswordField('Password', validators=[
         validators.DataRequired(),
@@ -90,6 +90,7 @@ class CompanyRegisterForm(FlaskForm):
         FileRequired(message="Logo file is required")
     ])
     name = StringField('Name', validators=[DataRequired()])
+    company_subdomain = StringField('Subdomain', validators=[DataRequired()])
     website_url = StringField('Website URL', validators=[DataRequired()])
     location = StringField('Location',  validators=[DataRequired(message='This field is required.')])
     description = TextAreaField('Descripton')

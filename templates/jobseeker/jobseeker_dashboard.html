@@ -113,7 +113,7 @@
     {% if recommendations %}
     {% for job, similarity_score in recommendations %}
     <div class="col-lg-6">
-        <a href="{{ url_for('get_post_by_username_and_slug', username=job.author_name, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}">
+        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}">
       <div class="card job-card">
           <div class="card-body">
                 <div class="row">

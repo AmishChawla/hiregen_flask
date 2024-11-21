@@ -32,6 +32,14 @@
                             </div>
                             <small class="text-danger">{{ form.name.errors[0] }}</small>
 
+                                <label for="company_subdomain" class="form-label">Company Subdomain:</label>
+                            <div class="input-group mb-3">
+                                {{ form.company_subdomain(class="form-control", required=True) }}
+                                <span class="input-group-text">.hiregen.com</span>
+                            </div>
+                            <small class="text-danger">{{ form.company_subdomain.errors[0] }}</small>
+
+
                             <div class="mb-3">
                                 <label for="website_url" class="form-label">Website URL:</label>
                                 {{ form.website_url(class="form-control", placeholder="google.com", required=True) }}

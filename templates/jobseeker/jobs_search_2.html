@@ -213,7 +213,7 @@
 <div class="container job-listings">
     <div class="row justify-content-center">
         {% for job in jobs %}
-        <a href="{{ url_for('get_post_by_username_and_slug', username=job.JobOpening.author_name, job_date=job.JobOpening.created_at.split('T')[0], job_slug=job.JobOpening.slug) }}" style="text-decoration:none;">
+        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.JobOpening.created_at.split('T')[0], job_slug=job.JobOpening.slug) }}" style="text-decoration:none;">
         <div class="col-12 d-flex justify-content-center mb-3">
             <div class="card job-card" style="width: 100%; max-width: 600px; display: flex; flex-direction: row; background-color: white; border: none; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                 <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo" class="company-logo" style="width: 80px; height: 80px; border-radius: 5px; object-fit: cover; margin: 15px;">

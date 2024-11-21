@@ -19,11 +19,20 @@ import api_calls
 import static_dropdowns
 from constants import ROOT_URL
 import google.generativeai as genai
+
 import openai
 from functools import wraps
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_PATH'] = '/'
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
@@ -295,10 +304,9 @@ def register():
         firstname= form.firstname.data
         lastname = form.lastname.data
         phone_number = form.phone_number.data
-        username = form.username.data
         email = form.email.data
         password = form.password.data
-        response = api_calls.user_register(firstname, lastname, phone_number, username, email, password)
+        response = api_calls.user_register(firstname, lastname, phone_number, email, password)
         print("inside")
         if response.status_code == 200:
             response = api_calls.user_login(email, password)
@@ -401,6 +409,7 @@ def result():
 @app.route("/profile", methods=['GET', 'POST'])
 @login_required
 def profile():
+    is_company_registered = False
     empty_folder(uploads_folder)
     empty_folder(profile_pictures_folder)
 
@@ -419,10 +428,12 @@ def profile():
         form.email.data = result["email"]
 
         company = result.get('company', {})
-        form.company_name.data = company.get('name', '')
-        form.company_location.data = company.get('location', '')
-        form.company_website.data = company.get('company_website', '')
-        form.company_description.data = company.get('company_description', '')
+        if company:
+            is_company_registered = True
+            form.company_name.data = company.get('name', '')
+            form.company_location.data = company.get('location', '')
+            form.company_website.data = company.get('company_website', '')
+            form.company_description.data = company.get('company_description', '')
 
     # On form submit, process the data
     if form.validate_on_submit():
@@ -470,7 +481,7 @@ def profile():
             flash('Failed to update profile. Please try again.', 'danger')
 
     return render_template('profile.html', form=form, current_plans=result.get('current_plans', []),
-                           profile_picture=result.get('profile_picture'), company=result.get('company'))
+                           profile_picture=result.get('profile_picture'), company=result.get('company'), is_company_registered=is_company_registered)
 
 
 @app.route("/admin/users")
@@ -820,6 +831,7 @@ def company_register():
         name = form.name.data
         website_url = form.website_url.data
         location = form.location.data
+        company_subdomain = form.company_subdomain.data
         description = form.description.data
 
         empty_folder(uploads_folder)
@@ -832,12 +844,15 @@ def company_register():
         file.save(file_path)
         payload = {'company_logo': (filename, open(file_path, 'rb'))}
 
-        response = api_calls.company_register(name, website_url,logo=payload,location=location, description=description, access_token=current_user.id)
+        response = api_calls.company_register(name, website_url,logo=payload,location=location, description=description,company_subdomain=company_subdomain, access_token=current_user.id)
         print("inside")
 
         if (response.status_code == 200):
             flash('Registration Successful', category='info')
             if (current_user.role == 'user'):
+                current_user.company = dict(response.json())
+                session['user']['company'] = dict(response.json())
+
                 return redirect(url_for('user_dashboard'))
             else:
                 return redirect(url_for('list_of_companies'))
@@ -867,6 +882,19 @@ def company_details_by_company_slug(company_slug):
     jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
 
     return render_template('company_details.html', company=result, job_posts=jobs_by_company)
+
+@app.route('/', subdomain="<company_subdomain>", methods=['GET', 'POST'])
+def company_details_by_company_subdomain(company_subdomain):
+    # Get the company details based on the subdomain
+    result = api_calls.get_company_details_by_subdomain(company_subdomain=company_subdomain)
+
+    # Retrieve jobs associated with the company
+    company_id = result["id"]
+    jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
+
+    # Render the template with company details and job postings
+    return render_template('company_details.html', company=result, job_posts=jobs_by_company)
+
 
 
 ######################################## resume history ##########################################################################
@@ -1206,11 +1234,38 @@ def admin_all_jobseekers():
 
 
 
-@app.route('/<username>/jobs', methods=['GET', 'POST'])
-def user_post_list(username):
+# @app.route('/<username>/jobs', methods=['GET', 'POST'])
+# def user_post_list(username):
+#     toast = 'null'
+#     form = forms.SubscribeToNewsletterForm()
+#     result = api_calls.get_user_job_opening_by_username(username=username)
+#
+#     if result is None:
+#         result = []  # Set result to an empty list
+#
+#     response = []
+#
+#     if form.validate_on_submit():
+#         print('inside validating')
+#         name = form.name.data
+#         email = form.email.data
+#         print('sending call')
+#         response_status = api_calls.subscribe_to_newsletter(name=name, email=email, username=username)
+#         if response_status == 200:
+#             return redirect(url_for('user_post_list', username=username, toast='new_sub'))
+#         elif response_status == 409:
+#             return redirect(url_for('user_post_list', username=username, toast='already_sub'))
+#         else:
+#             return redirect(url_for('user_post_list', username=username, toast='null'))
+#
+#     return render_template('user_post_list.html', result=result, response=response, form=form, username=username, toast=toast)
+
+
+@app.route('/jobs',subdomain='<company_subdomain>', methods=['GET', 'POST'])
+def user_post_list_by_company_subdomain(company_subdomain):
     toast = 'null'
     form = forms.SubscribeToNewsletterForm()
-    result = api_calls.get_user_job_opening_by_username(username=username)
+    result = api_calls.get_job_opening_by_company_subdomain(company_subdomain=company_subdomain)
 
     if result is None:
         result = []  # Set result to an empty list
@@ -1224,13 +1279,14 @@ def user_post_list(username):
         print('sending call')
         response_status = api_calls.subscribe_to_newsletter(name=name, email=email, username=username)
         if response_status == 200:
-            return redirect(url_for('user_post_list', username=username, toast='new_sub'))
+            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='new_sub'))
         elif response_status == 409:
-            return redirect(url_for('user_post_list', username=username, toast='already_sub'))
+            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='already_sub'))
         else:
-            return redirect(url_for('user_post_list', username=username, toast='null'))
+            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='null'))
 
-    return render_template('user_post_list.html', result=result, response=response, form=form, username=username, toast=toast)
+    return render_template('user_post_list.html', result=result, response=response, form=form, toast=toast)
+
 
 
 @app.route("/admin/delete-job/<job_id>", methods=['GET', 'POST'])
@@ -2185,15 +2241,43 @@ def delete_media(media_id):
 #
 
 
-@app.route('/<username>/jobs/<job_date>/<job_slug>', methods=['GET', 'POST'])
-def get_post_by_username_and_slug(username, job_date, job_slug):
-    job_details = api_calls.get_job_by_username_slug(job_ownername=username, slug=job_slug)
+# @app.route('/<username>/jobs/<job_date>/<job_slug>', methods=['GET', 'POST'])
+# def get_post_by_username_and_slug(username, job_date, job_slug):
+#     job_details = api_calls.get_job_by_username_slug(job_ownername=username, slug=job_slug)
+#     apply_form = forms.ApplyToJob()
+#     apply_form.job_id.data = job_details["id"]
+#     if apply_form.validate_on_submit:
+#         if apply_form.resume.data:
+#             applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, resume_id=apply_form.resume.data, job_id=apply_form.job_id.data)
+#             return redirect(url_for('get_post_by_username_and_slug', username=username, job_date=job_date, job_slug=job_slug))
+#
+#         elif apply_form.upload_resume.data:
+#             empty_folder(uploads_folder)
+#             file = apply_form.upload_resume.data
+#
+#             filename = secure_filename(file.filename)
+#             # Save the file to a designated folder
+#             file_path = 'uploads/' + filename
+#             print(file_path)
+#             file.save(file_path)
+#             payload = {'resume_file': (filename, open(file_path, 'rb'))}
+#
+#             api_calls.apply_to_job_via_device(access_token=current_user.id, file=payload,
+#                                                    job_id=apply_form.job_id.data)
+#             return redirect(url_for('get_post_by_username_and_slug', username=username, job_date=job_date, job_slug=job_slug))
+#
+#     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
+
+
+@app.route('/jobs/<job_date>/<job_slug>', subdomain='<company_subdomain>', methods=['GET', 'POST'])
+def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug):
+    job_details = api_calls.get_job_by_company_subdomain_slug(company_subdomain=company_subdomain, slug=job_slug)
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
     if apply_form.validate_on_submit:
         if apply_form.resume.data:
             applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, resume_id=apply_form.resume.data, job_id=apply_form.job_id.data)
-            return redirect(url_for('get_post_by_username_and_slug', username=username, job_date=job_date, job_slug=job_slug))
+            return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
 
         elif apply_form.upload_resume.data:
             empty_folder(uploads_folder)
@@ -2208,7 +2292,7 @@ def get_post_by_username_and_slug(username, job_date, job_slug):
 
             api_calls.apply_to_job_via_device(access_token=current_user.id, file=payload,
                                                    job_id=apply_form.job_id.data)
-            return redirect(url_for('get_post_by_username_and_slug', username=username, job_date=job_date, job_slug=job_slug))
+            return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
 
     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
 
@@ -2480,16 +2564,16 @@ def user_feedbacks():
 
     return render_template('user_feedbacks.html', result=feedbacks)
 
-@app.route("/<username>/posts/category/<category>/<category_id>", methods=['GET', 'POST'])
-def posts_by_category(username, category, category_id):
-    posts= api_calls.get_post_by_category_id(author_name=username, category_id=category_id)
-    return render_template('post_by_filter.html', result=posts, filter_by=category)
-
-
-@app.route("/<username>/posts/tag/<tag>/<tag_id>", methods=['GET', 'POST'])
-def posts_by_tag(username, tag, tag_id):
-    posts= api_calls.get_post_by_tags(username=username, tag_id=tag_id)
-    return render_template('post_by_filter.html', result=posts, filter_by=tag)
+# @app.route("/<username>/posts/category/<category>/<category_id>", methods=['GET', 'POST'])
+# def posts_by_category(username, category, category_id):
+#     posts= api_calls.get_post_by_category_id(author_name=username, category_id=category_id)
+#     return render_template('post_by_filter.html', result=posts, filter_by=category)
+#
+#
+# @app.route("/<username>/posts/tag/<tag>/<tag_id>", methods=['GET', 'POST'])
+# def posts_by_tag(username, tag, tag_id):
+#     posts= api_calls.get_post_by_tags(username=username, tag_id=tag_id)
+#     return render_template('post_by_filter.html', result=posts, filter_by=tag)
 
 
 #################################################### PAGES ##################################################
@@ -3913,6 +3997,12 @@ def homepage_contactus_submission():
         return jsonify({'message': 'Form submitted successfully'}), 200
     except Exception as e:
         return jsonify({'error': 'An error occurred while processing the form'}), 500
+
+
+@app.route('/aboutus')
+def about_us():
+    return render_template('aboutus.html')
+
 
 
 #####################################################################################################################################

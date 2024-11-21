@@ -103,7 +103,7 @@
                         </form>
                         <p class="post-meta">
                             Posted by
-                            <a href="{{ url_for('user_post_list', username=data.author_name) }}">{{ data.author_name }}</a>
+                            <a href="{{ url_for('user_post_list_by_company_subdomain', company_subdomain=data.company_subdomain) }}">{{ data.author_name }}</a>
                             on {{ data.created_at.split('T')[0] }} at {{ data.created_at.split('T')[1][:8] }}
                         </p>
 

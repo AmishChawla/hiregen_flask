@@ -29,7 +29,7 @@
                 <td class="py-1 text-truncate"><span>{{data.job_application_status.capitalize()}}</span></td>
                 <td class="py-1 text-truncate">{{ data.application_date.split('T')[0]}}</td>
                 <td class="py-1 text-truncate"> <a href="{{ data.resume }}">Resume</a></td>
-                <td class="py-1 text-truncate"> <a href="{{ data.url }}">Job</a></td>
+                <td class="py-1 text-truncate"> <a href="{{ data.url }}" target="_blank" rel="noopener noreferrer">Job</a></td>
               </tr>
               {% endfor %}
             </tbody>

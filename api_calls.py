@@ -38,14 +38,13 @@ def dashboard(file_list, access_token: str):
         print(f"Error: {e}")
 
 
-def user_register(firstname, lastname, phone_number, username, email, password):
+def user_register(firstname, lastname, phone_number, email, password):
     print('trying3')
     headers = {'Content-Type': 'application/json'}
     data = {
         "firstname": firstname,
         "lastname": lastname,
         "phone_number": phone_number,
-        "username": username,
         "email": email,
         "password": password,
         "role": "user"
@@ -443,7 +442,7 @@ def get_company_details(company_id: int):
 
 def get_company_details_by_slug(company_slug: str):
     try:
-        response = requests.get(constants.BASE_URL + f'/companies/{company_slug}')
+        response = requests.get(constants.BASE_URL + f'/companies/by-company-slug/{company_slug}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -470,8 +469,23 @@ def get_jobs_by_company_id(company_id: int):
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
 
+def get_company_details_by_subdomain(company_subdomain: str):
+    try:
+        response = requests.get(constants.BASE_URL + f'/companies/by-subdomain/{company_subdomain}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
 
-def company_register(name, website_url, logo, description, location, access_token):
+
+
+def company_register(name, website_url, company_subdomain, logo, description, location, access_token):
     print('trying3')
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
@@ -480,7 +494,8 @@ def company_register(name, website_url, logo, description, location, access_toke
     }
     data = {
         "location": location,
-        "description": description
+        "description": description,
+        "company_subdomain":company_subdomain
     }
     try:
         response = requests.post(constants.BASE_URL + f'/companies/create-company',data=data, params=params,files=logo, headers=headers)
@@ -1194,11 +1209,34 @@ def get_job_by_username_slug(job_ownername, slug):
         print(f"Timeout Error: {errt}")
 
 
+def get_job_by_company_subdomain_slug(company_subdomain, slug):
+    try:
+        response = requests.get(constants.BASE_URL + f'/job_openings/by-company_subdomain/{company_subdomain}/{slug}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
 
 
 def get_user_job_opening_by_username(username: str):
     try:
         response = requests.get(constants.BASE_URL + f'/user-job-openings/{username}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+def get_job_opening_by_company_subdomain(company_subdomain: str):
+    try:
+        response = requests.get(constants.BASE_URL + f'/job-openings/by-company-subdomain/{company_subdomain}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

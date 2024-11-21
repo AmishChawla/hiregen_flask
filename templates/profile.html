@@ -21,6 +21,7 @@
         }
         .btn-edit {
             margin-top: 20px;
+            background-color: #ffffff;
         }
         .img-upload {
             position: relative;
@@ -58,7 +59,7 @@
 
                 <div class="text-center">
                     <div class="img-upload">
-                        <img src="{{ profile_picture or 'default-profile.png' }}" alt="Profile Picture" class="profile-img">
+                        <img src="{{ profile_picture or url_for('static', filename='images/man.png')}}" alt="Profile Picture" class="profile-img">
                         {{ form.profile_picture.label(class="edit-icon fas fa-camera") }}
                         {{ form.profile_picture(class="d-none") }}
                     </div>
@@ -92,6 +93,7 @@
                 </div>
 
                 <h5 class="mb-3">Company Details</h5>
+                {% if is_company_registered %}
                 <div class="text-center">
                     <div class="img-upload">
                         <img src="{{ company['company_logo'] or 'default-company.png' }}" alt="Company Logo" class="company-logo">
@@ -115,6 +117,9 @@
                     {{ form.company_description.label() }}
                     {{ form.company_description(class="form-control", disabled=True, rows=10) }}
                 </div>
+                {% else %}
+                <a href="{{url_for('company_register')}}"> Add Company </a>
+                {% endif %}
 
                 <hr>
                 <h5 class="mb-3">Plan Details</h5>

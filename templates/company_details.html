@@ -8,7 +8,6 @@
 {% elif current_user == None %}
     {% extends 'base.html' %}
 {% endif %}
-{% block title %}{{company.name}}{% endblock %}
 
 {% block content %}
 
@@ -243,7 +242,7 @@
                                     {% if data.job_opening_status == 'Active' and data.status == 'published' %}
                                         <tr>
                                             <td>
-                                                <a href="{{ url_for('get_post_by_username_and_slug', username=data.author_name, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+                                                <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
                                                    class="job-title" aria-label="Job Title: {{ data.job_title }}">
                                                     {{ data.job_title }}
                                                 </a>

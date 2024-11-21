@@ -19,7 +19,7 @@
           <div style="display:flex; justify-content:space-between;">
             <h2 class="m-0">Jobs</h2>
             <div style="display: flex; justify-content: space-between;">
-              <a href="{{ url_for('company_details_by_company_slug', company_slug=current_user.company['company_slug']) }}" class="d-block" style="margin-right:0.5rem; margin-top:6px; font-weight:bolder; font-size:1.1rem;">Visit Site</a>
+              <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=current_user.company['company_subdomain']) }}" class="d-block" style="margin-right:0.5rem; margin-top:6px; font-weight:bolder; font-size:1.1rem;">Visit Site</a>
 
               <a class="btn btn-info" href="{{ url_for('add_post')}}" style="padding: 6px 30px 6px 30px;">
                 <span class="menu-title">Create Job</span>
