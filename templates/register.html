@@ -52,6 +52,29 @@
             font-weight: 500;
             color: #555;
         }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 5px;
+        }
+        .dropdown-content a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            font-size: 16px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
         .get-started {
             background-color: #1A73E8;
             color: white;
@@ -66,14 +89,44 @@
             background-color: #1664c0;
             transform: translateY(-2px);
         }
+        .burger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 20px;
+        }
+        .burger .line {
+            width: 25px;
+            height: 4px;
+            background-color: #333;
+            border-radius: 3px;
+        }
+        .nav-menu.active {
+            display: block;
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
         @media (max-width: 768px) {
-            header {
-                padding: 10px 20px;
-            }
             .nav-menu {
                 display: none;
             }
+            .burger {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 10px 20px;
+                width: 100%;
+                border-bottom: 1px solid #ddd;
+                margin: 0;
+            }
         }
+
 
         /* Register Card */
         .card {
@@ -168,13 +221,27 @@
 <body>
     <header>
         <h1>HireGen</h1>
-        <nav class="nav-menu">
+        <nav id="nav-menu" class="nav-menu">
             <a href="{{url_for('index')}}#features">Features</a>
             <a href="#">Pricing</a>
             <a href="{{url_for('index')}}#contact">Contact</a>
+            <div class="dropdown">
+                <a href="#" class="dropbtn">JobSeekers</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('jobseeker_login')}}#">Login</a>
+                    <a href="{{url_for('jobseeker_register')}}">Get Started</a>
+                    <a href="{{url_for('jobs_search')}}">Search Jobs</a>
+                </div>
+            </div>
             <a href="{{url_for('login')}}">Login</a>
             <button class="get-started">Try for Free</button>
         </nav>
+        <div class="burger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+
     </header>
 
     <div class="card">
@@ -240,4 +307,9 @@
         <p>&copy; 2024 HireGen. All rights reserved. | <a href="{{url_for('index')}}#features">Features</a> | <a href="{{url_for('index')}}#contact">Contact</a> | <a href="{{url_for('index')}}#">Privacy Policy</a></p>
     </footer>
 </body>
+<script>
+    function toggleMenu() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        }
+</script>
 </html>

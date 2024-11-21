@@ -28,8 +28,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
 app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
@@ -3549,8 +3549,8 @@ def jobs_search():
         date_filter = request.args.get('date_filter')
         keyword = request.args.get('keyword')
 
-        if country or state or job_type or industry or date_filter or keyword:
-            jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
+        # if country or state or job_type or industry or date_filter or keyword:
+        jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
 
     return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs)
 

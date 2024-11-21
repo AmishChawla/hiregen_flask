@@ -369,7 +369,14 @@
             <a href="#features">Features</a>
             <a href="{{ url_for('user_view_plan') }}">Pricing</a>
             <a href="#contact">Contact</a>
-
+            <div class="dropdown">
+                <a href="#" class="dropbtn">JobSeekers</a>
+                <div class="dropdown-content">
+                    <a href="{{url_for('jobseeker_login')}}">Login</a>
+                    <a href="{{url_for('jobseeker_register')}}">Get Started</a>
+                    <a href="{{url_for('jobs_search')}}">Search Jobs</a>
+                </div>
+            </div>
             <div class="dropdown">
                 <a href="#" class="dropbtn">AI</a>
                 <div class="dropdown-content">
