@@ -9,11 +9,11 @@ MY_ROOT_URL = 'https://hiregen.com'
 
 
 # FOR API
-# BASE_URL = 'http://127.0.0.1:8000/api'
-# ROOT_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'http://127.0.0.1:8000/api'
+ROOT_URL = 'http://127.0.0.1:8000'
 
-ROOT_URL = 'https://hiregen.com/api'
-BASE_URL = 'https://hiregen.com/api/api'
+# ROOT_URL = 'https://hiregen.com/api'
+# BASE_URL = 'https://hiregen.com/api/api'
 
 
 

@@ -19,7 +19,7 @@ import api_calls
 import static_dropdowns
 from constants import ROOT_URL
 import google.generativeai as genai
-
+from flask_wtf.csrf import CSRFProtect
 import openai
 from functools import wraps
 from flask_cors import CORS
@@ -28,16 +28,21 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
-app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+csrf = CSRFProtect(app)
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 uploads_folder = 'uploads'
+os.makedirs(uploads_folder, exist_ok=True)
+
 media_folder = 'media'
+os.makedirs(media_folder, exist_ok=True)
+
 profile_pictures_folder = 'profile_pictures/'
 os.makedirs(profile_pictures_folder, exist_ok=True)
 

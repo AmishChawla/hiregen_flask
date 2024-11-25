@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-
 {% block title %}Add Job{% endblock %}
 
 {% block content %}
@@ -23,29 +22,29 @@
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        height: 100%;
         padding: 20px;
-        box-sizing: border-box;
     }
 
     .form-container form {
         width: 100%;
     }
 
-    .form-container .form-group {
+    .form-group {
         width: 100%;
         margin-bottom: 15px;
     }
 
-    .form-container .form-group label {
+    .form-group label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
     }
 
-    .form-container .form-control {
+    .form-control {
         width: 100%;
-        height: auto;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
     }
 
     .tags-container {
@@ -53,6 +52,7 @@
         flex-wrap: wrap;
         margin-top: 10px;
     }
+
     .tag {
         background-color: #f0f0f0;
         padding: 5px 10px;
@@ -62,126 +62,128 @@
         cursor: pointer;
     }
 
-    .close-button {
-        margin-left: 5px;
-        background: none;
+    .custom-button {
         border: none;
-        cursor: pointer;
+        outline: none;
+        background-color: rgb(24, 22, 22);
+        padding: 10px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 16px;
+        text-decoration: none;
+        transition: 0.3s ease;
     }
-</style>
-<style>
-            .custom-button {
-          border: none;
-          outline: none;
-          background-color: rgb(24, 22, 22);
-          padding: 10px;
-          border-radius: 10px;
-          color: #fff;
-          font-size: 16px;
-          transform: .3s ease;
-          text-decoration: none;
-        }
 
-        .custom-button:hover {
-          background-color: rgb(21, 19, 19);
-        }
+    .custom-button:hover {
+        background-color: rgb(21, 19, 19);
+    }
 
-        .final-button {
-            border: none;
-            outline: none;
-            background-color: royalblue;
-            padding: 15px 25px; /* Increased padding */
-            border-radius: 10px;
-            color: #fff;
-            font-size: 18px; /* Optional: Adjust font size if needed */
-            transform: .3s ease;
-            text-decoration: none;
-            display: block; /* Make it a block element to apply margin auto */
-            margin: auto; /* Center the button horizontally */
-            width: fit-content; /* Adjust width to fit content */
-            margin-top: 20px; /* Optional: Adjust vertical positioning */
-            margin-bottom: 20px; /* Optional: Adjust vertical spacing below the button */
-        }
+    .final-button {
+        border: none;
+        outline: none;
+        background-color: royalblue;
+        padding: 15px 25px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 18px;
+        text-decoration: none;
+        display: block;
+        margin: 20px auto;
+        width: fit-content;
+        transition: 0.3s ease;
+    }
 
-        .final-button:hover {
-          background-color: rgb(56, 90, 194);
-        }
+    .final-button:hover {
+        background-color: rgb(56, 90, 194);
+    }
 
+    .w-50 {
+        width: 48%;
+    }
 
-        .field {
-            margin-bottom: 20px;
-            position: relative;
-            border: 1px solid #ccc;
-            padding: 20px;
-        }
+    .form-group.row {
+        display: flex;
+        justify-content: space-between;
+    }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        textarea,
-        select,
-        input[type="date"],
-        input[type="file"] {
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .w-50 {
             width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            margin-top: 5px;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: center;
             margin-bottom: 10px;
         }
 
-        .form-check input {
-            margin-right: 5px;
+        .form-container {
+            padding: 10px;
         }
 
-        .form-check-label {
-            flex: 1;
-            display: flex;
-            align-items: center;
+        .form-group {
+            margin-bottom: 10px;
         }
 
-        .dropdown-option {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
+        .form-control {
+            font-size: 14px;
         }
+
+        .final-button {
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .form-container {
+            padding: 5px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+        }
+
+        .form-control {
+            font-size: 12px;
+        }
+
+        .final-button {
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+    }
 </style>
+
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
 <form method="post" action="{{ url_for('add_post') }}" id="postForm">
     {{ form.hidden_tag() }}
     <aside class="control-sidebar control-sidebar-light">
         <div class="p-3">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h6><strong>Publish Job</strong></h6>
-            </div>
+            <h6><strong>Publish Job</strong></h6>
             <div class="form-group">
                 {{ form.publish(class="btn btn-primary w-100 mb-3") }}
                 {{ form.save_draft(class="btn btn-outline-primary w-100 mb-3") }}
             </div>
-                <div class="form-group">
-            {{ form.target_date.label }}
-            {{ form.target_date(class="form-control", id="target_date", required=True) }}
-        </div>
-                        <div class="form-group">
-            {{ form.opening_date.label }}
-            {{ form.opening_date(class="form-control", id="opening_date", required=True) }}
-        </div>
             <div class="form-group">
-            {{ form.job_opening_status.label }}
-            {{ form.job_opening_status(class="form-control", id="job_opening_status", required=True) }}
-        </div>
+                {{ form.target_date.label }}
+                {{ form.target_date(class="form-control", id="target_date", required=True) }}
+            </div>
+            <div class="form-group">
+                {{ form.opening_date.label }}
+                {{ form.opening_date(class="form-control", id="opening_date", required=True) }}
+            </div>
+            <div class="form-group">
+                {{ form.job_opening_status.label }}
+                {{ form.job_opening_status(class="form-control", id="job_opening_status", required=True) }}
+            </div>
         </div>
     </aside>
-   {% if current_user.company == None %}
+
+    {% if current_user.company == None %}
     <div class="alert alert-warning mt-1" role="alert">
         <i class="bi bi-exclamation-triangle-fill mr-1"></i>
-        Register company to start posting jobs  <a href="{{url_for('company_register')}}" class="alert-link ml-1" style="text-decoration:none;">here</a>
+        Register company to start posting jobs
+        <a href="{{ url_for('company_register') }}" class="alert-link ml-1" style="text-decoration:none;">here</a>
     </div>
-   {% endif %}
+    {% endif %}
 
     <div class="content-header">
         <div class="container-fluid">
@@ -193,78 +195,71 @@
         </div>
     </div>
 
-
-
-
     <div class="form-container">
-    <div id="errorMessages"></div>
+        <div id="errorMessages"></div>
 
         <div class="form-group">
             {{ form.job_title.label }}
             {{ form.job_title(class="form-control", placeholder="Position") }}
-        {% if form.job_title.errors %}
+            {% if form.job_title.errors %}
             <small class="text-danger">{{ form.job_title.errors[0] }}</small>
-        {% endif %}
-
-        </div>
-                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
-
-        <div class="w-50 mr-3">
-            {{ form.salary.label }}
-            {{ form.salary(class="form-control", id="salary") }}
-        </div>
-        <div class="w-50">
-            {{ form.work_experience.label }}
-            {{ form.work_experience(class="form-control", id="work_experience") }}
+            {% endif %}
         </div>
 
-                    </div>
-    <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="form-group row">
+            <div class="w-50">
+                {{ form.salary.label }}
+                {{ form.salary(class="form-control", id="salary") }}
+            </div>
+            <div class="w-50">
+                {{ form.work_experience.label }}
+                {{ form.work_experience(class="form-control", id="work_experience") }}
+            </div>
+        </div>
 
-        <div class="w-50 mr-3">
-            {{ form.job_type.label }}
-            {{ form.job_type(class="form-control", id="job_type") }}
+        <div class="form-group row">
+            <div class="w-50">
+                {{ form.job_type.label }}
+                {{ form.job_type(class="form-control", id="job_type") }}
+            </div>
+            <div class="w-50">
+                {{ form.industry.label }}
+                {{ form.industry(class="form-control", id="industry") }}
+            </div>
         </div>
-                <div class="w-50">
-            {{ form.industry.label }}
-            {{ form.industry(class="form-control", id="industry") }}
-        </div>
-</div>
-            <div class="form-group">
-                {{ form.address_country.label }}
+
+        <div class="form-group">
+            {{ form.address_country.label }}
             {{ form.address_country(class="form-control", placeholder="Country") }}
         </div>
         <div class="form-group">
             {{ form.address_province.label }}
             {{ form.address_province(class="form-control", placeholder="Province") }}
         </div>
-            <div class="form-group">
-                {{ form.address_city.label }}
+        <div class="form-group">
+            {{ form.address_city.label }}
             {{ form.address_city(class="form-control", placeholder="City") }}
         </div>
-            <div class="form-group">
-                {{ form.address_postal_code.label }}
+        <div class="form-group">
+            {{ form.address_postal_code.label }}
             {{ form.address_postal_code(class="form-control", placeholder="Postal Code") }}
         </div>
-
-
 
         <div class="form-group">
             {{ form.job_description.label }}
             {{ form.job_description(class="form-control", id="job_description") }}
         </div>
-            <div class="form-group">
+        <div class="form-group">
             {{ form.job_requirements.label }}
             {{ form.job_requirements(class="form-control", id="job_requirements") }}
         </div>
-            <div class="form-group">
+        <div class="form-group">
             {{ form.job_benefits.label }}
             {{ form.job_benefits(class="form-control", id="job_benefits") }}
         </div>
-
     </div>
-
 </form>
+
 
 <!-- Media Modal -->
 <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
@@ -338,6 +333,7 @@
         </div>
     </div>
 </div>
+
 
 
 
