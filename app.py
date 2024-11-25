@@ -1331,6 +1331,10 @@ def add_post():
 
     if form.validate_on_submit():
         print('inside form.validate_on_submit')
+
+        if not current_user.company:
+            return redirect(url_for('company_register'))
+
         job_title = form.job_title.data
         target_date = form.target_date.data
         opening_date = form.opening_date.data
