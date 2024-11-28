@@ -43,6 +43,12 @@
             font-weight: 700;
             color: #333;
         }
+        header h1 a:hover{
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+        }
+
         .nav-menu {
             display: flex;
             align-items: center;
@@ -220,7 +226,7 @@
 </head>
 <body>
     <header>
-        <h1>HireGen</h1>
+        <h1><a href="{{url_for('index')}}">HireGen</a></h1>
         <nav id="nav-menu" class="nav-menu">
             <a href="{{url_for('index')}}#features">Features</a>
             <a href="#">Pricing</a>

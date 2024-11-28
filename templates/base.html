@@ -64,8 +64,6 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a class="dropdown-item" href="{{ url_for('profile') }}" style="display: flex; justify-content: space-between;">Edit Profile<i class="far fa fa-pencin-square-o" style="margin-left:10px"></i></a>
           <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('user_password_update') }}" style="display: flex; justify-content: space-between;">Update Password <i class="mdi mdi-lock-reset menu-icon" style="margin-left:10px"></i></a>
-          <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ url_for('logout') }}" style="display: flex; justify-content: space-between;">Logout <i class="mdi mdi-logout menu-icon" style="margin-left:10px"></i></a>
 
         </div>
@@ -162,54 +160,54 @@
             </a>
           </li>
 
-          <li class="nav-item {% if request.endpoint == 'user_all_pages' or request.endpoint == 'add_page' %} menu-open {% endif %}">
-            <a href="#" class="nav-link">
-              <i class="far bi bi-window-stack nav-icon"></i>
-              <p>Pages</p>
-              <i class="right fas fa-angle-left"></i>
-            </a>
-            <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ url_for('user_all_pages') }}" class="nav-link {% if request.endpoint == 'user_all_pages' %} active {% endif %}">
-              <i class="far bi bi-window-dock nav-icon"></i>
-              <p>My Pages</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('add_page') }}" class="nav-link {% if request.endpoint == 'add_page' %} active {% endif %}">
-              <i class="far bi bi-window-plus nav-icon"></i>
-              <p>Add Page</p>
-            </a>
-          </li>
-        </ul>
-          </li>
-          <li class="nav-item {% if request.endpoint == 'user_all_forms' or request.endpoint == 'formbuilder' or request.endpoint == 'user_feedbacks' %} menu-open {% endif %}">
-            <a href="#" class="nav-link">
-              <i class="far bi bi-window-stack nav-icon"></i>
-              <p>Forms & Feedbacks</p>
-              <i class="right fas fa-angle-left"></i>
-            </a>
-            <ul class="nav nav-treeview">
-          <li class="nav-item">
-            <a href="{{ url_for('user_all_forms') }}" class="nav-link {% if request.endpoint == 'user_all_forms' %} active {% endif %}">
-              <i class="far bi bi-window-dock nav-icon"></i>
-              <p>My Forms</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('formbuilder') }}" class="nav-link {% if request.endpoint == 'formbuilder' %} active {% endif %}">
-              <i class="far bi bi-window-plus nav-icon"></i>
-              <p>Add Form</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('user_feedbacks') }}" class="nav-link {% if request.endpoint == 'user_feedbacks' %} active {% endif %}">
-              <i class="far bi bi-chat-right-text nav-icon"></i>
-              <p>Feedback</p>
-            </a>
-          </li>
-        </ul>
-          </li>
+<!--          <li class="nav-item {% if request.endpoint == 'user_all_pages' or request.endpoint == 'add_page' %} menu-open {% endif %}">-->
+<!--            <a href="#" class="nav-link">-->
+<!--              <i class="far bi bi-window-stack nav-icon"></i>-->
+<!--              <p>Pages</p>-->
+<!--              <i class="right fas fa-angle-left"></i>-->
+<!--            </a>-->
+<!--            <ul class="nav nav-treeview">-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{{ url_for('user_all_pages') }}" class="nav-link {% if request.endpoint == 'user_all_pages' %} active {% endif %}">-->
+<!--              <i class="far bi bi-window-dock nav-icon"></i>-->
+<!--              <p>My Pages</p>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{{ url_for('add_page') }}" class="nav-link {% if request.endpoint == 'add_page' %} active {% endif %}">-->
+<!--              <i class="far bi bi-window-plus nav-icon"></i>-->
+<!--              <p>Add Page</p>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--          </li>-->
+<!--          <li class="nav-item {% if request.endpoint == 'user_all_forms' or request.endpoint == 'formbuilder' or request.endpoint == 'user_feedbacks' %} menu-open {% endif %}">-->
+<!--            <a href="#" class="nav-link">-->
+<!--              <i class="far bi bi-window-stack nav-icon"></i>-->
+<!--              <p>Forms & Feedbacks</p>-->
+<!--              <i class="right fas fa-angle-left"></i>-->
+<!--            </a>-->
+<!--            <ul class="nav nav-treeview">-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{{ url_for('user_all_forms') }}" class="nav-link {% if request.endpoint == 'user_all_forms' %} active {% endif %}">-->
+<!--              <i class="far bi bi-window-dock nav-icon"></i>-->
+<!--              <p>My Forms</p>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{{ url_for('formbuilder') }}" class="nav-link {% if request.endpoint == 'formbuilder' %} active {% endif %}">-->
+<!--              <i class="far bi bi-window-plus nav-icon"></i>-->
+<!--              <p>Add Form</p>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li class="nav-item">-->
+<!--            <a href="{{ url_for('user_feedbacks') }}" class="nav-link {% if request.endpoint == 'user_feedbacks' %} active {% endif %}">-->
+<!--              <i class="far bi bi-chat-right-text nav-icon"></i>-->
+<!--              <p>Feedback</p>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--          </li>-->
           <li class="nav-item menu-open">
         <a class="nav-link {% if request.endpoint == 'resume_parser' or request.endpoint == 'resume_collection' %}active{% endif %}" href="#">
           <i class="far fa-regular fa-folder nav-icon"></i>
@@ -305,65 +303,6 @@
 
 
   <!-- Main Footer -->
-
-
-<footer id="footer" class="py-5 bg-light" style="margin-top: 25vh;width:100%">
-
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>SaaS CMS</h3>
-            <p>
-              Shalimar Bagh  <br>
-               New Delhi 110088<br>
-              India <br><br>
-              <strong>Phone:</strong> 9810336906<br>
-              <strong>Email:</strong> info@aynsoft.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-         <div class="col-lg-3 col-md-6 footer-links">
-        <h5>Section</h5>
-        <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-        </ul>
-      </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter bx-md"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook bx-md"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram bx-md"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype bx-md"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin bx-md"></i></a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-
-  </footer>
 
 </div>
 <!-- ./wrapper -->

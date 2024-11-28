@@ -24,7 +24,7 @@ load_dotenv('secrets.env')
 GEMINI_APIKEY = os.getenv("GOOGLE_GEMINI_APIKEY")
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-REDIRECT_URI = 'http://127.0.0.1:5000/callback'
+REDIRECT_URI = 'https://hiregen.com/callback'
 AUTHORIZATION_BASE_URL = 'https://accounts.google.com/o/oauth2/auth'
 TOKEN_URL = 'https://accounts.google.com/o/oauth2/token'
 GOOGLE_RECAPTCHA_SITE_KEY = os.getenv('GOOGLE_RECAPTCHA_SITE_KEY')
