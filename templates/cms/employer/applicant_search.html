@@ -116,7 +116,7 @@
             <div class="card-header">
                 <h2>Applicant Search</h2>
             </div>
-            <form id="filter-form" action="{{ url_for('employer_applicants_filter') }}" method="get">
+            <form id="filter-form" action="{{ url_for('employer_applicants_filter') }}" method="post">
                 <!-- Application Date Range -->
                 <div class="mb-4">
                     <label for="application_start_date" class="form-label">Start Date</label>

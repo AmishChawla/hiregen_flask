@@ -147,11 +147,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {% if all_chats %}
                         {% for data in all_chats %}
                         <tr style="max-height: 100px; overflow-y: auto; " onclick="loadChat({{data.messages}})">
                             <td class="py-1">{{ data.upload_datetime.split('T')[0] }} {{ data.upload_datetime.split('T')[1][:8] }}</td>
                         </tr>
                         {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>

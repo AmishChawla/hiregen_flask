@@ -28,11 +28,11 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
-csrf = CSRFProtect(app)
+# csrf = CSRFProtect(app)
 app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -3841,7 +3841,7 @@ def employer_applicants_filter():
     job_types = static_dropdowns.job_types
     industries = static_dropdowns.industries
 
-    if request.method == 'GET':
+    if request.method == 'POST':
         # Extract query parameters
         name = request.args.get('name')
         email = request.args.get('email')
@@ -3851,9 +3851,7 @@ def employer_applicants_filter():
         start_date = request.args.get('application_start_date')
         end_date = request.args.get('application_end_date')
 
-
-        if name or email or job_type or industry or job_title or job_type or start_date or end_date:
-            return redirect(url_for('employer_applicants_search',
+        return redirect(url_for('employer_applicants_search',
                                     name=name,
                                     email=email,
                                     job_title=job_title,
@@ -3875,6 +3873,8 @@ def employer_applicants_search():
     statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
     if statuses is None:
         statuses = static_dropdowns.statuses
+
+    print('here')
 
     if request.method == 'GET':
         # Extract query parameters
@@ -3904,10 +3904,8 @@ def employer_applicants_search():
         if end_date:
             params['application_end_date'] = end_date
 
-
-        if name or email or job_type or industry or job_title or job_type or start_date or end_date:
-
-            applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
+        print('here')
+        applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
 
     return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
 
