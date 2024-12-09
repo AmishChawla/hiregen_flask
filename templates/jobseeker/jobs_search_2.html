@@ -138,7 +138,7 @@
                     <label for="keyword" class="form-label">
                         <i class="bi bi-search"></i>Search
                     </label>
-                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter keyword (e.g., job title, company name, etc.)">
+                    <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Enter keyword (e.g., job title, company name, etc.)" value="{{ prefilled_data.keyword }}">
                 </div>
             </div>
 
@@ -152,7 +152,7 @@
                     <select name="country" id="country" class="form-select">
                         <option value="">Select Country</option>
                         {% for country in countries %}
-                            <option value="{{ country }}">{{ country }}</option>
+                            <option value="{{ country }}" {% if country == prefilled_data.country %}selected{% endif %}>{{ country }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -162,7 +162,7 @@
                     <label for="state" class="form-label">
                         <i class="bi bi-map-fill"></i> State
                     </label>
-                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" value="{{ prefilled_data.state }}">
                 </div>
 
                 <!-- Job Type Dropdown -->
@@ -173,7 +173,7 @@
                     <select name="job_type" id="job_type" class="form-select">
                         <option value="">Select Job Type</option>
                         {% for value, label in job_types %}
-                            <option value="{{ value }}">{{ label }}</option>
+                            <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -186,7 +186,7 @@
                     <select name="industry" id="industry" class="form-select">
                         <option value="">Select Industry</option>
                         {% for value, label in industries %}
-                            <option value="{{ value }}">{{ label }}</option>
+                            <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -198,9 +198,9 @@
                     </label>
                     <select name="date_filter" id="posted_on" class="form-select">
                         <option value="">Select Date Range</option>
-                        <option value="last_24_hours">Last 24 hours</option>
-                        <option value="last_week">Last Week</option>
-                        <option value="last_month">Last Month</option>
+            <option value="last_24_hours" {% if prefilled_data.date_filter =='last_24_hours' %}selected{% endif %}>Last 24 hours</option>
+            <option value="last_week" {% if prefilled_data.date_filter =='last_week' %}selected{% endif %}>Last Week</option>
+            <option value="last_month" {% if prefilled_data.date_filter =='last_month' %}selected{% endif %}>Last Month</option>
                     </select>
                 </div>
             </div>

@@ -32,7 +32,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
-# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -3558,10 +3558,20 @@ def jobs_search():
         date_filter = request.args.get('date_filter')
         keyword = request.args.get('keyword')
 
+        prefilled_data = {
+            'keyword': keyword,
+            'country': country,
+            'state': state,
+            'job_type': job_type,
+            'industry': industry,
+            'date_filter': date_filter
+        }
+
+
         # if country or state or job_type or industry or date_filter or keyword:
         jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
 
-    return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs)
+    return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs, prefilled_data=prefilled_data)
 
 
 
@@ -3733,18 +3743,27 @@ def jobs_filter():
 
     if request.method == 'GET':
         # Extract query parameters
-        country = request.args.get('country')
-        state = request.args.get('state')
-        job_type = request.args.get('job_type')
-        industry = request.args.get('industry')
-        date_filter = request.args.get('date_filter')
-        keyword= request.args.get('keyword')
+        country = request.args.get('country') or ''
+        state = request.args.get('state') or ''
+        job_type = request.args.get('job_type') or ''
+        industry = request.args.get('industry') or ''
+        date_filter = request.args.get('date_filter') or ''
+        keyword= request.args.get('keyword') or ''
+
+        prefilled_data = {
+            'keyword': keyword,
+            'country': country,
+            'state': state,
+            'job_type': job_type,
+            'industry': industry,
+            'date_filter': date_filter
+        }
 
         if country or state or job_type or industry or date_filter or keyword:
             jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
             return redirect(url_for('job_search'))
 
-    return render_template('jobseeker/jobs_search_1.html', countries=countries, job_types=job_types, industries=industries)
+    return render_template('jobseeker/jobs_search_1.html', countries=countries, job_types=job_types, industries=industries, prefilled_data=prefilled_data)
 
 
 

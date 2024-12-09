@@ -135,20 +135,17 @@
         <p>Resume</p>
         <i class="right fas fa-angle-left"></i>
     </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="{{ url_for('user_all_medias') }}" class="nav-link {% if request.endpoint == 'user_all_medias' %} active {% endif %}">
-                <i class="far fa fa-play nav-icon"></i>
-                <p>My Resume</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{{ url_for('media') }}" class="nav-link {% if request.endpoint == 'media' %} active {% endif %}">
-                <i class="far fa fa-plus-square nav-icon"></i>
-                <p>Upload Resume</p>
-            </a>
-        </li>
-    </ul>
+
+    <li class="nav-item">
+        <a class="nav-link {% if request.endpoint == 'jobseeker_profile' %}active{% endif %}" href="{{ url_for('jobseeker_profile') }}">
+          <i class="far fa fa-plus-square nav-icon">
+          </i>
+          <p>
+            Upload Resume
+          </p>
+        </a>
+      </li>
+
 </li>
           <li class="nav-item">
             <a class="nav-link {% if request.endpoint == 'jobs_filter' %}active{% endif %}" href="{{ url_for('jobs_filter') }}">
