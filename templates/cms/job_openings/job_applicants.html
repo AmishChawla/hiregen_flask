@@ -3,457 +3,212 @@
 {% block title %} Applicant Tracking{% endblock %}
 
 {% block content %}
-<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
-<style>
-  .offcanvas {
-    width: 300px; /* Adjust this value as needed */
-    max-width: 90%; /* Ensures the off-canvas doesn't exceed 90% of the screen width */
-    transition: transform 0.3s ease-in-out;
-}
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold text-gray-900 dark:text-gray-100">Applicant Tracking</h1>
+      <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Manage and review all your applicants here.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <button type="button" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400" onclick="openFilterDrawer()">Filter</button>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400 sm:pl-0">Name</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Job</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Score</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Date</th>
+              <th scope="col" class="relative py-3 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-800 dark:bg-gray-900">
+            {% for data in result %}
+            <tr>
+              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-0">
+                <div class="flex items-center">
+                  <img class="h-10 w-10 rounded-full" src="{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}" alt="">
+                  <div class="ml-4">
+                    <div class="font-medium text-gray-900 dark:text-gray-100">{{ data.applicant_name }}</div>
+                    <div class="text-gray-500 dark:text-gray-400">{{ data.applicant_email }}</div>
+                  </div>
+                </div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                <a href="{{ data.job_url }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">{{ data.job_title }}</a>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                <select class="rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-indigo-500" id="status-select-{{ data.id }}" onchange="updateApplicationStatus('{{ data.id }}')">
+                  {% for s in statuses %}
+                    <option value="{{ s.job_status }}" {% if data.application_status == s.job_status %}selected{% endif %}>{{ s.name.capitalize() }}</option>
+                  {% endfor %}
+                </select>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
+                <div class="relative flex justify-center">
+                  <svg class="h-10 w-10" viewBox="0 0 36 36">
+                    <path stroke="#d3d3d3" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path stroke="rgb(2,121,2)" stroke-dasharray="{{ data.applicant_score }}, 100" stroke-width="3.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="18.35" font-size="8" text-anchor="middle" fill="#000">{{ data.applicant_score }}%</text>
+                  </svg>
+                </div>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">{{ data.application_date }}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-right text-sm font-medium">
+                <button type="button" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" onclick="viewApplicantDetails('{{ data.id }}', '{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{ data.applicant_score }}', '{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}')">Details</button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-.offcanvas.show {
-    transform: translateX(0);
-}
+<div id="filterDrawer" class="fixed inset-0 z-10 hidden">
+  <div class="absolute inset-0 bg-gray-500/75 dark:bg-gray-900/75" onclick="closeFilterDrawer()"></div>
+  <div class="fixed inset-y-0 right-0 max-w-md bg-white dark:bg-gray-800 shadow-xl">
+    <div class="p-6">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Filter Options</h2>
+        <button type="button" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300" onclick="closeFilterDrawer()">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <form id="filter-form" action="{{ url_for('employer_applicants_filter') }}" method="get" class="mt-4">
+        <div class="mb-4">
+          <label for="application_start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
+          <input type="date" id="application_start_date" name="application_start_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+        </div>
+        <div class="mb-4">
+          <label for="application_end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
+          <input type="date" id="application_end_date" name="application_end_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100">
+        </div>
+        <button type="submit" class="block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-400">Apply Filters</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-.offcanvas-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-}
-
-.offcanvas-header h5 {
-    margin-bottom: 0;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.offcanvas-body {
-    padding: 1rem;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-.offcanvas-body p {
-    margin-bottom: 1rem;
-}
-
-</style>
-<style>
-        /* General Styles */
-
-        .container-form {
-            max-width: 600px;
-            margin: 50px auto;
-        }
-
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            background-color: #ffffff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .card-header h2 {
-            font-weight: 700;
-            color: #007bff;
-        }
-
-        .form-label {
-            font-weight: 500;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        .form-control,
-        .form-select {
-            border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        .select2-container--default .select2-selection--single {
-            height: 45px;
-            padding: 5px 15px;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__arrow {
-            height: 45px;
-            right: 10px;
-        }
-
-        .form-check-label {
-            font-weight: 500;
-            color: #555;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 576px) {
-            .container-form {
-                padding: 15px;
-            }
-
-            .card {
-                padding: 20px;
-            }
-
-            .btn-primary {
-                padding: 10px;
-                font-size: 14px;
-            }
-        }
-    </style>
-
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
-      <div class="card">
-        <div class="card-body">
-          <div class="mb-4" style="display:flex; justify-content:space-between;">
-            <h2 class="">Applicant Tracking</h2>
-  <a class="link-dark" style="text-decoration:None;" href="" data-bs-toggle="modal" data-bs-target="#filterModal">Filter</a>
+<div id="applicantDetailsDrawer" class="fixed inset-0 z-10 hidden">
+  <div class="absolute inset-0 bg-gray-500/75 dark:bg-gray-900/75" onclick="closeApplicantDetailsDrawer()"></div>
+  <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+    <div class="pointer-events-auto w-screen max-w-md bg-white dark:bg-gray-800 shadow-xl">
+      <div class="flex h-full flex-col overflow-y-scroll py-6">
+        <div class="px-4 sm:px-6">
+          <div class="flex items-start justify-between">
+            <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100" id="applicantDetailsTitle">Applicant Details</h2>
+            <button type="button" class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 dark:bg-gray-800 dark:hover:text-gray-300" onclick="closeApplicantDetailsDrawer()">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-            <div style="overflow-x: auto;">
-          <table id="applicantTable" class="hover row-border" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Status</th>
-                <th>Score</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in result %}
-              <tr style="overflow-y: auto;">
-                <td class="py-1 col-6">
-                  <div class="d-flex flex-row">
-                  <div class="" style="padding:0">
-                  {% if data.job_seeker_profile_picture %}
-                    <img src="{{ data.job_seeker_profile_picture }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                  {% else %}
-                    <img src="{{ url_for('static', filename='images/man.png') }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                  {% endif %}
-                  </div>
-                    <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.job_seeker_id) }}" class="link-dark" style="padding:0;">{{ data.applicant_name }}</a>
-                  </div>
-                  {% if data.job_seeker_current_job  %}
-                  <div class="row text-secondary" style="font-size:0.8rem; margin-left:2.2vw;">{{ data.job_seeker_current_job.position }}</div>
-                  <div class="row text-secondary" style="font-size:0.8rem; margin-left:2.2vw;">{{ data.job_seeker_current_job.company_name }}</div>
-                  {% endif %}
-                  <div class="row" style="font-size:0.8rem; margin-left:2.2vw;"> <a href="mailto:{{ data.applicant_email }}" style="padding:0;">{{ data.applicant_email }} </a>  </div>
-                </td>
-                <td class="py-1 text-truncate col-2"><div class="row"><a href="{{ data.job_url }}" style="padding-left:0;">{{ data.job_title }} </a></div></td>
+        </div>
+        <div id="applicantDetailsContent" class="relative mt-6 flex-1 px-4 sm:px-6">
+          <!-- Dynamic content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                <td class="py-1 text-truncate col-3">
-                  <div class="mb-3">
-                  <select class="form-select" id="status-select-{{data.id}}" aria-label="Change Status" onchange="updateApplicationStatus('{{data.id}}')">
+
+<script>
+function openFilterDrawer() {
+  document.getElementById('filterDrawer').classList.remove('hidden');
+}
+
+function closeFilterDrawer() {
+  document.getElementById('filterDrawer').classList.add('hidden');
+}
+
+function openApplicantDetailsDrawer() {
+  document.getElementById('applicantDetailsDrawer').classList.remove('hidden');
+}
+
+function closeApplicantDetailsDrawer() {
+  document.getElementById('applicantDetailsDrawer').classList.add('hidden');
+}
+
+function viewApplicantDetails(id, name, status, email, date, resume, score, profilePicture) {
+  openApplicantDetailsDrawer();
+  const content = document.getElementById('applicantDetailsContent');
+  content.innerHTML = `
+    <div class="pb-6">
+      <div class="relative h-40 sm:h-56">
+        <img class="absolute h-full w-full object-cover" src="${profilePicture}" alt="Applicant Photo">
+      </div>
+      <div class="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
+        <div class="sm:flex-1">
+            <div>
+              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</dt>
+              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${name}</dd>
+            </div>
+            <div>
+              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</dt>
+              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${email}</dd>
+            </div>
+
+          <dl class="mt-5 space-y-3">
+            <div>
+              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Date Applied</dt>
+              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${date}</dd>
+            </div>
+            <div>
+              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Score</dt>
+              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${score}%</dd>
+            </div>
+            <div>
+              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</dt>
+              <dd class="mt-1">
+                <div class="relative mt-2 px-3">
+                  <select class="rounded-md border-gray-300 shadow-sm focus:ring-indigo-600" id="status-select-drawer-${id}" onchange="updateApplicationStatus(${id}, true)">
                     {% for s in statuses %}
-                        <option value="{{ s.job_status }}" {% if data.application_status == s.job_status %} selected {% else %} {{ None }} {% endif %} >{{ s.name.capitalize() }}</option>
+                    <option value="{{ s.job_status }}" ${status === '{{ s.job_status }}' ? 'selected' : ''}>{{ s.name.capitalize() }}</option>
                     {% endfor %}
                   </select>
                 </div>
-
-                </td>
-                  <td class="py-1 text-truncate col">
-
-                            <div class="d-flex justify-content-center align-items-center mb-3">
-        <div class="position-relative">
-          <svg width="100" height="100" viewBox="0 0 36 36">
-            <!-- Background Circle (light grey) -->
-            <path
-              stroke="#d3d3d3"
-              stroke-width="3.8"
-              fill="none"
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <!-- Dynamic Circular Progress with computed color -->
-            <path
-              stroke="rgb(2,121,2)"
-              stroke-dasharray="{{data.applicant_score}}, 100"
-              stroke-width="3.8"
-              stroke-linecap="round"
-              fill="none"
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <!-- Score Text in the center -->
-            <text x="18" y="18.35" font-size="8" text-anchor="middle" fill="#000">{{data.applicant_score}}%</text>
-            <text x="18" y="24" font-size="5" text-anchor="middle" fill="#000">match</text>
-          </svg>
-        </div>
-      </div>
-
-
-                  </td>
-
-                <td class="py-1 text-truncate col">{{ data.application_date }}</td>
-                <td class="py-1 text-truncate col-2">
-                <div onclick="viewApplicantDetails('{{ data.id }}','{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.applicant_score}}')" style="font-size:0.9rem;"><i class="bi bi-chevron-right"></i></div>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-                </div>
+              </dd>
+            </div>
+            <div>
+              <a href="${resume}" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-indigo-600">View Resume</a>
+            </div>
+          </dl>
         </div>
       </div>
     </div>
-  </div>
-
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-      <h5 class="h5" style="font-size:1.5rem; font-weight:lighter;" id="offcanvasRightLabel">Applicant Details</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <!-- Content will be populated here -->
-    </div>
-  </div>
-
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="filterModalLabel">Filter Options</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-          <form id="filter-form" action="{{ url_for('employer_applicants_filter') }}" method="get">
-
-        <div class="modal-body">
-                <!-- Application Date Range -->
-                <div class="mb-4">
-                    <label for="application_start_date" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="application_start_date" name="application_start_date" aria-describedby="startDateHelp">
-                </div>
-                <div class="mb-4">
-                    <label for="application_end_date" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="application_end_date" name="application_end_date" aria-describedby="endDateHelp">
-                </div>
-
-                <!-- Name -->
-                <div class="mb-4">
-                    <label for="name" class="form-label">Applicant Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Applicant's Name" aria-label="Applicant Name">
-                </div>
-
-                <!-- Email -->
-                <div class="mb-4">
-                    <label for="email" class="form-label">Applicant Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Applicant's Email" aria-label="Applicant Email">
-                </div>
-                <!-- Job Title -->
-                <div class="mb-4">
-                    <label for="job_title" class="form-label">Job Title</label>
-                    <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter Job Title" aria-label="Job Title">
-                </div>
-
-                <!-- Job Type -->
-                <div class="mb-4">
-                    <label for="job_type" class="form-label">Job Type</label>
-                    <select class="form-select select2" id="job_type" name="job_type" aria-label="Job Type">
-                        <option></option> <!-- Placeholder for Select2 -->
-                        {% for value, label in job_types %}
-                        <option value="{{ value }}">{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <!-- Industry Dropdown with Search -->
-                <div class="mb-4">
-                    <label for="industry" class="form-label">Industry</label>
-                    <select class="form-select select2" id="industry" name="industry" aria-label="Industry">
-                        <option></option> <!-- Placeholder for Select2 -->
-                        {% for value, label in industries %}
-                        <option value="{{ value }}">{{ label }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <!-- Availability Checkbox -->
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="available" name="available" value="1">
-                    <label class="form-check-label" for="available">
-                        Only Available Applicants
-                    </label>
-                </div>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" id="apply-filters">Apply Filters</button>
-        </div>
-          </form>
-
-      </div>
-    </div>
-  </div>
-
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
-<script>
-new DataTable('#applicantTable');
-</script>
-
-<script>
-function viewApplicantDetails(application_id, name, status, email, applicationDate, resume, applicantScore) {
-    const offCanvas = document.getElementById('offcanvasRight');
-    const offCanvasContent = offCanvas.querySelector('.offcanvas-body');
-
-    // Calculate the color based on the applicant score (0% is red, 100% is green)
-    const scoreColor = getScoreColor(applicantScore);
-
-    offCanvasContent.innerHTML = `
-      <h5 class="offcanvas-title lead py-3">${name.charAt(0).toUpperCase() + name.slice(1)} (${status.charAt(0).toUpperCase() + status.slice(1)})</h5>
-
-      <div class="row mb-1">
-        <div class="col-4" style="font-size:0.9rem;">Email:</div>
-        <div class="col" style="font-size:0.9rem;">${email}</div>
-      </div>
-      <div class="row mb-1">
-        <div class="col-4" style="font-size:0.9rem;">Applied On:</div>
-        <div class="col" style="font-size:0.9rem;">${applicationDate}</div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-4" style="font-size:0.9rem;">Resume</div>
-        <a href="${resume}" class="text-link col" style="font-size:0.9rem;">View</a>
-      </div>
-
-      <!-- Applicant Score Section -->
-      <div class="d-flex justify-content-center align-items-center mb-3">
-        <div class="position-relative">
-          <svg width="100" height="100" viewBox="0 0 36 36">
-            <!-- Background Circle (light grey) -->
-            <path
-              stroke="#d3d3d3"
-              stroke-width="3.8"
-              fill="none"
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <!-- Dynamic Circular Progress with computed color -->
-            <path
-              stroke="${scoreColor}"
-              stroke-dasharray="${applicantScore}, 100"
-              stroke-width="3.8"
-              stroke-linecap="round"
-              fill="none"
-              d="M18 2.0845
-                a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"
-            />
-            <!-- Score Text in the center -->
-            <text x="18" y="18.35" font-size="8" text-anchor="middle" fill="#000">${applicantScore}%</text>
-            <text x="18" y="24" font-size="5" text-anchor="middle" fill="#000">match</text>
-          </svg>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <strong for="status-select-offcanvas-${application_id}" class="mb-3" style="font-size:0.9rem;">Change Status</strong>
-        <select class="form-select" id="status-select-offcanvas-${application_id}" aria-label="Change Status" onchange="updateApplicationStatusOffCanvas('${application_id}')">
-          {% for s in statuses %}
-              <option value="{{ s.job_status }}" ${status === '{{ s.job_status }}' ? 'selected' : ''}>{{ s.name.capitalize() }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    `;
-
-    const offcanvasInstance = new bootstrap.Offcanvas(offCanvas);
-    offcanvasInstance.show();
+  `;
 }
 
-// Function to calculate the color based on the applicant score
-function getScoreColor(score) {
-    // Score ranges from 0 to 100; we map it to a color gradient from red to green.
-    const red = Math.min(255, 255 - Math.round((score / 100) * 255));
-    const green = Math.min(255, Math.round((score / 100) * 255));
-    return `rgb(${red}, ${green}, 0)`; // The blue value is 0 for simplicity, giving a red to green gradient
+function updateApplicationStatus(application_id, fromDrawer = false) {
+  const selectId = fromDrawer ? `status-select-drawer-${application_id}` : `status-select-${application_id}`;
+  const statusSelect = document.getElementById(selectId);
+  const newStatus = statusSelect.value;
+
+  fetch(`/update-application-status`, {
+    method: 'POST',
+    body: JSON.stringify({ id: application_id, newStatus: newStatus }),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Status updated:', data);
+    if (!fromDrawer) {
+      window.location.reload();
+    }
+  })
+  .catch(error => console.error('Error updating status:', error));
 }
-
-
-</script>
-<script>
-      function updateApplicationStatus(application_id) {
-    const statusSelect = document.getElementById(`status-select-${application_id}`);
-    const newStatus = statusSelect.value;
-    console.log(newStatus);
-
-    fetch(`/update-application-status`, {
-      method: 'POST',
-      body: JSON.stringify({ id: application_id, newStatus: newStatus }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Status updated:', data);
-      window.location.reload();// Reload the page after updating the status
-    })
-    .catch(error => console.error('Error updating status:', error));
-  }
-
-        function updateApplicationStatusOffCanvas(application_id) {
-    const statusSelect = document.getElementById(`status-select-offcanvas-${application_id}`);
-    const newStatus = statusSelect.value;
-    console.log(newStatus);
-
-    fetch(`/update-application-status`, {
-      method: 'POST',
-      body: JSON.stringify({ id: application_id, newStatus: newStatus }),
-      headers: { 'Content-Type': 'application/json' },
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Status updated:', data);
-      window.location.reload(); // Reload the page after updating the status
-    })
-    .catch(error => console.error('Error updating status:', error));
-  }
-
 </script>
 {% endblock %}

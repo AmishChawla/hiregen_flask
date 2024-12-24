@@ -1,8 +1,7 @@
-
 {% if current_user %}
-    {% if current_user.role =='user' %}
+    {% if current_user.role == 'user' %}
         {% extends 'base.html' %}
-    {% elif current_user.role == jobseeker %}
+    {% elif current_user.role == 'jobseeker' %}
         {% extends 'jobseeker/jobseeker_base.html' %}
     {% endif %}
 {% elif current_user == None %}
@@ -11,309 +10,132 @@
 
 {% block content %}
 
+<!-- Tailwind CSS Integration -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Google Fonts - Roboto -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
-    <style>
-        /* Global Styles */
-        .container-flex {
-            display: flex;
-            flex-direction: column; /* Stack vertically */
-            gap: 30px;
-            margin-top: 20px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .merged-card {
-            background-color: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        /* Company Details Styles */
-        .company-card {
-            text-align: center;
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        .company-logo {
-            max-width: 150px;
-            max-height: 150px;
-            object-fit: contain;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            border: 2px solid #e9ecef;
-            padding: 10px;
-            background-color: #f8f9fa;
-            transition: transform 0.3s ease;
-        }
-        .company-logo:hover {
-            transform: scale(1.05);
-        }
-        .company-name {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #343a40;
-            margin-bottom: 15px;
-        }
-        .company-info {
-            font-size: 1rem;
-            color: #495057;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .danger-icon {
-            margin-right: 10px;
-            color: red; /* Primary color for consistency */
-            font-size: 1.2rem;
-        }
-        .company-description {
-            font-size: 1.1rem;
-            color: #495057;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            text-align: left;
-            flex-grow: 1; /* Allows description to take available space */
-            max-height: 200px; /* Initial collapsed height */
-            overflow: hidden; /* Hide overflow for collapsed state */
-            transition: max-height 0.3s ease;
-        }
-        .company-description.expanded {
-            max-height: 500px; /* Expanded height */
-            overflow-y: auto; /* Allow scrolling */
-        }
-        .read-more {
-            cursor: pointer;
-            color: #0d6efd;
-            font-weight: bold;
-            text-align: left;
-            align-self: flex-start;
-            margin-bottom: 10px;
-        }
-        /* Job Posts Styles */
-        .job-posts {
-            width: 100%;
-        }
-        .job-posts h4 {
-            color: #343a40;
-            margin-bottom: 20px;
-        }
-        .job-posts-content {
-            overflow-y: auto; /* Scroll if content overflows */
-            flex-grow: 1; /* Take available space */
-        }
-        .job-title {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: #0d6efd;
-            margin-bottom: 5px;
-            text-decoration: none;
-        }
-        .job-title:hover {
-            text-decoration: underline;
-        }
-        .no-jobs {
-            font-size: 1.1rem;
-            color: #6c757d;
-            text-align: center;
-            margin-top: 50px;
-        }
 
-        #companysocial {
-            padding: 20px 0;
-            background-color: #f8f9fa; /* Light grey background */
-        }
+<!-- Main Container -->
+<div class="container mx-auto mt-8">
+    <!-- Company Card -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-6">
+        <!-- Company Details -->
+        <div class="text-center space-y-4">
+            <!-- Company Logo -->
+            {% if company.company_logo %}
+                <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600">
+            {% else %}
+                <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600">
+            {% endif %}
 
-        #companysocial a {
-            color: #6c757d; /* Default color */
-            margin: 0 10px;
-            font-size: 24px; /* Size of the icons */
-            transition: color 0.3s ease;
-        }
+            <!-- Company Name -->
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ company.name }}</h2>
 
-        #companysocial a:hover {
-            color: #343a40; /* Darker hover color */
-        }
+            <!-- Location -->
+            <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center space-x-2">
+                <i class="bi bi-geo-alt-fill text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+</svg>
 
-        /* Specific colors for each social icon */
-        #companysocial a:nth-child(1) i { /* LinkedIn */
-            color: #0077b5;
-        }
-
-        #companysocial a:nth-child(2) i { /* Google Maps */
-            color: #db4437;
-        }
-
-        #companysocial a:nth-child(3) i { /* Twitter */
-            color: black;
-        }
-
-        #companysocial a:nth-child(4) i { /* Instagram */
-            color: #e4405f;
-        }
-
-        /* Ensure the social icons are displayed in a row and centered */
-        #companysocial {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Make it responsive for mobile screens */
-        @media (max-width: 576px) {
-            #companysocial {
-                flex-direction: column;
-            }
-            #companysocial a {
-                margin: 10px 0;
-            }
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 992px) {
-            .container-flex {
-                flex-direction: column;
-                align-items: center;
-            }
-            .merged-card {
-                width: 100%;
-            }
-        }
-    </style>
-    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
-
-    <!-- Main Container -->
-    <div class="container container-flex">
-        <!-- Merged Company Details and Job Posts Card -->
-        <div class="merged-card">
-            <!-- Company Details -->
-            <div class="company-card" id="company">
-                <!-- Company Logo -->
-                {% if company.company_logo %}
-                    <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="company-logo img-fluid">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="Default Logo" class="company-logo img-fluid">
-                {% endif %}
-
-                <!-- Company Name -->
-                <div class="company-name">{{ company.name }}</div>
-
-                <!-- Location -->
-                <div class="company-info">
-                    <i class="bi bi-geo-alt-fill danger-icon" aria-hidden="true"></i>
-                    <span>{{ company.location }}</span>
-                </div>
-
-                <!-- Company Description -->
-                <div id="companyDescription" class="company-description">
-                    {{ company.description }}
-                </div>
-                <div id="readMoreBtn" class="read-more" tabindex="0" role="button" aria-expanded="false" aria-controls="companyDescription">
-                    Read more...
-                </div>
-            </div>
-
-            <!-- Job Posts -->
-            <div class="job-posts" id="jobs">
-                <h4>Job Openings</h4>
-                <div class="job-posts-content">
-                    {% if job_posts and job_posts|length > 0 %}
-                        <table id="jobs_table" class="table table-hover table-lg" style="width:100%;">
-                            <thead>
-                                <tr>
-                                    <th>Position</th>
-                                    <th>Posted On</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for data in job_posts %}
-                                    {% if data.job_opening_status == 'Active' and data.status == 'published' %}
-                                        <tr>
-                                            <td>
-                                                <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
-                                                   class="job-title" aria-label="Job Title: {{ data.job_title }}">
-                                                    {{ data.job_title }}
-                                                </a>
-                                            </td>
-                                            <td class="date-cell text-secondary" style="font-size: 0.9rem;">{{ data.created_at.split('T')[0] }}</td>
-                                        </tr>
-                                    {% endif %}
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    {% else %}
-                        <div class="no-jobs">No Job Openings right now.</div>
-                    {% endif %}
-                </div>
-            </div>
-            <div id="companysocial" class="text-center d-flex">
-                <a href="{{company.linkedin_url}}"><i class="bi bi-linkedin"></i></a>
-                <a href="{{company.google_map_url}}"><i class="bi bi-geo-alt-fill"></i></a>
-                <a href="{{company.twitter_url}}"><i class="bi bi-twitter-x"></i></a>
-                <a href="{{company.instagram_url}}"><i class="bi bi-instagram"></i></a>
-            </div>
+                </i>
+                <span>{{ company.location }}</span>
+            </p>
 
         </div>
+
+                    <!-- Company Description -->
+                    <h3 class="mt-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">Description</h3>
+
+            <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
+                <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}</p>
+                <button @click="expanded = !expanded" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 font-medium">
+                    <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
+                </button>
+            </div>
+
+
+        <!-- Job Posts -->
+        <div class="space-y-4">
+            <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Openings</h3>
+            <div class="overflow-x-auto">
+                {% if job_posts and job_posts|length > 0 %}
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300">Position</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300">Posted On</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            {% for data in job_posts %}
+                                {% if data.job_opening_status == 'Active' and data.status == 'published' %}
+                                    <tr>
+                                        <td class="px-4 py-2">
+                                            <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800">
+                                                {{ data.job_title }}
+                                            </a>
+                                        </td>
+                                        <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ data.created_at.split('T')[0] }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex justify-center space-x-4 mt-6">
+            {% if company.linkedin_url %}
+                <a href="{{ company.linkedin_url }}" class="text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">
+                    <i class="bi bi-linkedin text-2xl"></i>
+                </a>
+            {% endif %}
+            {% if company.google_map_url %}
+                <a href="{{ company.google_map_url }}" class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
+                    <i class="bi bi-geo-alt-fill text-2xl"></i>
+                </a>
+            {% endif %}
+            {% if company.twitter_url %}
+                <a href="{{ company.twitter_url }}" class="text-black hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+                    <i class="bi bi-twitter text-2xl"></i>
+                </a>
+            {% endif %}
+            {% if company.instagram_url %}
+                <a href="{{ company.instagram_url }}" class="text-pink-500 hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-500">
+                    <i class="bi bi-instagram text-2xl"></i>
+                </a>
+            {% endif %}
+        </div>
     </div>
+</div>
 
-    <!-- JavaScript -->
-    <!-- jQuery (required for DataTables) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/2.0.3/js/jquery.dataTables.min.js"></script>
-    <!-- Bootstrap JS and dependencies (Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Read More / Show Less Toggle
-        document.getElementById('readMoreBtn').addEventListener('click', function() {
-            const description = document.getElementById('companyDescription');
-            const isExpanded = description.classList.toggle('expanded'); // Toggle the 'expanded' class
-            this.textContent = isExpanded ? 'Show less' : 'Read more...';
-            this.setAttribute('aria-expanded', isExpanded);
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Format Date
+        document.querySelectorAll('[data-date]').forEach(el => {
+            const originalDate = el.getAttribute('data-date');
+            const dateObj = new Date(originalDate);
+            if (!isNaN(dateObj)) {
+                el.textContent = dateObj.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
         });
+    });
+</script>
 
-        // Format Date to a more readable format
-        document.addEventListener('DOMContentLoaded', function() {
-            const dateCells = document.querySelectorAll('.date-cell');
-
-            dateCells.forEach(cell => {
-                const originalDate = cell.textContent.trim();
-                const dateObj = new Date(originalDate);
-                if (!isNaN(dateObj)) {
-                    const formattedDate = dateObj.toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                    cell.textContent = formattedDate;
-                }
-            });
-
-            // Initialize DataTables
-            $('#jobs_table').DataTable({
-                "paging": true,
-                "searching": true,
-                "info": false,
-                "language": {
-                    "emptyTable": "No Job Openings right now."
-                },
-                "columnDefs": [
-                    { "orderable": false, "targets": 0 }, // Disable ordering on the Position column if needed
-                    { "type": "date", "targets": 1 } // Ensure correct sorting for dates
-                ]
-            });
-        });
-    </script>
 {% endblock %}

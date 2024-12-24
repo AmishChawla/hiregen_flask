@@ -2,349 +2,216 @@
 
 {% block title %}Dashboard{% endblock %}
 
-
-<link rel="stylesheet" href="url_for('static', filename='assets/plugins/select2/css/select2.min.css')">
-<link rel="stylesheet" href="url_for('static', filename='assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')">
-
-
-
-
 {% block content %}
-<style>
-  .widget-card {
-  border: 3px solid #ddd;
-  border-radius: 0px;
-  box-shadow: none;
-  }
-</style>
-   {% if current_user.company == None %}
-    <div class="alert alert-warning mt-1" role="alert">
-        <i class="bi bi-exclamation-triangle-fill mr-1"></i>
-        Register company to start posting jobs  <a href="{{url_for('company_register')}}" class="alert-link ml-1" style="text-decoration:none;">here</a>
+{% if current_user.company == None %}
+<div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-400 dark:border-yellow-700 p-4 my-4">
+  <div class="flex">
+    <div class="flex-shrink-0">
+      <svg class="h-5 w-5 text-yellow-400 dark:text-yellow-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.59 12.59a1.5 1.5 0 102.12-2.12M12 11.25V7.5m6.5 4.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 10m0-5h4v4m-1.5-1.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 3.5" />
+      </svg>
     </div>
-    {% endif %}
-
-
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col --><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+    <div class="ml-3">
+      <p class="text-sm text-yellow-700 dark:text-yellow-300">
+        Register your company to start posting jobs
+        <a href="{{ url_for('company_register') }}" class="font-medium text-yellow-700 dark:text-yellow-300 hover:underline">here</a>.
+      </p>
     </div>
-<div>
-            <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-              <a href="{{ url_for('user_all_post') }}" style="text-decoration:none;">
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-                Jobs
-               </div>
-            <div class="card-title">
-              <h2>{{ total_jobs }}</h2>
-            </div>
-            </div>
-          </div>
-              </a>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-              <a href="{{ url_for('user_all_post') }}" style="text-decoration:none;">
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               Active Jobs
-               </div>
-            <div class="card-title">
-              <h2>{{ in_progress_jobs }}</h2>
-            </div>
-            </div>
-          </div>
-                  </a>
-            </div>
-
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-              <a href="{{ url_for('all_applicants') }}" style="text-decoration:none;">
-            <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               Applicants
-               </div>
-            <div class="card-title">
-              <h2>{{ applicants_count }}</h2>
-            </div>
-            </div>
-
-          </div>
-                </a>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-              <a href="{{ url_for('user_all_post') }}" style="text-decoration:none;">
-            <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               Total Views
-               </div>
-            <div class="card-title">
-              <h2>{{ total_views or 0 }} </h2>
-            </div>
-            </div>
-          </div>
-              </a>
-          </div>
-        </div>
-  <div class="row">
-          <div class="col-lg-6 ">
-            <!-- small card -->
-              <a href="{{ url_for('user_all_post') }}" style="text-decoration:none">
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-                Job Status
-               </div>
-            <canvas id="jobsChart" class="mt-3"></canvas> <!-- Chart container -->
-
-            </div>
-          </div>
-                  </a>
-
-          </div>
-          <!-- ./col -->
-
-          <div class="col-lg-6 ">
-            <!-- small card -->
-              <a href="{{ url_for('all_applicants') }}" style="text-decoration:none">
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               Hiring Pipeline
-               </div>
-            <canvas id="applicantsChart" class="mt-3"></canvas>
-            </div>
-          </div>
-              </a>
-            </div>
+  </div>
 </div>
-              <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               Latest Jobs
-               </div>
-                <table id="latestpostTable" class="table table-hover" style="width:100%;">
-            <thead>
+{% endif %}
+
+<div class="py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+
+    <!-- Metric Cards -->
+    <div class="mt-8">
+      <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm: grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Jobs</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ total_jobs }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Active Jobs</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ in_progress_jobs }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Applicants</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ applicants_count }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Total Views</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ total_views or 0 }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Job Status</h3>
+        <canvas id="jobsChart" class="mt-6"></canvas>
+      </div>
+      <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Hiring Pipeline</h3>
+        <canvas id="applicantsChart" class="mt-6"></canvas>
+      </div>
+    </div>
+
+    <!-- Latest Jobs Table -->
+    <div class="mt-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Latest Jobs</h3>
+      </div>
+      <div class="px-4 py-4 sm:px-6 lg:px-8">
+        <div class="overflow-hidden rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-900">
               <tr>
-                <th>Position</th>
-                <th>Salary</th>
-                <th>Job Status</th>
-                <th>Visibility</th>
-                <th>Views</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
-                <th>Applicants</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Position</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Salary</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Job Status</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Visibility</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Views</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Updated Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Applicants</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
               {% for data in latest_jobs %}
-              {% if data.JobOpening.status == 'published' %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}"> {{ data.JobOpening.job_title }}</a></td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.salary }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-                <td class="py-1" style="display: flex">
-
-                  <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
-                  <a  data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.JobOpening.id }}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash3-fill text-muted" style="font-size: 0.9rem"></i></a>
-
-                  <!-- Modal for delete button -->
-                  <div class="modal fade" id="deleteModal_{{ data.JobOpening.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ data.JobOpening.id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title fs-5" id="deleteModalLabel_{{ data.JobOpening.id }}">Delete Post</h4>
-                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you want to delete this post?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <a type="button" class="btn btn-danger" href="{{ url_for('user_delete_job', job_id=data.JobOpening.id) }}">Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              {% endif %}
+                {% if data.JobOpening.status == 'published' %}
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-200">{{ data.JobOpening.job_title }}</a>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.salary }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.job_opening_status }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.status }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.job_opening_views }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.created_at.split('T')[0] }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-200">{{ data.applicant_count }}</a>
+                  </td>
+                </tr>
+                {% endif %}
               {% endfor %}
             </tbody>
           </table>
-            </div>
-          </div>
-
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script>
-        var ctx = document.getElementById('jobsChart').getContext('2d');
-        var jobsChart = new Chart(ctx, {
-            type: 'bar', // Specify bar chart type
-            data: {
-                labels: ['Total Jobs', 'Active Jobs', 'Applicants'], // X-axis labels
-                datasets: [{
-                    label: 'Jobs Data', // This label will not be displayed since legend is disabled
-                    data: [{{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }}], // Values from variables
-                    backgroundColor: ['#4CAF50', '#2196F3', '#FF9800'], // Solid colors (green, blue, orange)
-                    borderColor: ['#4CAF50', '#2196F3', '#FF9800'], // Same colors as background (solid)
-                    borderWidth: 1, // Border thickness
-                    barPercentage: 0.7, // Controls bar width
-                    categoryPercentage: 0.6, // Controls spacing between bars
-                    borderRadius: 10, // Rounds the corners of bars
-                }]
+const jobsCtx = document.getElementById('jobsChart').getContext('2d');
+new Chart(jobsCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Total Jobs', 'Active Jobs', 'Applicants'],
+        datasets: [{
+            data: [{{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }}],
+            backgroundColor: ['#60A5FA', '#34D399', '#FCD34D'], // Softer colors: Blue, Green, Yellow
+            borderRadius: 6, // Slightly rounded bar edges
+            barPercentage: 0.5, // Reduce bar width (50% of the category width)
+            categoryPercentage: 0.8, // Increase spacing between bars
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false, // No legend needed
             },
-            options: {
-                layout: {
-                    padding: {
-                        top: 30 // Adds padding at the top for the labels
-                    }
-
-                },
-
-                scales: {
-                    x: {
-                        grid: {
-                            display: false // Remove horizontal grid lines
-                        },
-                        display: true, // Remove x-axis and labels
-
-                        ticks: {
-                            display: true, // Show y-axis labels (ticks)
-                            font: {
-                            size: 17 // Increase the Y-axis label font size
-                        }
-
-                        },
-                    },
-                    y: {
-                        grid: {
-                            display: false // Remove horizontal grid lines
-                        },
-                        display: false, // Remove y-axis and labels
-
-                        beginAtZero: true, // Y-axis starts at 0
-                    }
-                },
-            plugins: {
-                legend: {
-                    display: false // Hide the label from the top
-                },
-                tooltip: {
-                    enabled: true // Keep tooltips on hover
-                },
-                datalabels: {
-                    anchor: 'end',
-                    align: 'top', // Align the labels at the top of each bar
-                    color: '#000', // Color for the data labels
-                    font: {
-                        size: 17, // Increase the font size of the labels
-                    },
-                    formatter: (value) => value // Display the value on top of the bar
-                }
-            }
-        },
-        plugins: [ChartDataLabels] // Add ChartDataLabels plugin
-    });
-    </script>
-<script>
-    var ctx = document.getElementById('applicantsChart').getContext('2d');
-    var applicantsChart = new Chart(ctx, {
-        type: 'bar', // Specify bar chart type
-        data: {
-            labels: [
-                {% for status in statuses %}
-                    '{{ status.name }}',
-                {% endfor %}
-            ], // X-axis labels
-            datasets: [{
-                label: 'Applicant Count', // Label for the dataset
-                data: [
-                    {% for status in statuses %}
-                        {{ status.applicant_count }},
-                    {% endfor %}
-                ], // Values from the statuses
-                backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#FFC107', '#FF5722', '#9C27B0'], // Solid colors for each bar
-                borderColor: ['#4CAF50', '#2196F3', '#FF9800', '#FFC107', '#FF5722', '#9C27B0'], // Same colors as background
-                borderWidth: 1, // Border thickness
-                barPercentage: 0.9, // Controls bar width
-                categoryPercentage: 0.9, // Controls spacing between bars
-                borderRadius: 10, // Rounds the corners of bars
-            }]
-        },
-        options: {
-            layout: {
-                padding: {
-                    top: 30 // Adds padding at the top for the labels
-                }
+            tooltip: {
+                backgroundColor: '#1F2937', // Dark background for tooltips
+                titleColor: '#FFFFFF',
+                bodyColor: '#FFFFFF',
             },
-            scales: {
-                x: {
-                    grid: {
-                        display: false // Remove horizontal grid lines
-                    },
-                    display: true, // Display x-axis labels
-                    ticks: {
-                        display: true, // Show y-axis labels (ticks)
-                        font: {
-                            size: 17 // Increase the Y-axis label font size
-                        }
-                    },
-                },
-                y: {
-                    grid: {
-                        display: false // Remove horizontal grid lines
-                    },
-                    display: false, // Display y-axis labels
-                    beginAtZero: true, // Y-axis starts at 0
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false // Hide the label from the top
-                },
-                tooltip: {
-                    enabled: true // Keep tooltips on hover
-                },
-                datalabels: {
-                    anchor: 'end',
-                    align: 'top', // Align the labels at the top of each bar
-                    color: '#000', // Color for the data labels
-                    font: {
-                        size: 17, // Increase the font size of the labels
-                    },
-                    formatter: (value) => value // Display the value on top of the bar
-                }
-            }
         },
-        plugins: [ChartDataLabels] // Add ChartDataLabels plugin
-    });
+        scales: {
+            x: {
+                grid: {
+                    display: false, // Remove horizontal grid lines
+                },
+                ticks: {
+                    color: '#6B7280', // Tailwind gray-500 for text
+                },
+            },
+            y: {
+                grid: {
+                    display: false, // Light gray grid lines
+                },
+                ticks: {
+                    color: '#6B7280', // Tailwind gray-500 for text
+                    stepSize: 1, // Increment by 1
+                    beginAtZero: true,
+                    max: Math.ceil(Math.max({{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }})) + 1, // Dynamically set max value
+                },
+            },
+        },
+        layout: {
+            padding: 16, // Space around the chart
+        },
+        responsive: true,
+        maintainAspectRatio: false, // Ensures charts fit within cards
+    },
+});
+
+const applicantsCtx = document.getElementById('applicantsChart').getContext('2d');
+new Chart(applicantsCtx, {
+    type: 'bar',
+    data: {
+        labels: [{% for status in statuses %}'{{ status.name }}',{% endfor %}],
+        datasets: [{
+            data: [{% for status in statuses %}{{ status.applicant_count }},{% endfor %}],
+            backgroundColor: ['#60A5FA', '#34D399', '#FCD34D', '#FB923C', '#F87171', '#A78BFA'], // Updated colors
+            borderRadius: 6, // Slightly rounded bar edges
+            barPercentage: 0.5, // Reduce bar width
+            categoryPercentage: 0.8, // Increase spacing between bars
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false, // No legend needed
+            },
+            tooltip: {
+                backgroundColor: '#1F2937', // Dark background for tooltips
+                titleColor: '#FFFFFF',
+                bodyColor: '#FFFFFF',
+            },
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false, // Remove horizontal grid lines
+                },
+                ticks: {
+                    color: '#6B7280', // Tailwind gray-500 for text
+                },
+            },
+            y: {
+                grid: {
+                    display: false, // Light gray grid lines
+                },
+                ticks: {
+                    color: '#6B7280', // Tailwind gray-500 for text
+                    stepSize: 1, // Increment by 1
+                    beginAtZero: true,
+                    max: Math.ceil(Math.max({% for status in statuses %}{{ status.applicant_count }},{% endfor %})) + 1, // Dynamically set max value
+                },
+            },
+        },
+        layout: {
+            padding: 16, // Space around the chart
+        },
+        responsive: true,
+        maintainAspectRatio: false, // Ensures charts fit within cards
+    },
+});
+
 </script>
-
-
-
-
-
 {% endblock %}
-

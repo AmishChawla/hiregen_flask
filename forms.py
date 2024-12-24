@@ -86,7 +86,7 @@ class AdminRegisterForm(FlaskForm):
 
 
 class CompanyRegisterForm(FlaskForm):
-    company_logo = FileField('Company Logo', validators=[
+    company_logo = FileField('Upload a File', validators=[
         FileRequired(message="Logo file is required")
     ])
     name = StringField('Name', validators=[DataRequired()])

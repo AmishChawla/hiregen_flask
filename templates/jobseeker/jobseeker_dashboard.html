@@ -1,149 +1,96 @@
 {% extends 'jobseeker/jobseeker_base.html' %}
 
 {% block content %}
-<style>
-  .widget-card {
-  border: 3px solid #ddd;
-  border-radius: 0px;
-  box-shadow: none;
-  }
 
-    .job-card {
-  border-radius: 15px;
-  box-shadow: 5px;
-  }
+<div class="py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
 
-</style>
-
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col --><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-
-<div>
-    <div class="row">
-{% if profile_completion_percentage != 100 %}
-<div class="col-lg-3">
-    <!-- small card -->
-    <a href="{{ url_for('jobseeker_profile') }}">
-    <div class="card widget-card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-auto">
-                    {% if current_user.profile_picture %}
-                    <img src="{{ current_user.profile_picture }}"
-                         alt="User Profile Picture"
-                         class="rounded-circle" style="width: 80px; height: 80px;">
-                    {% else %}
-                  <img class="rounded-circle" style="width: 80px; height: 80px;"
-                       src="{{ url_for('static', filename='images/man.png') }}"
-                       alt="User profile picture">
-                    {% endif %}
-                </div>
-                <div class="col pl-3 mt-2">
-                    <div class="lead">{{ profile_completion_percentage }}%</div>
-                        <div class="progress" style="height: 1px;">
-                            {% if profile_completion_percentage < 40 %}
-                          <div class="progress-bar bg-danger" role="progressbar" style="width: {{ profile_completion_percentage }}%" aria-valuenow="{{ profile_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            {% elif profile_completion_percentage < 80 %}
-                          <div class="progress-bar bg-warning" role="progressbar" style="width: {{ profile_completion_percentage }}%" aria-valuenow="{{ profile_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            {% elif profile_completion_percentage > 80 %}
-                          <div class="progress-bar bg-success" role="progressbar" style="width: {{ profile_completion_percentage }}%" aria-valuenow="{{ profile_completion_percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
-                            {% endif %}
-                        </div>
-                        <div class="small text-muted">
-                            Complete your Profile
-                        </div>
-                </div>
-            </div>
+    <!-- Metric Cards -->
+<div class="mt-8">
+  <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+      <div class="flex items-center">
+        {% if current_user.profile_picture %}
+        <img src="{{ current_user.profile_picture }}" alt="User Profile Picture" class="rounded-full w-20 h-20">
+        {% else %}
+        <img src="{{ url_for('static', filename='images/man.png') }}" alt="User Profile Picture" class="rounded-full w-20 h-20">
+        {% endif %}
+      </div>
+      <div class="ml-4">
+        <div class="text-xl font-semibold text-gray-900 dark:text-white">{{ profile_completion_percentage }}%</div>
+        <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mt-2">
+          {% if profile_completion_percentage < 40 %}
+          <div class="bg-red-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
+          {% elif profile_completion_percentage < 80 %}
+          <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
+          {% else %}
+          <div class="bg-green-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
+          {% endif %}
         </div>
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
+      </div>
     </div>
-    </a>
-
+    <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+      <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Resumes</dt>
+      <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ total_resumes }}</dd>
+    </div>
+    <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+      <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">My Applications</dt>
+      <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ total_applications }}</dd>
+    </div>
+  </dl>
 </div>
-{% endif %}
-
-      <div class="col-lg-3">
-            <!-- small card -->
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-                Resumes
-               </div>
-            <div class="card-title">
-              <h2>{{ total_resumes }}</h2>
-            </div>
-            </div>
-          </div>
-
-          </div>
-          <!-- ./col -->
-
-          <div class="col-lg-3">
-            <!-- small card -->
-          <div class="card widget-card">
-            <div class="card-body">
-             <div class="lead">
-               My Applications
-               </div>
-            <div class="card-title">
-              <h2>{{ total_applications }}</h2>
-            </div>
-            </div>
-          </div>
-            </div>
-    </div>
 
 
-</div>
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Recommended for you</h1>
-          </div><!-- /.col --><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
+    <h1 class="mt-8 text-2xl font-semibold text-gray-900 dark:text-white">Recommended for you</h1>
 <div>
-    <div class="row">
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     {% if recommendations %}
     {% for job, similarity_score in recommendations %}
-    <div class="col-lg-6">
-        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}">
-      <div class="card job-card">
-          <div class="card-body">
-                <div class="row">
-                    <div class="col-md mb-2">
-                        <h5 class="mb-0 text-dark">{{ job.job_title }}</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <small class="text-dark" style="font-weight:bold;">{{ similarity_score }}% match</small>
-                    </div>
-                </div>
-
-                <div class="d-flex"> <i class="bi bi-geo-alt-fill mr-2 text-muted small"></i> <span class="text-muted" style="font-size:0.8rem;">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span> </div>
-                <div class="d-flex"> <i class="bi bi-calendar-check mr-2 text-muted small"></i> <span class="text-muted" style="font-size:0.8rem;">{{ job.opening_date.split('T')[0] }}</span> </div>
-              <div class="d-flex flex-row">
-                <div class="d-flex"> <i class="bi bi-currency-rupee text-muted small" ></i> <span class="text-muted small">{{ job.salary }}</span> </div>
-                <div class="d-flex"> <i class="bi bi-briefcase ml-3 text-muted small" ></i> <span class="text-muted small ml-1">{{ job.work_experience }}</span> </div>
-                <div class="d-flex"> <i class="bi bi-clock ml-3 text-muted small"></i> <span class="text-muted small ml-1">{{ job.job_type }}</span> </div>
-                <div class="d-flex"> <i class="bi bi-buildings ml-3 text-muted small"></i> <span class="text-muted small ml-1">{{ job.industry }}</span> </div>
+    <div>
+      <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}" class="block">
+        <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+          <div class="p-4">
+            <div class="flex justify-between items-center">
+              <h5 class="text-lg font-semibold text-gray-900 dark:text-white">{{ job.job_title }}</h5>
+              <small class="text-sm font-bold text-gray-700 dark:text-gray-300">{{ similarity_score }}% match</small>
+            </div>
+            <div class="mt-2 text-gray-500 dark:text-gray-400 text-sm flex items-center">
+              <i class="bi bi-geo-alt-fill mr-2"></i>
+              <span>{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
+            </div>
+            <div class="mt-1 text-gray-500 dark:text-gray-400 text-sm flex items-center">
+              <i class="bi bi-calendar-check mr-2"></i>
+              <span>{{ job.opening_date.split('T')[0] }}</span>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-4">
+              <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                <i class="bi bi-currency-rupee mr-1"></i>
+                <span>{{ job.salary }}</span>
+              </div>
+              <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                <i class="bi bi-briefcase mr-1"></i>
+                <span>{{ job.work_experience }}</span>
+              </div>
+              <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                <i class="bi bi-clock mr-1"></i>
+                <span>{{ job.job_type }}</span>
+              </div>
+              <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
+                <i class="bi bi-buildings mr-1"></i>
+                <span>{{ job.industry }}</span>
               </div>
             </div>
-      </div>
-        </a>
+          </div>
+        </div>
+      </a>
     </div>
     {% endfor %}
     {% else %}
-        <p class="text-secondary ml-3"> Complete profile to get recommendations </p>
+    <p class="text-gray-600 dark:text-gray-400">Complete profile to get recommendations</p>
     {% endif %}
-    </div>
   </div>
+</div>
 
 {% endblock %}

@@ -4,239 +4,112 @@
 
 {% block content %}
 
-<style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden; /* Prevent horizontal scroll */
-        box-sizing: border-box;
-    }
-
-    *, *:before, *:after {
-        box-sizing: inherit;
-    }
-
-    .form-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .form-container form {
-        width: 100%;
-    }
-
-    .form-container .form-group {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-
-    .form-container .form-group label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-    }
-
-    .form-container .form-control {
-        width: 100%;
-        height: auto;
-    }
-
-    .tags-container {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 10px;
-    }
-
-    .tag {
-        background-color: #f0f0f0;
-        padding: 5px 10px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    .close-button {
-        margin-left: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-</style>
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<form method="post" action="{{ url_for('admin_edit_post', job_id=job_id) }}">
-        {{ form.hidden_tag() }}
-<aside class="control-sidebar control-sidebar-light">
-    <!-- Control sidebar content goes here -->
-    <div class="p-3">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h6><strong>Publish Job</strong></h6>
-</div>
-      {{ form.publish(class="btn btn-primary w-100 mb-3") }}
-<!--      {{ form.preview(class="btn btn-outline-primary w-100 mb-3") }}-->
 
-                <div class="form-group">
-            {{ form.target_date.label }}
-            {{ form.target_date(class="form-control", id="target_date")}}
-        </div>
-                        <div class="form-group">
-            {{ form.opening_date.label }}
-            {{ form.opening_date(class="form-control", id="opening_date") }}
-        </div>
-            <div class="form-group">
-            {{ form.job_opening_status.label }}
-            {{ form.job_opening_status(class="form-control", id="job_opening_status") }}
-        </div>
-
-
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 px-6 py-6">
+  <!-- Sidebar for Publish Job -->
+  <aside class="col-span-1 bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+    <div class="mb-6">
+      <h6 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Modify Job</h6>
+    </div>
+    <div class="mb-6">
+      {{ form.publish(class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2") }}
+    </div>
+    <div class="form-group mb-4">
+      <label for="target_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.target_date.label }}</label>
+      {{ form.target_date(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+    </div>
+    <div class="form-group mb-4">
+      <label for="opening_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.opening_date.label }}</label>
+      {{ form.opening_date(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+    </div>
+    <div class="form-group">
+      <label for="job_opening_status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_opening_status.label }}</label>
+      {{ form.job_opening_status(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
     </div>
   </aside>
-<div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Job Opening</h1>
-          </div><!-- /.col -->
-<!--          <div class="col-sm-6">-->
-<!--            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">-->
-<!--          <i class="fas fa-th-large"></i>-->
-<!--        </a>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+
+  <!-- Main Form -->
+  <div class="col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+    <div id="errorMessages" class="mb-4 text-red-600 dark:text-red-400"></div>
+
+    <div class="form-group mb-4">
+      <label for="job_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_title.label }}</label>
+      {{ form.job_title(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", placeholder="Position") }}
+      {% if form.job_title.errors %}
+      <small class="text-red-600 dark:text-red-400">{{ form.job_title.errors[0] }}</small>
+      {% endif %}
     </div>
-<div class="form-container">
-<!--    <form method="post" action="{{ url_for('add_post') }}">-->
-<!--        {{ form.hidden_tag() }}-->
 
-        <div class="form-group">
-            {{ form.job_title.label }}
-            {{ form.job_title(class="form-control", placeholder="Position") }}
-            {% if form.job_title.errors %}
-            <small class="text-danger">{{ form.job_title.errors[0] }}</small>
-            {% endif %}
-        </div>
-                <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div class="form-group">
+        <label for="salary" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.salary.label }}</label>
+        {{ form.salary(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+      <div class="form-group">
+        <label for="work_experience" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.work_experience.label }}</label>
+        {{ form.work_experience(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+    </div>
 
-        <div class="w-50 mr-3">
-            {{ form.salary.label }}
-            {{ form.salary(class="form-control", id="salary") }}
-        </div>
-        <div class="w-50">
-            {{ form.work_experience.label }}
-            {{ form.work_experience(class="form-control", id="work_experience") }}
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+      <div class="form-group">
+        <label for="job_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_type.label }}</label>
+        {{ form.job_type(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+      <div class="form-group">
+        <label for="industry" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.industry.label }}</label>
+        {{ form.industry(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+    </div>
 
-                    </div>
-    <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="form-group mt-4">
+      <label for="address_country" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.address_country.label }}</label>
+      {{ form.address_country(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+    </div>
 
-        <div class="w-50 mr-3">
-            {{ form.job_type.label }}
-            {{ form.job_type(class="form-control", id="job_type") }}
-        </div>
-                <div class="w-50">
-            {{ form.industry.label }}
-            {{ form.industry(class="form-control", id="industry") }}
-        </div>
-</div>
-            <div class="form-group">
-                {{ form.address_country.label }}
-            {{ form.address_country(class="form-control", placeholder="Country") }}
-        </div>
-        <div class="form-group">
-            {{ form.address_province.label }}
-            {{ form.address_province(class="form-control", placeholder="Province") }}
-        </div>
-            <div class="form-group">
-                {{ form.address_city.label }}
-            {{ form.address_city(class="form-control", placeholder="City") }}
-        </div>
-            <div class="form-group">
-                {{ form.address_postal_code.label }}
-            {{ form.address_postal_code(class="form-control", placeholder="Postal Code") }}
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-4">
+      <div class="form-group">
+        <label for="address_province" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.address_province.label }}</label>
+        {{ form.address_province(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+      <div class="form-group">
+        <label for="address_city" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.address_city.label }}</label>
+        {{ form.address_city(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+      </div>
+    </div>
 
+    <div class="form-group mt-4">
+      <label for="address_postal_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.address_postal_code.label }}</label>
+      {{ form.address_postal_code(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+    </div>
 
+    <div class="form-group mt-4">
+      <label for="job_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_description.label }}</label>
+      {{ form.job_description(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_description") }}
+    </div>
 
-        <div class="form-group">
-            {{ form.job_description.label }}
-            {{ form.job_description(class="form-control", id="job_description") }}
-        </div>
-            <div class="form-group">
-            {{ form.job_requirements.label }}
-            {{ form.job_requirements(class="form-control", id="job_requirements") }}
-        </div>
-            <div class="form-group">
-            {{ form.job_benefits.label }}
-            {{ form.job_benefits(class="form-control", id="job_benefits") }}
-        </div>
-</div>
-    </form>
+    <div class="form-group mt-4">
+      <label for="job_requirements" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_requirements.label }}</label>
+      {{ form.job_requirements(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_requirements") }}
+    </div>
 
+    <div class="form-group mt-4">
+      <label for="job_benefits" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_benefits.label }}</label>
+      {{ form.job_benefits(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_benefits") }}
+    </div>
+  </div>
 </div>
 
-{% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
 <script>
-    $(document).ready(function() {
-    $('.control-sidebar').ControlSidebar('show');
-  $('#job_description').summernote({
-  height: 400,                 // set editor height
-  minHeight: null,             // set minimum height of editor
-  maxHeight: null             // set maximum height of editor
-});
- $('#job_requirements').summernote({
-  height: 400,                 // set editor height
-  minHeight: null,             // set minimum height of editor
-  maxHeight: null             // set maximum height of editor
-});
- $('#job_benefits').summernote({
-  height: 400,                 // set editor height
-  minHeight: null,             // set minimum height of editor
-  maxHeight: null             // set maximum height of editor
-});
+$(document).ready(function() {
+  $('#job_description, #job_requirements, #job_benefits').summernote({
+    height: 300,
+    minHeight: null,
+    maxHeight: null,
+    focus: true
+  });
 });
 </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        const categoryElement = document.getElementById('category');
-        const subcategoryElement = document.getElementById('subcategory');
-
-        categoryElement.addEventListener('change', function () {
-            const selectedCategoryId = this.value;
-
-            if (selectedCategoryId) {
-                fetch(`/subcategories/${selectedCategoryId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Fetched subcategories:', data); // Debugging line
-                        // Clear existing subcategory options
-                        subcategoryElement.innerHTML = '<option value="">Select a subcategory</option>';
-
-                        // Populate new subcategory options
-                        data.subcategories.forEach(subcategory => {
-                            const option = document.createElement('option');
-                            option.value = subcategory.id;
-                            option.textContent = subcategory.subcategory;
-                            subcategoryElement.appendChild(option);
-                        });
-                    })
-                    .catch(error => console.error('Error fetching subcategories:', error));
-            } else {
-                subcategoryElement.innerHTML = '<option value="">Select a subcategory</option>';
-            }
-        });
-    });
-</script>
-
-{% endblock %}
 {% endblock %}

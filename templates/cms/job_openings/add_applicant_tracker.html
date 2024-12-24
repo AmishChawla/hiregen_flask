@@ -1,63 +1,55 @@
 {% extends 'base.html' %}
 
-{% block title %} Create Tracker {% endblock %}
+{% block title %}Create Tracker{% endblock %}
 
 {% block content %}
+<div class="container mx-auto py-8">
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">Create Tracker</h2>
+        </div>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
+        <form method="post" action="{{ url_for('create_applicant_tracker') }}">
+            {{ form.hidden_tag() }}
 
-          <div class="row mb-4">
-            <div class="col-md-8">
-              <h2 class="mb-1 mt-1 display-6">Create</h2>
+            <div class="mb-6">
+                <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.name.label.text }}</label>
+                <input type="text" id="name" name="name" class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Name" required>
             </div>
-          </div>
 
+            <div class="mb-6">
+                <label for="description" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.description.label.text }}</label>
+                <textarea id="description" name="description" rows="4" class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Description" required></textarea>
+            </div>
 
-<form method="post" action="{{ url_for('create_applicant_tracker') }}">
-    {{ form.hidden_tag() }}
+            <div class="flex items-center mb-6">
+                <input id="on_apply" name="on_apply" type="checkbox" class="h-4 w-4 text-indigo-600 border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500">
+                <label for="on_apply" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">{{ form.on_apply.label.text }}</label>
+            </div>
 
-    <div class="mb-3">
-        {{form.name.label(class="lead")}}
-        {{ form.name(class="form-control", placeholder="Name", required=True) }}
+            <div class="mb-6">
+                <label for="job_status" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.job_status.label.text }}</label>
+                <input type="text" id="job_status" name="job_status" class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Job Status" required>
+            </div>
+
+            <div class="flex justify-center">
+                <button type="submit" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Create Tracker</button>
+            </div>
+        </form>
     </div>
-
-    <div class="mb-3">
-        {{form.description.label(class="lead")}}
-        {{ form.description(class="form-control", placeholder="Description", required=True) }}
-    </div>
-    <div class="mb-3 ml-4">
-        {{ form.on_apply(class="form-check-input") }} {{ form.on_apply.label() }}
-    </div>
-
-    <div class="mb-3">
-        {{form.job_status.label(class="lead")}}
-        {{ form.job_status(class="form-control", placeholder="Job Status", required=True) }}
-    </div>
-
-    <div class="d-grid gap-2 col-6 mx-auto">
-        {{ form.submit(class="btn btn-primary") }}
-    </div>
-</form>
-
-    </div>
-  </div>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-  const nameInput = document.getElementById('name');
-  const jobStatusInput = document.getElementById('job_status');
+        const nameInput = document.getElementById('name');
+        const jobStatusInput = document.getElementById('job_status');
 
-  if (nameInput && jobStatusInput) {
-    nameInput.addEventListener('input', function() {
-      const nameValue = this.value.toLowerCase().replace(/\s+/g, '_');
-      jobStatusInput.value = nameValue;
+        if (nameInput && jobStatusInput) {
+            nameInput.addEventListener('input', function() {
+                const nameValue = this.value.toLowerCase().replace(/\s+/g, '_');
+                jobStatusInput.value = nameValue;
+            });
+        }
     });
-  }
-});
-
 </script>
-
 {% endblock %}

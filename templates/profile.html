@@ -4,25 +4,6 @@
 
 {% block styles %}
     <style>
-        .profile-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px auto;
-            padding: 20px;
-            max-width: 900px;
-        }
-        .profile-img, .company-logo {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ddd;
-        }
-        .btn-edit {
-            margin-top: 20px;
-            background-color: #ffffff;
-        }
         .img-upload {
             position: relative;
             display: inline-block;
@@ -47,115 +28,169 @@
 {% endblock %}
 
 {% block content %}
+<div class="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="flex justify-end">
+                <button type="button" id="editBtn" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600">
+                    <i class="fas fa-pen"></i>
+                </button>
+            </div>
 
-    <div class="container">
-        <div class="profile-card">
-            <form method="POST" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
-                <div class="text-right">
-                    <button type="button" class="btn btn-light btn-edit" id="editBtn"><i class="bi bi-pen"></i></button>
+            <div class="flex justify-center mb-6">
+                <div class="img-upload relative">
+                    <img src="{{ profile_picture or url_for('static', filename='images/man.png') }}" alt="Profile Picture" class="w-32 h-32 rounded-full border-2 border-gray-300">
+                    {{ form.profile_picture.label(class="edit-icon fas fa-camera") }}
+                    {{ form.profile_picture(class="hidden") }}
                 </div>
+            </div>
 
+<div class="relative py-4">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+  </div>
+  <div class="relative flex justify-start">
+    <span class="bg-white dark:bg-gray-800 pr-3 text-base font-semibold text-gray-900 dark:text-gray-200">Personal Details</span>
+  </div>
+</div>
 
-                <div class="text-center">
-                    <div class="img-upload">
-                        <img src="{{ profile_picture or url_for('static', filename='images/man.png')}}" alt="Profile Picture" class="profile-img">
-                        {{ form.profile_picture.label(class="edit-icon fas fa-camera") }}
-                        {{ form.profile_picture(class="d-none") }}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <div>
+                        {{ form.firstname.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                        {{ form.firstname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
                     </div>
                 </div>
-                <hr>
+                <div>
+                    <div>
+                        {{ form.lastname.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                        {{ form.lastname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
+                    </div>
+                </div>
+            </div>
 
-                <h5 class="mb-3">Personal Details</h5>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        {{ form.firstname.label() }}
-                        {{ form.firstname(class="form-control", disabled=True) }}
-                    </div>
-                    <div class="form-group col-md-6">
-                        {{ form.lastname.label() }}
-                        {{ form.lastname(class="form-control", disabled=True) }}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                <div>
+                    <div>
+                        {{ form.username.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                        {{ form.username(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        {{ form.username.label() }}
-                        {{ form.username(class="form-control", disabled=True) }}
-                    </div>
-                    <div class="form-group col-md-6">
-                        {{ form.email.label() }}
-                        {{ form.email(class="form-control", disabled=True) }}
+                <div>
+                    <div>
+                        {{ form.email.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                        {{ form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
                     </div>
                 </div>
-                <div class="form-group">
-                    {{ form.phone_number.label() }}
-                    {{ form.phone_number(class="form-control", disabled=True) }}
-                </div>
-                <div class="mb-2">
-                    <a  href="url_for('update_password')"><span><i class="bi bi-lock-fill"></i></span> Update Password ? </a>
-                </div>
+            </div>
 
-                <h5 class="mb-3">Company Details</h5>
-                {% if is_company_registered %}
-                <div class="text-center">
-                    <div class="img-upload">
-                        <img src="{{ company['company_logo'] or 'default-company.png' }}" alt="Company Logo" class="company-logo">
-                        {{ form.company_logo.label(class="edit-icon fas fa-camera") }}
-                        {{ form.company_logo(class="d-none") }}
-                    </div>
+            <div class="mt-4">
+                <div>
+                    {{ form.phone_number.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                    {{ form.phone_number(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
                 </div>
-                <div class="form-group">
-                    {{ form.company_name.label() }}
-                    {{ form.company_name(class="form-control", disabled=True) }}
-                </div>
-                <div class="form-group">
-                    {{ form.company_location.label() }}
-                    {{ form.company_location(class="form-control", disabled=True) }}
-                </div>
-                <div class="form-group">
-                    {{ form.company_website.label() }}
-                    {{ form.company_website(class="form-control", disabled=True) }}
-                </div>
-                <div class="form-group">
-                    {{ form.company_description.label() }}
-                    {{ form.company_description(class="form-control", disabled=True, rows=10) }}
-                </div>
-                {% else %}
-                <a href="{{url_for('company_register')}}"> Add Company </a>
-                {% endif %}
+            </div>
 
-                <hr>
-                <h5 class="mb-3">Plan Details</h5>
-                <p><strong>Current Plan:</strong> {{ current_plans[0]['plan_name'] }}</p>
-                <p><strong>Plan Status:</strong> {{ current_plans[0]['status'] }}</p>
+            <div class="mt-4">
+                <a href="{{ url_for('user_password_update') }}" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
+                    <i class="fas fa-lock"></i> Update Password?
+                </a>
+            </div>
 
-                {{ form.submit(class="btn btn-success d-none", id="saveBtn") }}
-                {{ form.cancel(class="btn btn-secondary d-none", id="cancelBtn") }}
-            </form>
-        </div>
+<div class="relative py-4">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+  </div>
+  <div class="relative flex justify-start">
+    <span class="bg-white dark:bg-gray-800 pr-3 text-base font-semibold text-gray-900 dark:text-gray-200">Company Details</span>
+  </div>
+</div>
+            {% if is_company_registered %}
+            <div class="flex justify-center mb-6">
+                <div class="img-upload relative">
+                    <img src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="Company Logo" class="w-32 h-32 rounded-full border-2 border-gray-300">
+                    {{ form.company_logo.label(class="edit-icon fas fa-camera") }}
+                    {{ form.company_logo(class="hidden") }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div>
+                    {{ form.company_name.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                    {{ form.company_name(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div>
+                    {{ form.company_location.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                    {{ form.company_location(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div>
+                    {{ form.company_website.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                    {{ form.company_website(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <div>
+                    {{ form.company_description.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
+                    {{ form.company_description(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True, rows=5) }}
+                </div>
+            </div>
+            {% else %}
+            <div class="mt-4">
+                <a href="{{ url_for('company_register') }}" class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
+                    Add Company
+                </a>
+            </div>
+            {% endif %}
+
+<div class="relative py-4">
+  <div class="absolute inset-0 flex items-center" aria-hidden="true">
+    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+  </div>
+  <div class="relative flex justify-start">
+    <span class="bg-white dark:bg-gray-800 pr-3 text-base font-semibold text-gray-900 dark:text-gray-200">Plan Details</span>
+  </div>
+</div>
+
+
+            <p class="text-gray-700 dark:text-gray-300"><strong>Current Plan:</strong> {{ current_plans[0]['plan_name'] }}</p>
+            <p class="text-gray-700 dark:text-gray-300"><strong>Plan Status:</strong> {{ current_plans[0]['status'] }}</p>
+
+            <div class="flex justify-end space-x-4 mt-6">
+                {{ form.submit(class="hidden rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600", id="saveBtn") }}
+                {{ form.cancel(class="hidden rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", id="cancelBtn") }}
+            </div>
+        </form>
     </div>
+</div>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script>
-        document.getElementById('editBtn').addEventListener('click', function() {
-            var fields = document.querySelectorAll('input, textarea');
-            fields.forEach(function(field) {
-                field.disabled = false;
-            });
-            document.getElementById('editBtn').classList.add('d-none');
-            document.getElementById('saveBtn').classList.remove('d-none');
-            document.getElementById('cancelBtn').classList.remove('d-none');
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+    document.getElementById('editBtn').addEventListener('click', function() {
+        var fields = document.querySelectorAll('input, textarea');
+        fields.forEach(function(field) {
+            field.disabled = false;
         });
+        document.getElementById('editBtn').classList.add('hidden');
+        document.getElementById('saveBtn').classList.remove('hidden');
+        document.getElementById('cancelBtn').classList.remove('hidden');
+    });
 
-        document.getElementById('cancelBtn').addEventListener('click', function() {
-            var fields = document.querySelectorAll('input, textarea');
-            fields.forEach(function(field) {
-                field.disabled = true;
-            });
-            document.getElementById('editBtn').classList.remove('d-none');
-            document.getElementById('saveBtn').classList.add('d-none');
-            document.getElementById('cancelBtn').classList.add('d-none');
+    document.getElementById('cancelBtn').addEventListener('click', function() {
+        var fields = document.querySelectorAll('input, textarea');
+        fields.forEach(function(field) {
+            field.disabled = true;
         });
-    </script>
+        document.getElementById('editBtn').classList.remove('hidden');
+        document.getElementById('saveBtn').classList.add('hidden');
+        document.getElementById('cancelBtn').classList.add('hidden');
+    });
+</script>
 {% endblock %}
-
