@@ -3,42 +3,46 @@
 {% block title %}JobSeekers{% endblock %}
 
 {% block content %}
-<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
-      <div class="card">
-        <div class="card-body" style="overflow-x: auto;">
-          <div style="display:flex; justify-content:space-between;">
-            <h2 class="m-0">JobSeekers</h2>
-          </div>
-          <table id="jobseekerTable" class="hover" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Registered On</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in result %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a href=#> {{ data.name }}</a></td>
-                <td class="py-1 text-truncate">{{ data.email }}</td>
-                <td class="py-1 text-truncate">{{ data.phone_number}}</td>
-                <td class="py-1">{{ data.created_datetime.split('T')[0] }} {{ data.created_datetime.split('T')[1][:8] }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold text-gray-900">JobSeekers</h1>
+      <p class="mt-2 text-sm text-gray-700">A comprehensive list of all registered job seekers.</p>
+    </div>
+  </div>
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Name</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Mobile</th>
+              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Registered On</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            {% for data in result %}
+            <tr class="hover:bg-gray-100">
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                <a href="#" class="text-indigo-600 hover:text-indigo-900">{{ data.name }}</a>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.email }}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.phone_number }}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.created_datetime.split('T')[0] }} {{ data.created_datetime.split('T')[1][:8] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+</div>
 <script>
-new DataTable('#jobseekerTable');
+  document.addEventListener('DOMContentLoaded', () => {
+    const table = document.querySelector('table');
+    // Add any custom interactivity for TailwindCSS here
+  });
 </script>
 {% endblock %}

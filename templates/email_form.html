@@ -7,54 +7,57 @@
 {% block title %}Email Config{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card border-0">
-                <!-- Add a card header "Register" -->
-                <div class="card-header bg-white text-black text-center">
-                    <h2>Email Setup</h2>
-                </div>
-
-                <div class="card-body">
-
-
-                    <form method="post" action="{{ url_for('admin_email_setup') }}">
-                        {{ form.hidden_tag() }}
-
-                        <div class="mb-3">
-                            <label for="smtp_server" class="form-label">SMTP Server:</label>
-                            {{ form.smtp_server(class="form-control", placeholder="SMTP Server", required=True) }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="smtp_port" class="form-label">SMTP Port:</label>
-                            {{ form.smtp_port(class="form-control", placeholder="SMTP Port", required=True) }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="smtp_username" class="form-label">SMTP Username:</label>
-                            {{ form.smtp_username(class="form-control", placeholder="SMTP Username", required=True) }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="smtp_password" class="form-label">SMTP Password:</label>
-                            {{ form.smtp_password(class="form-control", placeholder="SMTP Password", required=True) }}
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="sender_email" class="form-label">Sender Email:</label>
-                            {{ form.sender_email(class="form-control", placeholder="Sender Email", required=True) }}
-                        </div>
-
-                        <div class="mb-3 text-center">
-                            {{ form.submit(class="btn btn-dark btn-lg") }}
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="sm:flex sm:items-center sm:justify-center">
+        <div class="sm:flex-auto sm:w-full sm:max-w-md">
+            <h1 class="text-lg font-semibold text-gray-900 text-center">Email Setup</h1>
+            <p class="mt-2 text-sm text-gray-700 text-center">Configure your SMTP email settings below.</p>
         </div>
     </div>
-</div>
+    <div class="mt-8">
+        <form method="post" action="{{ url_for('admin_email_setup') }}">
+            {{ form.hidden_tag() }}
+            <div class="space-y-6">
+                <div>
+                    <label for="smtp_server" class="block text-sm/6 font-medium text-gray-900">SMTP Server</label>
+                    <div class="mt-2">
+                        {{ form.smtp_server(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Enter SMTP Server", required=True) }}
+                    </div>
+                </div>
 
+                <div>
+                    <label for="smtp_port" class="block text-sm/6 font-medium text-gray-900">SMTP Port</label>
+                    <div class="mt-2">
+                        {{ form.smtp_port(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Enter SMTP Port", required=True) }}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="smtp_username" class="block text-sm/6 font-medium text-gray-900">SMTP Username</label>
+                    <div class="mt-2">
+                        {{ form.smtp_username(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Enter SMTP Username", required=True) }}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="smtp_password" class="block text-sm/6 font-medium text-gray-900">SMTP Password</label>
+                    <div class="mt-2">
+                        {{ form.smtp_password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Enter SMTP Password", required=True) }}
+                    </div>
+                </div>
+
+                <div>
+                    <label for="sender_email" class="block text-sm/6 font-medium text-gray-900">Sender Email</label>
+                    <div class="mt-2">
+                        {{ form.sender_email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Enter Sender Email", required=True) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                {{ form.submit(class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-indigo-600 focus:outline-offset-2") }}
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

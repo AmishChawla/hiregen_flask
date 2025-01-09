@@ -3,70 +3,68 @@
 {% block title %}AdminLogin{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card border-0">
-                    <!-- Add a card header "Login" -->
-                    <div class="card-header bg-white text-black text-center">
-                        <h2>Login</h2>
+<div class="flex justify-center items-center h-screen bg-gray-100">
+    <div class="w-full max-w-md">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <!-- Card Header -->
+            <div class="bg-white text-center py-4">
+                <h2 class="text-lg font-bold">Admin Login</h2>
+            </div>
+            <div class="w-full border-t border-gray-300"></div>
+
+
+            <!-- Card Body -->
+            <div class="p-6">
+                {% if form.errors %}
+                    <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                        {% for field, errors in form.errors.items() %}
+                            <p class="text-sm">{{ errors[0] }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="mb-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded">
+                            {% for message in messages %}
+                                <p class="text-sm">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <!-- Form -->
+                <form method="post" action="{{ url_for('admin_login') }}" class="space-y-4">
+                    {{ form.hidden_tag() }}
+
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+                        <div class="mt-2">
+                            {{ form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="you@example.com", required=True) }}
+                        </div>
                     </div>
 
-                    <!-- Center the image, add padding, and resize -->
-<!--                    <div class="card-img-top text-center my-3">-->
-<!--                        <img src="/static/images/login.png" alt="Login Image" style="max-width: 300px; width: 5rem; height: 5rem;" class="img-fluid">-->
-<!--                    </div>-->
-
-                    <div class="card-body">
-                        {% if form.errors %}
-                            <div class="alert" role="alert">
-                                <div>
-                                    {% for field, errors in form.errors.items() %}
-                                        <p class="text-danger">{{ errors[0] }}</p>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                                <div class="flashes alert">
-                                {% for message in messages %}
-                                    <p class="text-danger">{{ message }}</p>
-                                {% endfor %}
-                                </div>
-                            {% endif %}
-                        {% endwith %}
-
-
-                        <form method="post" action="{{ url_for('admin_login') }}">
-                            {{ form.hidden_tag() }}
-
-                            <div class="mb-3">
-                                <label for="email" class="form-label visually-hidden">Email:</label>
-                                <div class="input-group">
-                                    <span class="input-group-text text-danger"><i class="bi bi-envelope"></i></span>
-                                    {{ form.email(class="form-control", placeholder="Email", required=True) }}
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="password" class="form-label visually-hidden">Password:</label>
-                                <div class="input-group">
-                                    <span class="input-group-text text-secondary"><i class="bi bi-lock-fill"></i></span>
-                                    {{ form.password(class="form-control", placeholder="Password", required=True) }}
-                                </div>
-                            </div>
-
-                            <div class="mb-3 text-center">
-                                {{ form.submit(class="btn btn-dark btn-lg") }}
-                            </div>
-
-                            <p class="text-center"><a href="{{url_for('forgot_password')}}" class="text-muted">Forgot Password?</a></p>
-
-                        </form>
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
+                        <div class="mt-2">
+                            {{ form.password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Your password", required=True) }}
+                        </div>
                     </div>
-                </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        {{ form.submit(class="w-full py-2 px-4 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600") }}
+                    </div>
+                </form>
+
+                <!-- Forgot Password -->
+                <p class="mt-4 text-center text-sm text-gray-500">
+                    <a href="{{ url_for('forgot_password') }}" class="text-indigo-600 hover:underline">Forgot Password?</a>
+                </p>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

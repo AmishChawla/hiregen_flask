@@ -3,144 +3,119 @@
 {% block title %}Jobs{% endblock %}
 
 {% block content %}
-<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
-<div class="row">
-    <div class="col-lg-12 grid-margin stretch-card" style="padding-right: 0; padding-left: 0;">
-      <div class="card">
-        <div class="card-body" style="overflow-x: auto;">
-          <div style="display:flex; justify-content:space-between;">
-            <h2 class="m-0">Jobs</h2>
-          </div>
-            <ul class="nav nav-tabs" id="postTabs" style="margin-top: 1.5rem;">
-            <li class="nav-item">
-              <a class="nav-link active" id="published-tab" data-toggle="tab" href="#published-posts">Published </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="drafts-tab" data-toggle="tab" href="#draft-posts">Drafts </a>
-            </li>
-          </ul>
-            <div class="tab-content" style="margin-top: 1.5rem;">
-                <div class="tab-pane fade show active" id="published-posts">
-          <table id="userpostTable" class="hover" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Salary</th>
-                <th>Job Status</th>
-                <th>Visibility</th>
-                <th>Views</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
-                <th>Applicants</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in result %}
-              {% if data.JobOpening.status == 'published' %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}"> {{ data.JobOpening.job_title }}</a></td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.salary }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-                <td class="py-1" style="display: flex">
-
-                  <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
-                  <a  data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.JobOpening.id }}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash3-fill text-muted" style="font-size: 0.9rem"></i></a>
-
-                  <!-- Modal for delete button -->
-                  <div class="modal fade" id="deleteModal_{{ data.JobOpening.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ data.JobOpening.id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title fs-5" id="deleteModalLabel_{{ data.JobOpening.id }}">Delete Post</h4>
-                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you want to delete this post?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <a type="button" class="btn btn-danger" href="{{ url_for('user_delete_job', job_id=data.JobOpening.id) }}">Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        <div class="tab-pane fade" id="draft-posts">
-            <table id="draftpostTable" class="hover" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Salary</th>
-                <th>Job Status</th>
-                <th>Visibility</th>
-                <th>Views</th>
-                <th>Created Date</th>
-                <th>Updated Date</th>
-                <th>Applicants</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in result %}
-              {% if data.JobOpening.status == 'draft' %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="py-1"><a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}"> {{ data.JobOpening.job_title }}</a></td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.salary }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.status }}</td>
-                <td class="py-1 text-truncate">{{ data.JobOpening.job_opening_views }}</td>
-                <td class="py-1">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-                <td class="py-1">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-                <td class="py-1" style="display: flex">
-
-                  <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="btn btn-link">{{ data.applicant_count }}</a>
-                  <a data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.JobOpening.id }}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="Delete"><i class="bi bi-trash3-fill" style="color:#6b1313; font-size: 1.5rem"></i></a>
-
-                  <!-- Modal for delete button -->
-                  <div class="modal fade" id="deleteModal_{{ data.JobOpening.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel_{{ data.JobOpening.id }}" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title fs-5" id="deleteModalLabel_{{ data.JobOpening.id }}">Delete Post</h4>
-                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you want to delete this post?
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                          <a type="button" class="btn btn-danger" href="{{ url_for('user_delete_job', job_id=data.JobOpening.id) }}">Delete</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-            </div>
-                </div>
-        </div>
-      </div>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold text-gray-900">Jobs</h1>
+      <p class="mt-2 text-sm text-gray-700">Manage all job listings, including published and draft jobs.</p>
     </div>
   </div>
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+  <div class="mt-8">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+        <button class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" id="published-tab" onclick="showTab('published-posts')">
+          Published
+        </button>
+        <button class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" id="drafts-tab" onclick="showTab('draft-posts')">
+          Drafts
+        </button>
+      </nav>
+    </div>
+    <div class="mt-4" id="published-posts">
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead>
+          <tr>
+            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Position</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Salary</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Job Status</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Visibility</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Views</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Created Date</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Updated Date</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Applicants</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          {% for data in result %}
+          {% if data.JobOpening.status == 'published' %}
+          <tr class="hover:bg-gray-100">
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+              <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.JobOpening.job_title }}</a>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.applicant_count }}</a>
+              <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-4 hidden" id="draft-posts">
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead>
+          <tr>
+            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Position</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Salary</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Job Status</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Visibility</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Views</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Created Date</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Updated Date</th>
+            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Applicants</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          {% for data in result %}
+          {% if data.JobOpening.status == 'draft' %}
+          <tr class="hover:bg-gray-100">
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+              <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.JobOpening.job_title }}</a>
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.applicant_count }}</a>
+              <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <script>
-new DataTable('#userpostTable');
-new DataTable('#draftpostTable');
+  function showTab(tabId) {
+    document.getElementById('published-posts').classList.add('hidden');
+    document.getElementById('draft-posts').classList.add('hidden');
+    document.getElementById(tabId).classList.remove('hidden');
+  }
+  function openModal(modalId) {
+    document.querySelector(modalId).classList.remove('hidden');
+  }
+  function closeModal(modalId) {
+    document.querySelector(modalId).classList.add('hidden');
+  }
 </script>
 {% endblock %}

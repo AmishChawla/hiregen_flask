@@ -1349,7 +1349,7 @@ def add_post():
         job_description = form.job_description.data
         job_requirements = form.job_requirements.data
         job_benefits = form.job_benefits.data
-        job_opening_status = form.job_opening_status.data
+        job_opening_status = 'Acitve'
 
 
         print(form.data)

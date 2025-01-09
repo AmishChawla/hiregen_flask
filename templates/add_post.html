@@ -66,17 +66,17 @@
 
           <div class="mt-4">
             <label for="job_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_description.label }}</label>
-            {{ form.job_description(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_description") }}
+            {{ form.job_description(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_description", rows="6") }}
           </div>
 
           <div class="mt-4">
             <label for="job_requirements" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_requirements.label }}</label>
-            {{ form.job_requirements(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_requirements") }}
+            {{ form.job_requirements(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_requirements", rows="6") }}
           </div>
 
           <div class="mt-4">
             <label for="job_benefits" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_benefits.label }}</label>
-            {{ form.job_benefits(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_benefits") }}
+            {{ form.job_benefits(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_benefits", rows="6") }}
           </div>
         </div>
 
@@ -87,11 +87,11 @@
         </div>
 
           <div class="mb-6">
-            <button type="submit" name="publish" class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">Publish Job</button>
+            {{form.publish(class="w-full rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900")}}
           </div>
 
           <div class="mb-6">
-            <button type="submit" name="save_draft" class="w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">Save as Draft</button>
+            {{ form.save_draft(class="w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900") }}
           </div>
 
           <div class="mb-4">
@@ -102,11 +102,6 @@
           <div class="mb-4">
             <label for="opening_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.opening_date.label }}</label>
             {{ form.opening_date(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="opening_date") }}
-          </div>
-
-          <div>
-            <label for="job_status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_opening_status.label }}</label>
-            {{ form.job_opening_status(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_status") }}
           </div>
         </aside>
       </form>

@@ -3,303 +3,151 @@
 {% block title %}Applicants{% endblock %}
 
 {% block content %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
 
-
-
 <style>
-
 .kanban-columns-container {
   display: flex;
   gap: 10px;
 }
-
 .horizontal-scroll-container {
   position: relative;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   max-width: 100%;
-  padding-right: 15px; /* Adjust this value as needed */
+  padding-right: 15px;
 }
-
 .horizontal-scroll-container::-webkit-scrollbar {
   display: none;
 }
-
 .horizontal-scroll-container > * {
   display: inline-block;
   vertical-align: middle;
 }
-
-
-  .kanban-column {
-    display: inline-block;
-    vertical-align: top;
-    min-height: 70vh;
-    width: 12vw;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    margin-right: 20px;
-    position: relative;
-    box-sizing: border-box;
-  }
-
-
-
-  .kanban-column::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background-color:#125B9A;
-    border-radius: 75%;
-    z-index: 2;
-  }
-
-
+.kanban-column {
+  display: inline-block;
+  vertical-align: top;
+  min-height: 70vh;
+  width: 12vw;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-right: 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+.kanban-column::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background-color: #125B9A;
+  border-radius: 75%;
+  z-index: 2;
+}
 .kanban-column h3 {
   color: #0e0f2e;
   margin-bottom: 10px;
 }
-
 .list-group-item {
   padding: 10px;
   border-radius: 5px;
 }
-
 .list-group-item:hover {
   background-color: #f5f5f5;
 }
-
-.btn-secondary {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  background-color: #0056b3;
-}
-
-
-/* Prevent text wrapping inside buttons */
-.accordion-button {
-  word-break: break-all;
-}
-
-
-.offcanvas {
-    width: 300px; /* Adjust this value as needed */
-    max-width: 90%; /* Ensures the off-canvas doesn't exceed 90% of the screen width */
-    transition: transform 0.3s ease-in-out;
-}
-
-.offcanvas.show {
-    transform: translateX(0);
-}
-
-.offcanvas-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 1rem;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
-}
-
-.offcanvas-header h5 {
-    margin-bottom: 0;
-    font-size: 1.25rem;
-    font-weight: bold;
-}
-
-.offcanvas-body {
-    padding: 1rem;
-    background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-}
-
-.offcanvas-body p {
-    margin-bottom: 1rem;
-}
-
-.btn-close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background-color: transparent;
-    border: 0;
-    padding: 0;
-    cursor: pointer;
-}
-
-.btn-close:focus,
-.btn-close:hover {
-    color: #212529;
-    text-decoration: none;
-    outline: 0;
-}
-
 .draggable-list {
-    list-style-type: none;
-    padding: 0;
-    min-height: 70vh; /* Set your desired minimum height here */
+  list-style-type: none;
+  padding: 0;
+  min-height: 70vh;
 }
-
 .draggable-item {
-    border-radius: 5px;
-    cursor: move;
+  border-radius: 5px;
+  cursor: move;
 }
-
-.draggable-item.is-dragging {
-    opacity: 0.7;
-    background-color: #f0f0f0;
-}
-
-.draggable-item.drop-placeholder {
-    background-color: #f0f0f0;
-    opacity: 0.5;
-}
-
 .applicant-image {
-width: 25px;
-height: 25px;
-margin-right:10px;
-border-radius:50%;
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  border-radius: 50%;
 }
-
-
-
-@media (max-width: 768px) {
-    .offcanvas {
-        width: 80%;
-        max-width: 90%;
-    }
-}
-
-
-
-@media (max-width: 576px) {
-    .offcanvas {
-        width: 60%;
-        max-width: 90%;
-    }
-}
-
 </style>
 
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-bold">Applicant Tracking</h2>
+    <div class="flex gap-4">
+      <button id="toggleKanban" class="text-blue-600"><i class="bi bi-kanban"></i></button>
+      <button id="toggleTable" class="text-blue-600"><i class="bi bi-table"></i></button>
+    </div>
+  </div>
 
-          <div class="row mb-4" style="display: flex; justify-content: space-between;">
-            <div class="col-md-10">
-              <h2 class="mb-1 mt-1 display-5">Applicant Tracking</h2>
-            </div>
-              <div class="col-1"  style="display: flex; justify-content: space-around; margin-top:7vh;">
-        <a id="toggleKanban" class="mr-1"><i style="font-size:1.5rem; color:#125B9A;" class="bi bi-kanban"></i></a>
-      <a id="toggleTable"><i style="font-size:1.5rem; color:#125B9A;" class="bi bi-table"></i></a>
-            </div>
-          </div>
-
-          <!-- Horizontal scroll container -->
-          <div id="kanbanView" class="horizontal-scroll-container">
+  <!-- Horizontal scroll container -->
+  <div id="kanbanView" class="horizontal-scroll-container">
     {% for status in statuses %}
-    <div class="kanban-column">
-    <h3 class="text-dark lead" style="margin:20px;">{{ status.name.capitalize() }}</h3>
-    <ul class="list-group-flush draggable-list" style="padding-left: 0.2rem;">
+    <div class="kanban-column bg-white shadow rounded p-4">
+      <h3 class="font-bold text-gray-700">{{ status.name.capitalize() }}</h3>
+      <ul class="draggable-list">
         {% for data in result %}
-            {% if data.application_status == status.job_status %}
-                <li class="list-group-item draggable-item" data-id="{{ data.application_id }}">
-                    <div class="row">
-                        <div class="col-sm-2 mr-1"> {% if data.applicant_profile_picture %} <img class="applicant-image" src="{{ data.applicant_profile_picture }}"> {% else %} <img class="applicant-image" src="{{ url_for('static', filename='images/man.png') }}"> {% endif %}</div>
-                        <div class="col-sm lead" style="font-size:0.9rem;">
-                            <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="link-dark link-underline link-underline-opacity-0">
-                            {{ data.applicant_name }}
-                            </a>
-                        </div>
-                        <div class="col-sm-2 mr-2" onclick="viewApplicantDetails('{{ data.application_id }}','{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}')" style="font-size:0.9rem;"><i class="bi bi-chevron-right"></i></div>
-
-                    </div>
-                </li>
-            {% endif %}
-        {% endfor %}
-    </ul>
-</div>
-    {% endfor %}
-
+        {% if data.application_status == status.job_status %}
+        <li class="list-group-item draggable-item" data-id="{{ data.application_id }}">
+          <div class="flex items-center">
+            <img class="applicant-image" src="{{ data.applicant_profile_picture or url_for('static', filename='images/man.png') }}">
+            <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="text-blue-600">{{ data.applicant_name }}</a>
           </div>
-
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
     </div>
-  </div>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-      <h5 class="h5" style="font-size:1.5rem; font-weight:lighter;" id="offcanvasRightLabel">Applicant Details</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <!-- Content will be populated here -->
-    </div>
+    {% endfor %}
   </div>
 
-<div class="mt-3" id="tableView">
-  <table id="applicantTable" class="hover" style="width:100%;">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Resume</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for data in result %}
-              <tr style="max-height: 100px; overflow-y: auto;">
-                <td class="row py-1">
-                    <div class="col-sm-2"> {% if data.applicant_profile_picture %} <img class="applicant-image" src="{{ data.applicant_profile_picture }}"> {% else %} <img class="applicant-image" src="{{ url_for('static', filename='images/man.png') }}"> {% endif %}</div>
-                    <div class="col-sm">
-                        <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="link-dark link-underline link-underline-opacity-0">
-                        {{ data.applicant_name }}
-                        </a>
-                    </div>
-                </td>
-                <td class="py-1 text-truncate">{{ data.applicant_email }}</td>
-                <td class="py-1 text-truncate">{{ data.application_date }}</td>
-                <td class="py-1 text-truncate">{{ data.application_status.capitalize() }}</td>
-                <td class="py-1 text-truncate"> <a href="{{ data.resume }}">Resume</a></td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-</div>
-
+  <div id="tableView" class="hidden mt-6">
+    <table id="applicantTable" class="min-w-full border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2">Name</th>
+          <th class="p-2">Email</th>
+          <th class="p-2">Date</th>
+          <th class="p-2">Status</th>
+          <th class="p-2">Resume</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in result %}
+        <tr>
+          <td class="p-2 flex items-center">
+            <img class="applicant-image" src="{{ data.applicant_profile_picture or url_for('static', filename='images/man.png') }}">
+            <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.applicant_id) }}" class="text-blue-600">{{ data.applicant_name }}</a>
+          </td>
+          <td class="p-2">{{ data.applicant_email }}</td>
+          <td class="p-2">{{ data.application_date }}</td>
+          <td class="p-2">{{ data.application_status.capitalize() }}</td>
+          <td class="p-2"><a href="{{ data.resume }}" class="text-blue-600">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 {% endblock %}
 
-{%block scripts%}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block scripts %}
+<script src="{{url_for('static', filename='js/drag_drop.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.js"></script>
-<script src="{{ url_for('static', filename='assets/js/drag_drop.js') }}"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 <script>
 new DataTable('#applicantTable');
-</script>
 
-<script>
-  function viewApplicantDetails(application_id, name, status, email, applicationDate, resume) {
+function viewApplicantDetails(application_id, name, status, email, applicationDate, resume) {
     const offCanvas = document.getElementById('offcanvasRight');
     const offCanvasContent = offCanvas.querySelector('.offcanvas-body');
-    offCanvasContent.innerHTML = `
+    offCanvasContent.innerHTML =
       <h5 class="offcanvas-title lead py-3">${name.charAt(0).toUpperCase() + name.slice(1)} (${status.charAt(0).toUpperCase() + status.slice(1)})</h5>
       <div class="row mb-1">
       <div class="col-4" style="font-size:0.9rem;">Email:</div> <div class="col" style="font-size:0.9rem;">${email}</div>
@@ -320,15 +168,14 @@ new DataTable('#applicantTable');
         </select>
       </div>
 
-    `;
+    ;
     const offcanvasInstance = new bootstrap.Offcanvas(offCanvas);
     offcanvasInstance.show();
-  }
+ }
 
-    function updateApplicationStatus(application_id) {
+function updateApplicationStatus(application_id) {
     const newStatus = document.getElementById('status-select').value;
-
-    fetch(`/update-application-status`, {
+    fetch(/update-application-status, {
       method: 'POST',
       body: JSON.stringify({ id: application_id, newStatus: newStatus }),
       headers: { 'Content-Type': 'application/json' },
@@ -339,33 +186,26 @@ new DataTable('#applicantTable');
       window.location.reload(); // Reload the page after updating the status
     })
     .catch(error => console.error('Error updating status:', error));
-  }
+ }
 
-</script>
+document.addEventListener('DOMContentLoaded', function () {
+  const kanbanView = document.getElementById('kanbanView');
+  const tableView = document.getElementById('tableView');
+  const toggleKanban = document.getElementById('toggleKanban');
+  const toggleTable = document.getElementById('toggleTable');
 
+  kanbanView.style.display = 'block';
+  tableView.style.display = 'none';
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const kanbanView = document.getElementById('kanbanView');
-    const tableView = document.getElementById('tableView');
-    const toggleKanban = document.getElementById('toggleKanban');
-    const toggleTable = document.getElementById('toggleTable');
-
-    // Initially show Kanban and hide Table
+  toggleKanban.addEventListener('click', function () {
     kanbanView.style.display = 'block';
     tableView.style.display = 'none';
+  });
 
-    toggleKanban.addEventListener('click', function() {
-        kanbanView.style.display = 'block';
-        tableView.style.display = 'none';
-    });
-
-    toggleTable.addEventListener('click', function() {
-        tableView.style.display = 'block';
-        kanbanView.style.display = 'none';
-    });
+  toggleTable.addEventListener('click', function () {
+    tableView.style.display = 'block';
+    kanbanView.style.display = 'none';
+  });
 });
-
 </script>
-
 {% endblock %}

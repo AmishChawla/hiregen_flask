@@ -1,448 +1,222 @@
-
-
-
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}HirGen{% endblock %}</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Icons -->
-   <link rel="stylesheet" href="{{ url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css') }}">
-    <link href="{{ url_for('static', filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link href="{{ url_for('static', filename='assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-      <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
-      <link href="https://cdn.datatables.net/searchpanes/2.2.0/css/searchPanes.dataTables.min.css" rel="stylesheet">
-      <link href="https://cdn.datatables.net/select/1.7.0/css/select.dataTables.min.css" rel="stylesheet">
-      <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     body {
-   font-family: 'Roboto', sans-serif;
-   height:100vh;
-   min-height: 100vh;
-    }
-
-    .content-wrapper {
-      background-color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      height: 100vh;
     }
   </style>
-  {% block styles %}
-  {% endblock %}
+  {% block styles %}{% endblock %}
 </head>
-<body class="hold-transition {% if current_user.is_authenticated %} sidebar-mini {% else %} layout-top-nav sidebar-collapse {% endif %} control-sidebar-push">
-<div class="wrapper">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<div class="lg:flex">
+  <!-- Sidebar for Desktop -->
+  <aside class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col border-r border-gray-200 bg-white">
+    <div class="flex h-16 items-center px-6">
+        <h1 class="text-lg font-semibold text-gray-800">Welcome, {{ current_user.username }}</h1>
+      </div>
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      {% if current_user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-       {% endif %}
+    <nav class="flex flex-col px-6 pb-4 overflow-y-auto">
+      <ul role="list" class="space-y-1">
+        <li>
+          <a href="{{ url_for('admin_dashboard') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_dashboard' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('get_all_subscriptions') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'get_all_subscriptions' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            Orders
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('list_of_companies') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'list_of_companies' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+            </svg>
+            Companies
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('list_of_users') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'list_of_users' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+            </svg>
+            Employers
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_all_jobseekers') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_all_jobseekers' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+            </svg>
 
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('index',role=role)}}" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('index',role=role)}}" class="nav-link">About</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="{{ url_for('user_view_plan')}}" class="nav-link">Pricing</a>
-      </li>
-    </ul>
+            Jobseekers
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_all_jobs') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_all_jobs' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+          </svg>
+            Jobs
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_email_setup') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_email_setup' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-
-      <!-- Messages Dropdown Menu -->
-       {% if request.endpoint not in ['login', 'admin_login', 'register'] %}
-            {% if current_user.is_authenticated %}
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-                        {% if current_user.profile_picture %}
-                            <img src="{{ current_user.profile_picture }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                         {% else %}
-                            <img src="{{ url_for('static', filename='images/man.png') }}" alt="profile" style="width: 25px; height: 25px; margin-right:10px; border-radius:50%;">
-                        {% endif %}
-                        <span class="menu-title">{{ current_user.username }}</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <a class="dropdown-item" href="{{ url_for('profile') }}" style="display: flex; justify-content: space-between;">Edit Profile<i class="far fa fa-pencin-square-o" style="margin-left:10px"></i></a>
-          <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('user_password_update') }}" style="display: flex; justify-content: space-between;">Update Password <i class="mdi mdi-lock-reset menu-icon" style="margin-left:10px"></i></a>
-          <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('logout') }}" style="display: flex; justify-content: space-between;">Logout <i class="mdi mdi-logout menu-icon" style="margin-left:10px"></i></a>
-
-        </div>
-      </li>
-      {% else %}
-          <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('login') }}">
-            Login
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">
-            Sign Up
-        </a>
-    </li>
-            {% endif %}
-        {% endif %}
-
-<!--      {% if current_user.is_authenticated %}-->
-<!--      <li class="nav-item">-->
-<!--        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">-->
-<!--          <i class="fas fa-th-large"></i>-->
-<!--        </a>-->
-<!--      </li>-->
-<!--      {% endif %}-->
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class=" main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a  class="brand-link">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Hiregen</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-
-
-      <!-- Sidebar Menu -->
-
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">
-              <i class="nav-icon far fa fa-chart-pie">
-              </i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'get_all_subscriptions' %}active{% endif %}" href="{{ url_for('get_all_subscriptions') }}">
-              <i class="far fa fa-history nav-icon"></i>
-              <p>
-                Orders
-              </p>
-            </a>
-
-          <ul class="nav nav-treeview">
-
-               <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'get_all_subscriptions' %}active{% endif %}" href="{{ url_for('get_all_subscriptions') }}">
-                  <i class="far fa fa-history nav-icon"></i>
-                  <p>
-                    Subscriptions
-                  </p>
-                </a>
-
-              </li>
-
-            <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'list_of_plans' %}active{% endif %}" href="{{ url_for('list_of_plans') }}">
-              <i class="far bi bi-currency-rupee nav-icon"></i>
-              <p>
-                Plans Config
-              </p>
-            </a>
-          </li>
-
-          </ul>
-
-
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('list_of_sites') }}" class="nav-link {% if request.endpoint == 'list_of_sites' %} active {% endif %}">
-              <i class="far bi bi-window-stack nav-icon"></i>
-              <p>Sites</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('list_of_companies') }}" class="nav-link {% if request.endpoint == 'list_of_companies' %} active {% endif %}">
-              <i class="far bi bi-building nav-icon"></i>
-              <p>Companies</p>
-            </a>
-          </li>
-          <li class="nav-item">
-                <a href="{{ url_for('list_of_users') }}" class="nav-link {% if request.endpoint == 'list_of_users' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Employers</p>
-                </a>
-              </li>
-          <li class="nav-item">
-                <a href="{{ url_for('admin_all_jobseekers') }}" class="nav-link {% if request.endpoint == 'admin_all_jobseekers' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Jobseekers</p>
-                </a>
-              </li>
-          <li class="nav-item">
-                <a href="{{ url_for('admin_all_jobs') }}" class="nav-link {% if request.endpoint == 'admin_all_jobs' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Jobs</p>
-                </a>
-              </li>
-          <li class="nav-item">
-                <a href="{{ url_for('all_applicants_for_admin') }}" class="nav-link {% if request.endpoint == 'all_applicants_for_admin' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Applicants</p>
-                </a>
-              </li>
-          <li class="nav-item">
-    <a href="{{ url_for('jobs_filter') }}" class="nav-link {% if request.endpoint == 'jobs_filter' %} active {% endif %}">
-      <i class="far fa-thin fa-newspaper nav-icon"></i>
-      <p>Search</p>
-    </a>
-        <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                <a href="{{ url_for('jobs_filter') }}" class="nav-link {% if request.endpoint == 'jobs_filter' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Search Jobs</p>
-                </a>
-              </li>
-          <li class="nav-item">
-                <a href="{{ url_for('applicants_filter') }}" class="nav-link {% if request.endpoint == 'applicants_filter' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Search Applicants</p>
-                </a>
-              </li>
-          <li class="nav-item">
-                <a href="{{ url_for('jobseekers_filter') }}" class="nav-link {% if request.endpoint == 'jobseekers_filter' %} active {% endif %}">
-                  <i class="far fa-thin fa-newspaper nav-icon"></i>
-                  <p>Search JobSeekers</p>
-                </a>
-              </li>
-
-        </ul>
-  </li>
-          <li class="nav-item">
-            <a class="nav-link {% if request.endpoint == 'trash' %}active{% endif %}" href="{{ url_for('trash') }}">
-                <i class="nav-icon far bi bi-trash3-fill"></i>
-              <p>
-                Trash
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-<a class="nav-link {% if request.endpoint == 'admin_stats' %}active{% endif %}" href="{{ url_for('admin_stats') }}">
-    <i class="nav-icon far bi bi-trash3-fill"></i>
-  <p>
-    Stats
-  </p>
-</a>
-</li>
-          <li class="nav-item">
-              <a class="nav-link">
-              <i class="nav-icon far bi bi-gear-fill"></i>
-            <p> Settings </p>
-              </a>
-            <ul class="nav nav-treeview">
-
-               <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'admin_email_setup' %}active{% endif %}" href="{{ url_for('admin_email_setup') }}">
-                  <i class="far bi bi-envelope nav-icon"></i>
-                  <p>
-                    Email Config
-                  </p>
-                </a>
-              </li>
-          </ul>
-
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
+            Settings
+          </a>
+        </li>
+      </ul>
+    </nav>
   </aside>
 
-
-
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-
-<!--    <div class="content-header">-->
-<!--      <div class="container-fluid">-->
-<!--        <div class="row mb-2">-->
-<!--          <div class="col-sm-6">-->
-<!--            <h1 class="m-0">Dashboard</h1>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--          <div class="col-sm-6">-->
-<!--            <ol class="breadcrumb float-sm-right">-->
-<!--              <li class="breadcrumb-item"><a href="#">Home</a></li>-->
-<!--              <li class="breadcrumb-item active">Dashboard</li>-->
-<!--            </ol>-->
-<!--          </div>&lt;!&ndash; /.col &ndash;&gt;-->
-<!--        </div>&lt;!&ndash; /.row &ndash;&gt;-->
-<!--      </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
-<!--    </div>-->
-
-<!--     /.content-header -->
-
-    <!-- Main content -->
-    <div class=" content">
-    <!-- /.content -->
-        {% block content %}
-       {% endblock %}
+  <!-- Main Content Area -->
+  <div class="lg:pl-72 flex-1">
+    <!-- Navbar -->
+<header class="sticky top-0 z-40 flex h-16 items-center bg-white shadow px-6">
+  <button type="button" class="lg:hidden -m-2.5 p-2.5 text-gray-700">
+    <span class="sr-only">Open sidebar</span>
+    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+    </svg>
+  </button>
+  <div class="ml-auto flex items-center">
+    <!-- Logout Link -->
+    <a href="{{ url_for('admin_logout') }}" class="ml-4 inline-flex items-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus:outline focus:outline-2 focus:outline-red-600 focus:outline-offset-2">
+      <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25V9m6.75 0V5.25m-6.75 6.75h15.75m-15.75 0a1.5 1.5 0 0 1 0 3h15.75a1.5 1.5 0 0 1 0-3m-15.75 0V9m0 9a1.5 1.5 0 0 1 0-3m0 0h15.75m-15.75 3a1.5 1.5 0 0 1 0-3h15.75a1.5 1.5 0 0 1 0 3z" />
+      </svg>
+      Logout
+    </a>
   </div>
-  <!-- /.content-wrapper -->
-
+</header>
+          <!-- Main Content -->
+    <main class="py-6 px-4 sm:px-6 lg:px-8">
+      {% block content %}
+      <!-- Page-specific content will be inserted here -->
+      {% endblock %}
+    </main>
+  </div>
 </div>
-<!-- ./wrapper -->
 
-<!-- REQUIRED SCRIPTS -->
+<!-- Mobile Sidebar -->
+<div id="mobile-sidebar" class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-75 lg:hidden">
+  <aside class="fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-md">
+    <div class="flex items-center h-16 px-6 bg-gray-100">
+      <button type="button" id="close-mobile-sidebar" class="-m-2.5 p-2.5 text-gray-700">
+        <span class="sr-only">Close sidebar</span>
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <img class="ml-4 h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600" alt="HireGen">
+    </div>
+    <nav class="flex-1 px-6 pt-4 pb-6 overflow-y-auto">
+      <ul role="list" class="space-y-1">
+        <li>
+          <a href="{{ url_for('admin_dashboard') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_dashboard' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('get_all_subscriptions') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'get_all_subscriptions' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            Orders
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('list_of_companies') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'list_of_companies' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+            </svg>
+            Companies
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('list_of_users') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'list_of_users' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+            </svg>
+            Employers
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_all_jobseekers') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_all_jobseekers' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+            </svg>
+            Jobseekers
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_all_jobs') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_all_jobs' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+          </svg>
+            Jobs
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_email_setup') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold {{ 'bg-gray-50 text-indigo-600' if request.endpoint == 'admin_email_setup' else 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+            Settings
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+</div>
 
-<!-- jQuery -->
-  <script src="{{ url_for('static', filename='assets/plugins/jquery/jquery.min.js') }}"></script>
-  <!-- Bootstrap 4 -->
-  <script src="{{ url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script>
+  // Toggle mobile sidebar
+  const mobileSidebar = document.getElementById('mobile-sidebar');
+  const openSidebarButton = document.querySelector('.lg:hidden');
+  const closeSidebarButton = document.getElementById('close-mobile-sidebar');
 
-
-
-    <!--  Popper js-->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/searchpanes/2.2.0/js/dataTables.searchPanes.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.7.0/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-    <script>
-
-$(document).ready(function() {
-  $('#userTable').DataTable({
-    searchPanes: {
-      panes: [
-        {
-          header: 'Custom',
-          options: [
-            {
-              label: 'Last Week',
-              value: function(rowData, rowIdx) {
-                var currentDate = new Date();
-                var lastWeekDate = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
-                var creationDateTime = parseDateTime(rowData[6]);
-                console.log(creationDateTime);
-                return creationDateTime >= lastWeekDate && creationDateTime <= currentDate;
-              },
-              className: 'last-week'
-            },
-            {
-              label: 'Last Month',
-              value: function(rowData, rowIdx) {
-                var currentDate = new Date();
-                var lastMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
-                var creationDateTime = parseDateTime(rowData[6]);
-                console.log(creationDateTime);
-                return creationDateTime >= lastMonthDate && creationDateTime <= currentDate;
-              },
-              className: 'last-month'
-            },
-            {
-              label: 'Last Year',
-              value: function(rowData, rowIdx) {
-                var currentDate = new Date();
-                var lastYearDate = new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), currentDate.getDate());
-                var creationDateTime = parseDateTime(rowData[6]);
-                console.log(creationDateTime);
-                return creationDateTime >= lastYearDate && creationDateTime <= currentDate;
-              },
-              className: 'last-year'
-            }
-          ],
-          dtOpts: {
-            searching: false,
-            order: [[1, 'desc']]
-          }
-        }
-      ]
-    },
-    dom: 'Plfrtip'
+  openSidebarButton.addEventListener('click', () => {
+    mobileSidebar.classList.remove('hidden');
   });
 
-  // Trigger click event on the "Collapse All" button
-  $('.dtsp-collapseAll').click();
-});
-
-function parseDateTime(dateTimeString) {
-    // Remove non-breaking spaces
-    dateTimeString = dateTimeString.replace(/&nbsp;/g, ' ');
-
-    // Split date and time parts
-    var parts = dateTimeString.split(' ');
-
-    var dateParts = parts[0].split('-');
-    var year = parseInt(dateParts[0], 10);
-    var month = parseInt(dateParts[1], 10) - 1; // Month is zero-indexed
-    var day = parseInt(dateParts[2], 10);
-
-    var hours, minutes, seconds;
-
-    if (parts[1]) {
-        var timeParts = parts[1].split(':');
-        hours = parseInt(timeParts[0], 10);
-        minutes = parseInt(timeParts[1], 10);
-        seconds = parseInt(timeParts[2], 10);
-    } else {
-        // Set default values for time components
-        hours = 0;
-        minutes = 0;
-        seconds = 0;
-    }
-
-    // Create a Date object
-    return new Date(year, month, day, hours, minutes, seconds);
-}
-
-function redirectToPage(pageUrl) {
-    console.log(pageUrl);
-    window.location.href = pageUrl;
-}
+  closeSidebarButton.addEventListener('click', () => {
+    mobileSidebar.classList.add('hidden');
+  });
 </script>
-  <!-- AdminLTE App -->
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-
-
-{% block scripts %}{% endblock %}
-</div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
