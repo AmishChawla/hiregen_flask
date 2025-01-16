@@ -2306,36 +2306,6 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug
     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
 
 
-@app.route('/post/<post_id>', methods=['GET', 'POST'])
-def get_post_by_id(post_id):
-    response = api_calls.get_post(post_id=post_id)
-    id = response["id"]
-    title = response["title"]
-    category_name = response["category_name"]
-    content = response["content"]
-    author_name = response["author_name"]
-    created_at = response["created_at"]
-    date_obj = datetime.strptime(created_at, '%Y-%m-%dT%H:%M:%S.%f%z')
-    formatted_date = date_obj.strftime('%d %B %Y')
-    tags =response["tags"]
-    post_slug = response["slug"]
-    post_date = date_obj.strftime('%Y-%m-%d')
-
-
-    result = api_calls.get_a_post_all_comments(post_id=id)
-    if result is None:
-        result = []  # Set result to an empty list
-
-    comment_like_result = api_calls.get_like_of_a_comment(post_id=id)
-    if comment_like_result is None:
-        comment_like_result = []
-    print(comment_like_result)
-
-    return render_template('post.html', comment_like_result=comment_like_result, result=result, title=title, content=content, author_name=author_name, created_at=formatted_date, category=category_name, tags=tags, post_id=id, post_date=post_date, post_slug=post_slug)
-
-
-
-
 ###################################form builder################
 
 @app.route('/formbuilder')
@@ -4029,6 +3999,459 @@ def homepage_contactus_submission():
 def about_us():
     return render_template('aboutus.html')
 
+
+################## ADMIN CmS ####################################################
+
+
+@app.route('/posts')
+def all_cms_post():
+    result = api_calls.get_all_posts()
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('all_posts.html', result=result)
+
+
+@app.route('/admin/cms/posts')
+@requires_any_permission("manage_user")
+@login_required
+def admin_all_cms_post():
+    result = api_calls.get_admin_all_posts(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+
+    return render_template('admin/admin_cms/cms_all_post.html', result=result)
+
+
+@app.route("/admin/delete-posts/<post_id>", methods=['GET', 'POST'])
+@login_required
+def admin_delete_cms_post(post_id):
+    result = api_calls.admin_delete_post(post_id=post_id, access_token=current_user.id)
+
+    # Print the status code for debugging purposes
+    print(result.status_code)
+
+    if result.status_code == 200:
+        flash('Post deleted successfully', category='info')
+        return redirect(url_for('all_post'))
+    else:
+        abort(response.status_code)
+
+@app.route('/admin/cms/create-post/', methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def add_cms_post():
+    form = forms.AddPost()
+    media_form = forms.AddMediaForm()
+
+    # Fetch categories and format them for the form choices
+    try:
+        categories = api_calls.get_cms_all_categories(access_token=current_user.id)
+        category_choices = [('', 'Select a category')] + [(category['id'], category['category']) for category in categories]
+    except Exception as e:
+        print(f"Error fetching categories: {e}")
+        category_choices = [('', 'Select Category')]
+
+    form.category.choices = category_choices
+
+    if form.category.data:
+        # Fetch subcategories based on the selected category
+        try:
+            subcategories = api_calls.get_subcategories_by_category(form.category.data)
+            subcategory_choices = [(subcategory['id'], subcategory['subcategory']) for subcategory in subcategories]
+        except Exception as e:
+            print(f"Error fetching subcategories: {e}")
+            subcategory_choices = [('', 'Select Subcategory')]
+        form.subcategory.choices = subcategory_choices
+
+    if form.validate_on_submit():
+
+        # if form.preview.data:
+        #     return redirect(url_for('preview_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
+
+        post_data = {
+            'title': form.title.data,
+            'content': form.content.data,
+            'category_id': form.category.data,
+            'subcategory_id': form.subcategory.data,
+            'access_token': current_user.id
+        }
+
+        try:
+            if form.save_draft.data:
+                post_data['status'] = 'draft'
+            elif form.publish.data:
+                post_data['status'] = 'published'
+
+            result = api_calls.create_post(**post_data)
+
+            if result:
+                # if form.publish.data:
+                #     flash("Post created successfully", "success")
+                #     try:
+                #         post_slug = result["slug"]
+                #         dateiso = result["created_at"]
+                #         date = dateiso.split('T')[0]
+                #         post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
+                #         api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data, body=form.content.data, post_url=post_url)
+                #     except Exception as e:
+                #         print(f"Problem sending newsletter: {e}")
+                return redirect(url_for('admin_all_cms_post'))
+            else:
+                flash("Failed to create post", "danger")
+        except Exception as e:
+            flash(f"Error creating post: {e}", "danger")
+
+    # Fetch media and forms
+    root_url = constants.ROOT_URL + '/'
+    # media_result = api_calls.get_user_all_medias(access_token=current_user.id) or []
+    # forms_result = api_calls.get_user_all_forms(access_token=current_user.id) or []
+
+    # Check if service is allowed for the user
+    # if current_user.role == 'user':
+    #     is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
+    #     if not is_service_allowed:
+    #         return redirect(url_for('user_view_plan'))
+
+    return render_template('admin/admin_cms/cms_add_post.html', form=form, media_form=media_form,categories=category_choices)
+
+
+# @app.route('/post/preview-post/<username>.<root_url>', methods=['GET', 'POST'])
+# @requires_any_permission("manage_posts")
+# @login_required
+# def preview_post(username, root_url):
+#     date_obj = datetime.utcnow()
+#     formatted_date = date_obj.strftime('%d %B %Y')
+#     form = forms.AddPost()
+#     post_preview_json = request.form.get('postPreview', '{}')
+#     print(f"post_preview_json: {post_preview_json}")  # Debugging line
+#     post_preview = json.loads(post_preview_json)
+#     print(f"post_preview: {post_preview}")
+#
+#     # post_preview = session.get('post_preview', {})
+#     if request.method == 'GET':
+#         # Populate the form with the data from the query parameters
+#         # form.title.data = request.args.get('title')
+#         # form.content.data = request.args.get('content')
+#         # form.category.data = request.args.get('category')
+#         # form.subcategory.data = request.args.get('subcategory')
+#         # form.tags.data = request.args.get('tags')
+#         tags_list = post_preview.get('tags', '').split(",")
+#
+#
+#
+#
+#     if request.method == 'POST':
+#         tags_list = form.tags.data.split(",")
+#         if form.save_draft.data:
+#             try:
+#                 result = api_calls.create_post(
+#                     title=form.title.data,
+#                     content=form.content.data,
+#                     category_id=form.category.data,
+#                     subcategory_id=form.subcategory.data,
+#                     tags=tags_list,
+#                     status='draft',
+#                     access_token=current_user.id
+#                 )
+#
+#                 if result:
+#
+#                     if current_user.role == 'user':
+#                         return redirect(url_for('user_all_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
+#                     else:
+#                         return redirect(url_for('all_post'))
+#                 else:
+#                     flash("Failed to create post", "danger")
+#             except Exception as e:
+#                 flash(f"Error creating post: {e}", "danger")
+#         elif form.publish.data:
+#             try:
+#                 result = api_calls.create_post(
+#                     title=form.title.data,
+#                     content=form.content.data,
+#                     category_id=form.category.data,
+#                     subcategory_id=form.subcategory.data,
+#                     tags=tags_list,
+#                     status='published',
+#                     access_token=current_user.id
+#                 )
+#
+#                 if result:
+#                     session.pop('post_preview', None)
+#                     flash("Post created successfully", "success")
+#                     try:
+#                         dateiso = result["created_at"]
+#                         post_slug = result["slug"]
+#                         date = dateiso.split('T')[0]
+#                         post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
+#                         send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data,
+#                                                                body=form.content.data, post_url=post_url)
+#                     except Exception as e:
+#                         raise 'Problem sending newsletter' + e
+#                     if current_user.role == 'user':
+#                         return redirect(url_for('user_all_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
+#                     else:
+#                         return redirect(url_for('all_post'))
+#                 else:
+#                     flash("Failed to create post", "danger")
+#             except Exception as e:
+#                 flash(f"Error creating post: {e}", "danger")
+#
+#     return render_template('preview_post.html', ROOT_URL=ROOT_URL,  post_preview=post_preview, author_name=current_user.username, form=form, tags=tags_list, created_at=formatted_date)
+
+# @app.route("/posts/preview_post", methods=['GET', 'POST'])
+# @login_required
+# def preview_post():
+#     form = forms.AddPost()
+#     if request.method == 'POST':
+#         # Get form data from request.form since the form is submitted via POST
+#         title = request.form.get('title')
+#         content = request.form.get('content')
+#         category = request.form.get('category')
+#         subcategory = request.form.get('subcategory')
+#         tag = request.form.getlist('tags')
+#
+#         # Populate the form with the data
+#         form.title.data = title
+#         form.content.data = content
+#         form.category.data = category
+#         form.subcategory.data = subcategory
+#         form.tags.data = tag
+#
+#         # Render the preview page with the populated form
+#         return render_template('preview_post.html', title=title, content=content, author_name=current_user.username,
+#                                form=form, category=category, subcategory=subcategory, tag=tag)
+#
+#     return redirect(url_for('add_post'))
+
+
+@app.route("/admin/cms/add-category/", methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def add_category():
+    form = forms.AddCategory()
+    if form.validate_on_submit():
+        category = form.category.data
+        response = api_calls.add_category(category, access_token=current_user.id)
+        print(response.status_code)
+        if (response.status_code == 200):
+            flash('Category added Successful', category='info')
+            return redirect(url_for('admin_cms_all_categories'))
+        else:
+            flash('Some problem occured', category='error')
+
+    return render_template('admin/admin_cms/cms_add_category.html', form=form)
+
+
+@app.route("/admin/cms/update-category/<category_id>/", methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def update_category(category_id):
+    form = forms.AddCategory()
+    if form.validate_on_submit():
+        category = form.category.data
+        response = api_calls.update_category(category_id, category, access_token=current_user.id)
+        print(response.status_code)
+        if (response.status_code == 200):
+            flash('Category updated Successful', category='info')
+            return redirect(url_for('admin_cms_all_categories'))
+        else:
+            flash('Some problem occured', category='error')
+
+    return render_template('update_user_category.html', ROOT_URL=ROOT_URL, form=form, category_id=category_id)
+
+
+@app.route('/admin/cms/categories')
+@requires_any_permission("manage_user")
+@login_required
+def admin_cms_all_categories():
+    result = api_calls.get_cms_all_categories(access_token=current_user.id)
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('admin/admin_cms/cms_all_categories.html', result=result)
+
+
+@app.route('/admin/cms/all-subcategories/<category_id>')
+@requires_any_permission("manage_user")
+@login_required
+def admin_cms_all_subcategory(category_id):
+    result = api_calls.get_subcategories_by_category(category_id=category_id)
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('admin/admin_cms/cms_all_subcategories.html', result=result)
+
+
+@app.route("/admin/cms/delete-category/<category_id>", methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def admin_cms_delete_category(category_id):
+    result = api_calls.cms_delete_category(category_id=category_id, access_token=current_user.id)
+    print(result.status_code)
+    if result.status_code == 200:
+        return redirect(url_for('admin_cms_all_categories'))
+    else:
+        abort(result.status_code)
+
+
+@app.route('/admin/cms/subcategories/<int:category_id>')
+def get_subcategories(category_id):
+    # Fetch subcategories based on the category_id
+    subcategories = api_calls.get_subcategories_by_category(category_id)
+    return jsonify({'subcategories': subcategories})
+
+
+@app.route("/admin/cms/add-subcategory/", methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def add_subcategory():
+    form = forms.AddSubcategory()
+    categories = api_calls.get_cms_all_categories(access_token=current_user.id)
+    category_choices = [(category['id'], category['category']) for category in categories]
+    form.category.choices = category_choices
+    if form.validate_on_submit():
+        subcategory = form.subcategory.data
+        category_id = form.category.data
+        response = api_calls.add_subcategory(subcategory, category_id, access_token=current_user.id)
+        print(response.status_code)
+        if (response.status_code == 200):
+            flash('Subcategory added Successful', category='info')
+            return redirect(url_for('admin_cms_all_categories'))
+        else:
+            flash('Some problem occured', category='error')
+
+    return render_template('admin/admin_cms/cms_add_subcategory.html', ROOT_URL=ROOT_URL, form=form, categories=category_choices)
+
+
+@app.route("/admin/cms/update-subcategory/<subcategory_id>", methods=['GET', 'POST'])
+@requires_any_permission("manage_users")
+@login_required
+def update_subcategory(subcategory_id):
+    form = forms.AddSubcategory()  # Assuming you have a form for subcategory
+    categories = api_calls.get_cms_all_categories(access_token=current_user.id)
+    category_choices = [(category['id'], category['category']) for category in categories]
+    form.category.choices = category_choices
+    if form.validate_on_submit():
+        subcategory = form.subcategory.data
+        category_id = form.category.data
+        response = api_calls.update_subcategory(subcategory_id, subcategory, category_id, access_token=current_user.id)
+        print(response.status_code)
+        if (response.status_code == 200):
+            flash('Subcategory added Successful', category='info')
+            return redirect(url_for('admin_cms_all_categories'))
+        else:
+            flash('Some problem occured', category='error')
+
+    return render_template('update_user_subcategory.html', form=form, subcategory_id=subcategory_id,
+                           categories=category_choices)
+
+
+@app.route("/admin/cms/delete-subcategory/<subcategory_id>", methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+@login_required
+def admin_cms_delete_subcategory(subcategory_id):
+    result = api_calls.cms_delete_subcategory(subcategory_id=subcategory_id, access_token=current_user.id)
+    print(result.status_code)
+    if result.status_code == 200:
+        return redirect(url_for('admin_cms_all_categories'))
+
+
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@requires_any_permission("manage_user")
+def admin_edit_cms_post(post_id):
+    form = forms.AddPost()
+    post = api_calls.get_post(post_id=post_id)
+
+    # Fetch categories and format them for the form choices
+    try:
+        categories = api_calls.get_cms_all_categories(access_token=current_user.id)
+        category_choices = [(category['id'], category['category']) for category in categories]
+        if not category_choices:
+            category_choices = [('', 'Select Category')]
+    except Exception as e:
+        print(f"Error fetching categories: {e}")
+        category_choices = [('', 'Select Category')]
+    form.category.choices = category_choices
+
+    # If a category is selected, fetch and set subcategories
+    if form.category.data:
+        try:
+            subcategories = api_calls.get_subcategories_by_category(form.category.data)
+            subcategory_choices = [(subcategory['id'], subcategory['subcategory']) for subcategory in subcategories]
+            if not subcategory_choices:
+                subcategory_choices = [('', 'Select Subcategory')]
+        except Exception as e:
+            print(f"Error fetching subcategories: {e}")
+            subcategory_choices = [('', 'Select Subcategory')]
+        form.subcategory.choices = subcategory_choices
+
+
+    if form.validate_on_submit():
+
+        title = form.title.data
+        content = form.content.data
+        category = form.category.data
+        subcategory = form.subcategory.data
+
+        if form.publish.data:
+            try:
+                result = api_calls.admin_update_post(
+                    post_id=post_id,
+                    title=title,
+                    content=content,
+                    category_id=category,
+                    subcategory_id=subcategory,
+                    status='published',
+                    access_token=current_user.id
+                )
+                return redirect(url_for('admin_all_cms_post'))
+
+                # if result:
+                #     print("success")
+                #     try:
+                #         dateiso = result["created_at"]
+                #         post_slug = result["slug"]
+                #         date = dateiso.split('T')[0]
+                #         post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
+                #         print(post_url)
+                #         send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data,
+                #                                                body=form.content.data, post_url=post_url)
+                #     except Exception as e:
+                #         raise 'Problem sending newsletter' + e
+                #     print("Post updated successfully")
+                #     if current_user.role == 'user':
+                #         print("redirecting")
+                #         return redirect(url_for('user_all_post'))
+                #     else:
+                #         return redirect(url_for('all_post'))
+                # else:
+                #     print("Failed to update post")
+            except Exception as e:
+                print(f"Error updating post: {e}")
+        elif form.preview.data:
+            return redirect(url_for('preview_post',
+                                    title=form.title.data,
+                                    content=form.content.data,
+                                    category=form.category.data,
+                                    subcategory=form.subcategory.data,
+                                    ))
+    form.title.data = post['title']
+    form.category.data = post['category_id']
+    form.subcategory.data = post['subcategory_id']
+    form.content.data = post['content']
+
+    return render_template('edit_post_form.html', ROOT_URL=ROOT_URL, form=form, post_id=post_id)
+
+
+@app.route("/posts/<slug>", methods=['GET', 'POST'])
+def read_post(slug):
+    response = api_calls.get_post_by_slug(slug)
+    return render_template('read_cms_post.html', post=response)
 
 
 #####################################################################################################################################

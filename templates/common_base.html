@@ -6,17 +6,34 @@
 
     <title>{% block title %}HireGen|AI Recruitment Software{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+      <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    };
+  </script>
+
     <style>
-                * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        body {
+        html, body {
+            height: 100%;
             font-family: 'Montserrat', sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f9f9fc;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        #wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         a {
             text-decoration: none;
@@ -26,7 +43,6 @@
         a:hover {
             color: #1A73E8;
         }
-        /* Header */
         header {
             display: flex;
             align-items: center;
@@ -125,227 +141,6 @@
                 margin: 0;
             }
         }
-        /* Hero Section */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 100px 80px;
-            background-color: #fff;
-        }
-        .hero-text {
-            max-width: 50%;
-        }
-        .hero h2 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-        }
-        .hero button {
-            background-color: #1A73E8;
-            color: white;
-            padding: 15px 40px;
-            font-size: 18px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .hero button:hover {
-            background-color: #1664c0;
-            transform: translateY(-3px);
-        }
-        .hero video {
-            max-width: 45%;
-            border-radius: 15px;
-        }
-        @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-                padding: 40px 20px;
-            }
-            .hero video {
-                max-width: 100%;
-                margin-top: 20px;
-            }
-            .hero h2 {
-                font-size: 32px;
-            }
-            .hero p {
-                font-size: 16px;
-            }
-            .hero button {
-                font-size: 16px;
-                padding: 10px 30px;
-            }
-        }
-        /* Features Section */
-        .features {
-            padding: 60px 80px;
-            background-color: #fff;
-        }
-        .features h3 {
-            text-align: center;
-            font-size: 34px;
-            font-weight: 700;
-            margin-bottom: 40px;
-            color: #333;
-        }
-        .feature {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 40px;
-            border-radius: 15px;
-            padding: 20px;
-            background-color: #f9f9fc;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        .feature-icon {
-            font-size: 50px;
-            margin-right: 20px;
-            color: #1A73E8;
-        }
-        .feature-content h4 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .feature-content p {
-            font-size: 18px;
-            color: #555;
-        }
-        @media (max-width: 768px) {
-            .features {
-                padding: 40px 20px;
-            }
-            .features h3 {
-                font-size: 28px;
-            }
-            .feature {
-                flex-direction: column;
-                padding: 20px;
-            }
-            .feature-icon {
-                font-size: 40px;
-                margin-bottom: 10px;
-            }
-            .feature-content h4 {
-                font-size: 20px;
-            }
-            .feature-content p {
-                font-size: 16px;
-            }
-        }
-        /* FAQs Section */
-        .faqs {
-            padding: 60px 80px;
-            background-color: #f1f3f8;
-        }
-        .faqs h3 {
-            font-size: 34px;
-            font-weight: 700;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        .faq-item {
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 15px;
-        }
-        .faq-item h4 {
-            font-size: 22px;
-            font-weight: 600;
-            cursor: pointer;
-            color: #333;
-        }
-        .faq-item p {
-            display: none;
-            font-size: 18px;
-            margin-top: 10px;
-            color: #555;
-        }
-        .faq-item.active p {
-            display: block;
-        }
-        @media (max-width: 768px) {
-            .faqs {
-                padding: 40px 20px;
-            }
-            .faqs h3 {
-                font-size: 28px;
-            }
-            .faq-item h4 {
-                font-size: 20px;
-            }
-            .faq-item p {
-                font-size: 16px;
-            }
-        }
-        /* Contact Form */
-        .contact-form {
-            padding: 60px 80px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            margin: 40px 80px;
-        }
-        .contact-form h3 {
-            font-size: 34px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .contact-form form {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .contact-form input,
-        .contact-form textarea {
-            margin-bottom: 15px;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .contact-form button {
-            background-color: #1A73E8;
-            color: white;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .contact-form button:hover {
-            background-color: #1664c0;
-            transform: translateY(-3px);
-        }
-        @media (max-width: 768px) {
-            .contact-form {
-                padding: 40px 20px;
-                margin: 20px 20px;
-            }
-            .contact-form h3 {
-                font-size: 28px;
-            }
-            .contact-form input,
-            .contact-form textarea {
-                font-size: 14px;
-            }
-            .contact-form button {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-        /* Footer */
         footer {
             padding: 40px 80px;
             background-color: #ffffff;
@@ -363,51 +158,52 @@
     </style>
     {% block styles %}
     {% endblock %}
-
 </head>
 <body>
-    <header>
-        <h1>HireGen</h1>
-        <nav id="nav-menu" class="nav-menu" style="display:flex !important;">
-            <a href="#features">Features</a>
-            <a href="{{ url_for('user_view_plan') }}">Pricing</a>
-            <a href="#contact">Contact</a>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">JobSeekers</a>
-                <div class="dropdown-content">
-                    <a href="{{url_for('jobseeker_login')}}">Login</a>
-                    <a href="{{url_for('jobseeker_register')}}">Get Started</a>
-                    <a href="{{url_for('jobs_search')}}">Search Jobs</a>
+    <div id="wrapper">
+        <header>
+            <h1>HireGen</h1>
+            <nav id="nav-menu" class="nav-menu" style="display:flex !important;">
+                <a href="#features">Features</a>
+                <a href="{{ url_for('user_view_plan') }}">Pricing</a>
+                <a href="#contact">Contact</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">JobSeekers</a>
+                    <div class="dropdown-content">
+                        <a href="{{url_for('jobseeker_login')}}">Login</a>
+                        <a href="{{url_for('jobseeker_register')}}">Get Started</a>
+                        <a href="{{url_for('jobs_search')}}">Search Jobs</a>
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">AI</a>
-                <div class="dropdown-content">
-                    <a href="{{url_for('chatbot')}}">Chatbot</a>
-                    <a href="{{url_for('resume_parser')}}">Resume Parsing</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">AI</a>
+                    <div class="dropdown-content">
+                        <a href="{{url_for('chatbot')}}">Chatbot</a>
+                        <a href="{{url_for('resume_parser')}}">Resume Parsing</a>
+                    </div>
                 </div>
-            </div>
-            <div class="dropdown">
-                <a href="#" class="dropbtn">Resources</a>
-                <div class="dropdown-content">
-                    <a href="{{url_for('index')}}#">Blog</a>
-                    <a href="{{url_for('index')}}#faqs">FAQ's</a>
-                    <a href="{{url_for('about_us')}}">About Us</a>
-                    <a href="{{url_for('index')}}#">Solutions</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Resources</a>
+                    <div class="dropdown-content">
+                        <a href="{{url_for('admin_all_cms_post')}}#">Blog</a>
+                        <a href="{{url_for('index')}}#faqs">FAQ's</a>
+                        <a href="{{url_for('about_us')}}">About Us</a>
+                        <a href="{{url_for('index')}}#">Solutions</a>
+                    </div>
                 </div>
+                <a href="{{ url_for('login') }}">Login</a>
+                <button onclick="window.location.href='{{ url_for('register') }}'" class="get-started">Try for Free</button>
+            </nav>
+            <div class="burger" onclick="toggleMenu()">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
             </div>
-            <a href="{{ url_for('login') }}">Login</a>
-            <button onclick="window.location.href='{{ url_for('register') }}'" class="get-started">Try for Free</button>
-        </nav>
-        <div class="burger" onclick="toggleMenu()">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-    </header>
+        </header>
 
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
+    </div>
 
     <footer>
         <p>&copy; 2024 HireGen. All rights reserved. | <a href="#features">Features</a> | <a href="#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
@@ -417,49 +213,8 @@
         function toggleMenu() {
             document.getElementById('nav-menu').classList.toggle('active');
         }
-        // JavaScript for FAQs toggle functionality
-        document.querySelectorAll('.faq-item h4').forEach(item => {
-            item.addEventListener('click', () => {
-                item.parentNode.classList.toggle('active');
-            });
-        });
-
-        document.getElementById('contactForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        };
-
-
-        try {
-            const response = await fetch('/homepage_contact_form_submission', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-
-             console.log("after try");
-            if (response.ok) {
-                document.getElementById('contactForm').style.display = 'none';
-                document.getElementById('thankYouMessage').style.display = 'block';
-            } else {
-                alert('There was an error submitting your message. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('There was an error submitting your message. Please try again.');
-        }
-    });
-
     </script>
     {% block scripts %}
     {% endblock %}
-
-
 </body>
 </html>

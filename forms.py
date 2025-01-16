@@ -272,9 +272,10 @@ class AddPost(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     category = SelectField('Category', validators=[DataRequired()], choices=[('', 'Select a category')])
     subcategory = SelectField('Subcategory', validators=[DataRequired()], choices=[('', 'Select a subcategory')])
-    content = TextAreaField('Content', validators=[DataRequired()], render_kw={'rows': 30, 'cols': 30, 'id': 'content',
+    content = TextAreaField('Content', render_kw={'rows': 30, 'cols': 30, 'id': 'content',
                                                                                'placeholder': 'Write details about the post.'})
-    tags = StringField('Tags', validators=[DataRequired()])
+    publish = SubmitField('Publish')
+    save_draft = SubmitField('Save Draft')
 
 
 class AddJobOpening(FlaskForm):

@@ -1,0 +1,149 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}User's all posts{% endblock %}
+
+{% block content %}
+<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Posts</h1>
+                    <p class="mt-1 text-sm text-gray-700">Create, edit, and manage the posts on your site. <a class="text-indigo-600 hover:underline" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>.</p>
+                </div>
+                <div>
+                    <a href="{{ url_for('add_cms_post') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-500 focus:outline-none">
+                        Add Post
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:hidden mb-6">
+                <select id="mobileTabs" aria-label="Select a tab" class="w-full rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600">
+                    <option value="published-posts">Published ({{ result | selectattr('status', 'equalto', 'published') | list | length }})</option>
+                    <option value="draft-posts">Drafts ({{ result | selectattr('status', 'equalto', 'draft') | list | length }})</option>
+                </select>
+            </div>
+            <div class="hidden sm:block">
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex space-x-8" id="postTabs">
+                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-indigo-500 px-1 py-4 text-sm font-medium text-indigo-600" id="published-tab">Published ({{ result | selectattr('status', 'equalto', 'published') | list | length }})</a>
+                        <a href="#draft-posts" class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700" id="drafts-tab">Drafts ({{ result | selectattr('status', 'equalto', 'draft') | list | length }})</a>
+                    </nav>
+                </div>
+            </div>
+
+            <div>
+                <div id="published-posts" class="block">
+                    <table id="userpostTable" class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Views</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            {% for data in result %}
+                            {% if data.status == 'published' %}
+                            <tr>
+                                <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.author_name }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.category.category }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{% for tag in data.tags %}{{ tag.tag }}{% endfor %}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.post_views }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+                                <td class="px-4 py-2 text-sm">
+                                    <a href="#" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
+                                    <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.id }}" class="text-red-600 hover:text-red-800">Delete</button>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div id="draft-posts" class="hidden">
+                    <table id="draftpostTable" class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            {% for data in result %}
+                            {% if data.status == 'draft' %}
+                            <tr>
+                                <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.author_name }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.category.category }}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{% for tag in data.tags %}{{ tag.tag }}{% endfor %}</td>
+                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+                                <td class="px-4 py-2 text-sm">
+                                    <a href="#" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
+                                    <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.id }}" class="text-red-600 hover:text-red-800">Delete</button>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const publishedTab = document.getElementById('published-tab');
+        const draftsTab = document.getElementById('drafts-tab');
+        const publishedTable = document.getElementById('published-posts');
+        const draftsTable = document.getElementById('draft-posts');
+        const mobileTabs = document.getElementById('mobileTabs');
+
+        // Desktop tab switching
+        publishedTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            publishedTab.classList.add('text-indigo-600', 'border-indigo-500');
+            draftsTab.classList.remove('text-indigo-600', 'border-indigo-500');
+            publishedTable.classList.remove('hidden');
+            draftsTable.classList.add('hidden');
+        });
+
+        draftsTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            draftsTab.classList.add('text-indigo-600', 'border-indigo-500');
+            publishedTab.classList.remove('text-indigo-600', 'border-indigo-500');
+            draftsTable.classList.remove('hidden');
+            publishedTable.classList.add('hidden');
+        });
+
+        // Mobile dropdown switching
+        mobileTabs.addEventListener('change', (e) => {
+            const selectedValue = e.target.value;
+            if (selectedValue === 'published-posts') {
+                publishedTab.click();
+            } else if (selectedValue === 'draft-posts') {
+                draftsTab.click();
+            }
+        });
+
+        new DataTable('#userpostTable');
+        new DataTable('#draftpostTable');
+    });
+</script>
+{% endblock %}

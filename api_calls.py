@@ -1287,7 +1287,7 @@ def add_category(category, access_token):
     }
 
     try:
-        response = requests.post(constants.BASE_URL + f'/user/create_category', json=params, headers=headers)
+        response = requests.post(constants.BASE_URL + f'/create_category', json=params, headers=headers)
         print(response.text)
         return response
     except requests.exceptions.HTTPError as errh:
@@ -1321,10 +1321,10 @@ def update_category(category_id, category, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_user_all_categories(access_token):
+def get_cms_all_categories(access_token):
     headers = {'Authorization': f'Bearer {access_token}'}
     try:
-        response = requests.get(constants.BASE_URL + '/user-all-categories', headers=headers)
+        response = requests.get(constants.BASE_URL + '/cms-all-categories', headers=headers)
         print("Response Status Code:", response.status_code)  # Debug: Print status code
         if response.status_code == 200:
             result = response.json()
@@ -1342,19 +1342,6 @@ def get_user_all_categories(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def user_delete_category(category_id, access_token):
-    headers = {'Authorization': f'Bearer {access_token}'}
-    try:
-        response = requests.delete(constants.BASE_URL + f'/category/delete-category/{category_id}', headers=headers)
-        return response
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
-    except requests.exceptions.RequestException as err:
-        print(f"An unexpected error occurred: {err}")
 
 
 def add_subcategory(subcategory, category_id, access_token):
@@ -1400,10 +1387,10 @@ def update_subcategory(subcategory_id, subcategory, category_id, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def user_delete_subcategory(subcategory_id, access_token):
+def cms_delete_subcategory(subcategory_id, access_token):
     headers = {'Authorization': f'Bearer {access_token}'}
     try:
-        response = requests.delete(constants.BASE_URL + f'/user/delete_subcategory/{subcategory_id}', headers=headers)
+        response = requests.delete(constants.BASE_URL + f'/cms/delete_subcategory/{subcategory_id}', headers=headers)
         return response
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
@@ -3174,3 +3161,321 @@ def homepage_contact_form_submission(name, email, message):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+
+def get_all_posts():
+    try:
+        response = requests.get(constants.BASE_URL + '/all-posts/')
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+        else:
+            print("API Error:", response.text)  # Debug: Print error message from API
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_admin_all_posts(access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + f'/admin-all-posts', headers=headers)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+
+        else:
+            print("API Error:", response.text)
+            abort(response.status_code)
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def admin_delete_post(post_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.delete(constants.BASE_URL + f'/posts/delete-post/{post_id}', headers=headers)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def create_post(title, content, category_id, subcategory_id, status, access_token):
+    print('trying to create post')
+    print("2")
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "title": title,
+        "content": content,
+        "category_id": category_id,
+        "subcategory_id": subcategory_id,
+        "status": status
+    }
+    try:
+        response = requests.post(constants.BASE_URL + '/posts/create-post', json=params, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token):
+    print('trying3')
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+          "title": title,
+          "content": content,
+          "category_id": category_id,
+          "subcategory_id": subcategory_id,
+          "status": status,
+        }
+
+    try:
+        response = requests.put(constants.BASE_URL + f'/posts/update-post/{post_id}', json=params, headers=headers)
+        print(response.status_code)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_post(post_id: int):
+    try:
+        response = requests.get(constants.BASE_URL + f'/posts/{post_id}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+
+def get_post_by_slug(slug):
+    try:
+        response = requests.get(constants.BASE_URL + f'/posts/{slug}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+
+def get_subcategories_by_category(category_id):
+    try:
+        response = requests.get(constants.BASE_URL + f'/categories/{category_id}/subcategories/')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+
+def get_all_categories():
+    try:
+        response = requests.get(constants.BASE_URL + '/categories/')
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+        else:
+            print("API Error:", response.text)  # Debug: Print error message from API
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def add_category(category, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "category": category,
+    }
+
+    try:
+        response = requests.post(constants.BASE_URL + f'/create_category', json=params, headers=headers)
+        print(response.text)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def update_category(category_id, category, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "category": category,
+    }
+
+    try:
+        response = requests.put(constants.BASE_URL + f'/category/update-category/{category_id}', json=params,
+                                headers=headers)
+        print(response.text)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_cms_all_categories(access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + '/cms-all-categories', headers=headers)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+        else:
+            print("API Error:", response.text)  # Debug: Print error message from API
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def cms_delete_category(category_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.delete(constants.BASE_URL + f'/category/delete-category/{category_id}', headers=headers)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def add_subcategory(subcategory, category_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "subcategory": subcategory,
+        "category_id": category_id
+    }
+
+    try:
+        response = requests.post(constants.BASE_URL + '/cms/create_subcategory', json=params, headers=headers)
+        print(response.text)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def update_subcategory(subcategory_id, subcategory, category_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    params = {
+        "subcategory": subcategory,
+        "category_id": category_id
+    }
+
+    try:
+        response = requests.put(constants.BASE_URL + f'/cms/update_subcategory/{subcategory_id}', json=params,
+                                headers=headers)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        return response.json()  # Return the response as JSON
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def delete_subcategory(subcategory_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.delete(constants.BASE_URL + f'/cms/delete_subcategory/{subcategory_id}', headers=headers)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def get_category_name(category_id):
+    try:
+        response = requests.delete(constants.BASE_URL + f'/category/{category_id}')
+        return response.json
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
