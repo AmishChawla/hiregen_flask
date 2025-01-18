@@ -4012,6 +4012,25 @@ def all_cms_post():
 
     return render_template('all_posts.html', result=result)
 
+@app.route('/posts/category/<category>')
+def cms_posts_by_category(category):
+    result = api_calls.get_post_by_category(category)
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('admin/admin_cms/posts_by_category.html', category=category,result=result)
+
+@app.route('/posts/subcategory/<subcategory>')
+def cms_posts_by_subcategory(subcategory):
+    result = api_calls.get_post_by_subcategory(subcategory)
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('admin/admin_cms/posts_by_subcategory.html', subcategory=subcategory,result=result)
+
+
 
 @app.route('/admin/cms/posts')
 @requires_any_permission("manage_user")
@@ -4034,7 +4053,7 @@ def admin_delete_cms_post(post_id):
 
     if result.status_code == 200:
         flash('Post deleted successfully', category='info')
-        return redirect(url_for('all_post'))
+        return redirect(url_for('admin_all_cms_post'))
     else:
         abort(response.status_code)
 
@@ -4361,9 +4380,9 @@ def admin_cms_delete_subcategory(subcategory_id):
         return redirect(url_for('admin_cms_all_categories'))
 
 
-@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@app.route('/admin/cms/update-post/<post_id>', methods=['GET', 'POST'])
 @requires_any_permission("manage_user")
-def admin_edit_cms_post(post_id):
+def admin_update_cms_post(post_id):
     form = forms.AddPost()
     post = api_calls.get_post(post_id=post_id)
 
@@ -4433,19 +4452,27 @@ def admin_edit_cms_post(post_id):
                 #     print("Failed to update post")
             except Exception as e:
                 print(f"Error updating post: {e}")
-        elif form.preview.data:
-            return redirect(url_for('preview_post',
-                                    title=form.title.data,
-                                    content=form.content.data,
-                                    category=form.category.data,
-                                    subcategory=form.subcategory.data,
-                                    ))
+        if form.save_draft.data:
+            try:
+                result = api_calls.admin_update_post(
+                    post_id=post_id,
+                    title=title,
+                    content=content,
+                    category_id=category,
+                    subcategory_id=subcategory,
+                    status='draft',
+                    access_token=current_user.id
+                )
+                return redirect(url_for('admin_all_cms_post'))
+            except Exception as e:
+                print(f"Error updating post: {e}")
+
     form.title.data = post['title']
     form.category.data = post['category_id']
     form.subcategory.data = post['subcategory_id']
     form.content.data = post['content']
 
-    return render_template('edit_post_form.html', ROOT_URL=ROOT_URL, form=form, post_id=post_id)
+    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id)
 
 
 @app.route("/posts/<slug>", methods=['GET', 'POST'])

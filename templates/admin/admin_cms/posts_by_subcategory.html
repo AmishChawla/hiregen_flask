@@ -1,12 +1,12 @@
 {% extends 'common_base.html' %}
 
-{% block title %}From the Blog{% endblock %}
+{% block title %}{{subcategory}}{% endblock %}
 
 {% block content %}
 <div class="bg-white py-24 sm:py-32">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-2xl lg:mx-0">
-      <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">From the blog</h2>
+      <h2 class="text-pretty text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{subcategory}}</h2>
       <p class="mt-2 text-lg/8 text-gray-600">Learn how to grow your business with our expert advice.</p>
     </div>
 
@@ -15,8 +15,8 @@
       <article class="flex max-w-xl flex-col items-start justify-between">
         <div class="flex items-center gap-x-4 text-xs">
           <time datetime="{{ post.created_at}}" class="text-gray-500">{{ post.created_at }}</time>
-          <a href="{{url_for('cms_posts_by_category', category=post.category_name)}}" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ post.category_name }}</a>
-          <a href="{{url_for('cms_posts_by_subcategory', subcategory=post.subcategory_name)}}" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ post.subcategory_name }}</a>
+          <a href="url_for('cms_posts_by_category', category=post.category_name)" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ post.category_name }}</a>
+          <a href="url_for('cms_posts_by_subcategory', subcategory=post.subcategory_name)" class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ post.subcategory_name }}</a>
 
         </div>
         <div class="group relative">

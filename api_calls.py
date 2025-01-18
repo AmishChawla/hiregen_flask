@@ -3274,7 +3274,7 @@ def admin_update_post(post_id, title, content, category_id, subcategory_id, stat
 
 def get_post(post_id: int):
     try:
-        response = requests.get(constants.BASE_URL + f'/posts/{post_id}')
+        response = requests.get(constants.BASE_URL + f'/posts/get-post/{post_id}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -3479,3 +3479,26 @@ def get_category_name(category_id):
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
 
+def get_post_by_category(category):
+    try:
+        response = requests.get(constants.BASE_URL + f'/posts/by-category-name/{category}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+def get_post_by_subcategory(subcategory):
+    try:
+        response = requests.get(constants.BASE_URL + f'/posts/by-subcategory-name/{subcategory}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
