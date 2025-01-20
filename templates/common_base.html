@@ -12,6 +12,15 @@
       darkMode: 'class',
     };
   </script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9FZSTMCT2D"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9FZSTMCT2D');
+    </script>
+    <!-- End Google Analytics -->
 
     <style>
         * {
@@ -164,9 +173,9 @@
         <header>
             <h1>HireGen</h1>
             <nav id="nav-menu" class="nav-menu" style="display:flex !important;">
-                <a href="#features">Features</a>
+                <a href="{{url_for('index')}}#features">Features</a>
                 <a href="{{ url_for('user_view_plan') }}">Pricing</a>
-                <a href="#contact">Contact</a>
+                <a href="{{url_for('index')}}#contact">Contact</a>
                 <div class="dropdown">
                     <a href="#" class="dropbtn">JobSeekers</a>
                     <div class="dropdown-content">
@@ -206,7 +215,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 HireGen. All rights reserved. | <a href="#features">Features</a> | <a href="#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
+        <p>&copy; 2024 HireGen. All rights reserved. | <a href="{{url_for('index')}}#features">Features</a> | <a href="{{url_for('index')}}#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
     </footer>
 
     <script>

@@ -1093,7 +1093,7 @@ def user_all_post():
         result = []  # Set result to an empty list
 
     return render_template('user_all_post.html', result=result)
-
+#['applied', 'shortlisted', 'assessment', 'interview', 'rejected', 'selected']
 @app.route('/user/job/applicants/<job_id>')
 @requires_any_permission("manage_posts")
 @login_required
@@ -4477,7 +4477,11 @@ def admin_update_cms_post(post_id):
 
 @app.route("/posts/<slug>", methods=['GET', 'POST'])
 def read_post(slug):
+    import html
     response = api_calls.get_post_by_slug(slug)
+
+    response["content"] = html.unescape(response["content"])
+    print(response["content"])
     return render_template('read_cms_post.html', post=response)
 
 
