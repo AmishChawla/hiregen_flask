@@ -1105,6 +1105,7 @@ def job_applicants(job_id):
     if statuses is None:
         return render_template('cms/job_openings/job_applicants_2.html', result=result)
 
+    print(result)
     return render_template('cms/job_openings/job_applicants_3.html', result=result, statuses=statuses)
 
 
@@ -1458,6 +1459,36 @@ def add_post():
         return redirect(url_for('user_view_plan'))
     else:
         return render_template('add_post.html', form=form, result=media_result, forms_result=forms_result, root_url=root_url)
+
+
+@app.route('/generate-ai-content', methods=['POST'])
+def generate_ai_content():
+    data = request.json
+    field = data.get('field', '')
+    position = data.get('prompt', '')
+
+    if field == 'job_description' and position:
+        # Use the prompt to generate AI content
+        completion = openai.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"Generate Job Description for postion {position}",
+                },
+            ],
+            temperature=0.7,
+            max_tokens=256,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+        )
+        bot_response = completion.choices[0].message.content
+
+        generated_content = bot_response
+        return jsonify(success=True, content=generated_content)
+    return jsonify(success=False, error="Invalid request")
+
 
 @app.route('/posts/preview-post', methods=['GET', 'POST'])
 @requires_any_permission("manage_posts")

@@ -22,7 +22,7 @@
         background-color: #edf2f7;
     }
     .kanban-column {
-        min-width: 16rem;
+        min-width: 20rem;
     }
     .drawer {
         position: fixed;
@@ -74,28 +74,45 @@
     <!-- Kanban View -->
     <div id="kanbanView" class="flex space-x-4 overflow-x-auto">
         {% for status in statuses %}
-        <div class="kanban-column bg-white rounded-lg shadow-md w-64 min-h-[70vh] p-4">
+        <div class="kanban-column bg-white rounded-lg shadow-md w-80 min-h-[70vh] p-4">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">{{ status.capitalize() }}</h3>
-            <ul class="space-y-4 draggable-list" data-status="{{ status }}">
+            <ul class="space-y-4 draggable-list w-72" data-status="{{ status }}">
                 {% if result | selectattr('application_status', 'equalto', status) | list | length == 0 %}
                 <li class="bg-gray-100 p-4 rounded-lg text-center text-gray-400 draggable-placeholder">No Applicants</li>
                 {% endif %}
                 {% for data in result %}
                 {% if data.application_status == status %}
-                <li class="bg-gray-100 p-4 rounded-lg shadow draggable-item flex justify-between items-center" data-id="{{ data.application_id }}" data-status="{{ data.application_status }}">
-                    <div class="flex items-center space-x-4">
-                        <img src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/default.png') }}" class="w-10 h-10 rounded-full flex-shrink-0">
-                        <div class="flex-1 min-w-0">
-                            <p class="text-gray-700 font-medium truncate">{{ data.applicant_name }}</p>
-                            <p class="text-sm text-gray-500 truncate">{{ data.applicant_email }}</p>
-                        </div>
-                    </div>
-                    <button onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.application_status }}', '{{ data.resume }}')" class="text-gray-500 flex-shrink-0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </button>
-                </li>
+                <li class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow draggable-item flex justify-between items-center space-x-4" data-id="{{ data.application_id }}" data-status="{{ data.application_status }}">
+    <!-- Left Section: Profile Picture and Info -->
+    <div class="flex items-center space-x-1 overflow-hidden">
+        <!-- Profile Picture -->
+        <img src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/man.png') }}" alt="{{ data.applicant_name }}'s profile picture" class="w-12 h-12 rounded-full border border-gray-200 flex-shrink-0">
+
+        <!-- Applicant Info -->
+        <div class="flex-1 min-w-0">
+            <p class="text-gray-800 font-semibold text-sm truncate" title="{{ data.applicant_name }}">{{ data.applicant_name }}</p>
+            <p class="text-gray-500 text-xs truncate" title="{{ data.applicant_email }}">{{ data.applicant_email }}</p>
+        </div>
+    </div>
+
+    <!-- Right Section: Similarity Score -->
+    <div class="flex items-center space-x-1">
+        <!-- Similarity Score -->
+        <div class="bg-white text-gray-600 text-sm font-medium p-1 rounded-full text-center flex">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mt-1 mr-1 size-5 text-yellow-500">
+  <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
+</svg>
+            <p class="text-lg">{{ data.similarity_score }}%</p>
+        </div>
+
+        <!-- Action Button -->
+        <button onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.application_status }}', '{{ data.resume }}', '{{ data.similarity_score }}')" class="text-gray-500 hover:text-gray-800 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+    </div>
+</li>
                 {% endif %}
                 {% endfor %}
             </ul>
@@ -161,7 +178,7 @@
 </div>
 
 <script>
-    function openDrawer(id, name, email, date, status, resume) {
+    function openDrawer(id, name, email, date, status, resume, similarityScore) {
         const drawer = document.getElementById('applicantDrawer');
         const content = document.getElementById('drawerContent');
         const title = document.getElementById('drawerTitle');
@@ -176,6 +193,7 @@
             <p><strong>Applied On:</strong> ${date}</p>
             <p><strong>Status:</strong> ${currentStatus}</p>
             <p><strong>Resume:</strong> <a href="${resume}" class="text-blue-600" target="_blank">View Resume</a></p>
+            <p><strong>Score Generated by AI</strong> ${similarityScore}%</p>
         `;
 
         drawer.classList.add('open');
