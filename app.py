@@ -23,6 +23,8 @@ from flask_wtf.csrf import CSRFProtect
 import openai
 from functools import wraps
 from flask_cors import CORS
+import phonenumbers
+from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
 
 
 app = Flask(__name__)
@@ -3074,6 +3076,45 @@ def jobseeker_login():
 
     return render_template('jobseeker/jobseeker_login.html', form=form)
 
+@app.route("/get-country-codes", methods=["GET"])
+def get_country_codes():
+    from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
+
+    country_list = []
+    for code, regions in COUNTRY_CODE_TO_REGION_CODE.items():
+        # Skip the special non-geographic code "001"
+        if str(code) == "001":
+            continue
+        for region in regions:
+            country_list.append({
+                "name": region,
+                "dial_code": f"+{code}"
+            })
+
+    # Sort countries alphabetically by name
+    sorted_countries = sorted(country_list, key=lambda x: x["name"])
+    return jsonify(sorted_countries)
+
+
+@app.route("/validate-phone", methods=["POST"])
+def validate_phone():
+    import phonenumbers
+    data = request.json
+    phone = data.get("phone")
+    country_code = data.get("country_code")
+
+    if not phone or not country_code:
+        return jsonify({"valid": False, "error": "Phone number and country code are required"}), 400
+
+    try:
+        parsed_number = phonenumbers.parse(phone, country_code)
+        if phonenumbers.is_valid_number(parsed_number):
+            return jsonify({"valid": True})
+        else:
+            return jsonify({"valid": False, "error": "Invalid phone number"}), 400
+    except phonenumbers.NumberParseException:
+        return jsonify({"valid": False, "error": "Invalid phone number"}), 400
+
 
 @app.route('/jobseeker/register', methods=['GET', 'POST'])
 def jobseeker_register():
@@ -3121,7 +3162,7 @@ def jobseeker_register():
                     'profile_picture': profile_picture
                 }
             flash('Registration Successful', category='info')
-            return redirect(url_for('jobseeker_dashboard'))
+            return redirect(url_for('jobseeker_profile'))
         elif response.status_code == 400:
             result = response.json()
             message = result["detail"]

@@ -15,7 +15,13 @@
   });
     </script>
     <!-- End Google Analytics -->
-
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
+<!-- End Google Tag Manager -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* General Styles */
@@ -157,8 +163,27 @@
             text-decoration: underline;
         }
     </style>
+    <style>
+    #country_code {
+        width: 120px;
+        font-size: 14px;
+        border-radius: 8px;
+        background: #f9f9fc;
+        color: #333;
+    }
+    #country_code:focus {
+        outline: none;
+        border: 1px solid #1A73E8;
+        background: #fff;
+    }
+</style>
+
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     <header>
         <h1><a href="{{url_for('index')}}">HireGen</a></h1>
         <nav class="nav-menu">
@@ -203,10 +228,14 @@
                     <label for="email" class="form-label">Email</label>
                     {{ form.email(class="form-control", placeholder="Email", required=True) }}
                 </div>
-                <div class="form-group">
-                    <label for="phone_number" class="form-label">Mobile</label>
-                    {{ form.phone_number(class="form-control", placeholder="Mobile", required=True) }}
-                </div>
+<div class="form-group">
+    <label for="phone_number" class="form-label">Mobile</label>
+    <div style="display: flex; align-items: center; gap: 10px;">
+        {{ form.country_code(class="form-control", style="padding: 10px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9fc; font-size: 16px;") }}
+        {{ form.phone_number(class="form-control", placeholder="123-456-7890", required=True) }}
+    </div>
+    <small id="error_message" style="color: red; display: none;">Invalid phone number</small>
+</div>
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
                     {{ form.password(class="form-control", placeholder="Password", required=True) }}
@@ -229,4 +258,37 @@
         <p>&copy; 2024 HireGen. All rights reserved. | <a href="{{url_for('index')}}#features">Features</a> | <a href="{{url_for('index')}}#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
     </footer>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Fetch country codes and populate the dropdown
+        $.getJSON("/get-country-codes", function (data) {
+            const countryCodeDropdown = $("#country_code");
+            data.forEach((country) => {
+                const option = `<option value="${country.name}">${country.name}</option>`;
+                countryCodeDropdown.append(option);
+            });
+        });
+
+        // Validate phone number on blur
+        $("#phone_number").on("blur", function () {
+            const phoneNumber = $(this).val();
+            const countryCode = $("#country_code").val();
+            $.ajax({
+                url: "/validate-phone",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ phone: phoneNumber, country_code: countryCode }),
+                success: function () {
+                    $("#error_message").hide();
+                },
+                error: function () {
+                    $("#error_message").text("Invalid phone number").show();
+                },
+            });
+        });
+    });
+</script>
+
 </html>

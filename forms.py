@@ -1,4 +1,5 @@
 import datetime
+import phonenumbers
 
 from wtforms import MultipleFileField, StringField, SelectMultipleField, IntegerField, PasswordField, SubmitField, DateField, \
     HiddenField, validators, SelectField, BooleanField, \
@@ -52,7 +53,8 @@ class RegisterForm(FlaskForm):
 class JobseekerRegisterForm(FlaskForm):
     firstname = StringField('First Name')
     lastname = StringField('Last Name')
-    phone_number = StringField('Mobile')
+    country_code = SelectField('Country Code', choices=[], validators=[validators.DataRequired()])
+    phone_number = StringField('Mobile', validators=[validators.DataRequired()])
     email = StringField('Email', validators=[validators.Email(), validators.DataRequired()])
     password = PasswordField('Password', validators=[
         validators.DataRequired(),
@@ -66,6 +68,34 @@ class JobseekerRegisterForm(FlaskForm):
         validators.EqualTo('password', message='Passwords must match.')
     ])
     submit = SubmitField('Register')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Populate the country_code dropdown dynamically
+        country_list = []
+        from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
+        for code, regions in COUNTRY_CODE_TO_REGION_CODE.items():
+            if str(code) == "001":  # Exclude non-geographic codes
+                continue
+            for region in regions:
+                country_list.append((region,region))
+        # Sort and assign choices to the SelectField
+        self.country_code.choices = sorted(country_list, key=lambda x: x[1])
+
+    # Custom validator for phone_number
+    def validate_phone_number(self, field):
+        try:
+            country_code = self.country_code.data
+            if not country_code:
+                raise ValidationError("Country code is required.")
+
+            # Parse and validate the phone number
+            parsed_number = phonenumbers.parse(field.data, country_code)
+            if not phonenumbers.is_valid_number(parsed_number):
+                raise ValidationError("Invalid phone number for the selected country.")
+        except phonenumbers.NumberParseException:
+            raise ValidationError("Invalid phone number format.")
 
 
 class AdminRegisterForm(FlaskForm):
