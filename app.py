@@ -380,13 +380,9 @@ def user_dashboard():
                      "manage_subscription_plans", "order_history")
 @login_required
 def admin_dashboard():
-    response = api_calls.get_all_users(current_user.id)
+    stats = api_calls.get_admin_stats_for_dashboard(current_user.id)
 
-    if response.status_code == 200:
-        users = response.json()
-    else: abort(response.status_code)
-
-    return render_template('admin_dashboard.html', users=users)
+    return render_template('admin_dashboard.html', stats=stats)
 
 
 @app.route("/admin/settings")
@@ -4102,6 +4098,16 @@ def cms_posts_by_subcategory(subcategory):
 
     return render_template('admin/admin_cms/posts_by_subcategory.html', subcategory=subcategory,result=result)
 
+@app.route('/posts/tag/<tag>')
+def cms_posts_by_tag(tag):
+    result = api_calls.get_post_by_tag(tag)
+    if result is None:
+        result = []  # Set result to an empty list
+    print(result)
+
+    return render_template('admin/admin_cms/posts_by_tag.html', tag=tag,result=result)
+
+
 
 
 @app.route('/admin/cms/posts')
@@ -4160,13 +4166,18 @@ def add_cms_post():
 
         # if form.preview.data:
         #     return redirect(url_for('preview_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
+        tags = form.tags.data
+
+        # Split tags into a list
+        tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
 
         post_data = {
             'title': form.title.data,
             'content': form.content.data,
             'category_id': form.category.data,
             'subcategory_id': form.subcategory.data,
-            'access_token': current_user.id
+            'access_token': current_user.id,
+            'tags': tags_list
         }
 
         try:
@@ -4206,116 +4217,6 @@ def add_cms_post():
     #         return redirect(url_for('user_view_plan'))
 
     return render_template('admin/admin_cms/cms_add_post.html', form=form, media_form=media_form,categories=category_choices)
-
-
-# @app.route('/post/preview-post/<username>.<root_url>', methods=['GET', 'POST'])
-# @requires_any_permission("manage_posts")
-# @login_required
-# def preview_post(username, root_url):
-#     date_obj = datetime.utcnow()
-#     formatted_date = date_obj.strftime('%d %B %Y')
-#     form = forms.AddPost()
-#     post_preview_json = request.form.get('postPreview', '{}')
-#     print(f"post_preview_json: {post_preview_json}")  # Debugging line
-#     post_preview = json.loads(post_preview_json)
-#     print(f"post_preview: {post_preview}")
-#
-#     # post_preview = session.get('post_preview', {})
-#     if request.method == 'GET':
-#         # Populate the form with the data from the query parameters
-#         # form.title.data = request.args.get('title')
-#         # form.content.data = request.args.get('content')
-#         # form.category.data = request.args.get('category')
-#         # form.subcategory.data = request.args.get('subcategory')
-#         # form.tags.data = request.args.get('tags')
-#         tags_list = post_preview.get('tags', '').split(",")
-#
-#
-#
-#
-#     if request.method == 'POST':
-#         tags_list = form.tags.data.split(",")
-#         if form.save_draft.data:
-#             try:
-#                 result = api_calls.create_post(
-#                     title=form.title.data,
-#                     content=form.content.data,
-#                     category_id=form.category.data,
-#                     subcategory_id=form.subcategory.data,
-#                     tags=tags_list,
-#                     status='draft',
-#                     access_token=current_user.id
-#                 )
-#
-#                 if result:
-#
-#                     if current_user.role == 'user':
-#                         return redirect(url_for('user_all_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
-#                     else:
-#                         return redirect(url_for('all_post'))
-#                 else:
-#                     flash("Failed to create post", "danger")
-#             except Exception as e:
-#                 flash(f"Error creating post: {e}", "danger")
-#         elif form.publish.data:
-#             try:
-#                 result = api_calls.create_post(
-#                     title=form.title.data,
-#                     content=form.content.data,
-#                     category_id=form.category.data,
-#                     subcategory_id=form.subcategory.data,
-#                     tags=tags_list,
-#                     status='published',
-#                     access_token=current_user.id
-#                 )
-#
-#                 if result:
-#                     session.pop('post_preview', None)
-#                     flash("Post created successfully", "success")
-#                     try:
-#                         dateiso = result["created_at"]
-#                         post_slug = result["slug"]
-#                         date = dateiso.split('T')[0]
-#                         post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
-#                         send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data,
-#                                                                body=form.content.data, post_url=post_url)
-#                     except Exception as e:
-#                         raise 'Problem sending newsletter' + e
-#                     if current_user.role == 'user':
-#                         return redirect(url_for('user_all_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
-#                     else:
-#                         return redirect(url_for('all_post'))
-#                 else:
-#                     flash("Failed to create post", "danger")
-#             except Exception as e:
-#                 flash(f"Error creating post: {e}", "danger")
-#
-#     return render_template('preview_post.html', ROOT_URL=ROOT_URL,  post_preview=post_preview, author_name=current_user.username, form=form, tags=tags_list, created_at=formatted_date)
-
-# @app.route("/posts/preview_post", methods=['GET', 'POST'])
-# @login_required
-# def preview_post():
-#     form = forms.AddPost()
-#     if request.method == 'POST':
-#         # Get form data from request.form since the form is submitted via POST
-#         title = request.form.get('title')
-#         content = request.form.get('content')
-#         category = request.form.get('category')
-#         subcategory = request.form.get('subcategory')
-#         tag = request.form.getlist('tags')
-#
-#         # Populate the form with the data
-#         form.title.data = title
-#         form.content.data = content
-#         form.category.data = category
-#         form.subcategory.data = subcategory
-#         form.tags.data = tag
-#
-#         # Render the preview page with the populated form
-#         return render_template('preview_post.html', title=title, content=content, author_name=current_user.username,
-#                                form=form, category=category, subcategory=subcategory, tag=tag)
-#
-#     return redirect(url_for('add_post'))
 
 
 @app.route("/admin/cms/add-category/", methods=['GET', 'POST'])
@@ -4483,11 +4384,16 @@ def admin_update_cms_post(post_id):
 
 
     if form.validate_on_submit():
+        tags = form.tags.data
+
+        # Split tags into a list
+        tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
 
         title = form.title.data
         content = form.content.data
         category = form.category.data
         subcategory = form.subcategory.data
+
 
         if form.publish.data:
             try:
@@ -4498,7 +4404,8 @@ def admin_update_cms_post(post_id):
                     category_id=category,
                     subcategory_id=subcategory,
                     status='published',
-                    access_token=current_user.id
+                    access_token=current_user.id,
+                    tags=tags_list
                 )
                 return redirect(url_for('admin_all_cms_post'))
 
@@ -4533,16 +4440,23 @@ def admin_update_cms_post(post_id):
                     category_id=category,
                     subcategory_id=subcategory,
                     status='draft',
-                    access_token=current_user.id
+                    access_token=current_user.id,
+                    tags= tags_list
                 )
                 return redirect(url_for('admin_all_cms_post'))
             except Exception as e:
                 print(f"Error updating post: {e}")
+    tags_string = ""
+    for t in post['tags']:
+        tags_string+=t["name"]+","
+
+
 
     form.title.data = post['title']
     form.category.data = post['category_id']
     form.subcategory.data = post['subcategory_id']
     form.content.data = post['content']
+    form.tags.data= tags_string
 
     return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id)
 

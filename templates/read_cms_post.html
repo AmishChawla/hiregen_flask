@@ -218,6 +218,15 @@ article .ql-indent-9 {
           </svg>
           {{ post.created_at }}
         </div>
+        <div class="mt-2 flex items-center text-sm text-blue-500">
+          {% for tag in post.tags %}
+            <a href="{{url_for('cms_posts_by_tag', tag=tag)}}" class="mr-1">
+              <span class=""></span>
+              #{{ tag }}
+            </a>
+          {% endfor %}
+        </div>
+
       </div>
     </div>
   </div>

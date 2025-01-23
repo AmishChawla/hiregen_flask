@@ -3221,7 +3221,7 @@ def admin_delete_post(post_id, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def create_post(title, content, category_id, subcategory_id, status, access_token):
+def create_post(title, content, category_id, subcategory_id, status, access_token, tags):
     print('trying to create post')
     print("2")
     headers = {'Authorization': f'Bearer {access_token}'}
@@ -3230,7 +3230,8 @@ def create_post(title, content, category_id, subcategory_id, status, access_toke
         "content": content,
         "category_id": category_id,
         "subcategory_id": subcategory_id,
-        "status": status
+        "status": status,
+        "tags": tags
     }
     try:
         response = requests.post(constants.BASE_URL + '/posts/create-post', json=params, headers=headers)
@@ -3246,7 +3247,7 @@ def create_post(title, content, category_id, subcategory_id, status, access_toke
         print(f"An unexpected error occurred: {err}")
 
 
-def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token):
+def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token, tags):
     print('trying3')
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
@@ -3255,6 +3256,7 @@ def admin_update_post(post_id, title, content, category_id, subcategory_id, stat
           "category_id": category_id,
           "subcategory_id": subcategory_id,
           "status": status,
+          "tags":tags
         }
 
     try:
@@ -3502,3 +3504,39 @@ def get_post_by_subcategory(subcategory):
         print(f"Error Connecting: {errc}")
     except requests.exceptions.Timeout as errt:
         print(f"Timeout Error: {errt}")
+
+
+def get_post_by_tag(tag):
+    try:
+        response = requests.get(constants.BASE_URL + f'/posts/by-tag/{tag}')
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+
+
+############################################## ADMIN DASHBOARD ###################################################
+
+def get_admin_stats_for_dashboard(access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + '/admin/stats_for_admin', headers=headers)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print(result)
+            return result
+        else:
+            print("API Error:", response.text)  # Debug: Print error message from API
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")

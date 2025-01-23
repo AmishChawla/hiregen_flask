@@ -29,19 +29,26 @@
             </div>
 
             <div class="mb-4 flex space-x-4">
-                <div class="w-1/2">
+                <div class="w-1/3">
                     {{ form.category.label(class="block text-sm font-medium text-gray-900") }}
                     <div class="relative mt-2">
                         {{ form.category(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600", id="category") }}
                     </div>
                 </div>
 
-                <div class="w-1/2">
+                <div class="w-1/3">
                     {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
                     <div class="relative mt-2">
                         {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600", id="subcategory") }}
                     </div>
                 </div>
+                <div class="w-1/3">
+                    {{ form.tags.label(class="block text-sm font-medium text-gray-900") }}
+                    <div class="relative mt-2">
+                        {{ form.tags(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
+                    </div>
+                </div>
+
             </div>
 
             <div class="mb-4">

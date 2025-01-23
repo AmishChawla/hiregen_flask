@@ -1,131 +1,170 @@
-<!-- admin_dashboard.html -->
-
 {% extends 'admin_base.html' %}
 
-{% block title %}Admin Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
 
 {% block content %}
+<div class="py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
 
-<div>
-    <select id="timeRangeSelector">
-        <option value="7">Last 7 days</option>
-        <option value="14">Last 14 days</option>
-        <option value="28">Last 28 days</option>
-        <option value="90">Last 90 days</option>
-    </select>
-</div>
-<div id="chartContainer" style="width: 600px; height: 300px;">
-    <canvas id="userRegistrationsChart"></canvas>
+    <!-- Metric Cards -->
+    <div class="mt-8">
+      <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Employers</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_employers }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Jobseekers</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_jobseekers }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Jobs</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_jobs }}</dd>
+        </div>
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Contact Form Submissions</dt>
+          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_contact_forms }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Jobseekers Over Time</h3>
+        <canvas id="jobseekersChart" class="mt-6"></canvas>
+      </div>
+      <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Employers Over Time</h3>
+        <canvas id="employersChart" class="mt-6"></canvas>
+      </div>
+    </div>
+
+    <!-- Contact Form Submissions Table -->
+    <div class="mt-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+      <div class="px-4 py-5 sm:px-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Contact Form Submissions</h3>
+      </div>
+      <div class="px-4 py-4 sm:px-6 lg:px-8">
+        <div class="overflow-hidden rounded-lg">
+          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-900">
+              <tr>
+                <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Name</th>
+                <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email</th>
+                <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Message</th>
+                <th class="px-6 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+              {% for form in stats.contact_forms_table %}
+              <tr>
+                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.name }}</td>
+                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.email }}</td>
+                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.message }}</td>
+                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.created_at.split('T')[0] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const users = {{ users|tojson }};
-        const ctx = document.getElementById('userRegistrationsChart').getContext('2d');
-        let chart;
+const jobseekersData = {{ stats.jobseekers_graph_data|default({})|tojson }};
+const employersData = {{ stats.employers_graph_data|default({})|tojson }};
 
-        function formatDate(date) {
-            const d = new Date(date);
-            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-            ];
-            const day = d.getDate();
-            const monthIndex = d.getMonth();
-            return day + ' ' + monthNames[monthIndex];
-        }
+// Helper function to convert "YYYY-MM" to "Month Year" format
+const formatMonthYear = (key) => {
+    const [year, month] = key.split("-");
+    const monthNames = [
+        "January", "February", "March", "April", "May",
+        "June", "July", "August", "September", "October",
+        "November", "December"
+    ];
+    return `${monthNames[parseInt(month) - 1]} ${year}`; // Convert month to index and format
+};
 
-        function updateChart(range) {
-            const registrationDates = {};
-            const currentDate = new Date();
-            const cutoffDate = new Date();
-            cutoffDate.setDate(cutoffDate.getDate() - range); // Calculate the cutoff date
+// Format labels for jobseekers and employers
+const jobseekersLabels = Object.keys(jobseekersData).map(formatMonthYear);
+const jobseekersValues = Object.values(jobseekersData);
 
-            // Initialize registration dates with zero counts for each date within the range
-            for (let i = 0; i < range; i++) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                registrationDates[formatDate(date)] = 0;
-            }
+const employersLabels = Object.keys(employersData).map(formatMonthYear);
+const employersValues = Object.values(employersData);
 
-            users.forEach(user => {
-                const registrationDate = new Date(user.created_datetime.split('T')[0]);
-
-                // Check if the registration date is within the selected range
-                if (registrationDate >= cutoffDate && registrationDate <= currentDate) {
-                    const dateString = formatDate(registrationDate);
-                    registrationDates[dateString]++;
-                }
-            });
-
-            const today = new Date();
-            const currentMonth = today.getMonth();
-            const currentYear = today.getFullYear();
-
-            const dates = Object.keys(registrationDates).sort((a, b) => {
-                const [aDay, aMonth] = a.split(' ');
-                const [bDay, bMonth] = b.split(' ');
-
-                // Convert month names to month indices for comparison
-                const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                const aMonthIndex = monthNames.indexOf(aMonth);
-                const bMonthIndex = monthNames.indexOf(bMonth);
-
-                // Compare months and years
-                if (aMonthIndex !== bMonthIndex) {
-                    // If both months are in the current year
-                    if (currentYear === today.getFullYear()) {
-                        // Check if any month is beyond the current month
-                        if (aMonthIndex > currentMonth && bMonthIndex <= currentMonth) return -1;
-                        if (bMonthIndex > currentMonth && aMonthIndex <= currentMonth) return 1;
-                    }
-                    return aMonthIndex - bMonthIndex;
-                } else {
-                    return aDay - bDay;
-                }
-            });
-
-            const userCounts = dates.map(date => registrationDates[date]);
-
-            if (chart) {
-                chart.destroy();
-            }
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        label: 'User Registrations / Day',
-                        data: userCounts,
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        fill: false,
-                        borderColor: 'rgb(75, 192, 192)',
-                        tension: 0.2,
-                        borderWidth: 2
-                    }]
+// Jobseekers chart
+const jobseekersCtx = document.getElementById('jobseekersChart').getContext('2d');
+new Chart(jobseekersCtx, {
+    type: 'line',
+    data: {
+        labels: jobseekersLabels,
+        datasets: [{
+            label: 'Jobseekers',
+            data: jobseekersValues,
+            borderColor: '#60A5FA',
+            borderWidth: 2,
+            fill: false,
+        }],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Months',
                 },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                precision: 0,
-                                stepSize: 1
-                            }
-                        }]
-                    }
-                }
-            });
-        }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Count',
+                },
+            },
+        },
+    },
+});
 
-        document.getElementById('timeRangeSelector').addEventListener('change', function() {
-            const selectedRange = parseInt(this.value);
-            updateChart(selectedRange);
-        });
-
-        // Initially update the chart with the default selected value
-        updateChart(parseInt(document.getElementById('timeRangeSelector').value));
-    });
+// Employers chart
+const employersCtx = document.getElementById('employersChart').getContext('2d');
+new Chart(employersCtx, {
+    type: 'line',
+    data: {
+        labels: employersLabels,
+        datasets: [{
+            label: 'Employers',
+            data: employersValues,
+            borderColor: '#34D399',
+            borderWidth: 2,
+            fill: false,
+        }],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Months',
+                },
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Count',
+                },
+            },
+        },
+    },
+});
 </script>
-
 {% endblock %}

@@ -20,144 +20,106 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:hidden mb-6">
-                <select id="mobileTabs" aria-label="Select a tab" class="w-full rounded-md bg-white py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600">
-                    <option value="published-posts">Published ({{ result | selectattr('status', 'equalto', 'published') | list | length }})</option>
-                    <option value="draft-posts">Drafts ({{ result | selectattr('status', 'equalto', 'draft') | list | length }})</option>
-                </select>
-            </div>
             <div class="hidden sm:block">
                 <div class="border-b border-gray-200 mb-6">
                     <nav class="-mb-px flex space-x-8" id="postTabs">
-                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-indigo-500 px-1 py-4 text-sm font-medium text-indigo-600" id="published-tab">Published ({{ result | selectattr('status', 'equalto', 'published') | list | length }})</a>
-                        <a href="#draft-posts" class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700" id="drafts-tab">Drafts ({{ result | selectattr('status', 'equalto', 'draft') | list | length }})</a>
+                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-indigo-500 px-1 py-4 text-sm font-medium text-indigo-600" id="published-tab">Published</a>
+                        <a href="#draft-posts" class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700" id="drafts-tab">Drafts</a>
                     </nav>
                 </div>
             </div>
 
-            <div>
-                <div id="published-posts" class="block">
-                    <table id="userpostTable" class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Views</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for data in result %}
-                            {% if data.status == 'published' %}
-                            <tr>
-                                <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.author_name }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.category.category }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{% for tag in data.tags %}{{ tag.tag }}{% endfor %}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.post_views }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
-                                <td class="px-4 py-2 text-sm">
-                                    <a href="{{url_for('admin_update_cms_post', post_id=data.id)}}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
-                                    <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.id }}" class="text-red-600 hover:text-red-800">Delete</button>
-                                </td>
-                            </tr>
-                            <div class="relative z-10 hidden" id="deleteModal_{{ data.id }}" role="dialog" aria-modal="true">
-                                                <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
-                                                <div class="fixed inset-0 z-10 overflow-y-auto">
-                                                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                                        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                                                            <div class="sm:flex sm:items-start">
-                                                                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                                    </svg>
-                                                                </div>
-                                                                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                                                    <h3 class="text-base font-semibold text-gray-900" id="modal-title">Delete Post</h3>
-                                                                    <div class="mt-2">
-                                                                        <p class="text-sm text-gray-500">
-                                                                            Are you sure you want to delete this post?
-                                                                            This action cannot be undone.</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                                                                <a href="{{ url_for('admin_delete_cms_post', post_id=data.id) }}" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</a>
-                                                                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" data-bs-dismiss="modal">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+            <div id="published-posts" class="block">
+                <table id="publishedTable" class="min-w-full divide-y divide-gray-300">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Views</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        {% for data in result %}
+                        {%  if data.status == 'published' %}
+                        <tr>
+                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.username }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.category_name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.post_views }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at }}</td>
+                            <td class="px-4 py-2 text-sm">
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-red-600 hover:text-red-800">Delete</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div id="draft-posts" class="hidden">
+                <table id="draftTable" class="min-w-full divide-y divide-gray-300">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+                            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        {% for data in result if data.status == 'draft' %}
+                        {%  if data.status == 'draft' %}
+                        <tr>
+                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.username }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.category_name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
+                            <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at }}</td>
+                            <td class="px-4 py-2 text-sm">
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-red-600 hover:text-red-800">Delete</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="relative z-10 hidden" id="deleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <h3 class="text-base font-semibold text-gray-900" id="modal-title">Delete Post</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">Are you sure you want to delete this post? This action cannot be undone.</p>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="draft-posts" class="hidden">
-                    <table id="draftpostTable" class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Title</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Author</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Category</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Tags</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
-                                <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            {% for data in result %}
-                            {% if data.status == 'draft' %}
-                            <tr>
-                                <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.author_name }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.category.category }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{% for tag in data.tags %}{{ tag.tag }}{% endfor %}</td>
-                                <td class="px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
-                                <td class="px-4 py-2 text-sm">
-                                    <a href="{{url_for('admin_update_cms_post', post_id=data.id)}}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
-                                    <button data-bs-toggle="modal" data-bs-target="#deleteModal_{{ data.id }}" class="text-red-600 hover:text-red-800">Delete</button>
-                                </td>
-                            </tr>
-                            <div class="relative z-10 hidden" id="deleteModal_{{ data.id }}" role="dialog" aria-modal="true">
-                                                <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
-                                                <div class="fixed inset-0 z-10 overflow-y-auto">
-                                                    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                                                        <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                                                            <div class="sm:flex sm:items-start">
-                                                                <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                                                                    <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                                    </svg>
-                                                                </div>
-                                                                <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                                                                    <h3 class="text-base font-semibold text-gray-900" id="modal-title">Delete Post</h3>
-                                                                    <div class="mt-2">
-                                                                        <p class="text-sm text-gray-500">
-                                                                            Are you sure you want to delete this post?
-                                                                            This action cannot be undone.</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                                                                <a href="{{ url_for('admin_delete_cms_post', post_id=data.id) }}" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</a>
-                                                                <button type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" data-bs-dismiss="modal">Cancel</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                     </table>
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                    <a href="#" id="confirmDelete" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Delete</a>
+                    <button type="button" id="cancelModal" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Cancel</button>
                 </div>
             </div>
         </div>
@@ -171,72 +133,42 @@
         const publishedTab = document.getElementById('published-tab');
         const draftsTab = document.getElementById('drafts-tab');
         const publishedTable = document.getElementById('published-posts');
-        const draftsTable = document.getElementById('draft-posts');
-        const mobileTabs = document.getElementById('mobileTabs');
+        const draftTable = document.getElementById('draft-posts');
 
-        // Desktop tab switching
-        publishedTab.addEventListener('click', (e) => {
-            e.preventDefault();
+        publishedTab.addEventListener('click', () => {
             publishedTab.classList.add('text-indigo-600', 'border-indigo-500');
             draftsTab.classList.remove('text-indigo-600', 'border-indigo-500');
             publishedTable.classList.remove('hidden');
-            draftsTable.classList.add('hidden');
+            draftTable.classList.add('hidden');
         });
 
-        draftsTab.addEventListener('click', (e) => {
-            e.preventDefault();
+        draftsTab.addEventListener('click', () => {
             draftsTab.classList.add('text-indigo-600', 'border-indigo-500');
             publishedTab.classList.remove('text-indigo-600', 'border-indigo-500');
-            draftsTable.classList.remove('hidden');
+            draftTable.classList.remove('hidden');
             publishedTable.classList.add('hidden');
         });
 
-        // Mobile dropdown switching
-        mobileTabs.addEventListener('change', (e) => {
-            const selectedValue = e.target.value;
-            if (selectedValue === 'published-posts') {
-                publishedTab.click();
-            } else if (selectedValue === 'draft-posts') {
-                draftsTab.click();
-            }
-        });
+        // Initialize DataTables
+        new DataTable('#publishedTable');
+        new DataTable('#draftTable');
 
-        new DataTable('#userpostTable');
-        new DataTable('#draftpostTable');
-    });
-</script>
+        // Modal Logic
+        const deleteModal = document.getElementById('deleteModal');
+        const confirmDeleteButton = document.getElementById('confirmDelete');
+        const cancelModalButton = document.getElementById('cancelModal');
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const modalToggles = document.querySelectorAll('[data-bs-toggle="modal"]');
-
-        modalToggles.forEach(toggle => {
-            toggle.addEventListener('click', function () {
-                const targetModalId = this.getAttribute('data-bs-target').replace('#', '');
-                const targetModal = document.getElementById(targetModalId);
-
-                if (targetModal) {
-                    targetModal.classList.remove('hidden');
-                    targetModal.querySelector('.bg-gray-500/75').classList.add('opacity-100');
-                    targetModal.querySelector('.bg-gray-500/75').classList.remove('opacity-0');
-                }
-            });
-        });
-
-        const closeModalButtons = document.querySelectorAll('[data-bs-dismiss="modal"]');
-
-        closeModalButtons.forEach(button => {
+        document.querySelectorAll('.deleteModalTrigger').forEach(button => {
             button.addEventListener('click', function () {
-                const modal = this.closest('.relative.z-10');
-
-                if (modal) {
-                    modal.classList.add('hidden');
-                    modal.querySelector('.bg-gray-500/75').classList.add('opacity-0');
-                    modal.querySelector('.bg-gray-500/75').classList.remove('opacity-100');
-                }
+                const postId = this.getAttribute('data-post-id');
+                confirmDeleteButton.href = `/admin/delete-posts/${postId}`;
+                deleteModal.classList.remove('hidden');
             });
+        });
+
+        cancelModalButton.addEventListener('click', () => {
+            deleteModal.classList.add('hidden');
         });
     });
 </script>
-
 {% endblock %}

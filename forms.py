@@ -304,6 +304,11 @@ class AddPost(FlaskForm):
     subcategory = SelectField('Subcategory', validators=[DataRequired()], choices=[('', 'Select a subcategory')])
     content = TextAreaField('Content', render_kw={'rows': 30, 'cols': 30, 'id': 'content',
                                                                                'placeholder': 'Write details about the post.'})
+    tags = StringField('Tags', render_kw={
+        'placeholder': 'Enter tags, separated by commas',
+        'id': 'tags'
+    })  # New field for tags
+
     publish = SubmitField('Publish')
     save_draft = SubmitField('Save Draft')
 
