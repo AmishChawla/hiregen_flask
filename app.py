@@ -265,6 +265,7 @@ def callback():
     headers = {'Authorization': 'Bearer {}'.format(access_token)}
     user_info_response = requests.get(user_info_url, headers=headers)
     user_info = user_info_response.json()
+    print(user_info)
     data = api_calls.get_user_from_google_login(user_info=user_info)
 
     id = data.get('id')
@@ -421,6 +422,7 @@ def profile():
     # Get user data from API or database
     response = api_calls.get_user_profile(current_user.id)
     result = response.json()
+    print(result)
 
     # Populate the fields with data
     if request.method == 'GET':

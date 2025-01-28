@@ -159,10 +159,18 @@
   </div>
 </div>
 
-
-            <p class="text-gray-700 dark:text-gray-300"><strong>Current Plan:</strong> {{ current_plans[0]['plan_name'] }}</p>
-            <p class="text-gray-700 dark:text-gray-300"><strong>Plan Status:</strong> {{ current_plans[0]['status'] }}</p>
-
+{% if current_plans %}
+    <p class="text-gray-700 dark:text-gray-300">
+        <strong>Current Plan:</strong> {{ current_plans[0]['plan_name'] }}
+    </p>
+    <p class="text-gray-700 dark:text-gray-300">
+        <strong>Plan Status:</strong> {{ current_plans[0]['status'] }}
+    </p>
+{% else %}
+    <a href="{{ url_for('user_view_plan') }}" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600">
+        View Plans
+    </a>
+{% endif %}
             <div class="flex justify-end space-x-4 mt-6">
                 {{ form.submit(class="hidden rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600", id="saveBtn") }}
                 {{ form.cancel(class="hidden rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", id="cancelBtn") }}
