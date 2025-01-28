@@ -325,7 +325,7 @@ class AddJobOpening(FlaskForm):
     address_country= StringField('Country')
     address_province= StringField('Province')
     address_postal_code= StringField('Postal Code')
-    job_description= TextAreaField('Job Description', render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
+    job_description= TextAreaField('Job Description', validators=[DataRequired(message='This field is required')] , render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
     job_requirements= TextAreaField('Job Requirements', render_kw={'rows': 30, 'cols': 30, 'id': 'job_requirements'})
     job_benefits= TextAreaField('Job Benefits', render_kw={'rows': 30, 'cols': 30, 'id': 'job_benefits'})
     job_opening_status = SelectField('Job Opening Status', default='Active', choices=[('', 'Select status'),('Active', 'Active')])

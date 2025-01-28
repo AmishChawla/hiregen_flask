@@ -236,4 +236,27 @@ article .ql-indent-9 {
   </article>
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ post.title | escape }}",
+  "description": "{{ post.content[:300] | striptags | escape }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ post.author_name | default('Anonymous') | escape }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen"
+  },
+  "datePublished": "{{ post.created_at if post.created_at else '' }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ url_for('read_post', slug=post.slug, _external=True) }}"
+  },
+  "image": "https://via.placeholder.com/800x400?text=Default+Image"
+}
+</script>
+
 {% endblock %}

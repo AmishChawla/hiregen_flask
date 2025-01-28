@@ -10,6 +10,7 @@
     {% endif %}
 {% endif %}
 
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -19,6 +20,9 @@
 
 
 {% block title %}{{ job_details.job_title }}{% endblock %}
+
+
+
 
 {% block content %}
 <!-- Page Header -->
@@ -137,6 +141,34 @@
       });
     });
   });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  "title": "{{ job_details.job_title | escape }}",
+  "description": "{{ job_details.job_description | safe | escape }}",
+  "datePosted": "{{ job_details.opening_date if job_details.opening_date else '' }}",
+  "validThrough": "{{ job_details.target_date if job_details.target_date else '' }}",
+  "employmentType": "{{ job_details.job_type | upper }}",
+  "hiringOrganization": {
+    "@type": "Organization",
+    "name": "{{ job_details.company_name | escape }}",
+    "sameAs": "{{ job_details.company_website | escape }}"
+  },
+  "jobLocation": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ job_details.address_street | escape or '' }}",
+      "addressLocality": "{{ job_details.address_city | escape or '' }}",
+      "addressRegion": "{{ job_details.address_province | escape or '' }}",
+      "postalCode": "{{ job_details.address_postal_code | escape or '' }}",
+      "addressCountry": "{{ job_details.address_country | escape or '' }}"
+    }
+  }
+}
 </script>
 
 
