@@ -294,8 +294,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 {% endif %}
             {% endwith %}
 
-            <form method="post" action="{{ url_for('register') }}">
+            <form method="post" action="{{ url_for('register') }}" id="employer-register-form">
                 {{ form.hidden_tag() }}
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                 <div class="form-group">
                     <label for="firstname" class="form-label">First Name</label>
                     {{ form.firstname(class="form-control", placeholder="FirstName", required=True) }}
@@ -334,9 +335,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>&copy; 2024 HireGen. All rights reserved. | <a href="{{url_for('index')}}#features">Features</a> | <a href="{{url_for('index')}}#contact">Contact</a> | <a href="{{url_for('index')}}#">Privacy Policy</a></p>
     </footer>
 </body>
+<script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
 <script>
     function toggleMenu() {
             document.getElementById('nav-menu').classList.toggle('active');
         }
 </script>
+<script>
+grecaptcha.ready(function () {
+    document.getElementById('employer-register-form').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Execute reCAPTCHA
+        grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' }).then(function (token) {
+            console.log('Generated reCAPTCHA token:', token); // Debugging
+
+            // Set the reCAPTCHA token in the hidden input field
+            document.getElementById('g-recaptcha-response').value = token;
+
+            // Use the native submit method to submit the form
+            const form = document.getElementById('employer-register-form');
+            HTMLFormElement.prototype.submit.call(form);
+        }).catch(function (error) {
+            console.error('reCAPTCHA execution error:', error);
+        });
+    });
+});
+</script>
+
 </html>

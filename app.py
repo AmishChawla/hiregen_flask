@@ -301,6 +301,18 @@ def callback():
         return redirect(url_for('company_register'))
 
 
+def verify_recaptcha(token):
+    import requests
+    secret_key = "6LfjmMUqAAAAAJgO28h7Lb3vgzG3ed8YBhRacryN"  # Replace with your Secret Key
+    url = "https://www.google.com/recaptcha/api/siteverify"
+    data = {
+        "secret": secret_key,
+        "response": token
+    }
+    response = requests.post(url, data=data)
+    result = response.json()
+    return result.get("success", False)  # Returns True if valid
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     session.pop('_flashes', None)
@@ -314,46 +326,54 @@ def register():
         phone_number = form.phone_number.data
         email = form.email.data
         password = form.password.data
-        response = api_calls.user_register(firstname, lastname, phone_number, email, password)
-        print("inside")
-        if response.status_code == 200:
-            response = api_calls.user_login(email, password)
-            if response is not None and response.status_code == 200:
-                data = response.json()
-                token = data.get('access_token')
-                id=data.get('id')
-                role = data.get('role')
-                firstname = data.get('firstname')
-                lastname = data.get('lastname')
-                username = data.get('username')
-                email = data.get('email')
-                company = data.get('company', {})
-                group = data.get('group', {})
-                profile_picture = data['profile_picture']
 
-                user = User(id=id,user_id=token, firstname=firstname, lastname=lastname,role=role, username=username, email=email,
-                            company=company,group=group,
-                            profile_picture=profile_picture)
-                login_user(user)
-                session['user'] = {
-                    'id': id,
-                    'user_id': token,
-                    'role': role,
-                    'firstname': firstname,
-                    'lastname': lastname,
-                    'username': username,
-                    'email': email,
-                    'company': company,
-                    'group': group,
-                    'profile_picture': profile_picture
-                }
-            flash('Registration Successful', category='info')
-            return redirect((url_for('create_subscription', plan_id=1)))  # Hardcoded value for free plan
-        elif response.status_code == 400:
-            result = response.json()
-            message = result["detail"]
-            flash(message, category='error')
+        recaptcha_token = request.form.get('g-recaptcha-response')
+        recaptcha_success = verify_recaptcha(recaptcha_token)
 
+        if recaptcha_success:
+
+            response = api_calls.user_register(firstname, lastname, phone_number, email, password)
+            print("inside")
+            if response.status_code == 200:
+                response = api_calls.user_login(email, password)
+                if response is not None and response.status_code == 200:
+                    data = response.json()
+                    token = data.get('access_token')
+                    id=data.get('id')
+                    role = data.get('role')
+                    firstname = data.get('firstname')
+                    lastname = data.get('lastname')
+                    username = data.get('username')
+                    email = data.get('email')
+                    company = data.get('company', {})
+                    group = data.get('group', {})
+                    profile_picture = data['profile_picture']
+
+                    user = User(id=id,user_id=token, firstname=firstname, lastname=lastname,role=role, username=username, email=email,
+                                company=company,group=group,
+                                profile_picture=profile_picture)
+                    login_user(user)
+                    session['user'] = {
+                        'id': id,
+                        'user_id': token,
+                        'role': role,
+                        'firstname': firstname,
+                        'lastname': lastname,
+                        'username': username,
+                        'email': email,
+                        'company': company,
+                        'group': group,
+                        'profile_picture': profile_picture
+                    }
+                flash('Registration Successful', category='info')
+                return redirect((url_for('create_subscription', plan_id=1)))  # Hardcoded value for free plan
+            elif response.status_code == 400:
+                result = response.json()
+                message = result["detail"]
+                flash(message, category='error')
+
+            else:
+                flash('Registration unsuccessful. Please check username, email and password.', category='error')
         else:
             flash('Registration unsuccessful. Please check username, email and password.', category='error')
 
@@ -4057,9 +4077,10 @@ def homepage_contactus_submission():
         name = data.get('name')
         email = data.get('email')
         message = data.get('message')
-
-        result = api_calls.homepage_contact_form_submission(name=name, email=email, message=message)
-
+        recaptcha_token = data.get('g-recaptcha-response')  # Extract reCAPTCHA token
+        is_token_valid = verify_recaptcha(recaptcha_token)
+        if is_token_valid:
+            result = api_calls.homepage_contact_form_submission(name=name, email=email, message=message)
         return jsonify({'message': 'Form submitted successfully'}), 200
     except Exception as e:
         return jsonify({'error': 'An error occurred while processing the form'}), 500

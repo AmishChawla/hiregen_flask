@@ -520,6 +520,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="contact-form" id="contact">
     <h3>Contact Us</h3>
     <form id="contactForm" action="#" method="post">
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
         <input type="text" id="name" placeholder="Your Name" required>
         <input type="email" id="email" placeholder="Your Email" required>
         <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
@@ -534,50 +535,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <footer>
         <p>&copy; 2024 HireGen. All rights reserved. | <a href="#features">Features</a> | <a href="#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
     </footer>
+<script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
+<script>
+    function toggleMenu() {
+        document.getElementById('nav-menu').classList.toggle('active');
+    }
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('nav-menu').classList.toggle('active');
-        }
-        // JavaScript for FAQs toggle functionality
-        document.querySelectorAll('.faq-item h4').forEach(item => {
-            item.addEventListener('click', () => {
-                item.parentNode.classList.toggle('active');
-            });
+    // JavaScript for FAQs toggle functionality
+    document.querySelectorAll('.faq-item h4').forEach(item => {
+        item.addEventListener('click', () => {
+            item.parentNode.classList.toggle('active');
         });
+    });
 
-        document.getElementById('contactForm').addEventListener('submit', async function(event) {
+    document.getElementById('contactForm').addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        };
-
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
 
         try {
-            const response = await fetch('/homepage_contact_form_submission', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
+            // Execute reCAPTCHA and get the token
+            grecaptcha.ready(async function () {
+                const recaptchaToken = await grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' });
 
-             console.log("after try");
-            if (response.ok) {
-                document.getElementById('contactForm').style.display = 'none';
-                document.getElementById('thankYouMessage').style.display = 'block';
-            } else {
-                alert('There was an error submitting your message. Please try again.');
-            }
+                // Include the reCAPTCHA token in the form data
+                const formData = {
+                    name: name,
+                    email: email,
+                    message: message,
+                    'g-recaptcha-response': recaptchaToken
+                };
+
+                // Submit the form data to the server
+                const response = await fetch('/homepage_contact_form_submission', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Show the thank-you message
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                } else {
+                    alert('There was an error submitting your message. Please try again.');
+                }
+            });
         } catch (error) {
             console.error('Error:', error);
             alert('There was an error submitting your message. Please try again.');
         }
     });
-
-    </script>
+</script>
 </body>
 </html>
