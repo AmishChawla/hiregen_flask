@@ -641,6 +641,20 @@ def get_trash_users(access_token: str):
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
 
+def admin_delete_job(job_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.delete(constants.BASE_URL + f'/admin/jobs/delete-job/{job_id}', headers=headers)
+        return response
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
 
 def admin_delete_company(company_id: int):
     try:

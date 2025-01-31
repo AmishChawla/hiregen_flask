@@ -26,8 +26,8 @@
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for data in result %}
             <tr>
-              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                <a href="#" class="text-indigo-600 hover:text-indigo-900">{{ data.name }}</a>
+              <td class="whitespace-nowrap px-3 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                <a href="{{url_for('company_details_by_company_subdomain', company_subdomain=data.company_subdomain)}}" class="text-indigo-600 hover:text-indigo-900">{{ data.name }}</a>
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.website_url }}</td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>

@@ -25,7 +25,7 @@ from functools import wraps
 from flask_cors import CORS
 import phonenumbers
 from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
-
+from typing import List, Dict, Any
 
 app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
@@ -1317,17 +1317,17 @@ def user_post_list_by_company_subdomain(company_subdomain):
 
 @app.route("/admin/delete-job/<job_id>", methods=['GET', 'POST'])
 @login_required
-def admin_delete_post(post_id):
-    result = api_calls.admin_delete_post(job_id=job_id, access_token=current_user.id)
+def admin_delete_job(job_id):
+    result = api_calls.admin_delete_job(job_id=job_id, access_token=current_user.id)
 
     # Print the status code for debugging purposes
     print(result.status_code)
 
     if result.status_code == 200:
         flash('Post deleted successfully', category='info')
-        return redirect(url_for('all_post'))
+        return redirect(url_for('admin/admin_all_jobs.html'))
     else:
-        abort(response.status_code)
+        abort(result.status_code)
 
 
 @app.route("/user/delete-job/<job_id>", methods=['GET', 'POST'])
@@ -4492,6 +4492,133 @@ def read_post(slug):
     response["content"] = html.unescape(response["content"])
     print(response["content"])
     return render_template('read_cms_post.html', post=response)
+
+
+##################################################### JOBSEEKER CONTINUATION #########################################################
+
+@app.route('/jobseeker-create-profile', methods=['GET', 'POST'])
+def jobseeker_create_profile():
+    about_form = forms.AboutForm()
+    education_form = forms.EducationForm()
+    experience_form = forms.ExperienceForm()
+    internship_form = forms.InternshipForm()
+    project_form = forms.ProjectForm()
+    accomplishment_form = forms.AccomplishmentForm()
+
+    if request.method == 'POST':
+        if about_form.validate_on_submit() and education_form.validate_on_submit() and \
+                experience_form.validate_on_submit() and internship_form.validate_on_submit() and \
+                project_form.validate_on_submit() and accomplishment_form.validate_on_submit():
+
+            # Process the form data (Save to DB or perform actions)
+            flash('Profile submitted successfully!', 'success')
+            return redirect(url_for('jobseeker_profile'))
+        else:
+            flash('Please correct the errors in the form.', 'danger')
+
+    return render_template(
+        'jobseeker/jobseeker_profile_stepper.html',
+        about_form=about_form,
+        education_form=education_form,
+        experience_form=experience_form,
+        internship_form=internship_form,
+        project_form=project_form,
+        accomplishment_form=accomplishment_form
+    )
+
+
+def transform_form_data(form_data: Dict[str, List[str]]) -> Dict[str, Any]:
+    """
+    Transforms form data from Flask request.form into the API-compatible format.
+    """
+
+    def parse_ongoing(value):
+        """Convert 'y' to True and '' (empty string) to False."""
+        return value.lower() == 'y'
+
+    # Build the structured data
+    structured_data = {
+        "profile_summary": {"content": form_data.get("about", [""])[0]},  # Profile summary
+        "skills": form_data.get("skills", []),  # Skills (if available)
+        "education": [],
+        "experience": [],
+        "internships": [],
+        "projects": [],
+        "accomplishments": []
+    }
+
+    # Transform Education Data
+    education_fields = ["institution_name", "degree", "field_of_study", "start_date", "end_date", "ongoing"]
+    education_entries = zip(*[form_data.get(field, []) for field in education_fields])
+    for institution_name, degree, field_of_study, start_date, end_date, ongoing in education_entries:
+        structured_data["education"].append({
+            "institution_name": institution_name,
+            "degree": degree,
+            "field_of_study": field_of_study,
+            "start_date": start_date if start_date else None,
+            "end_date": end_date if end_date else None,
+            "is_ongoing": parse_ongoing(ongoing)
+        })
+
+    # Transform Experience Data
+    experience_fields = ["company_name", "position", "exp_start_date", "exp_end_date", "ongoing_experience", "responsibilities"]
+    experience_entries = zip(*[form_data.get(field, []) for field in experience_fields])
+    for company_name, position, start_date, end_date, ongoing, responsibilities in experience_entries:
+        structured_data["experience"].append({
+            "company_name": company_name,
+            "position": position,
+            "start_date": start_date if start_date else None,
+            "end_date": end_date if end_date else None,
+            "is_ongoing": parse_ongoing(ongoing),
+            "responsibilities": responsibilities
+        })
+
+    # Transform Internship Data
+    internship_fields = ["internship_company", "internship_position", "internship_start_date", "internship_end_date", "ongoing_internship", "internship_description"]
+    internship_entries = zip(*[form_data.get(field, []) for field in internship_fields])
+    for company_name, position, start_date, end_date, ongoing, job_description in internship_entries:
+        structured_data["internships"].append({
+            "company_name": company_name,
+            "position": position,
+            "start_date": start_date if start_date else None,
+            "end_date": end_date if end_date else None,
+            "is_ongoing": parse_ongoing(ongoing),
+            "job_description": job_description
+        })
+
+    # Transform Project Data
+    project_fields = ["project_title", "project_description", "project_url"]
+    project_entries = zip(*[form_data.get(field, []) for field in project_fields])
+    for title, description, project_url in project_entries:
+        structured_data["projects"].append({
+            "title": title,
+            "description": description,
+            "project_url": project_url
+        })
+
+    # Transform Accomplishment Data
+    accomplishment_fields = ["accomplishment_title", "accomplishment_description", "accomplishment_date"]
+    accomplishment_entries = zip(*[form_data.get(field, []) for field in accomplishment_fields])
+    for title, description, achievement_date in accomplishment_entries:
+        structured_data["accomplishments"].append({
+            "title": title,
+            "description": description,
+            "achievement_date": achievement_date
+        })
+
+    return structured_data
+
+
+
+@app.route('/submit-jobseeker-profile', methods=['POST'])
+def submit_jobseeker_profile():
+    form_data = request.form.to_dict(flat=False)  # Preserve multiple values for each field
+    structured_data = transform_form_data(form_data)  # Convert to API-compatible format
+
+    print("\n--- Transformed Data for API ---")
+    print(structured_data)  # Debugging output
+
+    return jsonify({"message": "Data transformed successfully", "data": structured_data})
 
 
 #####################################################################################################################################
