@@ -3155,6 +3155,22 @@ def update_jobseeker_profile(profile_data, access_token):
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
 
+def update_jobseeker_profile_two(profile_data, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+
+    try:
+        response = requests.post(constants.BASE_URL + '/jobseeker/update-jobseeker-profile', json=profile_data, headers=headers)
+        if response.status_code == 200:
+            return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
 
 def homepage_contact_form_submission(name, email, message):
     data = {

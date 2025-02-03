@@ -1,433 +1,338 @@
 {% extends 'jobseeker/jobseeker_base.html' %}
 
 {% block content %}
-<style>
-.profile-hover-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.profile-hover-wrapper:hover .hover-btn {
-  display: inline-block;
-}
-
-.hover-btn {
-  display: none;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -25px;
-  cursor: pointer;
-}
-
-.hover-btn i {
-  font-size: 16px;
-  color: grey;
-}
-
-.profile-user-img img:hover + .hover-btn {
-  display: inline-block;
-}
-</style>
-
 <section class="content">
   <div class="container mx-auto px-4 py-8">
-    <!-- Profile Image -->
+    <!-- Profile Section -->
     <div class="text-center">
       <div class="relative inline-block">
         {% if profile_info.profile_picture %}
-        <img class="w-32 h-32 rounded-full mx-auto"
-             src="{{ profile_info.profile_picture }}"
-             alt="User profile picture">
+        <img class="w-32 h-32 rounded-full mx-auto" src="{{ profile_info.profile_picture }}" alt="User profile picture">
         {% else %}
-        <img class="w-32 h-32 rounded-full mx-auto"
-             src="{{ url_for('static', filename='images/man.png') }}"
-             alt="User profile picture">
+        <img class="w-32 h-32 rounded-full mx-auto" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
         {% endif %}
-        <!-- Edit Picture Button -->
-        <button type="button" @click="openModal('changePictureModal')" class="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
-          <i class="text-gray-600 bi bi-pencil"></i>
+        <button type="button" onclick="openModal('changePictureModal')" class="absolute top-0 right-0 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+</svg>
+
         </button>
       </div>
-      <!-- Display Name -->
-      <h3 class="mt-4 text-xl font-semibold">{{ profile_info.name }}</h3>
-      <button type="button" @click="openModal('changeNameModal')" class="text-gray-600 text-sm ml-2 hover:underline">
-        Edit
-      </button>
-      <!-- Display Email -->
-      <p class="mt-1 text-gray-500">{{ profile_info.email }}
-        <button type="button" @click="openModal('changeEmailModal')" class="text-gray-600 text-sm ml-2 hover:underline">
-          Edit
-        </button>
-      </p>
-      <!-- Display Phone Number -->
-      <p class="mt-1 text-gray-500">
-        {% if profile_info.phone_number %}
-        {{ profile_info.phone_number }}
-        {% else %}
-        Your Mobile Number
-        {% endif %}
-        <button type="button" @click="openModal('changePhoneModal')" class="text-gray-600 text-sm ml-2 hover:underline">
-          Edit
-        </button>
-      </p>
     </div>
 
-    <!-- Sidebar and Main Content -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
-      <!-- Sidebar Navigation -->
-      <ul class="bg-white rounded-lg shadow divide-y divide-gray-200">
-        <li class="px-4 py-2">
-          <a href="#profileSummary" class="text-gray-800 hover:text-blue-600">Profile Summary</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#resume" class="text-gray-800 hover:text-blue-600">Resume</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#education" class="text-gray-800 hover:text-blue-600">Education</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#experience" class="text-gray-800 hover:text-blue-600">Experience</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#internships" class="text-gray-800 hover:text-blue-600">Internships</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#projects" class="text-gray-800 hover:text-blue-600">Projects</a>
-        </li>
-        <li class="px-4 py-2">
-          <a href="#accomplishments" class="text-gray-800 hover:text-blue-600">Accomplishments</a>
-        </li>
-      </ul>
+    <section class="content">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Profile Section -->
+    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+      <div class="px-4 py-6 sm:px-6">
+        <h3 class="text-base/7 font-semibold text-gray-900">Profile Information</h3>
+        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details and contact information.</p>
+      </div>
+      <div class="border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900">Full Name</dt>
+            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <span class="grow">{{ profile_info.name }}</span>
+        <span class="ml-4 shrink-0">
+          <button onclick="openModal('updateNameModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
+        </span>
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900">Email Address</dt>
+            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+        <span class="grow">{{ profile_info.email }}</span>
+        <span class="ml-4 shrink-0">
+          <button onclick="openModal('updateEmailModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
+        </span>
+            </dd>
+          </div>
+          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-900">Phone Number</dt>
+            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                      <span class="grow">{{ profile_info.phone_number }}</span>
+        <span class="ml-4 shrink-0">
+          <button onclick="openModal('updatePhoneModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
+        </span>
 
-      <!-- Main Content Area -->
-      <div class="col-span-3 space-y-6">
-        <!-- Upload Resume Card -->
-        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-          <!-- Upload Loader -->
-          <span class="loader" id="loading-bar-container"></span>
-          <form id="upload-form" method="post" action="{{ url_for('media') }}" enctype="multipart/form-data">
-            <p class="text-gray-600">Drop files here to upload</p>
-            <p class="text-gray-400">or</p>
-            <!-- Select Files Button -->
-            <label for="file-input" class="inline-block bg-blue-600 text-white py-2 px-4 rounded cursor-pointer hover:bg-blue-700">
-              Select Files
-            </label>
-            <input type="file" id="file-input" class="hidden" multiple>
-            <div id="file-list" class="mt-4 text-left text-gray-600"></div>
-            <!-- Upload Button -->
-            <button type="submit" id="btn-upload" class="hidden mt-4 bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
-              Upload Files
-            </button>
-            <!-- Error Messages -->
-            <p id="error-message" class="mt-2 text-red-500 text-sm"></p>
-          </form>
-        </div>
-
-        <!-- Profile Summary Section -->
-        <div id="profileSummary" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">About</h3>
-            <button @click="openModal('addAboutModal')" class="text-blue-600 hover:underline text-sm">Add</button>
+            </dd>
           </div>
-          <div class="p-4">
-            {% if profile_info.profile_summary %}
-            <p>{{ profile_info.profile_summary.content }}</p>
-            <button @click="openModal('deleteProfileSummaryModal')" class="text-red-500 text-sm hover:underline">
-              Delete
-            </button>
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- Resume Section -->
-        <div id="resume" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Resume</h3>
-            <a href="{{ url_for('media') }}" class="text-blue-600 hover:underline text-sm">Add</a>
-          </div>
-          <div class="p-4">
-            <table id="userResumeTable" class="w-full text-sm text-left">
-              <tbody>
-                {% for row in resumes %}
-                <tr class="border-b border-gray-200">
-                  <td class="py-2">
-                    <a href="{{ root_url + row.file_url }}" class="text-blue-600 hover:underline">{{ row.filename }}</a>
-                  </td>
-                  <td class="py-2 text-right">
-                    <button @click="openModal('deleteResumeModal_{{ row.id }}')" class="text-red-500 hover:underline text-sm">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Education Section -->
-        <div id="education" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Education</h3>
-            <button @click="openModal('addEducationModal')" class="text-blue-600 hover:underline text-sm">Add</button>
-          </div>
-          <div class="p-4 space-y-4">
-            {% for data in profile_info.education %}
-            <div class="border-b border-gray-200 pb-4">
-              <h4 class="text-gray-800 font-semibold">{{ data.degree }} in {{ data.field_of_study }}</h4>
-              <p class="text-gray-600 text-sm">{{ data.institution_name }}</p>
-              <p class="text-gray-500 text-xs">
-                {% if data.is_ongoing %}
-                {{ data.start_date }} - Present
-                {% else %}
-                {{ data.start_date }} - {{ data.end_date }}
-                {% endif %}
-              </p>
-              <button @click="openModal('deleteEducationModal_{{ data.id }}')" class="text-red-500 text-sm hover:underline">
-                Delete
-              </button>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Experience Section -->
-        <div id="experience" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Experience</h3>
-            <button @click="openModal('addExperienceModal')" class="text-blue-600 hover:underline text-sm">Add</button>
-          </div>
-          <div class="p-4 space-y-4">
-            {% for data in profile_info.experiences %}
-            <div class="border-b border-gray-200 pb-4">
-              <h4 class="text-gray-800 font-semibold">{{ data.position }}</h4>
-              <p class="text-gray-600 text-sm">{{ data.company_name }}</p>
-              <p class="text-gray-500 text-xs">
-                {% if data.is_ongoing %}
-                {{ data.start_date }} - Present
-                {% else %}
-                {{ data.start_date }} - {{ data.end_date }}
-                {% endif %}
-              </p>
-              <p class="text-gray-500 text-sm">{{ data.responsibilities }}</p>
-              <button @click="openModal('deleteExperienceModal_{{ data.id }}')" class="text-red-500 text-sm hover:underline">
-                Delete
-              </button>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Internships Section -->
-        <div id="internships" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Internships</h3>
-            <button @click="openModal('addInternshipModal')" class="text-blue-600 hover:underline text-sm">Add</button>
-          </div>
-          <div class="p-4 space-y-4">
-            {% for data in profile_info.internships %}
-            <div class="border-b border-gray-200 pb-4">
-              <h4 class="text-gray-800 font-semibold">{{ data.position }}</h4>
-              <p class="text-gray-600 text-sm">{{ data.company_name }}</p>
-              <p class="text-gray-500 text-xs">
-                {% if data.is_ongoing %}
-                {{ data.start_date }} - Present
-                {% else %}
-                {{ data.start_date }} - {{ data.end_date }}
-                {% endif %}
-              </p>
-              <p class="text-gray-500 text-sm">{{ data.job_description }}</p>
-              <button @click="openModal('deleteInternshipModal_{{ data.id }}')" class="text-red-500 text-sm hover:underline">
-                Delete
-              </button>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Projects Section -->
-        <div id="projects" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Projects</h3>
-            <button @click="openModal('addProjectModal')" class="text-blue-600 hover:underline text-sm">Add</button>
-          </div>
-          <div class="p-4 space-y-4">
-            {% for data in profile_info.projects %}
-            <div class="border-b border-gray-200 pb-4">
-              <h4 class="text-gray-800 font-semibold">{{ data.title }}</h4>
-              <a href="{{ data.project_url }}" class="text-blue-600 text-sm hover:underline">{{ data.project_url }}</a>
-              <p class="text-gray-500 text-sm">{{ data.description }}</p>
-              <button @click="openModal('deleteProjectModal_{{ data.id }}')" class="text-red-500 text-sm hover:underline">
-                Delete
-              </button>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Accomplishments Section -->
-        <div id="accomplishments" class="bg-white rounded-lg shadow">
-          <div class="p-4 border-b border-gray-200 flex justify-between">
-            <h3 class="text-lg font-medium text-gray-800">Accomplishments</h3>
-            <button @click="openModal('addAccomplishmentModal')" class="text-blue-600 hover:underline text-sm">Add</button>
-          </div>
-          <div class="p-4 space-y-4">
-            {% for data in profile_info.accomplishments %}
-            <div class="border-b border-gray-200 pb-4">
-              <h4 class="text-gray-800 font-semibold">{{ data.title }}</h4>
-              <p class="text-gray-600 text-sm">{{ data.achievement_date }}</p>
-              <p class="text-gray-500 text-sm">{{ data.description }}</p>
-              <button @click="openModal('deleteAccomplishmentModal_{{ data.id }}')" class="text-red-500 text-sm hover:underline">
-                Delete
-              </button>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
+        </dl>
+          <div class="px-4 py-6 sm:px-6 text-right">
+    <a href="{{url_for('jobseeker_update_profile')}}" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+      Update Profile
+    </a>
+  </div>
 
       </div>
     </div>
   </div>
 </section>
 
-<!-- Modal Templates -->
-<div id="addAboutModal" class="hidden">
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-    <div class="bg-white rounded-lg shadow-lg p-6">
-      <h3 class="text-lg font-medium text-gray-800">Add About</h3>
-      <form method="POST" class="mt-4">
-        {{ about_form.hidden_tag() }}
-        <textarea class="w-full border border-gray-300 rounded-md p-2" placeholder="Describe yourself in a few words">
-          {{ about_form.about }}
-        </textarea>
-        <button type="submit" class="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Save</button>
+
+    <!-- Sidebar & Main Content -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+      <!-- Sidebar Navigation -->
+      <div class="overflow-hidden rounded-md bg-white shadow">
+        <ul role="list" class="divide-y divide-gray-200">
+          <li class="px-6 py-4"><a href="#profileSummary" class="text-gray-800 hover:text-blue-600">Profile Summary</a></li>
+          <li class="px-6 py-4"><a href="#education" class="text-gray-800 hover:text-blue-600">Education</a></li>
+          <li class="px-6 py-4"><a href="#experience" class="text-gray-800 hover:text-blue-600">Experience</a></li>
+          <li class="px-6 py-4"><a href="#internships" class="text-gray-800 hover:text-blue-600">Internships</a></li>
+          <li class="px-6 py-4"><a href="#projects" class="text-gray-800 hover:text-blue-600">Projects</a></li>
+          <li class="px-6 py-4"><a href="#accomplishments" class="text-gray-800 hover:text-blue-600">Accomplishments</a></li>
+        </ul>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-span-3 space-y-6">
+        <!-- Profile Summary -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="profileSummary">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">About</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            <p class="text-sm">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="education">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Education</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for education in profile_info.education %}
+            <p class="text-sm">{{ education.degree }} in {{ education.field_of_study }} from {{ education.institution_name }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="experience">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Experience</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for experience in profile_info.experiences %}
+            <p><span class="font-semibold">{{ experience.position }} </span> <em class="font-light text-sm">at</em> <span class="font-semibold">{{ experience.company_name }}</span></p>
+            <p class="text-sm">({{ experience.start_date }} - {{ experience.end_date or 'Present' }})</p>
+            <p class="text-xs">{{ experience.responsibilities }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+                <!-- Internships -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="internships">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Internships</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for internship in profile_info.internships %}
+            <p><span class="font-semibold">{{ internship.position }} </span> <em class="font-light text-sm"> at </em> <span class="font-semibold"> {{ internship.company_name }} </span> </p>
+            <p class="text-sm">({{ internship.start_date }} - {{ internship.end_date or 'Present' }})</p>
+            <p class="text-xs">{{ internship.job_description }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="projects">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Projects</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for project in profile_info.projects %}
+            <p class="font-semibold">{{ project.title }}</p>
+            <p class="text-xs">{{ project.description }}</p>
+            <p><a href="{{ project.project_url }}" class="text-blue-600 hover:underline">{{ project.project_url }}</a></p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Accomplishments -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="accomplishments">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Accomplishments</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for accomplishment in profile_info.accomplishments %}
+            <p class="font-semibold">{{ accomplishment.title }} - {{ accomplishment.achievement_date }}</p>
+            <p class="text-xs">{{ accomplishment.description }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+
+
+
+        <!-- Other Sections: Internships, Projects, Accomplishments -->
+        <!-- Repeat similar structure as above for each section -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="updateNameModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center">
+    <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+      <h3 class="mb-2 text-base font-semibold text-gray-900" id="modal-title">Update Name</h3>
+      <form method="POST" action="{{ url_for('collect_jobseeker_name') }}">
+        {{ name_form.hidden_tag() }}
+        <div>
+          <label for="firstname" class="block text-sm/6 font-medium text-gray-900">First Name</label>
+          {{name_form.firstname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+        </div>
+        <div class="mt-4">
+          <label for="lastname" class="block text-sm/6 font-medium text-gray-900">Last Name</label>
+          {{name_form.lastname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+        </div>
+        <div class="mt-5 sm:mt-6 text-right">
+          {{ name_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          <button type="button" onclick="closeModal('updateNameModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- Additional Modals for Education, Experience, Internships, Projects, and Accomplishments -->
-<!-- Repeat the same modal structure for each section -->
+<div id="updateEmailModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center">
+    <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+      <h3 class="mb-2 text-base font-semibold text-gray-900" id="modal-title">Update Email</h3>
+      <form method="POST" action="{{ url_for('collect_jobseeker_email') }}">
+        {{ email_form.hidden_tag() }}
+        <div>
+          <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+        {{email_form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+        </div>
+        <div class="mt-5 sm:mt-6 text-right">
+          {{ email_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          <button type="button" onclick="closeModal('updateEmailModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-{% block scripts %}
+<div id="updatePhoneModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center">
+    <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+      <h3 class="mb-2 text-base font-semibold text-gray-900" id="modal-title">Update Phone Number</h3>
+      <form method="POST" action="{{ url_for('collect_jobseeker_phone') }}">
+        {{ phone_form.hidden_tag() }}
+        <div>
+          <label for="phone_number" class="block text-sm/6 font-medium text-gray-900">Mobile</label>
+          {{ phone_form.phone_number(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
+        </div>
+        <div class="mt-5 sm:mt-6 text-right">
+          {{ phone_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          <button type="button" onclick="closeModal('updatePhoneModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div id="changePictureModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto flex items-center justify-center">
+    <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+
+      <!-- Modal Title -->
+      <h3 class="text-base font-semibold text-gray-900" id="modal-title">Change Profile Picture</h3>
+
+      <!-- Profile Picture Update Form -->
+      <form method="POST" action="{{ url_for('collect_jobseeker_profile_picture') }}" enctype="multipart/form-data">
+        {{ profile_picture_form.hidden_tag() }}
+
+        <!-- Photo Upload Component -->
+        <div class="col-span-full mt-4">
+          <label for="profile_picture" class="block text-sm/6 font-medium text-gray-900">Profile Picture</label>
+          <div class="mt-2 flex items-center gap-x-3">
+            <img id="previewImage" class="size-12 rounded-full object-cover border border-gray-300"
+                 src="{{ profile_info.profile_picture or url_for('static', filename='images/man.png') }}"
+                 alt="Profile Picture">
+            {{ profile_picture_form.profile_picture(class="hidden", id="fileInput", onchange="previewFile()") }}
+            <button type="button" onclick="document.getElementById('fileInput').click();"
+                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              Change
+            </button>
+          </div>
+          {% if profile_picture_form.profile_picture.errors %}
+          <p class="text-red-500 text-xs mt-2">{{ profile_picture_form.profile_picture.errors[0] }}</p>
+          {% endif %}
+        </div>
+
+        <!-- Submit & Cancel Buttons -->
+        <div class="mt-5 sm:mt-6 text-right">
+          {{ profile_picture_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          <button type="button" onclick="closeModal('changePictureModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const dropZone = document.getElementById('drop-zone');
-  const fileInput = document.getElementById('file-input');
-  const fileList = document.getElementById('file-list');
-  const uploadButton = document.getElementById('btn-upload');
-  const errorMessage = document.getElementById('error-message');
-  const uploadForm = document.getElementById('upload-form');
-  let filesArray = [];
+  function previewFile() {
+    const file = document.getElementById("fileInput").files[0];
+    const preview = document.getElementById("previewImage");
 
-  // Add dragover event listener
-  dropZone.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropZone.classList.add('border-blue-500');
-  });
-
-  // Add dragleave event listener
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('border-blue-500');
-  });
-
-  // Add drop event listener
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('border-blue-500');
-    const newFiles = Array.from(e.dataTransfer.files);
-    addFiles(newFiles);
-  });
-
-  // Add change event listener for file input
-  fileInput.addEventListener('change', () => {
-    const newFiles = Array.from(fileInput.files);
-    addFiles(newFiles);
-    fileInput.value = "";
-  });
-
-  // Add submit event listener for form
-  uploadForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    uploadFiles();
-  });
-
-  // Function to validate and add files to the list
-  function addFiles(newFiles) {
-    const allowedTypes = ['application/pdf', 'application/msword'];
-    newFiles.forEach(file => {
-      if (allowedTypes.includes(file.type)) {
-        if (file.size <= 2 * 1024 * 1024) {
-          // Add valid files to the list
-          filesArray.push(file);
-          errorMessage.textContent = ''; // Clear any error messages
-        } else {
-          // Display error if file exceeds size limit
-          errorMessage.textContent = 'Some files were not added because they exceed the 2MB size limit.';
-        }
-      } else {
-        // Display error if file type is not allowed
-        errorMessage.textContent = 'Some files were not added because they are not of valid type.';
-      }
-    });
-    updateFileList(); // Update the displayed file list
-  }
-
-  // Function to update the file list display
-  function updateFileList() {
-    fileList.innerHTML = ''; // Clear the current file list
-    filesArray.forEach((file, index) => {
-      // Display each file in the list
-      const fileItem = document.createElement('p');
-      fileItem.textContent = `${index + 1}. ${file.name}`;
-      fileList.appendChild(fileItem);
-    });
-    // Show or hide the upload button based on file list length
-    uploadButton.style.display = filesArray.length > 0 ? 'block' : 'none';
-  }
-
-  // Function to handle file uploads
-  async function uploadFiles() {
-    if (filesArray.length === 0) {
-      alert('No files selected for upload.');
-      return; // Exit if no files are selected
-    }
-
-    const formData = new FormData();
-    filesArray.forEach((file) => {
-      formData.append('files', file); // Add files to FormData for upload
-    });
-
-    const loadingBarContainer = document.getElementById('loading-bar-container');
-    loadingBarContainer.style.display = 'block'; // Show the loading bar
-
-    try {
-      const response = await fetch('/jobseeker/upload-resume', {
-        method: 'POST',
-        body: formData, // Send FormData in the request body
-      });
-
-      loadingBarContainer.style.display = 'none'; // Hide the loading bar
-
-      if (response.ok) {
-        const result = await response.json(); // Parse JSON response
-        alert(result.message); // Show success message
-        window.location.href = result.redirect; // Redirect to provided URL
-      } else {
-        // Handle errors
-        const errorText = await response.text();
-        console.error('Error:', errorText);
-        alert('Failed to upload media.');
-      }
-    } catch (error) {
-      // Catch and display any errors
-      console.error('Error:', error);
-      alert('An error occurred while uploading files.');
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   }
-});
 </script>
-{% endblock %}
-{% endblock %}
+<script>
+  function openModal(modalId) {
+    console.log("Opening Modal:", modalId); // Debugging Log
+    let modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    } else {
+      console.error("Modal not found:", modalId);
+    }
+  }
 
+  function closeModal(modalId) {
+    console.log("Closing Modal:", modalId); // Debugging Log
+    let modal = document.getElementById(modalId);
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    } else {
+      console.error("Modal not found:", modalId);
+    }
+  }
+
+  // Close modal when clicking outside of the modal content
+  document.addEventListener("click", function(event) {
+    document.querySelectorAll(".relative.z-10").forEach((modal) => {
+      let modalContent = modal.querySelector(".modal-content");
+      if (!modal.classList.contains("hidden") && !modalContent.contains(event.target)) {
+        closeModal(modal.id);
+      }
+    });
+  });
+
+  // Prevent modal from closing when clicking inside the modal content
+  document.querySelectorAll(".modal-content").forEach((modalContent) => {
+    modalContent.addEventListener("click", function(event) {
+      event.stopPropagation();
+    });
+  });
+</script>
+
+
+{% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto py-10">
-  <h1 class="text-2xl font-semibold text-gray-900">Create Your Profile</h1>
+  <h1 class="text-2xl font-semibold text-gray-900">Update Your Profile</h1>
 
   <!-- Progress Bar -->
   <nav aria-label="Progress">
@@ -202,7 +202,7 @@
 
 
   <!-- Step Forms -->
-<form id="jobseeker-form" method="POST" action="{{url_for('submit_jobseeker_profile')}}" novalidate class="space-y-12">
+<form id="jobseeker-form" method="POST" action="{{url_for('jobseeker_update_profile')}}" novalidate class="space-y-12">
   <!-- Step 1: About -->
   <div class="step-content" id="step-1">
     <div class="border-b border-gray-900/10 pb-12">
@@ -740,7 +740,7 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
   console.log('Final JSON data (with empty entries removed):', jsonPayload);
 
   // 4. Send to server
-  fetch("{{ url_for('submit_jobseeker_profile') }}", {
+  fetch("{{ url_for('jobseeker_update_profile') }}", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -761,34 +761,41 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
 </script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Sample JSON data (replace this with actual fetched JSON)
-    const resumeData = {{ resume_json | tojson | safe }} || {};  // Injected from Flask template
+document.addEventListener("DOMContentLoaded", function () {
+    // ✅ Injected JSON from Flask (Replace this with actual fetched JSON)
+    const resumeData = {{ resume_json | tojson | safe }} || {};
 
     if (!resumeData || Object.keys(resumeData).length === 0) {
         console.log("No JSON data found. Form remains empty.");
-        return; // Stop execution if there's no data
+        return;
     }
 
-    console.log("Populating form with JSON data:", resumeData);
+    console.log("Populating stepper form with JSON data:", resumeData);
 
-    // ✅ Populate "About" Section
-    if (resumeData.ProfileSummary) {
-        document.querySelector('#step-1 textarea[name="about"]').value = resumeData.ProfileSummary;
+    // ✅ Populate "About" Section (Profile Summary)
+    if (resumeData.profile_summary && resumeData.profile_summary.content) {
+        document.querySelector('#step-1 textarea[name="about"]').value = resumeData.profile_summary.content;
     }
 
-    // ✅ Function to fill repeated fields (Education, Experience, etc.)
+    /**
+     * ✅ Generic function to populate repeated fields (Education, Experience, etc.)
+     * @param {String} containerId - The ID of the container where entries should be added
+     * @param {String} addMoreBtnId - The ID of the "Add More" button to trigger cloning
+     * @param {Array} fieldData - The JSON array containing multiple entries
+     * @param {Object} fieldMap - A mapping of JSON keys to form input names
+     */
     function populateRepeatedFields(containerId, addMoreBtnId, fieldData, fieldMap) {
         const container = document.getElementById(containerId);
 
         fieldData.forEach((entry, index) => {
             if (index > 0) {
-                document.getElementById(addMoreBtnId).click(); // Add more fields dynamically
+                document.getElementById(addMoreBtnId).click(); // Clone new field set
             }
 
             const entryForm = container.querySelectorAll('.entry-form')[index]; // Get the correct form
             if (!entryForm) return;
 
+            // Map JSON fields to form inputs
             Object.entries(fieldMap).forEach(([jsonKey, inputName]) => {
                 const inputEl = entryForm.querySelector(`[name="${inputName}"]`);
                 if (inputEl) {
@@ -805,8 +812,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Education
-    if (resumeData.Education && resumeData.Education.length > 0) {
-        populateRepeatedFields("education-container", "add-education", resumeData.Education, {
+    if (resumeData.education && resumeData.education.length > 0) {
+        populateRepeatedFields("education-container", "add-education", resumeData.education, {
             institution_name: "institution_name",
             degree: "degree",
             field_of_study: "field_of_study",
@@ -816,8 +823,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Experience
-    if (resumeData.Experience && resumeData.Experience.length > 0) {
-        populateRepeatedFields("experience-container", "add-experience", resumeData.Experience, {
+    if (resumeData.experiences && resumeData.experiences.length > 0) {
+        populateRepeatedFields("experience-container", "add-experience", resumeData.experiences, {
             company_name: "company_name",
             position: "position",
             start_date: "start_date",
@@ -827,8 +834,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Internships
-    if (resumeData.Internship && resumeData.Internship.length > 0) {
-        populateRepeatedFields("internship-container", "add-internship", resumeData.Internship, {
+    if (resumeData.internships && resumeData.internships.length > 0) {
+        populateRepeatedFields("internship-container", "add-internship", resumeData.internships, {
             company_name: "company_name",
             position: "position",
             start_date: "start_date",
@@ -838,8 +845,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Projects
-    if (resumeData.Project && resumeData.Project.length > 0) {
-        populateRepeatedFields("project-container", "add-project", resumeData.Project, {
+    if (resumeData.projects && resumeData.projects.length > 0) {
+        populateRepeatedFields("project-container", "add-project", resumeData.projects, {
             title: "title",
             description: "description",
             project_url: "project_url"
@@ -847,8 +854,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Accomplishments
-    if (resumeData.Accomplishment && resumeData.Accomplishment.length > 0) {
-        populateRepeatedFields("accomplishment-container", "add-accomplishment", resumeData.Accomplishment, {
+    if (resumeData.accomplishments && resumeData.accomplishments.length > 0) {
+        populateRepeatedFields("accomplishment-container", "add-accomplishment", resumeData.accomplishments, {
             title: "title",
             description: "description",
             achievement_date: "achievement_date"
@@ -856,10 +863,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // ✅ Populate Skills (if applicable)
-    if (resumeData.Skills && resumeData.Skills.length > 0) {
+    if (resumeData.skills && resumeData.skills.length > 0) {
         const skillsInput = document.querySelector('input[name="skills"]');
         if (skillsInput) {
-            skillsInput.value = resumeData.Skills.join(", "); // Convert array to comma-separated string
+            skillsInput.value = resumeData.skills.join(", "); // Convert array to comma-separated string
         }
     }
 });

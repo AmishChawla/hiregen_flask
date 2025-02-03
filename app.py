@@ -31,10 +31,10 @@ app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
-app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -3180,7 +3180,7 @@ def jobseeker_register():
                     'profile_picture': profile_picture
                 }
             flash('Registration Successful', category='info')
-            return redirect(url_for('jobseeker_profile'))
+            return redirect(url_for('jobseeker_profile_choice'))
         elif response.status_code == 400:
             result = response.json()
             message = result["detail"]
@@ -3282,6 +3282,7 @@ def jobseeker_profile():
     profile_picture_form = forms.CollectProfilePictureForm()
 
     profile_info = api_calls.get_jobseeker_profile(access_token=current_user.id)
+    print(profile_info)
     resumes = api_calls.get_user_all_medias(access_token=current_user.id)
 
     if request.method == 'POST':
@@ -4497,6 +4498,8 @@ def read_post(slug):
 ##################################################### JOBSEEKER CONTINUATION #########################################################
 
 @app.route('/jobseeker-create-profile', methods=['GET', 'POST'])
+# @requires_any_permission("applicants")
+# @login_required
 def jobseeker_create_profile():
     about_form = forms.AboutForm()
     education_form = forms.EducationForm()
@@ -4505,6 +4508,10 @@ def jobseeker_create_profile():
     project_form = forms.ProjectForm()
     accomplishment_form = forms.AccomplishmentForm()
 
+    resume_json = session.get('resume_json', {})
+    session.pop('resume_json', None)  # Clear session data after submission
+    if not isinstance(resume_json, dict) or not resume_json:
+        resume_json = {}
     if request.method == 'POST':
         if about_form.validate_on_submit() and education_form.validate_on_submit() and \
                 experience_form.validate_on_submit() and internship_form.validate_on_submit() and \
@@ -4523,103 +4530,89 @@ def jobseeker_create_profile():
         experience_form=experience_form,
         internship_form=internship_form,
         project_form=project_form,
-        accomplishment_form=accomplishment_form
+        accomplishment_form=accomplishment_form,
+        resume_json = resume_json  # Send JSON to template
     )
 
 
-def transform_form_data(form_data: Dict[str, List[str]]) -> Dict[str, Any]:
-    """
-    Transforms form data from Flask request.form into the API-compatible format.
-    """
+@app.route('/jobseeker/jobseeker-update-profile', methods=['GET', 'POST'])
+# @requires_any_permission("applicants")
+# @login_required
+def jobseeker_update_profile():
+    about_form = forms.AboutForm()
+    education_form = forms.EducationForm()
+    experience_form = forms.ExperienceForm()
+    internship_form = forms.InternshipForm()
+    project_form = forms.ProjectForm()
+    accomplishment_form = forms.AccomplishmentForm()
 
-    def parse_ongoing(value):
-        """Convert 'y' to True and '' (empty string) to False."""
-        return value.lower() == 'y'
 
-    # Build the structured data
-    structured_data = {
-        "profile_summary": {"content": form_data.get("about", [""])[0]},  # Profile summary
-        "skills": form_data.get("skills", []),  # Skills (if available)
-        "education": [],
-        "experience": [],
-        "internships": [],
-        "projects": [],
-        "accomplishments": []
-    }
+    resume_json = api_calls.get_jobseeker_profile(access_token=current_user.id)
+    print(resume_json)
+    if not isinstance(resume_json, dict) or not resume_json:
+        resume_json = {}
 
-    # Transform Education Data
-    education_fields = ["institution_name", "degree", "field_of_study", "start_date", "end_date", "ongoing"]
-    education_entries = zip(*[form_data.get(field, []) for field in education_fields])
-    for institution_name, degree, field_of_study, start_date, end_date, ongoing in education_entries:
-        structured_data["education"].append({
-            "institution_name": institution_name,
-            "degree": degree,
-            "field_of_study": field_of_study,
-            "start_date": start_date if start_date else None,
-            "end_date": end_date if end_date else None,
-            "is_ongoing": parse_ongoing(ongoing)
-        })
 
-    # Transform Experience Data
-    experience_fields = ["company_name", "position", "exp_start_date", "exp_end_date", "ongoing_experience", "responsibilities"]
-    experience_entries = zip(*[form_data.get(field, []) for field in experience_fields])
-    for company_name, position, start_date, end_date, ongoing, responsibilities in experience_entries:
-        structured_data["experience"].append({
-            "company_name": company_name,
-            "position": position,
-            "start_date": start_date if start_date else None,
-            "end_date": end_date if end_date else None,
-            "is_ongoing": parse_ongoing(ongoing),
-            "responsibilities": responsibilities
-        })
+    if request.method == 'POST':
+        data = request.get_json()
+        response = api_calls.update_jobseeker_profile_two(profile_data=data, access_token=current_user.id)
+        return jsonify({"success": True, "message": "Profile submitted successfully!"}), 200
 
-    # Transform Internship Data
-    internship_fields = ["internship_company", "internship_position", "internship_start_date", "internship_end_date", "ongoing_internship", "internship_description"]
-    internship_entries = zip(*[form_data.get(field, []) for field in internship_fields])
-    for company_name, position, start_date, end_date, ongoing, job_description in internship_entries:
-        structured_data["internships"].append({
-            "company_name": company_name,
-            "position": position,
-            "start_date": start_date if start_date else None,
-            "end_date": end_date if end_date else None,
-            "is_ongoing": parse_ongoing(ongoing),
-            "job_description": job_description
-        })
 
-    # Transform Project Data
-    project_fields = ["project_title", "project_description", "project_url"]
-    project_entries = zip(*[form_data.get(field, []) for field in project_fields])
-    for title, description, project_url in project_entries:
-        structured_data["projects"].append({
-            "title": title,
-            "description": description,
-            "project_url": project_url
-        })
-
-    # Transform Accomplishment Data
-    accomplishment_fields = ["accomplishment_title", "accomplishment_description", "accomplishment_date"]
-    accomplishment_entries = zip(*[form_data.get(field, []) for field in accomplishment_fields])
-    for title, description, achievement_date in accomplishment_entries:
-        structured_data["accomplishments"].append({
-            "title": title,
-            "description": description,
-            "achievement_date": achievement_date
-        })
-
-    return structured_data
+    return render_template(
+        'jobseeker/jobseeker_update_profile_stepper.html',
+        about_form=about_form,
+        education_form=education_form,
+        experience_form=experience_form,
+        internship_form=internship_form,
+        project_form=project_form,
+        accomplishment_form=accomplishment_form,
+        resume_json = resume_json  # Send JSON to template
+    )
 
 
 
-@app.route('/submit-jobseeker-profile', methods=['POST'])
+@app.route('/jobseeker/submit-profile', methods=['GET', 'POST'])
+# @requires_any_permission("applicants")
+# @login_required
 def submit_jobseeker_profile():
-    form_data = request.form.to_dict(flat=False)  # Preserve multiple values for each field
-    structured_data = transform_form_data(form_data)  # Convert to API-compatible format
+    # Retrieve the JSON payload from the request
+    if request.method == 'POST':
+        data = request.get_json()
 
-    print("\n--- Transformed Data for API ---")
-    print(structured_data)  # Debugging output
+        api_calls.update_jobseeker_profile(profile_data=data, access_token=current_user.id)
 
-    return jsonify({"message": "Data transformed successfully", "data": structured_data})
+        # For debugging: print the data to your server console/log
+        print("Received jobseeker JSON:", data)
 
+        # Return a simple response (could be JSON, text, etc.)
+        return jsonify({"success": True, "message": "Profile submitted successfully!"}), 200
+
+@app.route('/jobseeker-profile-choice', methods=['GET', 'POST'])
+# @requires_any_permission("applicants")
+# @login_required
+def jobseeker_profile_choice():
+    if request.method == 'POST':
+        pdf_file = request.files.get('pdf_file')
+        text = ""
+        try:
+            pdf_reader = PyPDF2.PdfReader(pdf_file)  # Open PDF from memory
+            for page in pdf_reader.pages:
+                text += page.extract_text() + "\n"  # Extract text from each page
+
+            resume_json = parse_single_resume(resume_text=text)
+            session['resume_json'] = resume_json
+            print('done')
+            return redirect(url_for('jobseeker_create_profile'))
+
+        except Exception as e:
+            return redirect(url_for('jobseeker_profile_choice'))
+
+        print("got pdf")
+
+    return render_template(
+        'jobseeker/jobseeker_create_profile_choice.html',
+    )
 
 #####################################################################################################################################
 
