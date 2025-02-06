@@ -2617,14 +2617,11 @@ def jobseeker_register(firstname,lastname,phone_number, email, password):
         print(f"An unexpected error occurred: {err}")
 
 
-def apply_to_job_via_resume_list(access_token, resume_id, job_id):
+def apply_to_job_via_resume_list(access_token, job_id):
     headers = {'Authorization': f'Bearer {access_token}'}
-    params = {
-        "resume_id": resume_id
-    }
 
     try:
-        response = requests.post(constants.BASE_URL + f'/jobs/{job_id}/apply', params=params, headers=headers)
+        response = requests.post(constants.BASE_URL + f'/jobs/{job_id}/apply', headers=headers)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

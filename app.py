@@ -31,10 +31,10 @@ app = Flask(__name__)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
-app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_PATH'] = '/'
-# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -2334,25 +2334,9 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug
     job_details = api_calls.get_job_by_company_subdomain_slug(company_subdomain=company_subdomain, slug=job_slug)
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
-    if apply_form.validate_on_submit:
-        if apply_form.resume.data:
-            applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, resume_id=apply_form.resume.data, job_id=apply_form.job_id.data)
-            return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
-
-        elif apply_form.upload_resume.data:
-            empty_folder(uploads_folder)
-            file = apply_form.upload_resume.data
-
-            filename = secure_filename(file.filename)
-            # Save the file to a designated folder
-            file_path = 'uploads/' + filename
-            print(file_path)
-            file.save(file_path)
-            payload = {'resume_file': (filename, open(file_path, 'rb'))}
-
-            api_calls.apply_to_job_via_device(access_token=current_user.id, file=payload,
-                                                   job_id=apply_form.job_id.data)
-            return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
+    if request.method == 'POST':
+        applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, job_id=apply_form.job_id.data)
+        return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
 
     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
 
@@ -2855,7 +2839,9 @@ def parse_single_resume(resume_text):
     - Internship (company_name, position, start_date, end_date, job_description, is_ongoing)
     - Accomplishment (title, description, achievement_date)
     - ProfileSummary (content)
-    - Skills
+    - Skills (list)
+    - IndustryKeywords (list)
+    - LeadershipKeywords (list)
     - Score (Score the resume from 0 to 100 based on your asessment)
     
     Note: Please generate a response that does not exceed 4096 tokens to ensure completeness.

@@ -103,17 +103,11 @@
             </button>
           </div>
 
-          <form method="POST" enctype="multipart/form-data" action="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details.company_subdomain, job_date=job_date, job_slug=job_slug) }}">
-            {{ form.hidden_tag() }}
-            {{ form.job_id() }}
-            <div class="mt-4">
-              <label for="{{ form.resume.id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Select Resume from My Resumes:</label>
-              {{ form.resume(class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:border-gray-700 dark:bg-gray-700 dark:text-gray-200") }}
-            </div>
-
+          <form method="POST" action="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details.company_subdomain, job_date=job_date, job_slug=job_slug) }}">
+            <input type="hidden" name="job_id" value="{{ job_id }}">
             <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
               <button type="button" id="closeModalBtn" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">Close</button>
-              {{ form.apply(class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:col-start-2") }}
+              <button type="submit" id="applyModalBtn" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:col-start-2">Apply</button>
             </div>
           </form>
         </div>
