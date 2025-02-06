@@ -10,9 +10,9 @@
       <p class="mt-2 text-sm text-gray-700">Manage all registered employers, including their profiles, roles, and companies.</p>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <a href="{{ url_for('add_user') }}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <button onclick="openModal('#add-user-modal')" type="button" data-modal-target="#addUserModal" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
         Add User
-      </a>
+     </button>
     </div>
   </div>
   <div class="mt-8 flow-root">
@@ -81,15 +81,125 @@
     </div>
   </div>
 </div>
+
+
+<div class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="add-user-modal">
+  <!-- Background backdrop -->
+  <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+    <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <!-- Modal panel -->
+    <form method="post" action="{{ url_for('add_user') }}">
+      <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+        <div class="mx-auto flex size-12 items-center justify-center rounded-full bg-green-100">
+          <svg class="size-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+        </div>
+        <div class="mt-3 text-center sm:mt-5">
+          <h3 class="text-base font-semibold text-gray-900" id="modal-title">Add New User</h3>
+          <div class="mt-2">
+            <p class="text-sm text-gray-500">Please fill out the form below to add a new user.</p>
+          </div>
+        </div>
+
+        <!-- User Add Form -->
+          {{ form.hidden_tag() }}
+
+          <!-- Username Input -->
+          <div class="mb-3">
+            <label for="username" class="block text-sm font-medium text-gray-900">Username</label>
+            <div class="mt-2">
+              {{ form.username(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+            </div>
+          </div>
+
+          <!-- Email Input -->
+          <div class="mb-3">
+            <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+            <div class="mt-2">
+              {{ form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="mb-3">
+            <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
+            <div class="mt-2">
+              {{ form.password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+            </div>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="mb-3">
+            <label for="confirm_password" class="block text-sm font-medium text-gray-900">Confirm Password</label>
+            <div class="mt-2">
+              {{ form.confirm_password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+            </div>
+          </div>
+
+          <!-- Role Dropdown -->
+    <div class="mb-3">
+        <label for="role" class="block text-sm font-medium text-gray-900">Select Role</label>
+        <div class="mt-2">
+            {{ form.role(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+        </div>
+    </div>
+
+    <!-- Security Group Dropdown -->
+    <div class="mb-3">
+        <label for="security_group" class="block text-sm font-medium text-gray-900">Security Group</label>
+        <div class="mt-2">
+            {{ form.security_group(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm") }}
+        </div>
+    </div>
+
+        <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+          <button type="submit" class="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2">Add User</button>
+          <button data-modal-close="#add-user-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
 <script>
-  function closeModal(modalId) {
-    document.querySelector(modalId).classList.add('hidden');
+  // Function to open the modal
+  function openModal(modalId) {
+    const modal = document.querySelector(modalId);
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
   }
+
+  // Function to close the modal
+  function closeModal(modalId) {
+    const modal = document.querySelector(modalId);
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  // Open modal via button
   document.querySelectorAll('[data-modal-target]').forEach(button => {
     button.addEventListener('click', () => {
       const modalId = button.getAttribute('data-modal-target');
-      document.querySelector(modalId).classList.remove('hidden');
+      openModal(modalId); // Open the modal
+    });
+  });
+
+  // Close modal via 'close' buttons inside modal
+  document.querySelectorAll('[data-modal-close]').forEach(button => {
+    button.addEventListener('click', () => {
+      const modalId = button.getAttribute('data-modal-close');
+      closeModal(modalId); // Close the modal
     });
   });
 </script>
+
 {% endblock %}

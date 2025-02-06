@@ -162,6 +162,8 @@ class AdminAddUserForm(FlaskForm):
         try:
             security_groups = api_calls.get_all_security_groups(access_token=current_user.id)
             # Replace this with actual async logic to fetch data
+            sec = [(security_group['id'], security_group['name']) for security_group in security_groups]
+            print(sec)
             return [(security_group['id'], security_group['name']) for security_group in security_groups]
         except:
             return []

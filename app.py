@@ -32,13 +32,13 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
 #TODO CHANGE TO '.hirigen.com' before deploying
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com:5000'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -517,18 +517,7 @@ def profile():
 @requires_any_permission("list_of_users")
 @login_required
 def list_of_users():
-    ITEMS_PER_PAGE = 5
-    # Fetch user profile details
-    # respo = api_calls.get_user_profile(current_user.id)
-    # username, email, role = '', '', ''
-    #
-    # if respo.status_code == 200:
-    #     admin_detail = respo.json()
-    #     username = admin_detail.get('username', '')
-    #     email = admin_detail.get('email', '')
-    #     role = admin_detail.get('role', '')
-
-    # Fetch all users
+    form = forms.AdminAddUserForm()
 
     response = api_calls.get_all_users(
         current_user.id,
@@ -540,7 +529,7 @@ def list_of_users():
     else:
         abort(response.status_code)
 
-    return render_template('list_of_users.html', result=users)
+    return render_template('list_of_users.html', result=users, form=form)
 
 
 @app.route("/admin/sites")
