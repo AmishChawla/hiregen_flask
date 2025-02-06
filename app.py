@@ -32,13 +32,13 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
 #TODO CHANGE TO '.hirigen.com' before deploying
-app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com:5000'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.hirigen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
