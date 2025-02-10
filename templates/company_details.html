@@ -3,9 +3,11 @@
         {% extends 'base.html' %}
     {% elif current_user.role == 'jobseeker' %}
         {% extends 'jobseeker/jobseeker_base.html' %}
+    {% elif current_user.role == 'admin' %}
+        {% extends 'admin_base.html' %}
     {% endif %}
-{% elif current_user == None %}
-    {% extends 'base.html' %}
+{% elif current_user.is_authenticated is None %}
+    {% extends 'common_base.html' %}
 {% endif %}
 
 {% block content %}

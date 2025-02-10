@@ -34,7 +34,7 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 #TODO CHANGE TO 'hiregen.com' before deploying
 app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
 #TODO CHANGE TO '.hirigen.com' before deploying
-app.config['SESSION_COOKIE_DOMAIN'] = '.hirigen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
@@ -669,15 +669,9 @@ def admin_restore_user(user_id):
 @requires_any_permission("manage_user")
 @login_required
 def admin_view_user_profile(user_id):
-    user_role = current_user.role
-    result = api_calls.admin_get_any_user(access_token=current_user.id, user_id=user_id)
-    username = result["username"]
-    email = result["email"]
-    role = result["role"]
-    resume_data = []
+    profile = api_calls.admin_get_any_user(access_token=current_user.id, user_id=user_id)
 
-    return render_template('admin_view_user_profile.html', resume_data=resume_data, email=email, role=role,
-                           username=username, user_role=user_role)
+    return render_template('admin_view_user_profile.html', profile=profile, profile_picture=profile.get('profile_picture'), company=profile.get('company'))
 
 
 @app.route('/admin/logout')

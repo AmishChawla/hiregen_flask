@@ -1,514 +1,135 @@
-{% extends 'base.html' %}
+{% extends 'admin_base.html' %}
 
 {% block content %}
-<style>
-.profile-hover-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.profile-hover-wrapper:hover .hover-btn {
-  display: inline-block;
-}
-
-.hover-btn {
-  display: none;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -25px;
-  cursor: pointer;
-}
-
-.hover-btn i {
-  font-size: 16px;
-  color: grey;
-}
-
-.profile-user-img img:hover + .hover-btn {
-  display: inline-block;
-}
-
-
-.list-group-item {
-    border: none;
-    padding: 10px 15px;
-    transition: background-color 0.3s ease;
-}
-
-.list-group-item:hover {
-    background-color: #f0f0f0;
-}
-
-.list-group-item i {
-    font-size: 1.2rem;
-}
-
-.list-group-item a {
-    font-size: 0.9rem;
-}
-
-.list-group-item a:hover {
-    color: #007bff;
-    text-decoration: underline;
-}
-
-</style>
-<style>
-  /* General styling for card */
-  .card {
-    border: none;
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
-    border-radius: 8px;
-    margin-bottom: 20px;
-    overflow: hidden;
-  }
-
-  .card-header {
-    background-color: #ffffff;
-    padding: 12px 16px;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-  }
-
-  .card-tools a {
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: #007bff;
-    text-decoration: none;
-  }
-
-  .card-tools a:hover {
-    color: #007bfb
-    font-weight: bold;
-    text-decoration: none;
-  }
-
-  .card-body {
-    padding: 16px;
-    background-color: #fff;
-    font-size: 0.9rem;
-    color: #555;
-  }
-
-  /* Styling for table inside Resume card */
-  #userResumeTable .table-hover tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-
-  #userResumeTable td.clickable a {
-    text-decoration: none;
-    color: #007bff;
-  }
-
-  /* Styling for items inside each section */
-  .container-fluid {
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .container-fluid:last-child {
-    border-bottom: none;
-  }
-
-  .container-fluid div {
-    line-height: 1.4;
-  }
-
-  /* Modal styling */
-  .modal .modal-content {
-    border-radius: 8px;
-  }
-
-  /* Trash icon */
-  .float-sm-right a i {
-    transition: color 0.3s ease;
-  }
-
-  .float-sm-right a i:hover {
-    color: #d9534f;
-  }
-</style>
-<style>
-    .upload-resume-card {
-        border: 2px dashed #ccc;
-        padding: 0;
-        text-align: center;
-        position: relative;
-        margin-bottom: 0;
-
-    }
-
-    .upload-resume-card.dragover {
-        border-color: #000;
-    }
-
-    .file-input {
-        position: absolute;
-        left: -9999px;
-    }
-
-    .btn-select, .btn-upload {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .btn-select:hover, .btn-upload:hover {
-        background-color: #0056b3;
-    }
-
-    .file-list {
-        margin-top: 20px;
-        text-align: left;
-    }
-
-    .file-list p {
-        margin: 0;
-        padding: 5px;
-    }
-
-    .error-message {
-        color: red;
-        font-size: 14px;
-    }
-
-    .disclaimer {
-        font-size: 14px;
-        color: #555;
-    }
-
-
-.loader {
-  width: 100%;
-  height: 4.8px;
-  display: none;
-  position: relative;
-  background: rgba(255, 255, 255, 0.15);
-  overflow: hidden;
-}
-.loader::after {
-  content: '';
-  width: 192px;
-  height: 4.8px;
-  background: #0d6efd;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  animation: animloader 2s linear infinite;
-}
-
-@keyframes animloader {
-  0% {
-    left: 0;
-    transform: translateX(-100%);
-  }
-  100% {
-    left: 100%;
-    transform: translateX(0%);
-  }
-}
-
-</style>
-
-
-
 <section class="content">
-      <div class="container-fluid">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Profile Section -->
+    <div class="text-center">
+      <div class="relative inline-block">
+        {% if profile_info.profile_picture %}
+        <img class="w-32 h-32 rounded-full mx-auto" src="{{ profile_info.profile_picture }}" alt="User profile picture">
+        {% else %}
+        <img class="w-32 h-32 rounded-full mx-auto" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
+        {% endif %}
+      </div>
+    </div>
 
-            <!-- Profile Image -->
-              <div class="mt-4 box-profile">
-                <div class="text-center">
-                  <div class="">
-                    {% if profile_info.profile_picture %}
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{ profile_info.profile_picture }}"
-                       alt="User profile picture">
-                    {% else %}
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="{{ url_for('static', filename='images/man.png') }}"
-                       alt="User profile picture">
-                    {% endif %}
-
-                </div>
-                </div>
-
-
-                <h3 class="text-center profile-username" style="text_overflow: hidden;">
-                  {{ profile_info.name }}
-                </h3>
-
-                <p class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem; ">
-                  <div class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem;">
-                  {{ profile_info.email }}
-                  </div>
-                <div class="text-center text-secondary" style="text_overflow: hidden; font-size:0.9rem;">
-                  {% if profile_info.phone_number  %}
-                  {{ profile_info.phone_number }}
-                  {% else %}
-                  No Mobile Number
-                  {% endif %}
-                </div>
-                </p>
-
+    <section class="content">
+      <div class="container mx-auto px-4 py-8">
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg">
+          <div class="px-4 py-6 sm:px-6">
+            <h3 class="text-base/7 font-semibold text-gray-900">Profile Information</h3>
+            <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details and contact information.</p>
+          </div>
+          <div class="border-t border-gray-100">
+            <dl class="divide-y divide-gray-100">
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-900">Full Name</dt>
+                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{{ profile_info.name }}</dd>
               </div>
-              <!-- /.card-body -->
-        <div class="row">
-          <div class="col-md-3">
-<ul class="list-group mb-3">
-  <li class="list-group-item">
-    <a href="#profileSummary" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-person-circle me-2"></i> Profile Summary
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#resume" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-file-earmark-text me-2"></i> Resume
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#education" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-book me-2"></i> Education
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#experience" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-briefcase me-2"></i> Experience
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#internships" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-building me-2"></i> Internships
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#projects" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-folder2-open me-2"></i> Projects
-    </a>
-  </li>
-  <li class="list-group-item">
-    <a href="#accomplishments" class="text-decoration-none link-dark d-flex align-items-center">
-      <i class="bi bi-trophy me-2"></i> Accomplishments
-    </a>
-  </li>
-</ul>
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-900">Email Address</dt>
+                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{{ profile_info.email }}</dd>
+              </div>
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-900">Phone Number</dt>
+                <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{{ profile_info.phone_number }}</dd>
+              </div>
+            </dl>
           </div>
-          <div class="col-md-9">
-            <div class="card card-outline" id="profileSummary">
-  <div class="card-header">
-    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">About </h3>
-    <!-- /.card-tools -->
-  </div>
-  <!-- /.card-header -->
-  <div class="card-body">
-    {% if profile_info.profile_summary %}
-    {{ profile_info.profile_summary.content }}
-
-    {% endif %}
-
-
-  </div>
-
-  <!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="resume">
-  <div class="card-header">
-    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Resume </h3>
-    <div class="card-tools">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-    </div>
-    <!-- /.card-tools -->
-  </div>
-  <!-- /.card-header -->
-  <div class="card-body">
-    <table id="userResumeTable" class="table table-hover">
-            <tbody>
-        {% for row in resumes %}
-
-            <tr>
-<!--              <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}">-->
-                 <td class="clickable"> <a href="{{ root_url + row.file_url }}" style="text-overflow: hidden;"> {{ row.filename }} </a></td>
-
-                <td>
-</td>
-
-<!--                </a>-->
-            </tr>
-
-        {% endfor %} <!-- Your table body content here -->
-            </tbody>
-
-        </table>
-
-  </div>
-  <!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="education">
-  <div class="card-header">
-    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Education </h3>
-    <div class="card-tools">
-      <!-- Buttons, labels, and many other things can be placed here! -->
-      <!-- Here is a label for example -->
-    </div>
-    <!-- /.card-tools -->
-  </div>
-  <!-- /.card-header -->
-  <div class="card-body">
-        {% for data in profile_info.education %}
-    <div class="container-fluid mb-2">
-      <div style="font-size: 0.9rem;">
-        {{ data.degree }} in {{ data.field_of_study }} from {{ data.institution_name }}
-      </div>
-      <div style="color: grey; font-size: 0.8rem;">
-        {% if data.is_ongoing %}
-        {{ data.start_date }} - Present
-        {% else %}
-        {{ data.start_date }} - {{ data.end_date }}
-        {% endif %}
-      </div>
-    </div>
-
-        {% endfor %}
-  </div>
-  <!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="experience">
-  <div class="card-header">
-    <h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Experience </h3><!-- /.card-tools -->
-  </div>
-  <!-- /.card-header -->
-  <div class="card-body">
-        {% for data in profile_info.experiences %}
-    <div class="container-fluid mb-2">
-      <div style="font-size: 0.9rem; font-weight:bold;">
-        {{ data.position.capitalize() }}
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.company_name.capitalize() }}
-      </div>
-      <div style="color: grey; font-size: 0.8rem;">
-        {% if data.is_ongoing %}
-        {{ data.start_date }} - Present
-        {% else %}
-        {{ data.start_date }} - {{ data.end_date }}
-        {% endif %}
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.responsibilities }}
-      </div>
-    </div>
-
-        {% endfor %}
-  </div>
-  <!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="internships">
-<div class="card-header">
-<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Internships </h3>
-<div class="card-tools">
-<!-- Buttons, labels, and many other things can be placed here! -->
-<!-- Here is a label for example -->
-</div>
-<!-- /.card-tools -->
-</div>
-<!-- /.card-header -->
-<div class="card-body">
-        {% for data in profile_info.internships %}
-    <div class="container-fluid mb-2">
-      <div style="font-size: 0.9rem; font-weight:bold;">
-        {{ data.position.capitalize() }}
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.company_name.capitalize() }}
-      </div>
-      <div style="color: grey; font-size: 0.8rem;">
-        {% if data.is_ongoing %}
-        {{ data.start_date }} - Present
-        {% else %}
-        {{ data.start_date }} - {{ data.end_date }}
-        {% endif %}
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.job_description }}
-      </div>
-    </div>
-
-        {% endfor %}
-</div>
-<!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="projects">
-<div class="card-header">
-<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Projects </h3>
-<div class="card-tools">
-<!-- Buttons, labels, and many other things can be placed here! -->
-<!-- Here is a label for example -->
-</div>
-<!-- /.card-tools -->
-</div>
-<!-- /.card-header -->
-<div class="card-body">
-        {% for data in profile_info.projects %}
-    <div class="container-fluid mb-2">
-      <div style="font-size: 0.9rem; font-weight:bold;">
-        {{ data.title }}
-      </div>
-      <div style="color: grey; font-size: 0.9rem;">
-         <a href="{{ data.project_url }}" style="color: grey;">{{ data.project_url }}</a>
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.description }}
-      </div>
-
-    </div>
-        {% endfor %}
-</div>
-<!-- /.card-body -->
-</div>
-            <div class="card card-outline" id="accomplishments">
-<div class="card-header">
-<h3 class="card-title" style="font-weight:bold; font-size:0.9rem;">Accomplishments </h3>
-<!-- /.card-tools -->
-</div>
-<!-- /.card-header -->
-<div class="card-body">
-        {% for data in profile_info.accomplishments %}
-    <div class="container-fluid mb-2">
-      <div style="font-size: 0.9rem; font-weight:bold;">
-        {{ data.title }}
-      </div>
-      <div style="color: grey; font-size: 0.9rem;">
-         <a href="{{ data.project_url }}" style="color: grey;">{{ data.achievement_date }}</a>
-      </div>
-      <div style="font-size: 0.9rem;">
-        {{ data.description }}
-      </div>
-    </div>
-
-        {% endfor %}
-</div>
-<!-- /.card-body -->
-</div>
-          </div>
-<!-- /.card -->
-</div>
         </div>
+      </div>
     </section>
 
-{% endblock %}
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
+      <div class="overflow-hidden rounded-md bg-white shadow">
+        <ul role="list" class="divide-y divide-gray-200">
+          <li class="px-6 py-4"><a href="#profileSummary" class="text-gray-800 hover:text-blue-600">Profile Summary</a></li>
+          <li class="px-6 py-4"><a href="#education" class="text-gray-800 hover:text-blue-600">Education</a></li>
+          <li class="px-6 py-4"><a href="#experience" class="text-gray-800 hover:text-blue-600">Experience</a></li>
+          <li class="px-6 py-4"><a href="#internships" class="text-gray-800 hover:text-blue-600">Internships</a></li>
+          <li class="px-6 py-4"><a href="#projects" class="text-gray-800 hover:text-blue-600">Projects</a></li>
+          <li class="px-6 py-4"><a href="#accomplishments" class="text-gray-800 hover:text-blue-600">Accomplishments</a></li>
+        </ul>
+      </div>
 
+      <div class="col-span-3 space-y-6">
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="profileSummary">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">About</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            <p class="text-sm">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
+          </div>
+        </div>
 
-{% block scripts %}
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="education">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Education</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for education in profile_info.education %}
+            <p class="text-sm">{{ education.degree }} in {{ education.field_of_study }} from {{ education.institution_name }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="experience">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Experience</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for experience in profile_info.experiences %}
+            <p><span class="font-semibold">{{ experience.position }}</span> <em class="font-light text-sm">at</em> <span class="font-semibold">{{ experience.company_name }}</span></p>
+            <p class="text-sm">({{ experience.start_date }} - {{ experience.end_date or 'Present' }})</p>
+            <p class="text-xs">{{ experience.responsibilities }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+                        <!-- Internships -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="internships">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Internships</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for internship in profile_info.internships %}
+            <p><span class="font-semibold">{{ internship.position }} </span> <em class="font-light text-sm"> at </em> <span class="font-semibold"> {{ internship.company_name }} </span> </p>
+            <p class="text-sm">({{ internship.start_date }} - {{ internship.end_date or 'Present' }})</p>
+            <p class="text-xs">{{ internship.job_description }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Projects -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="projects">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Projects</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for project in profile_info.projects %}
+            <p class="font-semibold">{{ project.title }}</p>
+            <p class="text-xs">{{ project.description }}</p>
+            <p><a href="{{ project.project_url }}" class="text-blue-600 hover:underline">{{ project.project_url }}</a></p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Accomplishments -->
+        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="accomplishments">
+          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+            <h3 class="text-base font-semibold text-gray-900">Accomplishments</h3>
+          </div>
+          <div class="px-4 py-5 sm:p-6">
+            {% for accomplishment in profile_info.accomplishments %}
+            <p class="font-semibold">{{ accomplishment.title }} - {{ accomplishment.achievement_date }}</p>
+            <p class="text-xs">{{ accomplishment.description }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

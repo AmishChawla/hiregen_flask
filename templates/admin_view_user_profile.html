@@ -1,94 +1,108 @@
-{% if request.endpoint == 'user_history' %}
-    {% extends 'base.html' %}
-{% else %}
-    {% extends 'admin_base.html' %}
-{% endif %}
+{% extends 'admin_base.html' %}
 
-{% block title %}User History{% endblock %}
+{% block title %}Profile{% endblock %}
+
+{% block styles %}
+    <style>
+        .img-upload {
+            position: relative;
+            display: inline-block;
+        }
+        .edit-icon {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 50%;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
-    {% if request.endpoint != 'user_history' %}
-        <div style="margin-bottom: 20px">
-            <div class="card-header bg-white text-black text-center">
-                <h2>Profile</h2>
-            </div>
-
-            <div class="profile-arrange" style="display: flex; flex-direction: row; justify-content: space-between; width: 60%; margin: auto;">
-                <div class="profile-picture text-center" style="width: 20%;">
-                    <div class="card-img-top text-center my-3" style="margin-top: 5%;">
-                        <img src="/static/images/man.png" style="max-width: 300px; width: 10rem; height: 10rem;">
-                    </div>
-                </div>
-                <div class="profile-details" style="width: 70%; margin-top: 4%">
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text text-secondary" style="width:100%"><i class="bi bi-person-fill" style="margin-right:20px"></i>{{ username }}</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text text-secondary" style="width:100%"><i class="bi bi-envelope" style="margin-right:20px"></i>{{ email }}</span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="input-group">
-                            <span class="input-group-text text-secondary" style="width:100%"><i class="bi bi-envelope" style="margin-right:20px"></i>{{ role }}</span>
-                        </div>
-                    </div>
-                </div>
+<div class="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
+        <div class="flex justify-center mb-6">
+            <div class="img-upload relative">
+                <img src="{{ profile_picture or url_for('static', filename='images/man.png') }}" alt="Profile Picture" class="w-32 h-32 rounded-full border-2 border-gray-300">
             </div>
         </div>
-    {% endif %}
-<link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css", rel="stylesheet">
-    <div class="main-panel">
-        <div class="content-wrapper" style = "background-color:#ffffff">
 
-            <div class="page-header"></div>
-            {% if resume_data %}
-                <div class="row">
-                    <div class="col-lg-12 grid-margin stretch-card">
-                        <div class="card" style="overflow-x:auto;">
-                            <div class="card-body" style="padding: 2rem;">
-                                <h4 class="card-title">Resume History</h4>
-                                <table id="userHistoryTable" class="hover table " style="width:100%; ">
-                                    <thead>
-                                        <tr>
-                                            <th> Sr. No. </th>
-                                            <th> Upload Date </th>
-
-                                            <th> CSV File </th>
-                                            <th> XML File </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for data in resume_data|reverse %}
-                                            <tr style="max-height: 100px; overflow-y: auto; ">
-                                                <td class="py-1">{{ loop.index }}</td>
-                                                <td class="py-1">{{ data.upload_datetime.split('T')[0] }} {{ data.upload_datetime.split('T')[1][:8] }}</td>
-
-                                                <td><a href="data:application/csv;charset=utf-8,{{ data.csv_file }}" download="data.csv">Download CSV</a></td>
-                                                <td><a href="data:application/xml;charset=utf-8,{{ data.xml_file|e }}" download="data.xml">Download XML</a></td>
-
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <br>
-            {% else %}
-                <div class="d-flex justify-content-center align-items-center" style="height: 50vh;">
-                    <p>No history</p>
-                </div>
-            {% endif %}
+        <div class="relative py-4">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <div class="relative flex justify-start">
+                <span class="bg-white dark:bg-gray-800 pr-3 text-base font-semibold text-gray-900 dark:text-gray-200">Personal Details</span>
+            </div>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-gray-300">First Name</p>
+                <p class="text-base text-gray-900 dark:text-gray-200">{{ profile.firstname }}</p>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Last Name</p>
+                <p class="text-base text-gray-900 dark:text-gray-200">{{ profile.lastname }}</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Username</p>
+                <p class="text-base text-gray-900 dark:text-gray-200">{{ profile.username }}</p>
+            </div>
+            <div>
+                <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Email</p>
+                <p class="text-base text-gray-900 dark:text-gray-200">{{ profile.email }}</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Phone Number</p>
+            <p class="text-base text-gray-900 dark:text-gray-200">{{ profile.phone_number }}</p>
+        </div>
+
+        {% if company %}
+        <div class="relative py-4">
+            <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+            </div>
+            <div class="relative flex justify-start">
+                <span class="bg-white dark:bg-gray-800 pr-3 text-base font-semibold text-gray-900 dark:text-gray-200">Company Details</span>
+            </div>
+        </div>
+        <div class="flex justify-center mb-6">
+            <div class="img-upload relative">
+                <img src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="Company Logo" class="w-32 h-32 rounded-full border-2 border-gray-300">
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Company Name</p>
+            <p class="text-base text-gray-900 dark:text-gray-200">{{ company.name }}</p>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Location</p>
+            <p class="text-base text-gray-900 dark:text-gray-200">{{ company.location }}</p>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Website</p>
+            <p class="text-base text-gray-900 dark:text-gray-200">{{ company.company_website }}</p>
+        </div>
+
+        <div class="mt-4">
+            <p class="text-sm font-medium text-gray-900 dark:text-gray-300">Description</p>
+            <p class="text-base text-gray-900 dark:text-gray-200">{{ company.company_description }}</p>
+        </div>
+        {% else %}
+        {% endif %}
+
     </div>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
-<script>new DataTable('#userHistoryTable');</script>
-
+</div>
 {% endblock %}
