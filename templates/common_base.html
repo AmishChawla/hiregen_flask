@@ -179,61 +179,176 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-    <div id="wrapper">
-        <header>
-            <h1>HireGen</h1>
-            <nav id="nav-menu" class="nav-menu" style="display:flex !important;">
-                <a href="{{url_for('index')}}#features">Features</a>
-                <a href="{{ url_for('user_view_plan') }}">Pricing</a>
-                <a href="{{url_for('index')}}#contact">Contact</a>
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">JobSeekers</a>
-                    <div class="dropdown-content">
-                        <a href="{{url_for('jobseeker_login')}}">Login</a>
-                        <a href="{{url_for('jobseeker_register')}}">Get Started</a>
-                        <a href="{{url_for('jobs_search')}}">Search Jobs</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">AI</a>
-                    <div class="dropdown-content">
-                        <a href="{{url_for('chatbot')}}">Chatbot</a>
-                        <a href="{{url_for('resume_parser')}}">Resume Parsing</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#" class="dropbtn">Resources</a>
-                    <div class="dropdown-content">
-                        <a href="{{url_for('all_cms_post')}}#">Blog</a>
-                        <a href="{{url_for('index')}}#faqs">FAQ's</a>
-                        <a href="{{url_for('about_us')}}">About Us</a>
-                        <a href="{{url_for('index')}}#">Solutions</a>
-                    </div>
-                </div>
-                <a href="{{ url_for('login') }}">Login</a>
-                <button onclick="window.location.href='{{ url_for('register') }}'" class="get-started">Try for Free</button>
-            </nav>
-            <div class="burger" onclick="toggleMenu()">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
+    <div id="wrapper bg-white">
+        <header class="mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center p-4">
+          <div class="flex items-center">
+            <div class="logo">
+              <Link href="/">
+                <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
+              </Link>
             </div>
+            <button class="ml-auto md:hidden" onClick={toggleMenu}>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+              </svg>
+            </button>
+          </div>
+          <nav class="flex-col md:flex-row md:flex items-center space-x-10">
+            <li class="flex relative group">
+              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Features</span></a>
+              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+              <!-- Submenu starts -->
+              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('index')}}#features">Recruitment software</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Applicant Tracking System</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Resume Parsing</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Recruitment CRM</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Candidate Matching</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">AI Recruitment</a></li>
+              </ul>
+              <!-- Submenu ends -->
+            </li>
+            <li class="flex relative group">
+              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">AI</span></a>
+              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+              <!-- Submenu starts -->
+              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/employer/login?next=%2Fresume-parser">Resume Screening</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Candidate Matching</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/chatbot">Chatbots</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Recruitment Analytics</a></li>
+              </ul>
+              <!-- Submenu ends -->
+            </li>
+            <a href="#pricing"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Pricing</span></a>
+            <a href="#contact"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Contact</span></a>
+<!--            <li class="flex relative group">-->
+<!--              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Job Seeker</span></a>-->
+<!--              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>-->
+<!--              &lt;!&ndash; Submenu starts &ndash;&gt;-->
+<!--              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">-->
+<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobseeker/login">Login</a></li>-->
+<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobseeker/register">Get Started</a></li>-->
+<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobs/search">Search Jobs</a></li>-->
+<!--              </ul>-->
+<!--              &lt;!&ndash; Submenu ends &ndash;&gt;-->
+<!--            </li>-->
+            <li class="flex relative group">
+              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Resources</span></a>
+              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+              <!-- Submenu starts -->
+              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('all_cms_post')}}">Blog</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="#faq">FAQ's</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('about_us')}}">About Us</a></li>
+                <li class="text-sm hover:bg-slate-100 leading-8"><a href="#">Solutions</a></li>
+              </ul>
+              <!-- Submenu ends -->
+            </li>
+            <a href="{{url_for('login')}}"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Sign in</span></a>
+            <a href="{{url_for('register')}}" class="inline-flex justify-center rounded-full bg-blue-700 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Free trial</a>
+          </nav>
         </header>
-
         {% block content %}
         {% endblock %}
     </div>
 
-    <footer>
-        <p>&copy; 2024 HireGen. All rights reserved. | <a href="{{url_for('index')}}#features">Features</a> | <a href="{{url_for('index')}}#contact">Contact</a> | <a href="#">Privacy Policy</a></p>
-    </footer>
+      <footer class="bg-white py-10 sm:py-20 border-y border-gray-200">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">Services</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">AI Recruitment </a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Candidate Screening</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Resume Parsing</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Career Site</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Interview Scheduling</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">Products</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Recruitment Software</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Applicant Tracking Software</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Recruitment CRM</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Staffing Software</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Job Board Software</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">AI Recruitment Tools</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">AI Agents</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">Recruitment Chatbots</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">AI Candidate Matching</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">AI Job Matching</a></li>
+                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="ddd">AI Interview</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="logo"><a href="/">
+              <Image
+          alt="Logo"
+          src="/static/images/logo.webp"
+          class="w-auto h-6"
+          width="6659"
+          height="1086"
+
+      />
+
+              </a></div>
+              <p class="mt-5 text-base text-slate-500">Hiregen.com leverages AI-driven recruitment software to streamline hiring, saving time and ensuring you attract, evaluate, and hire top talent effortlessly for your organization.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <section class="bg-white py-6 sm:py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <nav class="flex flex-wrap justify-center sm:justify-start space-x-4 gap-y-3 text-sm text-slate-600">
+              <a class="hover:text-indigo-600" href="#">Privacy Policy</a>
+              <a class="hover:text-indigo-600" href="#">Terms of Service</a>
+              <a class="hover:text-indigo-600" href="#">Contact</a>
+              <a class="hover:text-indigo-600" href="#">Support</a>
+              <a class="hover:text-indigo-600" href="#">FAQ</a>
+              <Link href="/about" legacyBehavior><a class="hover:text-indigo-600">About</a></Link>
+            </nav>
+            <div class="flex justify-center sm:justify-end space-x-4">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fas fa-rss"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('nav-menu').classList.toggle('active');
-        }
-    </script>
-    {% block scripts %}
-    {% endblock %}
+      function openAnsSection(val) {
+  var p = document.getElementById("para" + val);
+  var svg = document.getElementById("path" + val);
+
+  if (p.classList.contains("hidden")) {
+    p.classList.remove("hidden");
+    p.classList.add("block");
+  } else {
+    p.classList.remove("block");
+    p.classList.add("hidden");
+  }
+
+  if (svg.classList.contains("hidden")) {
+    svg.classList.remove("hidden");
+    svg.classList.add("block");
+  } else {
+    svg.classList.remove("block");
+    svg.classList.add("hidden");
+  }
+}
+</script>
+<script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+
+</script>
 </body>
 </html>
