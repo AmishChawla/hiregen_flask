@@ -1,0 +1,76 @@
+{% extends 'common_base.html' %}
+
+{% block content %}
+
+<div class="p-6 bg-white rounded-lg shadow-md">
+
+  <!-- Sitemap Title -->
+  <div class="flex flex-col md:flex-row md:items-center md:justify-start">
+    <div class="flex-1">
+      <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl sm:tracking-tight">Sitemap</h2>
+    </div>
+  </div>
+
+  <!-- Companies Section -->
+<div class="mt-5">
+  <h3 class="text-base font-semibold text-gray-900">Companies</h3>
+</div>
+  {% if company_list %}
+    <ul role="list" class="mt-4">
+      {% for company in company_list %}
+      <li class="flex justify-start gap-x-6 py-2">
+        <div class="min-w-0">
+          <a href="{{ company.url }}" class="text-blue-600 font-medium hover:underline">
+            {{ company.company_name }}
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500 mt-2">No companies available.</p>
+  {% endif %}
+
+  <!-- Jobs Section -->
+<div class="mt-5">
+  <h3 class="text-base font-semibold text-gray-900">Jobs</h3>
+</div>
+  {% if jobs_list %}
+    <ul role="list" class="mt-4">
+      {% for job in jobs_list %}
+      <li class="flex justify-start gap-x-6 py-2">
+        <div class="min-w-0">
+          <a href="{{ job.url }}" class="text-blue-600 font-medium hover:underline">
+            {{ job.job_title }}
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500 mt-2">No job listings available.</p>
+  {% endif %}
+
+  <!-- Posts Section -->
+<div class="mt-5">
+  <h3 class="text-base font-semibold text-gray-900">Blog Posts</h3>
+</div>
+  {% if posts_list %}
+    <ul role="list" class="mt-4">
+      {% for post in posts_list %}
+      <li class="flex justify-start gap-x-6 py-2">
+        <div class="min-w-0">
+          <a href="{{ post.url }}" class="text-blue-600 font-medium hover:underline">
+            {{ post.post_title }}
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500 mt-2">No blog posts available.</p>
+  {% endif %}
+
+</div>
+
+{% endblock %}

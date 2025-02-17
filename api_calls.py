@@ -3567,3 +3567,24 @@ def get_admin_stats_for_dashboard(access_token):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+############################################# GET SITEMAP DATA ##################################################
+
+def get_sitemap_data():
+    try:
+        response = requests.get(constants.BASE_URL + f'/admin/sitemap-data')
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            return result
+
+        else:
+            print("API Error:", response.text)
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")

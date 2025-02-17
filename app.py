@@ -4594,40 +4594,114 @@ def jobseeker_profile_choice():
 ############################################## ALL ROUTES ABOVE THIS ################################################################
 ################################################   SITEMAP.XML  #####################################################################
 #####################################################################################################################################
-def generate_urls(app):
-    """
-    Generates a list of URLs for all registered routes in the Flask app
-    that start with a username variable part.
-    """
-    urls = []
-    # Define a pattern that indicates a username variable part in the URL rule
-    username_pattern = '/<'
+@app.route('/sitemap')
+def sitemap_html():
+    try:
+        sitemap_data = api_calls.get_sitemap_data()
+        company_list = sitemap_data.get('companies', []) or []
+        jobs_list = sitemap_data.get('jobs', []) or []
+        posts_list = sitemap_data.get('posts', []) or []
+    except Exception:
+        print(Exception)
+    # Return the sitemap as an XML response
+    return render_template('sitemap.html', company_list=company_list, jobs_list=jobs_list, posts_list=posts_list)
 
-    for rule in app.url_map.iter_rules():
-        # Ignore HEAD rules since they don't serve content
-        if rule.methods != {'HEAD'}:
-            # Check if the rule starts with a username variable part
-            if str(rule).startswith(username_pattern):
-                urls.append(str(rule))
+@app.route('/sitemap/table')
+def sitemap_table():
+    return render_template('sitemap_table.html')
 
-    return urls
+@app.route('/sitemap/<sitemap_key>/sitemap.xml')
+def sitemap_by_key(sitemap_key):
+    try:
+        sitemap_data = api_calls.get_sitemap_data()
+        company_list = sitemap_data.get('companies', []) or []
+        jobs_list = sitemap_data.get('jobs', []) or []
+        posts_list = sitemap_data.get('posts', []) or []
+    except Exception:
+        print(Exception)
+
+    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>\n"""
+    sitemap_xml += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
+
+    if sitemap_key == 'companies':
+        for entry in company_list:
+            sitemap_xml += f"""
+            <url>
+                <loc>{entry['url']}</loc>
+                <lastmod>{entry['lastmod']}</lastmod>
+                <priority>{entry['priority']}</priority>
+            </url>"""
+        sitemap_xml += "\n</urlset>"
+
+    elif sitemap_key == 'jobs':
+        for entry in jobs_list:
+            sitemap_xml += f"""
+            <url>
+                <loc>{entry['url']}</loc>
+                <lastmod>{entry['lastmod']}</lastmod>
+                <priority>{entry['priority']}</priority>
+            </url>"""
+        sitemap_xml += "\n</urlset>"
+
+    elif sitemap_key == 'posts':
+
+        for entry in posts_list:
+            sitemap_xml += f"""
+            <url>
+                <loc>{entry['url']}</loc>
+                <lastmod>{entry['lastmod']}</lastmod>
+                <priority>{entry['priority']}</priority>
+            </url>"""
+
+        sitemap_xml += "\n</urlset>"
+
+    # Return the sitemap as an XML response
+    return Response(sitemap_xml, mimetype="application/xml")
+
 
 @app.route('/sitemap.xml')
 def sitemap():
-    urls = generate_urls(app)  # Use the function from Step 1
-    # Start building the sitemap structure
-    sitemap_xml = ET.Element('urlset', xmlns='http://www.sitemaps.org/schemas/sitemap/0.9')
+    try:
+        sitemap_data = api_calls.get_sitemap_data()
+        company_list = sitemap_data.get('companies', []) or []
+        jobs_list = sitemap_data.get('jobs', []) or []
+        posts_list = sitemap_data.get('posts', []) or []
+    except Exception:
+        print(Exception)
 
-    for url in urls:
-        url_element = ET.SubElement(sitemap_xml, 'url')
-        loc = ET.SubElement(url_element, 'loc')
-        loc.text = url
+    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>\n"""
+    sitemap_xml += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
 
-    # Convert the ElementTree object to a string
-    sitemap_str = ET.tostring(sitemap_xml, encoding='utf8').decode('utf8')
+    for entry in company_list:
+        sitemap_xml += f"""
+    <url>
+        <loc>{entry['url']}</loc>
+        <lastmod>{entry['lastmod']}</lastmod>
+        <priority>{entry['priority']}</priority>
+    </url>"""
+
+    for entry in jobs_list:
+        sitemap_xml += f"""
+    <url>
+        <loc>{entry['url']}</loc>
+        <lastmod>{entry['lastmod']}</lastmod>
+        <priority>{entry['priority']}</priority>
+    </url>"""
+
+    for entry in posts_list:
+        sitemap_xml += f"""
+    <url>
+        <loc>{entry['url']}</loc>
+        <lastmod>{entry['lastmod']}</lastmod>
+        <priority>{entry['priority']}</priority>
+    </url>"""
+
+    sitemap_xml += "\n</urlset>"
+
+
 
     # Return the sitemap as an XML response
-    return Response(sitemap_str, mimetype="application/xml")
+    return Response(sitemap_xml, mimetype="application/xml")
 
 @app.route('/robots.txt')
 def robots_txt():

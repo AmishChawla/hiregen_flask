@@ -179,8 +179,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-    <div id="wrapper bg-white">
-        <header class="mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center p-4">
+    <header class="w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center p-4">
           <div class="flex items-center">
             <div class="logo">
               <Link href="/">
@@ -249,9 +248,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <a href="{{url_for('register')}}" class="inline-flex justify-center rounded-full bg-blue-700 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Free trial</a>
           </nav>
         </header>
+
+    <div id="wrapper" class="w-full bg-white">
         {% block content %}
         {% endblock %}
     </div>
+
+
+
+    <script>
+      function openAnsSection(val) {
+  var p = document.getElementById("para" + val);
+  var svg = document.getElementById("path" + val);
+
+  if (p.classList.contains("hidden")) {
+    p.classList.remove("hidden");
+    p.classList.add("block");
+  } else {
+    p.classList.remove("block");
+    p.classList.add("hidden");
+  }
+
+  if (svg.classList.contains("hidden")) {
+    svg.classList.remove("hidden");
+    svg.classList.add("block");
+  } else {
+    svg.classList.remove("block");
+    svg.classList.add("hidden");
+  }
+}
+</script>
+<script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+</body>
 
       <footer class="bg-white py-10 sm:py-20 border-y border-gray-200">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -294,9 +322,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           class="w-auto h-6"
           width="6659"
           height="1086"
-
       />
-
               </a></div>
               <p class="mt-5 text-base text-slate-500">Hiregen.com leverages AI-driven recruitment software to streamline hiring, saving time and ensuring you attract, evaluate, and hire top talent effortlessly for your organization.</p>
             </div>
@@ -324,31 +350,4 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
       </section>
-
-    <script>
-      function openAnsSection(val) {
-  var p = document.getElementById("para" + val);
-  var svg = document.getElementById("path" + val);
-
-  if (p.classList.contains("hidden")) {
-    p.classList.remove("hidden");
-    p.classList.add("block");
-  } else {
-    p.classList.remove("block");
-    p.classList.add("hidden");
-  }
-
-  if (svg.classList.contains("hidden")) {
-    svg.classList.remove("hidden");
-    svg.classList.add("block");
-  } else {
-    svg.classList.remove("block");
-    svg.classList.add("hidden");
-  }
-}
-</script>
-<script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
-
-</script>
-</body>
 </html>
