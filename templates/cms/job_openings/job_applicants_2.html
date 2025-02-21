@@ -65,10 +65,18 @@
 <div class="container mx-auto p-6">
     <!-- Header Section -->
     <div class="flex justify-between items-center mb-6">
+        <div>
         <h1 class="text-2xl font-bold">Applicant Tracking</h1>
+        </div>
+        <div>
+        <button id="convertDownloadCsvBtn" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            Download CSV
+        </button>
+
         <button id="toggleView" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Switch to Table View
         </button>
+        </div>
     </div>
 
     <!-- Kanban View -->
@@ -803,6 +811,67 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+</script>
 
+<script>
+document.getElementById('convertDownloadCsvBtn').addEventListener('click', function() {
+    // Sample JSON data (Replace with actual JSON response from your backend)
+    const jsonData = {{ result | tojson }};
+
+    // Convert JSON to CSV
+    function jsonToCsv(json) {
+        const csvRows = [];
+        const headers = [
+            "applicant_id",
+            "application_id",
+            "applicant_name",
+            "applicant_profile_picture",
+            "applicant_email",
+            "application_date",
+            "application_status",
+            "experience_score",
+            "education_score",
+            "skill_score",
+            "leadership_score",
+            "industry_score",
+            "overall_score"
+        ];
+        csvRows.push(headers.join(",")); // Add header row
+
+        json.forEach(item => {
+            const similarity = item.similarity_scores || {}; // Handle missing similarity scores
+            const row = [
+                item.applicant_id,
+                item.application_id,
+                `"${item.applicant_name}"`,  // Wrap text values in quotes
+                item.applicant_profile_picture || "",
+                item.applicant_email,
+                item.application_date,
+                item.application_status,
+                similarity.experience_embedding || "",
+                similarity.education_embedding || "",
+                similarity.skill_embedding || "",
+                similarity.leadership_embedding || "",
+                similarity.industry_embedding || "",
+                similarity.overall_score || ""
+            ];
+            csvRows.push(row.join(","));
+        });
+
+        return csvRows.join("\n");
+    }
+
+    // Create CSV Blob and trigger download
+    const csvData = jsonToCsv(jsonData);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "job_applications.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});
 </script>
 {% endblock %}
