@@ -3,58 +3,129 @@
 {% block title %}Add Plan{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card border-0">
-                    <!-- Add a card header "Register" -->
-                    <div class="card-header bg-white text-black text-center">
-                        <h2>Add Plan</h2>
-                    </div>
-
-                    <div class="card-body">
-
-
-                        <form method="post" action="{{ url_for('add_plan') }}">
-                            {{ form.hidden_tag() }}
-
-                            <div class="mb-3">
-                                {{ form.name(class="form-control", placeholder="Name", required=True) }}
-                            </div>
-
-                            <div class="mb-3">
-                                {{ form.duration(class="form-control", placeholder="Duration (Months)", required=True) }}
-                            </div>
-
-                            <div class="mb-3">
-                                {{ form.fees(class="form-control",placeholder="Price in $") }}
-                                {{ form.is_free() }} {{ form.is_free.label }}
-                            </div>
-
-
-                            <div class="mb-3">
-                                {{ form.num_resume_parsing(class="form-control", placeholder="Resume Parsings Allowed (Number)",) }}
-                                    {{ form.unlimited_resume_parsing() }} {{ form.unlimited_resume_parsing.label }}
-                            </div>
-
-                            <div class="mb-3">
-                                {{ form.plan_details.label }}
-                                {{ form.plan_details(class="ckeditor", placeholder="Write details about the plan.") }}
-                            </div>
-
-                            <div class="mb-3 text-center">
-                                {{ form.submit(class="btn btn-dark btn-lg") }}
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://cdn.ckeditor.com/4.16.2/standard-all/ckeditor.js"></script>
 
 <script>
-    CKEDITOR.replace('plan_details');
+    function toggleFeature(id) {
+        let button = document.getElementById(id);
+        let isActive = button.getAttribute("aria-checked") === "true";
+        button.setAttribute("aria-checked", !isActive);
+        let toggle = button.querySelector("span");
+        toggle.classList.toggle("translate-x-5");
+        toggle.classList.toggle("translate-x-0");
+        document.getElementById(id + "_input").value = !isActive;
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+        let formData = new FormData(document.getElementById("planForm"));
+        let jsonData = {};
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        fetch("{{url_for('add_plan')}}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => alert("Plan created successfully!"))
+        .catch(error => console.error("Error:", error));
+    }
 </script>
+
+<style>
+    .toggle-btn {
+        cursor: pointer;
+        width: 44px;
+        height: 24px;
+        display: inline-flex;
+        align-items: center;
+        background-color: #e5e7eb;
+        border-radius: 9999px;
+        position: relative;
+        transition: background-color 0.3s;
+    }
+    .toggle-btn span {
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        left: 2px;
+        transition: transform 0.3s;
+    }
+    .toggle-btn[aria-checked="true"] {
+        background-color: #4f46e5;
+    }
+    .toggle-btn[aria-checked="true"] span {
+        transform: translateX(20px);
+    }
+</style>
+
+<div class="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-900">Create a Plan</h3>
+    <form id="planForm" onsubmit="submitForm(event)" class="mt-4">
+        <div class="grid grid-cols-1 gap-4">
+            <div>
+                <label for="plan_name" class="block text-sm font-medium text-gray-900">Plan Name</label>
+                <input type="text" name="plan_name" id="plan_name" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter plan name">
+            </div>
+
+            <div>
+                <label for="duration" class="block text-sm font-medium text-gray-900">Duration</label>
+                <select name="duration" id="duration" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600">
+                    {% for option in ['monthly'] %}
+                    <option value="{{ option }}">{{ option.capitalize() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-900">Price</label>
+                <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 outline-gray-300">
+                    <div class="shrink-0 select-none text-gray-500">$</div>
+                    <input type="text" name="price" id="price" class="grow py-1.5 pl-1 pr-3 text-gray-900 placeholder:text-gray-400 focus:outline-none" placeholder="0.00">
+                    <select id="currency" name="currency" class="ml-2 py-1.5 pl-3 pr-7 text-gray-500 bg-white border rounded-md">
+                        {% for currency in ['USD'] %}
+                        <option>{{ currency }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label for="job_postings" class="block text-sm font-medium text-gray-900">Job Postings</label>
+                <input type="number" name="job_postings" id="job_postings" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter number of job postings">
+            </div>
+        </div>
+
+        <h3 class="mt-6 text-lg font-semibold text-gray-900">Features</h3>
+        <div class="mt-2 grid grid-cols-1 gap-4">
+            {% for feature in [
+                ('ai_candidate_matching', 'AI Candidate Matching'),
+                ('ai_based_resume_ranking', 'AI-based Resume Ranking'),
+                ('applicant_tracking', 'Applicant Tracking'),
+                ('resume_parsing', 'Resume Parsing'),
+                ('analytics_and_reports', 'Analytics and Reports'),
+                ('interview_scheduling', 'Interview Scheduling'),
+                ('multi_user_access', 'Multi User Access'),
+                ('branded_careers_page', 'Branded Careers Page')
+            ] %}
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">{{ feature[1] }}</span>
+                <button id="{{ feature[0] }}" type="button" class="toggle-btn" aria-checked="false" onclick="toggleFeature('{{ feature[0] }}')">
+                    <span></span>
+                </button>
+                <input type="hidden" name="{{ feature[0] }}" id="{{ feature[0] }}_input" value="false">
+            </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="mt-6 w-full bg-indigo-600 text-white py-2 rounded-md">Create Plan</button>
+    </form>
+</div>
 
 {% endblock %}

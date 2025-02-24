@@ -458,19 +458,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Simple pricing, for everyone.</h2>
             <p class="mt-2 font-display text-lg sm:text-xl text-slate-600">AI Recruitment Software - Find the right plan for your team</p>
           </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
             {% for plan in pricing %}
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
             <div class="border border-gray-200 flex flex-col overflow-hidden rounded-3xl p-8 shadow-lg shadow-gray-900/5 bg-white">
-              <h3 class="font-display text-5xl tracking-tight text-slate-900 font-semibold">${{ plan.fees }}</h3>
-              <p class="mt-5 font-semibold text-lg text-blue-800">{{ plan.plan_type_name }}</p>
-              <p class="mt-4 text-lg font-semibold tracking-tight text-slate-500">Good for anyone who is self-employed and just getting started.</p>
-              <button onclick="window.location.href='{% if plan.fees == 0 %}{{ url_for('create_subscription', plan_id=plan.id) }}{% else %}{{ url_for('payment', plan_id=plan.id) }}{% endif %}'" class="inline-flex justify-center rounded-full bg-blue-700 px-4 py-2 text-base font-semibold text-white hover:bg-blue-600 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70 mt-10">Get started</button>
+              <h3 class="font-display text-5xl tracking-tight text-slate-900 font-semibold">${{ plan.price }}</h3>
+              <p class="mt-5 font-semibold text-lg text-blue-800">{{ plan.plan_name }}</p>
+<!--              <p class="mt-4 text-lg font-semibold tracking-tight text-slate-500">Good for anyone who is self-employed and just getting started.</p>-->
+              <button onclick="window.location.href='{% if plan.price == 0 %}{{ url_for('create_subscription', plan_id=plan.id) }}{% else %}{{ url_for('payment', plan_id=plan.id) }}{% endif %}'" class="inline-flex justify-center rounded-full bg-blue-700 px-4 py-2 text-base font-semibold text-white hover:bg-blue-600 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70 mt-10">Get started</button>
               <ul class="order-last mt-10 flex flex-col gap-y-3 text-md text-slate-600">
-                <li class="flex items-center"><svg aria-hidden="true" class="h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg><span class="ml-4">{{ plan.plan_details | safe }}</span></li>
+                  {% for feature in plan.features %}
+                <li class="flex items-center"><svg aria-hidden="true" class="h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg><span class="ml-4">{{ feature }}</li>
+              {% endfor %}
               </ul>
             </div>
-          </div>
             {% endfor %}
+            </div>
         </div>
       </section>
       <section class="p-4 sm:p-16 bg-white">

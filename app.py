@@ -42,7 +42,7 @@ app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-
+login_manager.init_app(app)
 uploads_folder = 'uploads'
 os.makedirs(uploads_folder, exist_ok=True)
 
@@ -77,7 +77,7 @@ def load_user(user_id):
                     profile_picture=user_from_session.get('profile_picture'))
         return user
     else:
-        return redirect(url_for('login'))
+        return None
 
 
 class User(UserMixin):
@@ -189,10 +189,14 @@ def login():
     session.pop('_flashes', None)
     print('trying')
     if current_user.is_authenticated:
-        if current_user.company is not None:
-            return redirect(url_for('user_dashboard'))
-        else:
-            return redirect(url_for('company_register'))
+        next_page = request.args.get('next')
+        if next_page:
+            return redirect(next_page)
+        return redirect(url_for('user_dashboard') if current_user.company else url_for('company_register'))
+
+    next_page = request.args.get('next') or request.form.get('next')
+    print(f"Next Page Before Validation: {next_page}")
+
     form = forms.LoginForm()
     print(form.validate_on_submit())
     if form.validate_on_submit():
@@ -228,10 +232,11 @@ def login():
                 'group':group,
                 'profile_picture': profile_picture,
             }
-            if current_user.company is not None:
-                return redirect(url_for('user_dashboard'))
-            else:
-                return redirect(url_for('company_register'))
+            next_page = next_page or (url_for('user_dashboard') if user.company else url_for('company_register'))
+            print(f"Redirecting to: {next_page}")
+            return redirect(next_page)
+
+
         elif response.status_code == 400:
             result = response.json()
             message = result["detail"]
@@ -457,6 +462,7 @@ def profile():
         form.username.data = result["username"]
         form.email.data = result["email"]
 
+        current_plan=result.get('current_plan')
         company = result.get('company', {})
         if company:
             is_company_registered = True
@@ -511,7 +517,7 @@ def profile():
             flash('Failed to update profile. Please try again.', 'danger')
 
     return render_template('profile.html', form=form, current_plans=result.get('current_plans', []),
-                           profile_picture=result.get('profile_picture'), company=result.get('company'), is_company_registered=is_company_registered)
+                           profile_picture=result.get('profile_picture'), company=result.get('company'), is_company_registered=is_company_registered, current_plan=current_plan)
 
 
 @app.route("/admin/users")
@@ -986,30 +992,51 @@ def admin_email_setup():
 @login_required
 def list_of_plans():
     result = api_calls.get_all_plans()
-    return render_template('admin_plan_page.html', result=result)
+    print(result)
+    return render_template('admin_plan_page.html', plans=result)
 
 
 @app.route('/admin/settings/add-plan', methods=['GET', 'POST'])
 @requires_any_permission("manage_subscription_plans")
 @login_required
 def add_plan():
-    form = forms.AddPlan()
-    print("outside validate on submit")
-    if form.validate_on_submit():
-        name = form.name.data
-        duration = form.duration.data
-        fees = 0 if form.is_free.data else form.fees.data
-        num_resume_parsing = 'unlimited' if form.unlimited_resume_parsing.data else form.num_resume_parsing.data
-        plan_details = form.plan_details.data
-        print("sending request to add plan")
-        result = api_calls.create_plan(plan_name=name, time_period=duration, fees=fees,
-                                       num_resume_parse=num_resume_parsing, plan_details=plan_details)
-        if result:
-            return redirect(url_for('list_of_plans'))
-    else:
-        print(form.errors)
+    if request.method == 'POST':
+        data = request.get_json()
 
-    return render_template('add_plan.html', form=form)
+        plan_name = data.get('plan_name')
+        duration = data.get('duration')
+        email = data.get('email')  # Not used in processing but included in form
+        price = data.get('price', 0.0)
+        currency = data.get('currency', 'USD')
+        job_postings = data.get('job_postings', 0)
+
+        # Features toggle
+        features = {
+            "ai_candidate_matching": data.get("ai_candidate_matching", False),
+            "ai_based_resume_ranking": data.get("ai_based_resume_ranking", False),
+            "applicant_tracking": data.get("applicant_tracking", False),
+            "resume_parsing": data.get("resume_parsing", False),
+            "analytics_and_reports": data.get("analytics_reports", False),
+            "interview_scheduling": data.get("interview_scheduling", False),
+            "multi_user_access": data.get("multi_user_access", False),
+            "branded_careers_page": data.get("branded_careers_page", False),
+        }
+
+        # Call API to create plan
+        result = api_calls.create_plan(
+            plan_name=plan_name,
+            duration=1, #months
+            price=price,
+            job_postings=job_postings,
+            features=features
+        )
+
+        if result:
+            return jsonify({"message": "Plan created successfully!"}), 201
+        else:
+            return jsonify({"error": "Failed to create plan."}), 400
+
+    return render_template('add_plan.html')
 
 
 @app.route("/admin/settings/update-plan/<plan_id>", methods=['GET', 'POST'])
@@ -1934,8 +1961,9 @@ def admin_edit_post(job_id):
 @login_required
 def payment(plan_id):
     plan = api_calls.get_plan_by_id(plan_id)  # Fetch the plan details from the database or API
+    print(plan)
 
-    if plan.fees == 0:
+    if plan.get('price') == 0:
         return redirect(url_for('create_subscription', plan_id=plan.id))
 
     return render_template('payment.html', plan_id=plan_id)
@@ -1947,7 +1975,7 @@ def create_subscription(plan_id):
     plan = api_calls.get_plan_by_id(plan_id)  # Fetch the plan details from the database or API
     print(plan)
 
-    if plan['fees'] == 0:
+    if plan.get('price') == 0:
         # Directly create the subscription for free plans
         result = api_calls.start_subscription(plan_id=plan_id, stripe_token=None, access_token=current_user.id)
         if result:

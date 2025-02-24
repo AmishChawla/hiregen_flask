@@ -374,6 +374,8 @@ footer a:hover {
     <div class="card-body">
         <form method="post" action="{{ url_for('login') }}">
             {{ form.hidden_tag() }}
+                <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+
                 <div class="form-group form-group-icon mb-4">
                     <label for="email" class="form-label">Email Address</label>
                     {{ form.email(class="form-control", placeholder="Enter your email", required=True) }}

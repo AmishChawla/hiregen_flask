@@ -806,25 +806,39 @@ def get_all_plans():
         print(f"Error: {e}")
 
 
-def create_plan(plan_name, time_period, fees, num_resume_parse, plan_details):
-    print("inside api call")
+def create_plan(plan_name, duration, price, job_postings, features, stripe_product_id=None, stripe_price_id=None):
+    print("Inside API call for creating a plan")
+
     headers = {
         'Content-Type': 'application/json',
     }
 
     data = {
-        "plan_type_name": plan_name,
-        "time_period": time_period,
-        "fees": fees,
-        "num_resume_parse": num_resume_parse,
-        "plan_details": plan_details
+        "plan_name": plan_name,
+        "duration": duration,
+        "price": price,
+        "job_postings": job_postings,
+        "ai_candidate_matching": features.get("ai_candidate_matching", False),
+        "ai_based_resume_ranking": features.get("ai_based_resume_ranking", False),
+        "applicant_tracking": features.get("applicant_tracking", False),
+        "resume_parsing": features.get("resume_parsing", False),
+        "analytics_and_reports": features.get("analytics_and_reports", False),
+        "interview_scheduling": features.get("interview_scheduling", False),
+        "multi_user_access": features.get("multi_user_access", False),
+        "branded_careers_page": features.get("branded_careers_page", False),
     }
 
     try:
         response = requests.post(constants.BASE_URL + '/plans/create-plan', json=data, headers=headers)
+        response.raise_for_status()  # Raises an HTTPError for bad responses (4xx and 5xx)
+
         if response.status_code == 200:
-            print("successful")
-            return response.json
+            print("Plan created successfully!")
+            return response.json()
+        else:
+            print(f"Failed to create plan. Status Code: {response.status_code}")
+            return None
+
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
@@ -833,6 +847,8 @@ def create_plan(plan_name, time_period, fees, num_resume_parse, plan_details):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+    return None
 
 
 def delete_plan(plan_id: int):
