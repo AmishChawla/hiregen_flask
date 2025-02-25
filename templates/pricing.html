@@ -2,114 +2,43 @@
 {% block title %}HireGen | Pricing{% endblock %}
 {% block content %}
 
-    <style>
-                .pricing-header {
-            text-align: center;
-            padding: 60px 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-        .pricing-header h2 {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .pricing-header p {
-            font-size: 18px;
-            color: #555;
-        }
-        .pricing-cards {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 40px 20px;
-        }
-        .pricing-card {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            max-width: 350px;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        .pricing-card:hover {
-            transform: translateY(-5px);
-        }
-        .pricing-card h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-        .pricing-card .price {
-            font-size: 32px;
-            color: #1A73E8;
-            margin-bottom: 10px;
-        }
-        .pricing-card ul {
-            list-style: none;
-            margin: 20px 0;
-            padding: 0;
-        }
-        .pricing-card ul li {
-            font-size: 16px;
-            color: #555;
-            margin: 10px 0;
-        }
-        .pricing-card button {
-            background-color: #1A73E8;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .pricing-card button:hover {
-            background-color: #1664c0;
-            transform: translateY(-3px);
-        }
-        @media (max-width: 768px) {
-            .pricing-header h2 {
-                font-size: 28px;
-            }
-            .pricing-header p {
-                font-size: 16px;
-            }
-        }
-    </style>
 
-    <section class="pricing-header">
-        <h2>Pricing Plans</h2>
-        <p>Choose the plan that fits your hiring needs and budget. Simplify your recruitment process with HireGen's AI tools.</p>
-    </section>
+    <div class="container mx-auto px-4 py-12">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl text-center">
+      <h2 class="text-base/7 font-semibold text-indigo-600">Pricing</h2>
+      <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl">Pricing that grows with you</p>
+    </div>
+    <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-600 sm:text-xl/8">AI Powered Recruitment, Find the right plan for you</p>
+    </div>
 
-    <section class="pricing-cards">
-        {% for plan in result %}
-        <div class="pricing-card">
-            <h3>{{ plan.plan_type_name }}</h3>
-            <p class="price">${{ plan.fees }}</p>
-            <p>
-                {% if plan.time_period == "1" %}
-                    / Month
-                {% elif plan.time_period == "12" %}
-                    / Year
-                {% else %}
-                    / {{ plan.time_period }} Month
-                {% endif %}
-            </p>
-            <ul>
-                <li>Resume Parsing: {{ plan.num_resume_parse }} times</li>
-                {{ plan.plan_details | safe }}
-            </ul>
-            <button onclick="window.location.href='{% if plan.fees == 0 %}{{ url_for('create_subscription', plan_id=plan.id) }}{% else %}{{ url_for('payment', plan_id=plan.id) }}{% endif %}'">
-                {% if plan.fees == 0 %}Subscribe for Free{% else %}Purchase{% endif %}
-            </button>
+
+
+    <div class="isolate mx-auto mt-16 grid max-w-md grid-cols-1 gap-y-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      {% for plan in pricing %}
+        <div class="flex flex-col justify-between rounded-3xl bg-white p-8 ring-1 ring-gray-200 lg:mt-8 lg:rounded-r-none xl:p-10">
+        <div>
+          <div class="flex items-center justify-between gap-x-4">
+            <h3 class="text-lg/8 font-normal text-gray-900">{{plan.plan_name}}</h3>
+          </div>
+          <p class="mt-6 flex items-baseline gap-x-1">
+            <span class="text-4xl font-semibold tracking-tight text-gray-900">${{plan.price}}</span>
+            <span class="text-sm/6 font-normal text-gray-600">/month</span>
+          </p>
+          <ul role="list" class="mt-8 space-y-3 text-sm/6 text-gray-600">
+              {% for feature in plan.features %}
+            <li class="flex gap-x-3">
+              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
+              </svg>
+                {{feature}}
+            </li>
+              {% endfor %}
+          </ul>
         </div>
-        {% endfor %}
-    </section>
+        <a href="{% if plan.fees == 0 %}{{ url_for('create_subscription', plan_id=plan.id) }}{% else %}{{ url_for('payment', plan_id=plan.id) }}{% endif %}" class="mt-8 block rounded-md px-3 py-2 text-center text-sm/6 font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 hover:ring-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Buy plan</a>
+      </div>
+        {%endfor%}
+    </div>
 
 {%endblock%}

@@ -125,8 +125,7 @@ def requires_any_permission(*required_permissions):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    pricing = api_calls.get_all_plans() or None
-    return render_template('index.html', pricing=pricing)
+    return render_template('index.html')
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -1093,7 +1092,7 @@ def delete_plan(plan_id):
 @app.route("/pricing", methods=['GET', 'POST'])
 def user_view_plan():
     result = api_calls.get_all_plans()
-    return render_template('pricing.html', result=result)
+    return render_template('pricing.html', pricing=result)
 
 
 @app.route('/admin/posts')
