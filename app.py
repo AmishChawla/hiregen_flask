@@ -2351,6 +2351,10 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug
     apply_form.job_id.data = job_details["id"]
     if request.method == 'POST':
         applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, job_id=apply_form.job_id.data)
+        if applied:  # Assuming API call returns success status
+            flash('Job application submitted successfully!', 'success')
+        else:
+            flash('Failed to apply for the job. Please try again.', 'error')
         return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
 
     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)

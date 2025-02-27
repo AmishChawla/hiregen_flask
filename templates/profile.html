@@ -12,7 +12,7 @@
             display: none;
         }
         .img-upload:hover .edit-icon {
-            display: block;
+            display: none;
         }
         .edit-icon {
             display: none;
@@ -187,6 +187,14 @@
 <script>
     document.getElementById('editBtn').addEventListener('click', function() {
         var fields = document.querySelectorAll('input, textarea');
+        let editIcons = document.querySelectorAll(".edit-icon");
+
+        // Change display property to inline-block when edit button is clicked
+        editIcons.forEach(function(editIcon) {
+            editIcon.style.display = "inline-block";
+        });
+
+
         fields.forEach(function(field) {
             field.disabled = false;
         });
@@ -196,6 +204,13 @@
     });
 
     document.getElementById('cancelBtn').addEventListener('click', function() {
+        let editIcons = document.querySelectorAll(".edit-icon");
+
+        // Change display property to inline-block when edit button is clicked
+        editIcons.forEach(function(editIcon) {
+            editIcon.style.display = "none";
+        });
+
         var fields = document.querySelectorAll('input, textarea');
         fields.forEach(function(field) {
             field.disabled = true;
