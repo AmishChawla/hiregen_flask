@@ -34,7 +34,7 @@
             <tr>
               <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-gray-100 sm:pl-0">
                 <div class="flex items-center">
-                  <img class="h-10 w-10 rounded-full" src="{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}" alt="">
+                  <img class="h-10 w-10 rounded-full" src="{{ data.applicant_profile_picture or url_for('static', filename='images/man.png') }}" alt="">
                   <div class="ml-4">
                     <div class="font-medium text-gray-900 dark:text-gray-100">{{ data.applicant_name }}</div>
                     <div class="text-gray-500 dark:text-gray-400">{{ data.applicant_email }}</div>
@@ -53,16 +53,12 @@
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                 <div class="relative flex justify-center">
-                  <svg class="h-10 w-10" viewBox="0 0 36 36">
-                    <path stroke="#d3d3d3" stroke-width="3.8" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path stroke="rgb(2,121,2)" stroke-dasharray="{{ data.applicant_score }}, 100" stroke-width="3.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <text x="18" y="18.35" font-size="8" text-anchor="middle" fill="#000">{{ data.applicant_score }}%</text>
-                  </svg>
+                  {{data.similarity_scores.get('overall_score') or 0}} %
                 </div>
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">{{ data.application_date }}</td>
               <td class="whitespace-nowrap px-3 py-4 text-right text-sm font-medium">
-                <button type="button" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" onclick="viewApplicantDetails('{{ data.id }}', '{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{ data.applicant_score }}', '{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}')">Details</button>
+                <button type="button" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')">Details</button>
               </td>
             </tr>
             {% endfor %}
@@ -100,29 +96,196 @@
   </div>
 </div>
 
-<div id="applicantDetailsDrawer" class="fixed inset-0 z-10 hidden">
-  <div class="absolute inset-0 bg-gray-500/75 dark:bg-gray-900/75" onclick="closeApplicantDetailsDrawer()"></div>
-  <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-    <div class="pointer-events-auto w-screen max-w-md bg-white dark:bg-gray-800 shadow-xl">
-      <div class="flex h-full flex-col overflow-y-scroll py-6">
-        <div class="px-4 sm:px-6">
-          <div class="flex items-start justify-between">
-            <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100" id="applicantDetailsTitle">Applicant Details</h2>
-            <button type="button" class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 dark:bg-gray-800 dark:hover:text-gray-300" onclick="closeApplicantDetailsDrawer()">
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+<div id="applicantDrawer" class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <!-- Background Overlay -->
+  <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+        <!-- Slide-over panel -->
+        <div class="pointer-events-auto w-screen max-w-2xl transform transition ease-in-out duration-500 sm:duration-700 translate-x-full" id="drawerPanel">
+          <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+            <div class="flex-1">
+              <!-- Header -->
+              <div class="bg-white px-4 py-6 sm:px-6">
+                <div class="flex items-start justify-between space-x-3">
+                  <div class="px-4 sm:px-0">
+                    <h3 class="text-base font-semibold text-gray-900">Applicant Information</h3>
+                    <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
+                  </div>
+                  <div class="flex h-7 items-center">
+                    <button type="button" class="relative text-gray-400 hover:text-gray-500" onclick="closeDrawer()">
+                      <span class="absolute -inset-2.5"></span>
+                      <span class="sr-only">Close panel</span>
+                      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Applicant Information -->
+              <div class="space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0 px-6" id="drawerContent">
+                <div>
+                  <div class="mt-6 border-t border-gray-100">
+                    <dl class="divide-y divide-gray-100">
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium text-gray-900">Full name</dt>
+                        <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0" id="drawerApplicantName"></dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium text-gray-900">Email address</dt>
+                        <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0" id="drawerApplicantEmail"></dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium text-gray-900">Applied On</dt>
+                        <dd class="mt-1 text-sm text-gray-700 sm:col-span-2 sm:mt-0" id="drawerApplicationDate"></dd>
+                      </div>
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium text-gray-900">Overall Score</dt>
+                        <dd class="mt-1 sm:col-span-2 sm:mt-0">
+                          <!-- Gauge for Overall Score -->
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeOverall" cx="18" cy="18" r="16" fill="none" class="stroke-current text-blue-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerOverallScore" class="text-4xl font-bold text-blue-600">0</span>
+                              <span class="text-blue-600 block">Overall</span>
+                            </div>
+                          </div>
+                        </dd>
+                      </div>
+
+                      <!-- Detailed Scores Section -->
+                      <div class="px-4 py-6 sm:grid sm:grid-cols-1 gap-4 sm:px-0">
+                        <h3 class="text-sm font-medium text-gray-900 mb-4">Detailed Scores</h3>
+                        <div class="grid grid-cols-3 gap-4">
+                          <!-- Individual Gauges -->
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeExperience" cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerExperienceScore" class="text-4xl font-bold text-green-600">0</span>
+                              <span class="text-green-600 block">Experience</span>
+                            </div>
+                          </div>
+
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeEducation" cx="18" cy="18" r="16" fill="none" class="stroke-current text-yellow-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerEducationScore" class="text-4xl font-bold text-yellow-500">0</span>
+                              <span class="text-yellow-500 block">Education</span>
+                            </div>
+                          </div>
+
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeSkills" cx="18" cy="18" r="16" fill="none" class="stroke-current text-red-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerSkillScore" class="text-4xl font-bold text-red-600">0</span>
+                              <span class="text-red-600 block">Skills</span>
+                            </div>
+                          </div>
+
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeLeadership" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerLeadershipScore" class="text-4xl font-bold text-purple-600">0</span>
+                              <span class="text-purple-600 block">Leadership</span>
+                            </div>
+                          </div>
+
+                          <div class="relative size-40">
+                            <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeIndustry" cx="18" cy="18" r="16" fill="none" class="stroke-current text-orange-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                              <span id="drawerIndustryScore" class="text-4xl font-bold text-orange-500">0</span>
+                              <span class="text-orange-500 block">Industry</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Close Button -->
+            <div class="shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
+              <div class="flex justify-end space-x-3">
+                <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="closeDrawer()">Close</button>
+              </div>
+            </div>
+
           </div>
-        </div>
-        <div id="applicantDetailsContent" class="relative mt-6 flex-1 px-4 sm:px-6">
-          <!-- Dynamic content -->
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  function openDrawer(id, name, email, date, resume, overallScore, experienceScore, educationScore, skillScore, leadershipScore, industryScore) {
+      const drawer = document.getElementById('applicantDrawer');
+      const drawerPanel = document.getElementById('drawerPanel');
+
+      // Update static content
+      document.getElementById('drawerApplicantName').textContent = name;
+      document.getElementById('drawerApplicantEmail').textContent = email;
+      document.getElementById('drawerApplicationDate').textContent = date;
+
+      const resumeLink = document.getElementById('drawerResumeLink');
+      if (resumeLink) resumeLink.href = resume || '#';
+
+      // Update gauges
+      const updateGauge = (gaugeId, textId, score) => {
+          const gauge = document.getElementById(gaugeId);
+          const text = document.getElementById(textId);
+          if (gauge && text) {
+              text.textContent = score;
+              gauge.setAttribute('stroke-dasharray', `${(score / 100) * 75} 100`);
+          }
+      };
+
+      updateGauge('drawerGaugeOverall', 'drawerOverallScore', overallScore);
+      updateGauge('drawerGaugeExperience', 'drawerExperienceScore', experienceScore);
+      updateGauge('drawerGaugeEducation', 'drawerEducationScore', educationScore);
+      updateGauge('drawerGaugeSkills', 'drawerSkillScore', skillScore);
+      updateGauge('drawerGaugeLeadership', 'drawerLeadershipScore', leadershipScore);
+      updateGauge('drawerGaugeIndustry', 'drawerIndustryScore', industryScore);
+
+      // Open drawer
+      drawer.classList.remove('hidden');
+      setTimeout(() => {
+          drawerPanel.classList.remove('translate-x-full');
+      }, 10);
+  }
+
+  function closeDrawer() {
+      const drawerPanel = document.getElementById('drawerPanel');
+      drawerPanel.classList.add('translate-x-full');
+      setTimeout(() => {
+          document.getElementById('applicantDrawer').classList.add('hidden');
+      }, 500);
+  }
+</script>
 
 <script>
 function openFilterDrawer() {
@@ -133,63 +296,6 @@ function closeFilterDrawer() {
   document.getElementById('filterDrawer').classList.add('hidden');
 }
 
-function openApplicantDetailsDrawer() {
-  document.getElementById('applicantDetailsDrawer').classList.remove('hidden');
-}
-
-function closeApplicantDetailsDrawer() {
-  document.getElementById('applicantDetailsDrawer').classList.add('hidden');
-}
-
-function viewApplicantDetails(id, name, status, email, date, resume, score, profilePicture) {
-  openApplicantDetailsDrawer();
-  const content = document.getElementById('applicantDetailsContent');
-  content.innerHTML = `
-    <div class="pb-6">
-      <div class="relative h-40 sm:h-56">
-        <img class="absolute h-full w-full object-cover" src="${profilePicture}" alt="Applicant Photo">
-      </div>
-      <div class="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
-        <div class="sm:flex-1">
-            <div>
-              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</dt>
-              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${name}</dd>
-            </div>
-            <div>
-              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</dt>
-              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${email}</dd>
-            </div>
-
-          <dl class="mt-5 space-y-3">
-            <div>
-              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Date Applied</dt>
-              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${date}</dd>
-            </div>
-            <div>
-              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Score</dt>
-              <dd class="px-3 py-3 text-left text-xs font-medium tracking-wide text-gray-800">${score}%</dd>
-            </div>
-            <div>
-              <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</dt>
-              <dd class="mt-1">
-                <div class="relative mt-2 px-3">
-                  <select class="rounded-md border-gray-300 shadow-sm focus:ring-indigo-600" id="status-select-drawer-${id}" onchange="updateApplicationStatus(${id}, true)">
-                    {% for s in statuses %}
-                    <option value="{{ s.job_status }}" ${status === '{{ s.job_status }}' ? 'selected' : ''}>{{ s.name.capitalize() }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </dd>
-            </div>
-            <div>
-              <a href="${resume}" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-indigo-600">View Resume</a>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
-  `;
-}
 
 function updateApplicationStatus(application_id, fromDrawer = false) {
   const selectId = fromDrawer ? `status-select-drawer-${application_id}` : `status-select-${application_id}`;

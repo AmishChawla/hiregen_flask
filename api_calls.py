@@ -1239,17 +1239,28 @@ def get_job_by_username_slug(job_ownername, slug):
         print(f"Timeout Error: {errt}")
 
 
-def get_job_by_company_subdomain_slug(company_subdomain, slug):
+def get_job_by_company_subdomain_slug(company_subdomain, slug, access_token=None):
     try:
-        response = requests.get(constants.BASE_URL + f'/job_openings/by-company_subdomain/{company_subdomain}/{slug}')
+        headers = {}
+        if access_token:
+            headers["Authorization"] = f"Bearer {access_token}"
+
+        response = requests.get(
+            constants.BASE_URL + f'/job_openings/by-company_subdomain/{company_subdomain}/{slug}',
+            headers=headers
+        )
+
         if response.status_code == 200:
             return response.json()
+
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
     except requests.exceptions.ConnectionError as errc:
         print(f"Error Connecting: {errc}")
     except requests.exceptions.Timeout as errt:
         print(f"Timeout Error: {errt}")
+
+    return None  # Return None if the request fails
 
 
 def get_user_job_opening_by_username(username: str):

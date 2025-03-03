@@ -26,7 +26,7 @@
         <tr>
           <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
             <div class="flex items-center space-x-3">
-              <img src="{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}" alt="Profile Picture" class="h-10 w-10 rounded-full">
+              <img src="{{ data.applicant_profile_picture or url_for('static', filename='images/man.png') }}" alt="Profile Picture" class="h-10 w-10 rounded-full">
               <div>
                 <p>{{ data.applicant_name }}</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">{{ data.applicant_email }}</p>

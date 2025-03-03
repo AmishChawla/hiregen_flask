@@ -1134,13 +1134,16 @@ def user_all_post():
 def job_applicants(job_id):
     result = api_calls.get_job_applicants(access_token=current_user.id, job_id=job_id)
     statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
+    if statuses is not None:
+        job_statuses = [item['job_status'] for item in statuses]
     if result is None:
         result = []  # Set result to an empty list
     if statuses is None:
         return render_template('cms/job_openings/job_applicants_2.html', result=result)
 
     print(result)
-    return render_template('cms/job_openings/job_applicants_3.html', result=result, statuses=statuses)
+    print(statuses)
+    return render_template('cms/job_openings/job_applicants_3.html', result=result, statuses=job_statuses)
 
 
 @app.route('/applicant-tracking')
@@ -1497,30 +1500,57 @@ def add_post():
 
 @app.route('/generate-ai-content', methods=['POST'])
 def generate_ai_content():
+    functions = [
+        {
+            "name": "generate_job_posting",
+            "description": "Generate a structured job posting",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "job_description": {"type": "string", "description": "Detailed job description"},
+                    "job_requirements": {"type": "string", "description": "List of job requirements"},
+                    "job_benefits": {"type": "string", "description": "List of job benefits"}
+                },
+                "required": ["job_description", "job_requirements", "job_benefits"]
+            }
+        }
+    ]
+
     data = request.json
     field = data.get('field', '')
-    position = data.get('prompt', '')
+    job_details = data.get('prompt', {})
 
-    if field == 'job_description' and position:
-        # Use the prompt to generate AI content
-        completion = openai.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {
-                    "role": "user",
-                    "content": f"Generate Job Description for postion {position}",
-                },
-            ],
-            temperature=0.7,
-            max_tokens=256,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0
-        )
-        bot_response = completion.choices[0].message.content
+    # Strict instruction to return clean JSON
+    completion = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful AI that generates structured job postings."},
+            {"role": "user", "content": f"Generate a job posting for: {json.dumps(job_details, indent=2)}"}
+        ],
+        functions=functions,
+        function_call={"name": "generate_job_posting"},  # Force function calling
+        temperature=0.7,
+        max_tokens=512,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+    # print(completion)
 
-        generated_content = bot_response
-        return jsonify(success=True, content=generated_content)
+    # bot_response = completion.choices[0].message.content.strip()
+    # print("Bot Response:", bot_response)  # Debugging
+
+    try:
+        # Ensure valid JSON response
+        response_data = completion.choices[0].message.function_call.arguments
+        print(response_data)
+        structured_response = json.loads(response_data)
+        print("Structured Response:", structured_response)  # Debugging
+        return jsonify(success=True, content=structured_response)
+    except json.JSONDecodeError as e:
+        print("JSON Decode Error:", str(e))  # Debugging
+        return jsonify(success=False, error="Failed to parse AI response as JSON", raw_response=bot_response)
+
     return jsonify(success=False, error="Invalid request")
 
 
@@ -2346,9 +2376,17 @@ def delete_media(media_id):
 
 @app.route('/jobs/<job_date>/<job_slug>', subdomain='<company_subdomain>', methods=['GET', 'POST'])
 def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug):
-    job_details = api_calls.get_job_by_company_subdomain_slug(company_subdomain=company_subdomain, slug=job_slug)
+    access_token = current_user.id if current_user.is_authenticated else None
+
+    job_details = api_calls.get_job_by_company_subdomain_slug(
+        company_subdomain=company_subdomain,
+        slug=job_slug,
+        access_token=access_token
+    )
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
+    print(job_details.get('applied'))
+    print(job_details.get('company_logo'))
     if request.method == 'POST':
         applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, job_id=apply_form.job_id.data)
         if applied:  # Assuming API call returns success status
@@ -3421,6 +3459,11 @@ def collect_jobseeker_profile_picture():
         payload = {'profile_picture': (filename, open(file_path, 'rb'))}
 
         res = api_calls.update_basic_info(profile_picture=payload, access_token=current_user.id)
+        if res:
+            current_user.profile_picture = constants.BASE_URL+'/'+file_path
+            print(current_user.profile_picture)
+            session['profile_picture'] = constants.BASE_URL+'/'+file_path
+            login_user(current_user)
         return redirect(url_for('jobseeker_profile'))
     else:
         print(form.errors)
@@ -3991,7 +4034,7 @@ def employer_applicants_search():
 
         print('here')
         applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
-
+        print(len(applicants))
     return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
 
 

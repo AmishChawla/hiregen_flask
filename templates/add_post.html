@@ -6,7 +6,7 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
     <div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
-      <form method="post" action="{{ url_for('add_post') }}" id="postForm" class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <form method="post" action="{{ url_for('add_post') }}" id="addjobForm" class="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {{ form.hidden_tag() }}
 
         <!-- Middle Column: Job Fields -->
@@ -65,27 +65,33 @@
           </div>
 
 <div class="mt-4">
+  <div class="flex items-center justify-between">
   <label for="job_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_description.label }}</label>
-  <div class="relative">
-    {{ form.job_description(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_description", rows="6") }}
-    <button type="button" id="generateAI" class="flex absolute top-0 right-0 mt-2 mr-2 bg-indigo-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+      <button type="button" id="generateAI" class="flex mt-2 mr-2 bg-indigo-600 text-white text-sm font-semibold px-3 py-1.5 rounded-md shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mt-1 mr-1 size-5 text-yellow-500">
   <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
 </svg>
      <p class=""> Generate by AI </p>
     </button>
+    </div>
+
+  <div class="relative">
+    <div id="job_description"></div>
+    {{ form.job_description(class="hidden mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="hidden_job_description", rows="6") }}
   </div>
 </div>
 
 
           <div class="mt-4">
             <label for="job_requirements" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_requirements.label }}</label>
-            {{ form.job_requirements(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_requirements", rows="6") }}
+            <div id="job_requirements"></div>
+            {{ form.job_requirements(class="hidden mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="hidden_job_requirements", rows="6") }}
           </div>
 
           <div class="mt-4">
             <label for="job_benefits" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ form.job_benefits.label }}</label>
-            {{ form.job_benefits(class="mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="job_benefits", rows="6") }}
+            <div id="job_benefits"></div>
+            {{ form.job_benefits(class="hidden mt-1 block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-1.5 text-gray-900 dark:text-gray-300 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", id="hidden_job_benefits", rows="6") }}
           </div>
         </div>
 
@@ -116,32 +122,98 @@
       </form>
     </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('generateAI').addEventListener('click', function () {
-    const jobTitle = document.getElementById('job_title').value;
+  // Initialize Quill Editor
+  var quillOptions = {
+    theme: 'snow',
+    placeholder: 'Write something...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link', 'blockquote', 'code-block'],
+        ['clean']
+      ]
+    }
+  };
 
-    if (!jobTitle.trim()) {
+  var quillRequirements = new Quill('#job_requirements', quillOptions);
+  var quillBenefits = new Quill('#job_benefits', quillOptions);
+  var quillDescription = new Quill('#job_description', quillOptions);
+
+
+
+
+  document.querySelector("#addjobForm").addEventListener('submit', function () {
+      document.getElementById("hidden_job_description").value = quillDescription.root.innerHTML;
+      document.getElementById("hidden_job_requirements").value = quillRequirements.root.innerHTML;
+      document.getElementById("hidden_job_benefits").value = quillBenefits.root.innerHTML;
+  });
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('generateAI').addEventListener('click', function () {
+    const position = document.getElementById('job_title').value.trim();
+
+    if (!position) {
       alert("Please fill in the Position field before generating the job description.");
       return;
     }
+
+    const jobDetails = { position }; // Position is mandatory
+
+    // List of optional fields
+    const optionalFields = ['salary', 'work_experience', 'job_type', 'industry', 'country', 'province', 'city'];
+
+    // Dynamically add only non-empty fields to jobDetails
+    optionalFields.forEach(field => {
+      const element = document.getElementById(field);
+      if (element && element.value.trim()) {
+        jobDetails[field] = element.value.trim();
+      }
+    });
 
     fetch('/generate-ai-content', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ field: 'job_description', prompt: jobTitle })
+      body: JSON.stringify({ field: 'job_description', prompt: jobDetails })
     })
       .then(response => response.json())
       .then(data => {
-        if (data.success) {
-          document.getElementById('job_description').value = data.content;
+    if (data.success && data.content) {
+        // Assuming AI response is a structured JSON object with job_description, job_requirements, and job_benefits
+
+        if (typeof quillDescription !== 'undefined') {
+            quillDescription.root.innerHTML = (data.content.job_description || '').split('\n').map(line => `<p>${line}</p>`).join(''); ;
+            console.log(quillDescription.root.innerHTML);
         } else {
-          alert('Failed to generate content. Please try again.');
+            document.getElementById('job_description').value = data.content.job_description || '';
         }
+
+        if (typeof quillRequirements !== 'undefined') {
+            quillRequirements.root.innerHTML = (data.content.job_requirements || '').split('\n').map(line => `<p>${line}</p>`).join('');;
+            console.log(quillRequirements.root.innerHTML);
+        } else {
+            document.getElementById('job_requirements').value = data.content.job_requirements || '';
+        }
+
+        if (typeof quillBenefits !== 'undefined') {
+            quillBenefits.root.innerHTML = (data.content.job_benefits || '').split('\n').map(line => `<p>${line}</p>`).join('');;
+            console.log(quillBenefits.root.innerHTML);
+        } else {
+            document.getElementById('job_benefits').value = data.content.job_benefits || '';
+        }
+    } else {
+        alert('Failed to generate content. Please try again.');
+    }
       })
       .catch(error => {
         console.error('Error generating content:', error);
@@ -149,5 +221,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 });
+
+</script>
+
+<script>
 </script>
 {% endblock %}
