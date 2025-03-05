@@ -67,18 +67,17 @@
     </div>
     <div class="container mx-auto mt-6">
         {% for job in jobs %}
-        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.JobOpening.created_at.split('T')[0], job_slug=job.JobOpening.slug) }}" class="block mb-4 bg-white shadow-md rounded-md p-4 hover:shadow-lg transition">
+        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.id) }}" class="block mb-4 bg-white shadow-md rounded-md p-4 hover:shadow-lg transition">
             <div class="flex items-center">
                 <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo" class="w-16 h-16 rounded-md object-cover mr-4">
                 <div>
-                    <h2 class="text-xl font-semibold text-gray-800">{{ job.JobOpening.job_title }}</h2>
-                    <p class="text-gray-600 text-sm">{{ job.JobOpening.address_city }}, {{ job.JobOpening.address_province }}, {{ job.JobOpening.address_country }}</p>
-                    <p class="text-gray-500 text-sm">{{ job.JobOpening.opening_date.split('T')[0] }}</p>
+                    <h2 class="text-xl font-semibold text-gray-800">{{ job.job_title }}</h2>
+                    <p class="text-gray-600 text-sm">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</p>
+                    <p class="text-gray-500 text-sm">{{ job.opening_date.split('T')[0] }}</p>
                     <div class="flex space-x-4 text-gray-600 text-sm mt-2">
-                        <p><strong>Salary:</strong> {{ job.JobOpening.salary }}</p>
-                        <p><strong>Experience:</strong> {{ job.JobOpening.work_experience }}</p>
-                        <p><strong>Type:</strong> {{ job.JobOpening.job_type }}</p>
-                        <p><strong>Industry:</strong> {{ job.JobOpening.industry }}</p>
+                        <p><strong>Salary:</strong> {{ job.salary }}</p>
+                        <p><strong>Type:</strong> {{ job.job_type }}</p>
+                        <p><strong>Industry:</strong> {{ job.industry }}</p>
                     </div>
                 </div>
             </div>

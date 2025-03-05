@@ -10,12 +10,12 @@ MY_ROOT_URL = 'https://hiregen.com'
 
 # FOR API
 #TODO COMMMENT BEFORE DEPLOYING
-# BASE_URL = 'http://127.0.0.1:8000/api'
-# ROOT_URL = 'http://127.0.0.1:8000'
+BASE_URL = 'http://127.0.0.1:8000/api'
+ROOT_URL = 'http://127.0.0.1:8000'
 
 #TODO UNCOMMENT BEFORE DEPLOYING
-ROOT_URL = 'https://hiregen.com/api'
-BASE_URL = 'https://hiregen.com/api/api'
+# ROOT_URL = 'https://hiregen.com/api'
+# BASE_URL = 'https://hiregen.com/api/api'
 
 
 

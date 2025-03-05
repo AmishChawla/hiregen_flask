@@ -3679,6 +3679,7 @@ def jobs_search():
 
         # if country or state or job_type or industry or date_filter or keyword:
         jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
+        print(jobs)
 
     return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs, prefilled_data=prefilled_data)
 
