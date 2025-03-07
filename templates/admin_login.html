@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
 {% block title %}AdminLogin{% endblock %}
-
 {% block content %}
 <style>
    /* New CSS */
@@ -28,14 +26,6 @@
         </div>
         <div class="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
             <div class="w-full max-w-md rounded-xl bg-white ring-1 shadow-md ring-black/5">
-                <form action="#" method="POST" class="p-7 sm:p-11">
-                    <div class="flex items-start">
-                        <a title="Home" class="login-logo" href="/">
-                            <image src="{{ url_for('static', filename='images/hiregen-icon.png') }}" alt="Logo" width="55" />
-                        </a>
-                    </div>
-                    <h1 class="mt-8 text-base/6 font-medium">Welcome Admin!</h1>
-                    <p class="mt-1 text-sm/5 text-gray-600">Sign in to your account to continue.</p>
                 {% if form.errors %}
                     <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
                         {% for field, errors in form.errors.items() %}
@@ -54,9 +44,16 @@
                     {% endif %}
                 {% endwith %}
 
-                    <form method="post" action="{{ url_for('admin_login') }}" class="space-y-4">
+                    <form method="post" action="{{ url_for('admin_login') }}" class="p-7 sm:p-11">
                     {{ form.hidden_tag() }}
                     <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+                    <div class="flex items-start">
+                        <a title="Home" class="login-logo" href="/">
+                            <image src="{{ url_for('static', filename='images/hiregen-icon.png') }}" alt="Logo" width="55" />
+                        </a>
+                    </div>
+                    <h1 class="mt-8 text-base/6 font-medium">Welcome Admin!</h1>
+                    <p class="mt-1 text-sm/5 text-gray-600">Sign in to your account to continue.</p>
 
                     <div class="mt-8 space-y-3">
                         <label class="text-sm/5 font-medium" for="email">Email</label>
