@@ -1,283 +1,99 @@
 {% extends 'common_base.html' %}
 {% block content %}
-
-<style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f9f9fc;
-            color: #333;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: color 0.3s;
-        }
-        a:hover {
-            color: #1A73E8;
-        }
-
-        /* Header */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 80px;
-            background-color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-        }
-        header h1 a:hover{
-            font-size: 28px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .nav-menu {
-            display: flex;
-            align-items: center;
-        }
-        .nav-menu a {
-            margin: 0 15px;
-            font-weight: 500;
-            color: #555;
-        }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 160px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-            border-radius: 5px;
-        }
-        .dropdown-content a {
-            display: block;
-            padding: 10px 15px;
-            color: #333;
-            font-size: 16px;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .get-started {
-            background-color: #1A73E8;
-            color: white;
-            padding: 15px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-        .get-started:hover {
-            background-color: #1664c0;
-            transform: translateY(-2px);
-        }
-        .burger {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 20px;
-        }
-        .burger .line {
-            width: 25px;
-            height: 4px;
-            background-color: #333;
-            border-radius: 3px;
-        }
-        .nav-menu.active {
-            display: block;
-            flex-direction: column;
-            position: absolute;
-            top: 70px;
-            left: 0;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-            }
-            .burger {
-                display: flex;
-            }
-            .nav-menu a {
-                padding: 10px 20px;
-                width: 100%;
-                border-bottom: 1px solid #ddd;
-                margin: 0;
-            }
-        }
-
-
-        /* Register Card */
-        .card {
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            padding: 40px 30px;
-            margin: 40px auto;
-            max-width: 500px;
-        }
-        .card-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .card-header h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: #000000;
-        }
-        .card-header p {
-            font-size: 14px;
-            color: #777;
-        }
-        .form-group {
-            position: relative;
-            margin-bottom: 24px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 16px;
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <style>
+        a.login-logo {
             border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9fc;
-            color: #333;
-            transition: all 0.3s ease;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: #1A73E8;
-            box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
-            background-color: #fff;
-        }
-        .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 15px 20px;
-            font-size: 18px;
-            font-weight: 600;
-            text-align: center;
-            color: white;
-            background: #1A73E8;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn:hover {
-            background-color: #1664c0;
-            transform: translateY(-2px);
+            border-radius: 100rem;
+            height: 60px;
+            width: 60px;
+            padding: 10px;
+            display: flex;
         }
 
-        /* Footer */
-        footer {
-            padding: 40px 80px;
-            background-color: #ffffff;
-            color: #333;
-            text-align: center;
+        a.login-logo img {
+            object-fit: contain;
         }
-        footer a {
-            color: #1A73E8;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .card {
-                padding: 20px;
-            }
-            .btn {
-                font-size: 16px;
-                padding: 10px 15px;
-            }
-            footer {
-                padding: 20px;
-            }
-        }
+        header {display:none!important;}
+        footer {display:none!important;}
+        section {display:none!important;}
     </style>
-    <div class="card">
-        <div class="card-header">
-            <h2>Register</h2>
+
+
+    <main class="overflow-hidden bg-gray-50">
+        <div class="relative mx-auto max-w-7xl">
+            <div
+                class="absolute -top-44 -right-60 h-60 w-[36rem] transform-gpu md:right-0 bg-linear-115 from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] rotate-[-10deg] rounded-full blur-3xl">
+            </div>
         </div>
-        <div class="card-body">
-
-            {% if form.errors %}
-                <div class="alert" role="alert">
-                    {% for field, errors in form.errors.items() %}
-                        <p class="text-danger" style="color:red; font-size:0.8rem;">{{ errors[0] }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="flashes alert">
-                    {% for message in messages %}
-                        <p class="text-danger" style="color:red; font-size:0.8rem;">{{ message }}</p>
-                    {% endfor %}
+        <div class="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
+            <div class="w-full max-w-lg rounded-xl bg-white ring-1 shadow-md ring-black/5">
+                <form action="#" method="POST" class="p-7 sm:p-11">
+                    <div class="flex items-start">
+                        <a title="Home" class="login-logo" href="/">
+                            <image src="{{ url_for('static', filename='images/hiregen-icon.png') }}" alt="Logo" width="55" />
+                        </a>
                     </div>
-                {% endif %}
-            {% endwith %}
-
-            <form method="post" action="{{ url_for('register') }}" id="employer-register-form">
+                    <h1 class="mt-8 text-base/6 font-medium">Employer Sign up</h1>
+                    <p class="mt-1 text-sm/5 text-gray-600">Sign up for an account to get started.</p>
+                            {% if form.errors %}
+                                <div class="alert" role="alert">
+                                    {% for field, errors in form.errors.items() %}
+                                        <p class="text-danger" style="color:red; font-size:0.8rem;">{{ errors[0] }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    <div class="flashes alert">
+                                    {% for message in messages %}
+                                        <p class="text-danger" style="color:red; font-size:0.8rem;">{{ message }}</p>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endwith %}
+                    <form method="post" action="{{ url_for('register') }}" id="employer-register-form">
                 {{ form.hidden_tag() }}
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-                <div class="form-group">
-                    <label for="firstname" class="form-label">First Name</label>
-                    {{ form.firstname(class="form-control", placeholder="FirstName", required=True) }}
-                </div>
-                <div class="form-group">
-                    <label for="lastname" class="form-label">Last Name</label>
-                    {{ form.lastname(class="form-control", placeholder="LastName", required=True) }}
-                </div>
-                <div class="form-group">
-                    <label for="phone_number" class="form-label">Mobile</label>
-                    {{ form.phone_number(class="form-control", placeholder="Mobile", required=True) }}
-                </div>
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    {{ form.email(class="form-control", placeholder="Email", required=True) }}
-                </div>
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    {{ form.password(class="form-control", placeholder="Password", required=True) }}
-                </div>
-                <div class="form-group">
-                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                    {{ form.confirm_password(class="form-control", placeholder="Confirm Password", required=True) }}
-                </div>
-                <div class="d-grid">
-                    {{ form.submit(class="btn employer-register-button") }}
-                </div>
-                <p class="text-center mt-3">
-                    Already have an account? <a href="{{ url_for('login') }}" class="text-muted">Login here</a>
-                </p>
+                        <div class="mt-8 flex space-x-6">
+                        <div class="w-1/2">
+                            <label class="text-sm/5 font-medium" for="firstname">First Name</label>
+                            {{ form.firstname(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
+                        </div>
+                        <div class="w-1/2">
+                            <label class="text-sm/5 font-medium" for="lastname">Last Name</label>
+                            {{ form.lastname(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
+                        </div>
+                        </div>
+                        <div class="mt-8 flex space-x-6">
+                        <div class="w-1/2">
+                            <label class="text-sm/5 font-medium" for="phone_number">Mobile</label>
+                            {{ form.phone_number(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
+                        </div>
+                        <div class="w-1/2">
+                            <label class="text-sm/5 font-medium" for="email">Email</label>
+                            {{ form.email(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
+                        </div>
+                        </div>
+                     <div class="mt-8 space-y-3">
+                        <label class="text-sm/5 font-medium" for="password">Password</label>
+                        {{ form.password(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black", placeholder="", required=True) }}
+                    </div>
+                    <div class="mt-8 space-y-3">
+                        <label class="text-sm/5 font-medium" for="confirm_password">Conform Password</label>
+                        {{ form.confirm_password(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black", placeholder="", required=True) }}
+                    </div>
+                    <div class="mt-8">
+                        {{ form.submit(class="w-full inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800") }}
+                   </div>
             </form>
+                <div class="m-1.5 rounded-lg bg-gray-50 py-4 text-center text-sm/5 ring-1 ring-black/5">Already a member? <a
+                        class="font-medium hover:text-gray-600" href="{{ url_for('login') }}">Sign in</a>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
+
 <script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
 <script>
     function toggleMenu() {
