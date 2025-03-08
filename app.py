@@ -32,8 +32,10 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-app.config['SERVER_NAME'] = 'hiregen.com'  # Base domain for subdomains
-#TODO CHANGE TO '.hirigen.com' before deploying
+# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+app.config['SERVER_NAME'] = 'hiregen.com'  
+#TODO CHANGE TO '.hiregen.com' before deploying
+# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
@@ -1681,7 +1683,6 @@ def preview_post():
 #
 #     return render_template('user_add_category.html', form=form)
 #
-
 # @app.route("/user/update-category/<category_id>", methods=['GET', 'POST'])
 # @requires_any_permission("manage_posts")
 # @login_required
@@ -1699,7 +1700,6 @@ def preview_post():
 #
 #     return render_template('update_user_category.html', form=form, category_id=category_id)
 #
-
 # @app.route('/user/all-categories')
 # @requires_any_permission("manage_posts")
 # @login_required
@@ -4665,6 +4665,108 @@ def jobseeker_profile_choice():
 
 #####################################################################################################################################
 
+@app.route('/features/recruitment-software')
+def recruitment_software():
+    return render_template('features/recruitment_software.html')
+
+@app.route('/features/applicant-tracking')
+def applicant_tracking_feature():
+    return render_template('features/applicant_tracking.html')
+
+@app.route('/features/resume-parsing')
+def resume_parsing_feature():
+    return render_template('features/resume_parsing.html')
+
+@app.route('/features/recruitment-crm')
+def recruitment_crm():
+    return render_template('features/recruitment_crm.html')
+
+@app.route('/features/candidate-matching')
+def candidate_matching():
+    return render_template('features/candidate_matching.html')
+
+@app.route('/features/ai-recruitment')
+def ai_recruitment():
+    return render_template('features/ai_recruitment.html')
+
+@app.route('/AI/resume-screening')
+def ai_resume_screening():
+    return render_template('AI/resume_screening.html')
+
+@app.route('/AI/candidate-matching')
+def ai_candidate_matching():
+    return render_template('AI/candidate_matching.html')
+
+@app.route('/AI/chatbots')
+def ai_chatbots():
+    return render_template('AI/chatbots.html')
+
+@app.route('/AI/recruitment-analytics')
+def ai_recruitment_analytics():
+    return render_template('AI/recruitment_analytics.html')
+
+@app.route('/services/ai-recruitment')
+def ai_recruitment_service():
+    return render_template('services/ai_recruitment.html')
+
+@app.route('/services/candidate-screening')
+def candidate_screening_service():
+    return render_template('services/candidate_screening.html')
+
+@app.route('/services/resume-parsing')
+def resume_parsing_service():
+    return render_template('services/resume_parsing.html')
+
+@app.route('/services/career-site')
+def career_site_service():
+    return render_template('services/career_site.html')
+
+@app.route('/services/interview-scheduling')
+def interview_scheduling_service():
+    return render_template('services/interview_scheduling.html')
+
+@app.route('/products/recruitment-software')
+def recruitment_software_product():
+    return render_template('products/recruitment_software.html')
+
+@app.route('/products/applicant-tracking')
+def applicant_tracking_product():
+    return render_template('products/applicant_tracking.html')
+
+@app.route('/products/recruitment-crm')
+def recruitment_crm_product():
+    return render_template('products/recruitment_crm.html')
+
+@app.route('/products/staffing-software')
+def staffing_software_product():
+    return render_template('products/staffing_software.html')
+
+@app.route('/products/job-board')
+def job_board_product():
+    return render_template('products/job_board.html')
+
+@app.route('/AI-tools/ai-agents')
+def ai_agents():
+    return render_template('AI_tools/ai_agents.html')
+
+@app.route('/AI-tools/recruitment-chatbots')
+def recruitment_chatbots():
+    return render_template('AI_tools/recruitment_chatbots.html')
+
+@app.route('/AI-tools/ai-candidate-matching')
+def ai_tools_candidate_matching():
+    return render_template('AI_tools/ai_candidate_matching.html')
+
+@app.route('/AI-tools/ai-job-matching')
+def ai_job_matching():
+    return render_template('AI_tools/ai_job_matching.html')
+
+@app.route('/AI-tools/ai-interview')
+def ai_interview():
+    return render_template('AI_tools/ai_interview.html')
+
+
+
 #####################################################################################################################################
 ############################################## ALL ROUTES ABOVE THIS ################################################################
 ################################################   SITEMAP.XML  #####################################################################
@@ -4781,6 +4883,7 @@ def sitemap():
 @app.route('/robots.txt')
 def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
+
 
 if __name__ == '__main__':
     app.run()
