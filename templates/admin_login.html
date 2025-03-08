@@ -1,20 +1,31 @@
 {% extends 'base.html' %}
-
 {% block title %}AdminLogin{% endblock %}
-
 {% block content %}
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-full max-w-md">
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <!-- Card Header -->
-            <div class="bg-white text-center py-4">
-                <h2 class="text-lg font-bold">Admin Login</h2>
+<style>
+   /* New CSS */
+           a.login-logo {
+            border: 1px solid #ddd;
+            border-radius: 100rem;
+            height: 60px;
+            width: 60px;
+            padding: 10px;
+            display: flex;
+        }
+
+        a.login-logo img {
+            object-fit: contain;
+        }
+   /* New CSS */
+</style>
+
+<!--Login Container-->
+        <div class="relative mx-auto max-w-7xl">
+            <div
+                class="absolute -top-44 -right-60 h-60 w-[36rem] transform-gpu md:right-0 bg-linear-115 from-[#fff1be] from-28% via-[#ee87cb] via-70% to-[#b060ff] rotate-[-10deg] rounded-full blur-3xl">
             </div>
-            <div class="w-full border-t border-gray-300"></div>
-
-
-            <!-- Card Body -->
-            <div class="p-6">
+        </div>
+        <div class="isolate flex min-h-dvh items-center justify-center p-6 lg:p-8">
+            <div class="w-full max-w-md rounded-xl bg-white ring-1 shadow-md ring-black/5">
                 {% if form.errors %}
                     <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
                         {% for field, errors in form.errors.items() %}
@@ -33,38 +44,35 @@
                     {% endif %}
                 {% endwith %}
 
-                <!-- Form -->
-                <form method="post" action="{{ url_for('admin_login') }}" class="space-y-4">
+                    <form method="post" action="{{ url_for('admin_login') }}" class="p-7 sm:p-11">
                     {{ form.hidden_tag() }}
+                    <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+                    <div class="flex items-start">
+                        <a title="Home" class="login-logo" href="/">
+                            <image src="{{ url_for('static', filename='images/hiregen-icon.png') }}" alt="Logo" width="55" />
+                        </a>
+                    </div>
+                    <h1 class="mt-8 text-base/6 font-medium">Welcome Admin!</h1>
+                    <p class="mt-1 text-sm/5 text-gray-600">Sign in to your account to continue.</p>
 
-                    <!-- Email Input -->
-                    <div>
-                        <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
-                        <div class="mt-2">
-                            {{ form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="you@example.com", required=True) }}
-                        </div>
+                    <div class="mt-8 space-y-3">
+                        <label class="text-sm/5 font-medium" for="email">Email</label>
+                        {{ form.email(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black", placeholder="", required=True) }}
+                    </div>
+                    <div class="mt-8 space-y-3">
+                        <label class="text-sm/5 font-medium" for="password">Password</label>
+                        {{ form.password(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-2 data-focus:-outline-offset-1 data-focus:outline-black", placeholder="", required=True) }}
+                    </div>
+                    <div class="mt-8 flex items-center justify-between text-sm/5">
+                        <a href="{{ url_for('forgot_password') }}" class="font-medium hover:text-gray-600 ms-auto">Forgot password?</a>
+                    </div>
+                    <div class="mt-8">
+                        {{ form.submit(class="w-full inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800") }}
                     </div>
 
-                    <!-- Password Input -->
-                    <div>
-                        <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
-                        <div class="mt-2">
-                            {{ form.password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6", placeholder="Your password", required=True) }}
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="text-center">
-                        {{ form.submit(class="w-full py-2 px-4 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600") }}
-                    </div>
-                </form>
-
-                <!-- Forgot Password -->
-                <p class="mt-4 text-center text-sm text-gray-500">
-                    <a href="{{ url_for('forgot_password') }}" class="text-indigo-600 hover:underline">Forgot Password?</a>
-                </p>
+            </form>
             </div>
         </div>
-    </div>
-</div>
+<!--End Login Container-->
+<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 {% endblock %}
