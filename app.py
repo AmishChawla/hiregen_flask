@@ -4765,6 +4765,17 @@ def ai_job_matching():
 def ai_interview():
     return render_template('AI_tools/ai_interview.html')
 
+@app.route('/faqs')
+def faqs():
+    return render_template('faqs.html')
+
+@app.route('/privacy-policy') 
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
+@app.route('/terms-of-service')
+def terms_of_service():
+    return render_template('terms_of_service.html')
 
 
 #####################################################################################################################################
@@ -4883,6 +4894,8 @@ def sitemap():
 @app.route('/robots.txt')
 def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
+
+
 
 
 if __name__ == '__main__':

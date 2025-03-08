@@ -44,57 +44,74 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </button>
           </div>
           <nav class="flex-col md:flex-row md:flex items-center space-x-10">
-            <li class="flex relative group">
-              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Features</span></a>
-              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
-              <!-- Submenu starts -->
-              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="features">Recruitment software</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Applicant Tracking System</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Resume Parsing</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Recruitment CRM</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Candidate Matching</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">AI Recruitment</a></li>
-              </ul>
-              <!-- Submenu ends -->
-            </li>
-            <li class="flex relative group">
-              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">AI</span></a>
-              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
-              <!-- Submenu starts -->
-              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/employer/login?next=%2Fresume-parser">Resume Screening</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Candidate Matching</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/chatbot">Chatbots</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="ddd">Recruitment Analytics</a></li>
-              </ul>
-              <!-- Submenu ends -->
-            </li>
-            <a href="#pricing"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Pricing</span></a>
-            <a href="#contact"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Contact</span></a>
-<!--            <li class="flex relative group">-->
-<!--              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Job Seeker</span></a>-->
-<!--              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>-->
-<!--              &lt;!&ndash; Submenu starts &ndash;&gt;-->
-<!--              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">-->
-<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobseeker/login">Login</a></li>-->
-<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobseeker/register">Get Started</a></li>-->
-<!--                <li class="text-sm hover:bg-slate-100 leading-8"><a href="https://hiregen.com/jobs/search">Search Jobs</a></li>-->
-<!--              </ul>-->
-<!--              &lt;!&ndash; Submenu ends &ndash;&gt;-->
-<!--            </li>-->
-            <li class="flex relative group">
-              <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Resources</span></a>
-              <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
-              <!-- Submenu starts -->
-              <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('all_cms_post')}}">Blog</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="#faq">FAQ's</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('about_us')}}">About Us</a></li>
-                <li class="text-sm hover:bg-slate-100 leading-8"><a href="#">Solutions</a></li>
-              </ul>
-              <!-- Submenu ends -->
-            </li>
+            <ul class="flex flex-col md:flex-row items-center space-x-10">
+              <li class="flex relative group">
+                <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Features</span></a>
+                <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+                <!-- Submenu starts -->
+                <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('recruitment_software')}}">Recruitment software</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('applicant_tracking_feature')}}">Applicant Tracking System</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('resume_parsing_feature')}}">Resume Parsing</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('recruitment_crm')}}">Recruitment CRM</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('candidate_matching')}}">Candidate Matching</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_recruitment')}}">AI Recruitment</a></li>
+                </ul>
+                <!-- Submenu ends -->
+              </li>
+              <li class="flex relative group">
+                <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Services</span></a>
+                <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+                <!-- Submenu starts -->
+                <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_recruitment_service')}}">AI Recruitment</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('candidate_screening_service')}}">Candidate Screening</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('resume_parsing_service')}}">Resume Parsing</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('career_site_service')}}">Career Site</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('interview_scheduling_service')}}">Interview Scheduling</a></li>
+                </ul>
+                <!-- Submenu ends -->
+              </li>
+              <li class="flex relative group">
+                <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Products</span></a>
+                <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+                <!-- Submenu starts -->
+                <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('recruitment_software_product')}}">Recruitment Software</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('applicant_tracking_product')}}">Applicant Tracking</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('recruitment_crm_product')}}">Recruitment CRM</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('staffing_software_product')}}">Staffing Software</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('job_board_product')}}">Job Board</a></li>
+                </ul>
+                <!-- Submenu ends -->
+              </li>
+              <li class="flex relative group">
+                <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">AI</span></a>
+                <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+                <!-- Submenu starts -->
+                <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_resume_screening')}}">Resume Screening</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_candidate_matching')}}">Candidate Matching</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_chatbots')}}">Chatbots</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('ai_recruitment_analytics')}}">Recruitment Analytics</a></li>
+                </ul>
+                <!-- Submenu ends -->
+              </li>
+              <li><a href="{{url_for('user_view_plan')}}"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Pricing</span></a></li>
+              <li><a href="{{url_for('index')}}#contact"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Contact</span></a></li>
+              <li class="flex relative group">
+                <a href="#"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Resources</span></a>
+                <i class="fa-solid fa-chevron-down fa-2xs pt-3"></i>
+                <!-- Submenu starts -->
+                <ul class="absolute bg-white p-3 w-52 top-6 transform scale-0 group-hover:scale-100 transition duration-150 ease-in-out origin-top shadow-lg">
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('all_cms_post')}}">Blog</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('faqs')}}">FAQ's</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('about_us')}}">About Us</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('privacy_policy')}}">Privacy Policy</a></li>
+                  <li class="text-sm hover:bg-slate-100 leading-8"><a href="{{url_for('terms_of_service')}}">Terms of Service</a></li>
+                </ul>
+                <!-- Submenu ends -->
+              </li>            </ul>
             <a href="{{url_for('login')}}"><span class="text-base font-medium text-gray-700 hover:text-blue-600">Sign in</span></a>
             <a href="{{url_for('register')}}" class="inline-flex justify-center rounded-full bg-blue-700 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Free trial</a>
           </nav>
