@@ -194,47 +194,47 @@ article .ql-indent-9 {
 
 </style>
 
-<div class="container mx-auto px-6 py-8 bg-white">
-  <div class="lg:flex lg:items-center lg:justify-between mb-4">
-    <div class="min-w-0 flex-1">
-      <h2 class="text-2xl/7 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">{{ post.title }}</h2>
-      <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-        <div class="mt-2 flex items-center text-sm text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z" />
-          </svg>
-          {{post.category_name}}
-        </div>
-        <div class="mt-2 flex items-center text-sm text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
-          </svg>
-          {{post.subcategory_name}}
-        </div>
-        <div class="mt-2 flex items-center text-sm text-gray-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-          </svg>
-          {{ post.created_at }}
-        </div>
-        <div class="mt-2 flex items-center text-sm text-blue-500">
-          {% for tag in post.tags %}
-            <a href="{{url_for('cms_posts_by_tag', tag=tag)}}" class="mr-1">
-              <span class=""></span>
-              #{{ tag }}
-            </a>
-          {% endfor %}
-        </div>
+    <!--Blog Preview-->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
+        <h2
+            class="mt-10 font-mono text-xs/5 font-semibold tracking-widest text-gray-500 uppercase data-dark:text-gray-400">
+            {{ post.created_at }}</h2>
+        <h1
+            class="mt-2 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            {{ post.title }}</h1>
+        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+                <div class="flex items-center gap-3">
+                  <img alt="{{ post.username }}"
+                                        src="{{ post.profile_picture or url_for('static' , filename='images/empty_avatar.png') }}"
+                                        class="aspect-square size-6 rounded-full object-cover">
+                                    <div class="text-sm/5 text-gray-700">{{ post.username }} Author</div>
 
-      </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500">{{post.category_name}}</span>
+                  <span class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500">{{post.subcategory_name}}</span>
+                </div>
+            </div>
+
+            <div class="text-gray-700">
+                <div class="max-w-2xl xl:mx-auto"><img alt="A crossed out European emblem"
+                        src="{{ url_for('static' , filename='images/blog-bg.jpg') }}"
+                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+                    <p class="my-10 text-base/8 first:mt-0 last:mb-0">{{post.content | safe}}</p>
+                </div>
+              <div>
+              {% for tag in post.tags %}
+              <a href="{{url_for('cms_posts_by_tag', tag=tag)}}" class="mr-1">
+                <span class=""></span>
+                #{{ tag }}
+              </a>
+            {% endfor %}
+            </div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <article class="m-9">
-      {{post.content | safe}}
-  </article>
-</div>
 
 <script type="application/ld+json">
 {

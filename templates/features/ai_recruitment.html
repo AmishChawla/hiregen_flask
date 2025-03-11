@@ -1,100 +1,126 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-cyan-600 to-blue-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI-Powered Recruitment</h1>
-                <p class="text-xl text-white opacity-90">Transform your hiring process with artificial intelligence</p>
+<!--Features-->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
+        <div class="flex flex-wrap gap-2 mt-8">
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-software">Recruitment software</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/applicant-tracking">Applicant Tracking System</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/resume-parsing">Resume Parsing</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-crm">Recruitment CRM</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/candidate-matching">Candidate Matching</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/ai-recruitment">AI Recruitment</a>
+        </div>
+        <h1
+            class="mt-4 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            List of Features in AI Recruitment</h1>
+        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+
+            </div>
+            <div class="text-gray-700">
+                <div class="max-w-2xl xl:mx-auto"><img alt="AI Recruitment"
+                        src="{{ url_for('static' , filename='images/list-of-features-in-ai-recruitment.jpg') }}"
+                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+
+                    <div class="max-w-4xl mx-auto p-6">
+                        <h2 class="text-2xl font-semibold mb-4">Why Choose HireGen’s AI Recruitment Technology?</h2>
+    <p class="mb-4">Recruitment is evolving, and AI is at the forefront of this transformation. HireGen’s AI-powered recruitment software leverages machine learning, automation, and predictive analytics to streamline hiring, reduce time-to-hire, and enhance candidate engagement. Below is a comprehensive list of features that make HireGen’s AI Recruitment a must-have for modern hiring teams.</p>
+
+    <h3 class="text-xl font-semibold mb-2">Key Features of HireGen’s AI Recruitment Software</h3>
+
+    <h4 class="text-lg font-semibold mt-4">1. AI-Powered Resume Screening & Parsing</h4>
+    <ul class="list-disc pl-6">
+        <li>Instantly extracts and structures candidate information from resumes.</li>
+        <li>Uses Natural Language Processing (NLP) for accurate keyword matching.</li>
+        <li>Reduces manual effort and accelerates shortlisting.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">2. Intelligent Candidate Matching</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-driven job-to-candidate matching based on skills, experience, and preferences.</li>
+        <li>Predictive analytics to rank and score top candidates.</li>
+        <li>Semantic search for enhanced talent discovery.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">3. Automated Job Posting & Distribution</h4>
+    <ul class="list-disc pl-6">
+        <li>AI recommends the best job boards and platforms for posting.</li>
+        <li>Auto-scheduling of job ads based on candidate activity trends.</li>
+        <li>Integration with LinkedIn, Indeed, and other major job portals.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">4. Chatbot & AI-Driven Candidate Engagement</h4>
+    <ul class="list-disc pl-6">
+        <li>24/7 AI chatbot to answer candidate queries and pre-screen applicants.</li>
+        <li>Automated email & SMS communication to keep candidates engaged.</li>
+        <li>AI-powered sentiment analysis for better interaction tracking.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">5. Predictive Hiring Analytics & Insights</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-driven hiring trend analysis for data-backed decision-making.</li>
+        <li>Predicts candidate success rates based on historical hiring patterns.</li>
+        <li>Custom reports on sourcing effectiveness and recruitment KPIs.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">6. Bias-Free & Diversity Hiring</h4>
+    <ul class="list-disc pl-6">
+        <li>AI removes unconscious bias from hiring decisions.</li>
+        <li>Promotes inclusive hiring by focusing on skills and experience.</li>
+        <li>Ensures compliance with EEOC and GDPR guidelines.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">7. Automated Interview Scheduling & Assessments</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-powered interview scheduling based on availability detection.</li>
+        <li>Integration with video interview platforms like Zoom & Microsoft Teams.</li>
+        <li>AI-based candidate assessment tools for skill evaluation.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">8. Seamless Integration with ATS & HRMS</h4>
+    <ul class="list-disc pl-6">
+        <li>Direct integration with HireGen’s Applicant Tracking System (ATS).</li>
+        <li>API-based connectivity with third-party HR tools.</li>
+        <li>Auto-syncing of candidate profiles across platforms.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">9. AI-Powered Workforce Planning</h4>
+    <ul class="list-disc pl-6">
+        <li>AI forecasts future hiring needs based on market trends.</li>
+        <li>Talent pool insights for succession planning and internal mobility.</li>
+        <li>Reduces cost-per-hire with strategic hiring recommendations.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">10. Mobile-Friendly AI Recruitment Platform</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-powered mobile recruitment for on-the-go hiring.</li>
+        <li>Mobile-friendly chatbot for seamless candidate communication.</li>
+        <li>Instant notifications for job updates and interview scheduling.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">The Future of AI in Recruitment</h3>
+    <p class="mb-4">As AI continues to reshape talent acquisition, HireGen’s AI Recruitment remains at the cutting edge by adopting deep learning, real-time analytics, and automation to improve hiring efficiency.</p>
+
+    <h3 class="text-xl font-semibold mt-6">Why HireGen’s AI Recruitment?</h3>
+    <p class="mb-4">With HireGen, recruiters can leverage AI to source, screen, and hire top talent faster. Whether hiring for tech, healthcare, finance, or any industry, our AI-powered platform ensures smarter hiring decisions.</p>
+            <!-- Call to Action -->
+        <div class="text-center mt-10">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                Get Started with HireGen Today!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Transform your hiring strategy with HireGen’s AI Recruitment Software. Sign up for a free demo and experience the future of AI-driven hiring!
+            </p>
+            <a href="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800">
+                Sign Up for Free Demo
+            </a>
+        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-cyan-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">AI Resume Screening</h3>
-                    <p class="text-gray-600">Automatically screen and rank candidates based on job requirements.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-cyan-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Chatbot Interviews</h3>
-                    <p class="text-gray-600">Conduct initial screenings with AI-powered chatbots.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-cyan-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Predictive Analytics</h3>
-                    <p class="text-gray-600">Predict candidate success and retention using AI models.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI Benefits -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of AI Recruitment</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-cyan-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Time Efficiency</h3>
-                        <p class="text-gray-600">Reduce time-to-hire by automating manual screening processes.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-cyan-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Improved Quality</h3>
-                        <p class="text-gray-600">Make data-driven decisions and reduce hiring bias.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="bg-cyan-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Experience the Future of Recruitment</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI to transform your hiring process today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-cyan-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
-</div>
 {% endblock %} 

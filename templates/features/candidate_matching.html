@@ -1,102 +1,126 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-yellow-600 to-orange-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Candidate Matching</h1>
-                <p class="text-xl text-white opacity-90">Find the perfect match between candidates and job openings</p>
+<!--Features-->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
+        <div class="flex flex-wrap gap-2 mt-8">
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-software">Recruitment software</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/applicant-tracking">Applicant Tracking System</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/resume-parsing">Resume Parsing</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-crm">Recruitment CRM</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/candidate-matching">Candidate Matching</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/ai-recruitment">AI Recruitment</a>
+        </div>
+        <h1
+            class="mt-4 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            List of Features in Candidate Matching</h1>
+        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+
+            </div>
+            <div class="text-gray-700">
+                <div class="max-w-2xl xl:mx-auto"><img alt="Candidate Matching"
+                        src="{{ url_for('static' , filename='images/list-of-features-in-candidate-matching.jpg') }}"
+                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+
+                    <div class="max-w-4xl mx-auto p-6">
+                        <h2 class="text-2xl font-semibold mb-4">Why Choose HireGen’s Candidate Matching Technology?</h2>
+    <p class="mb-4">Finding the right candidate for a job can be challenging, but HireGen’s AI-powered Candidate Matching software simplifies and accelerates the hiring process. Using machine learning, NLP, and predictive analytics, HireGen ensures recruiters connect with the most suitable candidates quickly and efficiently. Here’s a detailed breakdown of the key features that make HireGen’s Candidate Matching solution a game-changer for recruitment.</p>
+
+    <h3 class="text-xl font-semibold mb-2">Key Features of HireGen’s Candidate Matching Software</h3>
+
+    <h4 class="text-lg font-semibold mt-4">1. AI-Powered Resume-to-Job Matching</h4>
+    <ul class="list-disc pl-6">
+        <li>Uses Natural Language Processing (NLP) to analyze resumes.</li>
+        <li>Matches candidates based on skills, experience, and job requirements.</li>
+        <li>Provides an accuracy score for each match to streamline decision-making.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">2. Automated Job Recommendations for Candidates</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-driven job matching engine recommends relevant positions.</li>
+        <li>Candidates receive personalized job suggestions based on their profiles.</li>
+        <li>Continuous learning from user behavior improves recommendation accuracy.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">3. Advanced Search & Filtering Capabilities</h4>
+    <ul class="list-disc pl-6">
+        <li>Boolean search for precision talent discovery.</li>
+        <li>AI-enhanced semantic search for better candidate-job alignment.</li>
+        <li>Geolocation-based candidate filtering for local hiring needs.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">4. Real-Time Candidate Ranking & Scoring</h4>
+    <ul class="list-disc pl-6">
+        <li>Automatic ranking of candidates based on qualifications and experience.</li>
+        <li>AI-generated candidate scoring for better hiring decisions.</li>
+        <li>Highlights top matches for faster shortlisting.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">5. Skill Gap Analysis & Candidate Insights</h4>
+    <ul class="list-disc pl-6">
+        <li>Identifies missing skills and suggests potential training needs.</li>
+        <li>Provides detailed insights on candidate strengths and weaknesses.</li>
+        <li>Predictive analytics to assess future hiring trends.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">6. Seamless ATS & Recruitment CRM Integration</h4>
+    <ul class="list-disc pl-6">
+        <li>Directly integrates with HireGen’s Applicant Tracking System (ATS).</li>
+        <li>Syncs with Recruitment CRM for a unified hiring experience.</li>
+        <li>API-based connectivity with third-party HR tools and databases.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">7. Automated Candidate Engagement</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-powered chatbots for instant candidate communication.</li>
+        <li>Automated email and SMS follow-ups to enhance engagement.</li>
+        <li>Candidate status tracking for personalized recruitment journeys.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">8. Diversity & Bias-Free Matching</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-driven fair hiring to eliminate unconscious bias.</li>
+        <li>Promotes diverse and inclusive hiring with neutral job matching.</li>
+        <li>Compliance with EEOC and GDPR guidelines.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">9. Mobile-Friendly Candidate Matching</h4>
+    <ul class="list-disc pl-6">
+        <li>Mobile-optimized platform for on-the-go hiring.</li>
+        <li>Candidate applications via mobile apps, cloud storage, and social media.</li>
+        <li>Push notifications for real-time job alerts and interview updates.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">10. Recruitment Analytics & Reporting</h4>
+    <ul class="list-disc pl-6">
+        <li>AI-driven insights into hiring success rates.</li>
+        <li>Performance tracking of sourcing channels and candidate engagement.</li>
+        <li>Customizable reports for data-driven recruitment strategies.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">Future Trends in AI-Powered Candidate Matching</h3>
+    <p class="mb-4">AI and predictive analytics are revolutionizing candidate-job matching, enabling better hiring decisions, increased automation, and improved talent retention. HireGen continues to innovate, ensuring businesses stay ahead in the competitive hiring landscape.</p>
+
+    <h3 class="text-xl font-semibold mt-6">Why HireGen’s Candidate Matching?</h3>
+    <p class="mb-4">With HireGen, recruiters can reduce time-to-hire, improve hiring quality, and create a seamless candidate experience. Whether hiring for tech, finance, healthcare, or any other industry, our AI-driven candidate matching software delivers the best talent, faster.</p>
+
+            <!-- Call to Action -->
+        <div class="text-center mt-10">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                Get Started with HireGen Today!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Optimize your recruitment with HireGen’s AI-powered Candidate Matching. Sign up for a free demo and transform your hiring strategy!
+            </p>
+            <a href="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800">
+                Sign Up for Free Demo
+            </a>
+        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-yellow-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Skill Matching</h3>
-                    <p class="text-gray-600">Advanced algorithms to match candidate skills with job requirements.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-yellow-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Experience Weighting</h3>
-                    <p class="text-gray-600">Smart weighting of experience levels and job requirements.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-yellow-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Match Analytics</h3>
-                    <p class="text-gray-600">Detailed insights into match quality and candidate fit.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">How Candidate Matching Works</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-yellow-600">1</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Job Analysis</h3>
-                    <p class="text-gray-600">Extract key requirements</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-yellow-600">2</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Profile Matching</h3>
-                    <p class="text-gray-600">Compare with candidates</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-yellow-600">3</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Score Generation</h3>
-                    <p class="text-gray-600">Calculate match scores</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-yellow-600">4</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Recommendations</h3>
-                    <p class="text-gray-600">Present best matches</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="bg-yellow-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Find Your Perfect Candidates</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start matching candidates with your job openings today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-yellow-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Try It Now</a>
-        </div>
-    </div>
-</div>
 {% endblock %} 

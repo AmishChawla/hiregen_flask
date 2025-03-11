@@ -1,106 +1,100 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-green-600 to-teal-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Resume Parsing</h1>
-                <p class="text-xl text-white opacity-90">Extract valuable insights from resumes automatically</p>
+<!--Features-->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
+        <div class="flex flex-wrap gap-2 mt-8">
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-software">Recruitment software</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/applicant-tracking">Applicant Tracking System</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/resume-parsing">Resume Parsing</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-crm">Recruitment CRM</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/candidate-matching">Candidate Matching</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/ai-recruitment">AI Recruitment</a>
+        </div>
+        <h1
+            class="mt-4 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            List of Features in Resume Parsing</h1>
+        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+
+            </div>
+            <div class="text-gray-700">
+                <div class="max-w-2xl xl:mx-auto"><img alt="Resume Parsing"
+                        src="{{ url_for('static' , filename='images/list-of-features-in-resume-parsing.jpg') }}"
+                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+
+                    <div class="max-w-4xl mx-auto p-6">
+                        <h1 class="text-3xl font-semibold">Why Choose HireGen’s Resume Parsing Technology?</h1>
+        <p class="mt-4 text-lg">Recruiters and hiring managers deal with thousands of resumes, making manual screening time-consuming and inefficient. HireGen’s AI-powered Resume Parsing software automates this process, extracting critical candidate information and structuring it into an easy-to-analyze format.</p>
+
+        <h2 class="mt-6 text-2xl font-semibold">Key Features of HireGen’s Resume Parsing Software</h2>
+
+        <div class="mt-4 space-y-6">
+            <div>
+                <h3 class="text-xl font-semibold">1. AI-Powered Resume Extraction</h3>
+                <ul class="list-disc list-inside">
+                    <li>Advanced Natural Language Processing (NLP) extracts key candidate details.</li>
+                    <li>Identifies and categorizes skills, experience, education, and contact details.</li>
+                    <li>Multi-language support for global recruitment needs.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">2. Accurate Candidate Data Structuring</h3>
+                <ul class="list-disc list-inside">
+                    <li>Converts unstructured resume data into a standardized format.</li>
+                    <li>Extracts job titles, locations, and industries for precise filtering.</li>
+                    <li>Minimizes errors by eliminating manual data entry.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">3. Multi-Format Resume Processing</h3>
+                <ul class="list-disc list-inside">
+                    <li>Supports PDF, DOC, DOCX, RTF, TXT, and image-based resumes.</li>
+                    <li>OCR (Optical Character Recognition) technology for scanned resumes.</li>
+                    <li>Batch processing for bulk resume uploads.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">4. Automated Candidate Matching</h3>
+                <ul class="list-disc list-inside">
+                    <li>AI-driven resume-to-job matching based on job descriptions.</li>
+                    <li>Keyword-based search for fast talent identification.</li>
+                    <li>Automated ranking of resumes by relevance and suitability.</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-semibold">5. Seamless ATS & CRM Integration</h3>
+                <ul class="list-disc list-inside">
+                    <li>Directly integrates with HireGen’s Applicant Tracking System (ATS).</li>
+                    <li>API-based connectivity with HRMS, payroll, and CRM platforms.</li>
+                    <li>Custom data mapping for existing HR workflows.</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2 class="mt-8 text-2xl font-semibold">Future Trends in Resume Parsing Technology</h2>
+        <p class="mt-2">AI and automation are transforming resume parsing with features like predictive hiring analytics, AI-powered sentiment analysis, and deeper candidate insights.</p>
+
+        <h2 class="mt-6 text-2xl font-semibold">Why HireGen’s Resume Parsing?</h2>
+        <p class="mt-2">With HireGen, recruiters can process resumes 10x faster, improve hiring accuracy, and reduce time-to-fill. Whether you’re hiring for tech, finance, healthcare, or any other industry, our resume parsing software adapts to your needs.</p>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-10">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                Get Started with HireGen Today!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6">Experience the power of AI-driven resume parsing with HireGen.</p>
+
+           <a href="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800">Sign Up for a Free Demo</a>
+        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-    <!-- Key Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-green-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Intelligent Data Extraction</h3>
-                    <p class="text-gray-600">Extract key information from resumes with high accuracy using AI.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-green-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Multiple Format Support</h3>
-                    <p class="text-gray-600">Process PDF, Word, and other common document formats.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-green-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Structured Data Output</h3>
-                    <p class="text-gray-600">Convert unstructured resume data into organized, searchable formats.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">How Resume Parsing Works</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-green-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3 3m0 0l-3-3m3 3V8"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Upload Resume</h3>
-                        <p class="text-gray-600">Upload resumes in any common format</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-green-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">AI Processing</h3>
-                        <p class="text-gray-600">Advanced AI extracts key information</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-green-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Structured Results</h3>
-                        <p class="text-gray-600">Get organized, searchable data</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="bg-green-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Experience the Power of AI Resume Parsing</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Save time and improve accuracy in candidate screening.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-green-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Try It Now</a>
-        </div>
-    </div>
-</div>
 {% endblock %} 

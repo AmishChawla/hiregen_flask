@@ -1,100 +1,141 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-purple-600 to-pink-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Recruitment CRM</h1>
-                <p class="text-xl text-white opacity-90">Build and nurture your talent pool with our powerful CRM</p>
+
+<!--Features-->
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
+        <div class="flex flex-wrap gap-2 mt-8">
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-software">Recruitment software</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/applicant-tracking">Applicant Tracking System</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/resume-parsing">Resume Parsing</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-crm">Recruitment CRM</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/candidate-matching">Candidate Matching</a>
+            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/ai-recruitment">AI Recruitment</a>
+        </div>
+        <h1
+            class="mt-4 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
+            List of Features in Recruitment CRM</h1>
+        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
+            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+
+            </div>
+            <div class="text-gray-700">
+                <div class="max-w-2xl xl:mx-auto"><img alt="Recruitment CRM"
+                        src="{{ url_for('static' , filename='images/list-of-features-in-recruitment-crm.jpg') }}"
+                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+
+                    <div class="max-w-4xl mx-auto p-6">
+    <h2 class="text-2xl font-semibold mb-4">Why Choose HireGen’s Recruitment CRM?</h2>
+    <p class="mb-4">In today’s competitive hiring landscape, building and maintaining strong candidate relationships is crucial for long-term success. HireGen’s AI-powered Recruitment CRM helps recruiters streamline engagement, improve talent pipeline management, and accelerate hiring processes. Below is a comprehensive list of features that make HireGen’s Recruitment CRM an essential tool for modern talent acquisition teams.</p>
+
+    <h3 class="text-xl font-semibold mb-2">Key Features of HireGen’s Recruitment CRM</h3>
+
+    <h4 class="text-lg font-semibold mt-4">1. AI-Driven Candidate Relationship Management</h4>
+    <ul class="list-disc pl-6">
+        <li>Smart automation for candidate engagement and follow-ups.</li>
+        <li>AI-powered candidate matching based on job roles and skills.</li>
+        <li>Personalized communication via email, SMS, and chatbots.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">2. Centralized Talent Pool Management</h4>
+    <ul class="list-disc pl-6">
+        <li>Maintain an organized database of active and passive candidates.</li>
+        <li>AI-based tagging and categorization for easy candidate retrieval.</li>
+        <li>Smart filters to identify top talent quickly.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">3. Automated Candidate Nurturing</h4>
+    <ul class="list-disc pl-6">
+        <li>Drip campaigns for continuous candidate engagement.</li>
+        <li>Automated reminders for follow-ups and interview scheduling.</li>
+        <li>AI-driven insights to predict candidate interest levels.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">4. Seamless ATS & HR Software Integration</h4>
+    <ul class="list-disc pl-6">
+        <li>Native integration with HireGen’s Applicant Tracking System (ATS).</li>
+        <li>API-based connectivity with HRMS, payroll, and CRM platforms.</li>
+        <li>Auto-syncing of candidate data for a seamless hiring experience.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">5. Customizable Recruitment Pipelines</h4>
+    <ul class="list-disc pl-6">
+        <li>Drag-and-drop interface to manage hiring stages.</li>
+        <li>Role-based access control for recruiters and hiring managers.</li>
+        <li>Automated status updates and notifications.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">6. AI-Powered Resume Parsing & Candidate Insights</h4>
+    <ul class="list-disc pl-6">
+        <li>Instant resume parsing for structured candidate profiles.</li>
+        <li>AI-driven insights on candidate experience, skills, and cultural fit.</li>
+        <li>Predictive analytics for future hiring needs.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">7. Advanced Search & Filtering Capabilities</h4>
+    <ul class="list-disc pl-6">
+        <li>Boolean search for precise talent discovery.</li>
+        <li>AI-enhanced candidate suggestions based on hiring trends.</li>
+        <li>Geolocation-based candidate searches for local hiring needs.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">8. Collaboration & Workflow Automation</h4>
+    <ul class="list-disc pl-6">
+        <li>Internal team collaboration tools for seamless communication.</li>
+        <li>Automated approvals and feedback loops.</li>
+        <li>Task assignment and tracking for streamlined workflows.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">9. Recruitment Marketing & Employer Branding</h4>
+    <ul class="list-disc pl-6">
+        <li>Career page integration with branded job listings.</li>
+        <li>Social media job sharing for increased candidate reach.</li>
+        <li>AI-driven content recommendations for engaging job postings.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">10. Recruitment Analytics & Reporting</h4>
+    <ul class="list-disc pl-6">
+        <li>Real-time dashboards with data-driven hiring insights.</li>
+        <li>Performance tracking of sourcing channels and candidate engagement.</li>
+        <li>Customizable reports for ROI analysis and hiring forecasts.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">11. Mobile-Friendly Recruitment CRM</h4>
+    <ul class="list-disc pl-6">
+        <li>Mobile-optimized interface for hiring on the go.</li>
+        <li>Mobile app for instant access to candidate data.</li>
+        <li>Push notifications for interview updates and follow-ups.</li>
+    </ul>
+
+    <h4 class="text-lg font-semibold mt-4">12. Compliance & Data Security</h4>
+    <ul class="list-disc pl-6">
+        <li>GDPR, EEOC, and SOC2 compliance for secure candidate data management.</li>
+        <li>Encrypted cloud storage with multi-layer security.</li>
+        <li>Audit trails for full transparency and compliance.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">Future Trends in Recruitment CRM Technology</h3>
+    <p class="mb-4">With AI and automation driving recruitment innovation, HireGen’s Recruitment CRM evolves continuously, incorporating predictive hiring analytics, chat-based candidate engagement, and intelligent automation to keep businesses ahead in talent acquisition.</p>
+
+    <h3 class="text-xl font-semibold mt-6">Why HireGen’s Recruitment CRM?</h3>
+    <p class="mb-4">With HireGen, recruiters can streamline hiring workflows, enhance candidate experience, and build a strong employer brand. Whether you're a startup or a global enterprise, our Recruitment CRM is designed to adapt to your hiring needs.</p>
+        <!-- Call to Action -->
+        <div class="text-center mt-10">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                Get Started with HireGen Today!
+            </h2>
+            <p class="text-lg text-gray-700 mb-6">
+                Experience the power of AI-driven recruitment with HireGen’s Recruitment CRM. Sign up for a free demo and take your hiring strategy to the next level!
+            </p>
+            <a href="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-blue-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800">
+                Sign Up for Free Demo
+            </a>
+        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Talent Pool Management</h3>
-                    <p class="text-gray-600">Build and maintain a database of qualified candidates for future opportunities.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Automated Follow-ups</h3>
-                    <p class="text-gray-600">Schedule and automate candidate communications and follow-ups.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Pipeline Analytics</h3>
-                    <p class="text-gray-600">Track and analyze your recruitment pipeline performance.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of Recruitment CRM</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Time Savings</h3>
-                        <p class="text-gray-600">Reduce time spent on manual candidate tracking and follow-ups.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Better Relationships</h3>
-                        <p class="text-gray-600">Build and maintain strong relationships with potential candidates.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="bg-purple-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Transform Your Recruitment Process</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start building your talent pool with our powerful CRM tools.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
-</div>
 {% endblock %} 
