@@ -1,117 +1,228 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-indigo-600 to-blue-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Custom Career Sites</h1>
-                <p class="text-xl text-white opacity-90">Create a branded career portal that attracts top talent</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+ul {margin-bottom:25px;}
+  h2 {color:#000;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Branded Experience</h3>
-                    <p class="text-gray-600">Customize your career site to match your brand identity.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     Transform Your Hiring with a Powerful Employer Branding Platform – Career Site
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Mobile Responsive</h3>
-                    <p class="text-gray-600">Optimized for all devices and screen sizes.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <p class="text-gray-700 mb-4">
+            In today's competitive job market, having a strong career site is essential for attracting top talent. Job seekers don't just look at job postings—they evaluate a company's culture, mission, and growth opportunities before applying.
+        </p>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-indigo-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Easy Integration</h3>
-                    <p class="text-gray-600">Seamlessly integrate with your existing systems.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            A well-designed career site serves as a powerful tool for employer branding and talent acquisition.
+        </p>
 
-    <!-- Features Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Career Site Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-indigo-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Job Search</h3>
-                        <p class="text-gray-600">Advanced search functionality</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-indigo-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Easy Apply</h3>
-                        <p class="text-gray-600">One-click applications</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-indigo-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Job Alerts</h3>
-                        <p class="text-gray-600">Automated notifications</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-indigo-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Secure Portal</h3>
-                        <p class="text-gray-600">Protected candidate data</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            <span class="font-bold">HireGen.com</span> provides an AI-driven career site solution that enhances employer branding, improves candidate engagement, and streamlines the hiring process.
+        </p>
 
-    <!-- CTA Section -->
-    <div class="bg-indigo-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Launch Your Career Site?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Create a powerful career portal that attracts top talent.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            With customizable templates, AI-powered job recommendations, and seamless applicant tracking system (ATS) integration, HireGen.com helps businesses build a career site that attracts, engages, and converts top candidates.
+        </p>
+
+        <p class="text-gray-700 mb-6">
+            This blog will explore the importance of career sites, key features of HireGen.com's Career Site Solution, and how businesses can leverage it for efficient hiring.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Why a Career Site Is Essential for Hiring Success</h2>
+        <p class="text-gray-700 mb-4">
+            A career site is more than just a job listing page—it's the digital face of an employer brand. Here's why a career site is crucial:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li><span class="font-semibold">Enhances Employer Branding</span> – A career site showcases company culture, values, and mission, helping to attract the right talent.</li>
+            <li><span class="font-semibold">Improves Candidate Experience</span> – A user-friendly career page simplifies job searches and applications.</li>
+            <li><span class="font-semibold">Increases Job Visibility</span> – Career sites rank on search engines, driving organic traffic and reducing reliance on paid job boards.</li>
+            <li><span class="font-semibold">Automates the Hiring Process</span> – Integrated ATS and AI-driven features optimize recruitment efficiency.</li>
+            <li><span class="font-semibold">Encourages Direct Applications</span> – Avoids job board fees and fosters direct candidate relationships.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            Without a well-optimized career site, companies risk losing top talent to competitors who offer a more engaging and informative hiring experience.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">How HireGen.com's Career Site Solution Works</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Powered Job Recommendations</span>
+                <ul class="list-disc pl-6">
+                    <li>Uses AI algorithms to suggest relevant jobs based on a candidate's profile.</li>
+                    <li>Increases conversion rates by presenting personalized job matches.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Customizable Career Page Templates</span>
+                <ul class="list-disc pl-6">
+                    <li>Offers drag-and-drop customization to match your brand.</li>
+                    <li>Supports multimedia elements like videos, testimonials, and blogs.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Mobile-Optimized Career Site</span>
+                <ul class="list-disc pl-6">
+                    <li>Ensures a seamless mobile experience for job seekers.</li>
+                    <li>Increases applications from mobile users.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">SEO-Optimized Job Listings</span>
+                <ul class="list-disc pl-6">
+                    <li>Helps job postings rank higher on Google for Jobs and search engines.</li>
+                    <li>Drives organic traffic and reduces job advertising costs.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Applicant Tracking System (ATS) Integration</span>
+                <ul class="list-disc pl-6">
+                    <li>Connects seamlessly with HireGen.com's ATS and other HR software.</li>
+                    <li>Enables real-time applicant tracking and communication.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">AI Chatbot for Candidate Engagement</span>
+                <ul class="list-disc pl-6">
+                    <li>Provides instant answers to job seeker queries.</li>
+                    <li>Reduces candidate drop-off rates.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Employer Branding Features</span>
+                <ul class="list-disc pl-6">
+                    <li>Showcases company culture, diversity, values, and team insights.</li>
+                    <li>Features video testimonials from employees.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">One-Click Apply & Resume Parsing</span>
+                <ul class="list-disc pl-6">
+                    <li>Simplifies applications with one-click apply options.</li>
+                    <li>Uses AI-powered resume parsing to extract candidate data automatically.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Talent Community & Job Alerts</span>
+                <ul class="list-disc pl-6">
+                    <li>Allows candidates to subscribe to job alerts.</li>
+                    <li>Builds a talent pipeline for future hiring needs.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Data Analytics & Insights</span>
+                <ul class="list-disc pl-6">
+                    <li>Provides real-time metrics on job post performance, visitor behavior, and application rates.</li>
+                    <li>Helps optimize career site engagement strategies.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of Using HireGen.com's Career Site Solution</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Stronger Employer Branding</span>
+                <ul class="list-disc pl-6">
+                    <li>Highlights company mission, vision, and work culture.</li>
+                    <li>Attracts top talent that aligns with your company's values.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Higher Candidate Engagement</span>
+                <ul class="list-disc pl-6">
+                    <li>AI-driven job recommendations enhance user experience.</li>
+                    <li>Interactive features keep candidates engaged and informed.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Increased Application Rates</span>
+                <ul class="list-disc pl-6">
+                    <li>Mobile-optimized, SEO-friendly career sites lead to higher job applications.</li>
+                    <li>AI-driven job matching ensures better candidate-job fit.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Cost Savings on Recruitment Marketing</span>
+                <ul class="list-disc pl-6">
+                    <li>Reduces dependency on paid job boards.</li>
+                    <li>Improves organic reach through SEO.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Faster Hiring Process</span>
+                <ul class="list-disc pl-6">
+                    <li>Integrated ATS streamlines candidate tracking and selection.</li>
+                    <li>AI-driven automation reduces time-to-hire.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Better Candidate Experience</span>
+                <ul class="list-disc pl-6">
+                    <li>AI chatbot ensures instant communication.</li>
+                    <li>Simplified application process improves user satisfaction.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Enhanced Hiring Analytics</span>
+                <ul class="list-disc pl-6">
+                    <li>Provides data-driven insights for recruitment strategy improvement.</li>
+                    <li>Helps HR teams optimize job postings and hiring efforts.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from HireGen.com's Career Site?</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Large Enterprises & Corporations</span>
+                <ul class="list-disc pl-6">
+                    <li>Centralized hiring portal for multiple departments and locations.</li>
+                    <li>Enhances employer branding on a global scale.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Small & Medium Businesses (SMBs)</span>
+                <ul class="list-disc pl-6">
+                    <li>Affordable solution for companies building their employer brand.</li>
+                    <li>Automates hiring without the need for large HR teams.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Recruitment Agencies</span>
+                <ul class="list-disc pl-6">
+                    <li>Streamlined job postings for multiple clients.</li>
+                    <li>Enhances candidate tracking and application management.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Startups & Growing Businesses</span>
+                <ul class="list-disc pl-6">
+                    <li>AI-driven career pages to attract top industry talent.</li>
+                    <li>Cost-effective alternative to third-party job boards.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Tech & Remote Hiring Platforms</span>
+                <ul class="list-disc pl-6">
+                    <li>Helps tech companies hire specialized talent quickly.</li>
+                    <li>AI-powered job matching for remote workers.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">The Future of Career Sites with HireGen.com</h2>
+        <p class="text-gray-700 mb-4">
+            With advancements in AI and automation, the future of career sites is evolving. HireGen.com is investing in:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Powered Virtual Career Fairs</span> – Host virtual job fairs with AI-driven matchmaking.</li>
+            <li><span class="font-semibold">Predictive Hiring Analytics</span> – AI-based hiring trends to improve recruitment strategy.</li>
+            <li><span class="font-semibold">Voice & Video-Based Job Applications</span> – Allow candidates to apply via voice and video submissions.</li>
+            <li><span class="font-semibold">Blockchain-Based Credential Verification</span> – Secure and verified candidate background checks.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            By adopting these cutting-edge innovations, businesses can stay ahead in attracting and hiring the best talent.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+        <p class="text-gray-700 mb-4">
+            A well-designed career site is no longer optional—it's a necessity in today's competitive job market.
+        </p>
+        <p class="text-gray-700 mb-4">
+            HireGen.com's Career Site Solution offers AI-powered tools that help businesses attract top talent, enhance employer branding, and streamline the hiring process.
+        </p>
+        <p class="text-gray-700 mb-4">
+            From SEO-optimized job postings to AI-driven job recommendations, HireGen.com provides a one-stop solution for modern recruitment needs.
+        </p>
+        <p class="text-gray-700 font-bold">
+            Ready to build a high-performing career site? <a class="hover:text-blue-700 text-blue-700" href="/register">Get started with HireGen.com today</a>
+        </p>
+</div>
+  </div>
 </div>
 {% endblock %} 

@@ -1,145 +1,132 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-violet-600 to-purple-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI Recruitment Agents</h1>
-                <p class="text-xl text-white opacity-90">Intelligent agents that automate and enhance your recruitment process</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+  h2 {color:#000;}
+  ul, ol {margin-left: 1.25rem;margin-bottom:25px;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-violet-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Autonomous Screening</h3>
-                    <p class="text-gray-600">AI agents that automatically screen and evaluate candidates.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     AI Agents: Transforming Recruitment with Intelligent Automation
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-violet-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Intelligent Automation</h3>
-                    <p class="text-gray-600">Smart workflows that adapt to your recruitment needs.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <p class="text-gray-700 mb-4">The recruitment industry is undergoing a massive transformation with the adoption of AI-driven automation.</p>
+            <p class="text-gray-700 mb-4">One of the biggest game-changers in modern hiring is the use of AI agents, which streamline recruitment processes, improve candidate engagement, and reduce hiring time.</p>
+            <p class="text-gray-700 mb-4">HireGen.com’s AI Agents are designed to enhance recruitment efficiency by automating repetitive tasks, optimizing candidate screening, and improving the overall hiring experience.</p>
+            <p class="text-gray-700 mb-4">These intelligent AI-driven assistants enable faster, smarter, and bias-free hiring.</p>
+            <p class="text-gray-700">In this blog, we’ll explore how HireGen.com’s AI Agents revolutionize recruitment, their key features, and how businesses can leverage them to enhance their talent acquisition strategies.</p>
+        </section>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-violet-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Performance Analytics</h3>
-                    <p class="text-gray-600">Real-time insights and performance tracking.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">What Are AI Agents in Recruitment?</h2>
+            <p class="text-gray-700 mb-4">AI agents in recruitment are intelligent virtual assistants that help automate various aspects of the hiring process. They use machine learning (ML), natural language processing (NLP), and automation to handle tasks like:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Candidate Screening & Shortlisting:</span> AI analyzes resumes and job applications to identify the best candidates.</li>
+                <li><span class="font-semibold">Interview Scheduling:</span> AI agents coordinate interview times based on recruiter and candidate availability.</li>
+                <li><span class="font-semibold">Candidate Engagement:</span> Automated responses to candidate queries via chatbots and email.</li>
+                <li><span class="font-semibold">Job Matching:</span> AI matches job seekers to relevant job roles based on skills, experience, and preferences.</li>
+                <li><span class="font-semibold">Talent Pool Management:</span> AI organizes and updates candidate databases for future hiring needs.</li>
+                <li><span class="font-semibold">Bias-Free Hiring:</span> AI-driven analysis ensures fair and objective candidate selection.</li>
+                <li><span class="font-semibold">Recruitment Analytics & Insights:</span> AI provides data-driven hiring decisions and performance metrics.</li>
+            </ul>
+            <p class="text-gray-700 mt-4">By automating these tasks, HireGen.com’s AI Agents help recruiters save time, reduce hiring costs, and improve candidate experience.</p>
+        </section>
 
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">How AI Agents Work</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-violet-600 mb-4">
-                            <span class="text-2xl font-bold">1</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Data Collection</h3>
-                        <p class="text-gray-600">Gather candidate and job requirement data</p>
-                    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">How HireGen.com’s AI Agents Work</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">1. AI-Powered Candidate Screening & Matching</h3>
+                    <p class="text-gray-600">Analyzes resumes, job applications, and candidate profiles to identify the best fit. Uses advanced algorithms and machine learning models for high-accuracy matching. Eliminates manual screening, saving recruiters hours of work.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-violet-600 mb-4">
-                            <span class="text-2xl font-bold">2</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Analysis</h3>
-                        <p class="text-gray-600">Process and analyze information</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">2. Intelligent Chatbots for Candidate Engagement</h3>
+                    <p class="text-gray-600">AI-powered chatbots answer FAQs, guide candidates, and provide application updates. Ensures 24/7 support to enhance candidate experience. Improves employer branding by offering instant responses and a professional interaction.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-violet-600 mb-4">
-                            <span class="text-2xl font-bold">3</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Decision Making</h3>
-                        <p class="text-gray-600">Make intelligent recommendations</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">3. Automated Interview Scheduling</h3>
+                    <p class="text-gray-600">AI automatically schedules interviews based on recruiter and candidate availability. Syncs with Google Calendar, Outlook, and Zoom for seamless interview coordination. Sends automated reminders to reduce no-shows and cancellations.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-violet-600 mb-4">
-                            <span class="text-2xl font-bold">4</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Action</h3>
-                        <p class="text-gray-600">Execute automated tasks</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">4. AI-Driven Resume Parsing & Data Extraction</h3>
+                    <p class="text-gray-600">Extracts key candidate information (skills, experience, qualifications) from resumes. Converts unstructured resume data into structured profiles. Improves searchability and filtering within the applicant tracking system (ATS).</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">5. Personalized Job Recommendations</h3>
+                    <p class="text-gray-600">AI matches candidates with the most suitable job openings based on skills, experience, and interests. Enhances candidate engagement by offering relevant job opportunities. Reduces application drop-off rates by guiding candidates to ideal roles.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">6. AI-Powered Candidate Assessment & Pre-Screening</h3>
+                    <p class="text-gray-600">Conducts automated skill assessments and pre-employment tests. Uses AI-driven analytics to predict candidate performance and culture fit. Helps recruiters make data-driven hiring decisions.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">7. Diversity Hiring & Bias-Free Selection</h3>
+                    <p class="text-gray-600">AI eliminates unconscious biases by focusing on skills, experience, and qualifications. Ensures a fair and inclusive hiring process. Helps organizations achieve diversity and inclusion (D&I) goals.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">8. Predictive Analytics for Workforce Planning</h3>
+                    <p class="text-gray-600">AI analyzes hiring trends and candidate data to provide recruitment insights. Helps HR teams make strategic hiring decisions based on real-time data. Forecasts future talent needs and hiring success rates.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">9. Automated Follow-Ups & Communication</h3>
+                    <p class="text-gray-600">AI sends personalized follow-up emails and messages. Keeps candidates engaged throughout the hiring process. Reduces candidate drop-offs by maintaining constant communication.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">10. Seamless Integration with HR & ATS Platforms</h3>
+                    <p class="text-gray-600">Works effortlessly with HireGen.com’s ATS and other HR tools. Ensures a smooth recruitment workflow from application to onboarding. Automates data entry, tracking, and reporting.</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Benefits</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-violet-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Enhanced Efficiency</h3>
-                        <p class="text-gray-600">Reduce time-to-hire by up to 75% with AI-powered automation.</p>
-                    </div>
-                </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of Using HireGen.com’s AI Agents</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Faster Hiring Process:</span> Reduces time-to-hire by automating repetitive recruitment tasks. AI-powered screening shortlists top candidates instantly. AI-driven interview scheduling eliminates manual coordination.</li>
+                <li><span class="font-semibold">Improved Candidate Experience:</span> 24/7 AI chatbot assistance improves engagement and communication. Candidates receive instant updates on job applications and interviews. Personalized job recommendations ensure a better job search experience.</li>
+                <li><span class="font-semibold">Increased Recruiter Productivity:</span> Reduces manual workload, allowing recruiters to focus on high-value tasks. AI handles candidate screening, scheduling, and engagement. Recruiters can spend more time on building relationships with top talent.</li>
+                <li><span class="font-semibold">Reduced Hiring Costs:</span> Automating recruitment tasks saves on administrative costs. AI minimizes time spent on unqualified candidates, reducing hiring expenses. Improved hiring efficiency leads to higher ROI on recruitment investments.</li>
+                <li><span class="font-semibold">Data-Driven Hiring Decisions:</span> AI provides real-time analytics on hiring trends and candidate performance. Helps HR teams make smarter hiring choices based on AI-driven insights. Predictive analytics improves workforce planning and recruitment forecasting.</li>
+                <li><span class="font-semibold">Better Diversity & Inclusion:</span> AI-based hiring reduces bias and promotes fair recruitment. Focuses on candidate skills rather than personal demographics. Encourages a more inclusive and diverse workplace.</li>
+                <li><span class="font-semibold">Seamless Integration with Recruitment Systems:</span> AI agents work with existing HR software, ATS, and career sites. Automates recruitment workflows for a unified hiring experience.</li>
+            </ul>
+        </section>
 
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-violet-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Improved Accuracy</h3>
-                        <p class="text-gray-600">Eliminate human bias and make data-driven decisions.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from HireGen.com’s AI Agents?</h2>
+            <ul class="list-decimal list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Enterprises & Large Corporations:</span> Handles high-volume hiring with automated screening and scheduling. AI-powered recruitment analytics improve hiring strategies.</li>
+                <li><span class="font-semibold">Recruitment Agencies & Staffing Firms:</span> Speeds up candidate sourcing, screening, and client coordination. Enhances talent pool management with AI-driven insights.</li>
+                <li><span class="font-semibold">Small & Medium Businesses (SMBs):</span> Offers cost-effective recruitment automation. Helps SMBs compete with larger companies in hiring top talent.</li>
+                <li><span class="font-semibold">Startups & Tech Companies:</span> Enables fast hiring for rapidly growing teams. AI-driven job matching finds the right candidates quickly.</li>
+                <li><span class="font-semibold">Remote & Global Hiring Teams:</span> Manages hiring across different time zones and remote locations. AI-powered video interview scheduling simplifies virtual hiring.</li>
+            </ul>
+        </section>
 
-    <!-- CTA Section -->
-    <div class="bg-violet-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Transform Your Recruitment?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI agents to revolutionize your hiring process.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-violet-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">The Future of AI Agents in Recruitment</h2>
+            <p class="text-gray-700 mb-4">The future of hiring is AI-driven, data-powered, and automated. HireGen.com’s AI Agents continue to evolve with:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">AI-Powered Video Interviews:</span> Automated candidate assessments via AI.</li>
+                <li><span class="font-semibold">Sentiment Analysis for Candidate Engagement:</span> AI measures candidate interest and satisfaction.</li>
+                <li><span class="font-semibold">Enhanced Predictive Hiring Models:</span> Data-driven insights for workforce planning.</li>
+                <li><span class="font-semibold">Conversational AI for Fully Automated Recruitment:</span> AI agents handling entire hiring workflows.</li>
+            </ul>
+            <p class="text-gray-700 mt-4">Companies that leverage AI in recruitment will gain a competitive edge, reduce hiring costs, and attract top talent faster.</p>
+        </section>
+
+        <footer class="text-center bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+            <p class="text-gray-700 mb-4">AI-driven hiring is no longer the future—it’s the present. HireGen.com’s AI Agents offer intelligent automation, real-time insights, and improved efficiency to make recruitment smarter and faster.</p>
+            <p class="text-gray-700 font-semibold">Ready to transform your hiring process? <a class="hover:text-blue-700 text-blue-700" href="/register">Try HireGen.com’s AI Agents today</a></p>
+        </footer>
+</div>
+  </div>
 </div>
 {% endblock %} 

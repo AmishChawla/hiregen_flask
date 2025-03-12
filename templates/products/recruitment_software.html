@@ -1,153 +1,165 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-blue-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Recruitment Software</h1>
-                <p class="text-xl text-white opacity-90">All-in-one platform for modern recruitment needs</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+  h2 {color:#000;}
+  ul, ol {margin-left: 1.25rem;margin-bottom:25px;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Centralized Management</h3>
-                    <p class="text-gray-600">Manage all recruitment activities from a single dashboard.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     Recruitment Software for Modern Hiring
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Workflow Automation</h3>
-                    <p class="text-gray-600">Automate repetitive tasks and streamline processes.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <p class="text-gray-700 mb-4">
+            Traditional recruitment methods are no longer sufficient to keep up with the fast-paced hiring needs of businesses.
+        </p>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Analytics & Reporting</h3>
-                    <p class="text-gray-600">Data-driven insights for better decision making.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            That’s where <span class="font-bold">HireGen.com</span>, an advanced AI-powered recruitment software, comes into play.
+        </p>
 
-    <!-- Key Features Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-blue-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Job Posting</h3>
-                        <p class="text-gray-600">Multi-channel job distribution</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-blue-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Candidate Management</h3>
-                        <p class="text-gray-600">Complete candidate lifecycle</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-blue-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Interview Scheduling</h3>
-                        <p class="text-gray-600">Automated scheduling system</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-blue-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Compliance</h3>
-                        <p class="text-gray-600">Built-in compliance tools</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            HireGen.com is designed to automate and enhance the entire recruitment process, making it faster, smarter, and more efficient. Whether you’re a startup, a mid-sized company, or an enterprise, HireGen.com can help you find, attract, and hire the best candidates effortlessly.
+        </p>
 
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Why Choose Our Software?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Increased Efficiency</h3>
-                        <p class="text-gray-600">Reduce time-to-hire by up to 50% with automated workflows.</p>
-                    </div>
-                </div>
+        <p class="text-gray-700 mb-6">
+            This blog will explore the features, benefits, and why HireGen.com stands out as the best recruitment software for modern businesses.
+        </p>
 
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Better Candidate Quality</h3>
-                        <p class="text-gray-600">AI-powered screening for better candidate matches.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Why Choose HireGen.com?</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Powered Talent Matching</span>
+                <p class="ml-0">One of the biggest challenges recruiters face is identifying the right candidates. HireGen.com uses Artificial Intelligence (AI) and Machine Learning (ML) to analyze resumes, match skills with job descriptions, and provide top recommendations based on experience, expertise, and cultural fit.</p>
+            </li>
+            <li><span class="font-semibold">Automated Resume Screening</span>
+                <p class="ml-0">Gone are the days of manually sifting through hundreds of resumes. With automated resume screening, HireGen.com filters out unqualified applicants and highlights the most suitable candidates, saving recruiters valuable time.</p>
+            </li>
+            <li><span class="font-semibold">Seamless Job Posting Across Multiple Platforms</span>
+                <p class="ml-0">With just a single click, recruiters can post job listings on multiple job boards, social media platforms, and career websites, ensuring maximum visibility and attracting a larger talent pool.</p>
+            </li>
+            <li><span class="font-semibold">End-to-End Applicant Tracking System (ATS)</span>
+                <p class="ml-0">HireGen.com features a comprehensive ATS that helps recruiters track applications, schedule interviews, manage candidate communication, and collaborate with hiring teams all from a single dashboard.</p>
+            </li>
+            <li><span class="font-semibold">AI-Powered Chatbot for Candidate Engagement</span>
+                <p class="ml-0">Engaging with candidates is crucial for keeping them interested in job opportunities. HireGen.com comes with an AI-driven chatbot that provides real-time responses, answers FAQs, and keeps candidates informed throughout the hiring process.</p>
+            </li>
+            <li><span class="font-semibold">Advanced Analytics & Reporting</span>
+                <p class="ml-0">Data-driven decision-making is key to successful recruitment. With HireGen.com, recruiters get access to detailed analytics and reports on job postings, applicant sources, time-to-hire, and more, helping them optimize their hiring strategy.</p>
+            </li>
+            <li><span class="font-semibold">Video Interviewing Capabilities</span>
+                <p class="ml-0">HireGen.com integrates video interview tools, enabling recruiters to conduct live or pre-recorded interviews, reducing hiring time and increasing efficiency in remote hiring.</p>
+            </li>
+            <li><span class="font-semibold">Seamless Integration with HR Tools</span>
+                <p class="ml-0">HireGen.com seamlessly integrates with HRMS, payroll systems, and third-party HR tools, ensuring smooth data transfer and minimizing administrative tasks.</p>
+            </li>
+            <li><span class="font-semibold">Customizable Recruitment Workflows</span>
+                <p class="ml-0">Every company has unique hiring needs. HireGen.com allows customizable workflows, so businesses can tailor the recruitment process to match their specific requirements.</p>
+            </li>
+            <li><span class="font-semibold">Mobile-Friendly Interface</span>
+                <p class="ml-0">With a fully mobile-responsive platform, recruiters can manage hiring on the go, review resumes, schedule interviews, and communicate with candidates anytime, anywhere.</p>
+            </li>
+        </ol>
 
-    <!-- CTA Section -->
-    <div class="bg-blue-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Transform Your Recruitment?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using our comprehensive recruitment software today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of Using HireGen.com</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Saves Time and Reduces Hiring Costs</span>
+                <p class="ml-0">By automating manual processes, HireGen.com helps businesses reduce time-to-hire by up to 50%, leading to significant cost savings.</p>
+            </li>
+            <li><span class="font-semibold">Enhances Candidate Experience</span>
+                <p class="ml-0">A smooth and transparent hiring process boosts candidate engagement and improves employer branding.</p>
+            </li>
+            <li><span class="font-semibold">Increases Hiring Accuracy</span>
+                <p class="ml-0">AI-powered screening ensures that only the most qualified candidates make it through, reducing hiring mistakes and turnover rates.</p>
+            </li>
+            <li><span class="font-semibold">Boosts Collaboration Between Hiring Teams</span>
+                <p class="ml-0">Recruiters, HR managers, and department heads can easily collaborate on hiring decisions with shared dashboards and real-time updates.</p>
+            </li>
+            <li><span class="font-semibold">Ensures Compliance and Data Security</span>
+                <p class="ml-0">HireGen.com follows GDPR and EEOC guidelines, ensuring secure storage and management of candidate data.</p>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">How HireGen.com Works</h2>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 1: Job Posting & Candidate Sourcing</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Create job descriptions using AI suggestions.</li>
+            <li>Post jobs on multiple job boards, career pages, and social media.</li>
+            <li>Source candidates through HireGen.com’s AI-driven talent pool.</li>
+        </ul>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 2: Automated Resume Screening & AI Matching</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI analyzes resumes and shortlists the best-fit candidates.</li>
+            <li>Keyword-based filtering ensures precise candidate selection.</li>
+        </ul>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 3: Interview Scheduling & Assessments</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Automate interview scheduling and send reminders.</li>
+            <li>Conduct online assessments and video interviews.</li>
+        </ul>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 4: Candidate Evaluation & Selection</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Score candidates based on experience, skills, and culture fit.</li>
+            <li>Use AI insights to make data-driven hiring decisions.</li>
+        </ul>
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 5: Offer Management & Onboarding</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li>Generate automated offer letters.</li>
+            <li>Streamline onboarding with integration into HR systems.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from HireGen.com?</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Startups and Small Businesses</span>
+                <p class="ml-0">Startups often struggle with hiring due to limited resources. HireGen.com offers an affordable, all-in-one recruitment solution that automates hiring without the need for a large HR team.</p>
+            </li>
+            <li><span class="font-semibold">Enterprises and Large Organizations</span>
+                <p class="ml-0">Large enterprises require scalable hiring solutions. HireGen.com handles high-volume recruitment while ensuring efficiency and accuracy.</p>
+            </li>
+            <li><span class="font-semibold">Recruitment Agencies</span>
+                <p class="ml-0">HireGen.com helps agencies manage multiple clients, track applicants efficiently, and reduce time-to-fill for job positions.</p>
+            </li>
+            <li><span class="font-semibold">HR Managers & Hiring Teams</span>
+                <p class="ml-0">HR teams can leverage AI-powered insights to make smarter hiring decisions and improve recruitment KPIs.</p>
+            </li>
+            <li><span class="font-semibold">Remote & Hybrid Workforces</span>
+                <p class="ml-0">With remote hiring becoming the norm, HireGen.com’s video interviews and AI-powered assessments make virtual recruitment seamless.</p>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Future of Recruitment with HireGen.com</h2>
+        <p class="text-gray-700 mb-4">
+            The future of hiring is AI-driven, data-centric, and automation-focused. As recruitment trends evolve, HireGen.com continues to innovate, incorporating new-age technologies such as:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Predictive Hiring Analytics</span> – Forecasting candidate success based on past hiring data.</li>
+            <li><span class="font-semibold">AI-based Diversity Hiring</span> – Ensuring bias-free recruitment.</li>
+            <li><span class="font-semibold">Blockchain for Candidate Verification</span> – Verifying resumes and credentials securely.</li>
+            <li><span class="font-semibold">Augmented Reality (AR) in Hiring</span> – Virtual workplace tours for candidates.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            With continuous advancements, HireGen.com ensures that businesses stay ahead in the talent acquisition game.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+        <p class="text-gray-700 mb-4">
+            HireGen.com is more than just recruitment software—it’s a complete hiring ecosystem designed to simplify, automate, and optimize the entire recruitment process.
+        </p>
+        <p class="text-gray-700 mb-4">
+            Whether you are a small business or a multinational corporation, HireGen.com provides AI-powered solutions to help you attract, evaluate, and hire the best talent effortlessly.
+        </p>
+        <p class="text-gray-700 mb-4">
+            If you’re looking to accelerate your hiring process, reduce recruitment costs, and improve candidate experience, HireGen.com is the ultimate solution for modern businesses.
+        </p>
+        <p class="text-gray-700 font-bold">
+            Ready to transform your hiring process? <a class="hover:text-blue-700 text-blue-700" href="/register">Sign up for HireGen.com today</a>
+        </p>
+</div>
+  </div>
 </div>
 {% endblock %} 

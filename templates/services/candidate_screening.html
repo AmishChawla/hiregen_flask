@@ -1,101 +1,268 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-purple-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Smart Candidate Screening</h1>
-                <p class="text-xl text-white opacity-90">Efficiently evaluate and shortlist the best candidates</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+ul {margin-bottom:25px;}
+  h2 {color:#000;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Automated Screening</h3>
-                    <p class="text-gray-600">Screen candidates automatically based on your requirements.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     Candidate Screening: The Future of Smarter Hiring
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Skill Assessment</h3>
-                    <p class="text-gray-600">Evaluate technical and soft skills efficiently.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <p class="text-gray-700 mb-4">
+            Traditional candidate screening processes are often time-consuming, prone to bias, and inefficient in identifying the best-fit candidates.
+        </p>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Ranking System</h3>
-                    <p class="text-gray-600">Automatically rank candidates based on match scores.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            Enter AI-powered candidate screening—a game-changer that streamlines hiring, enhances decision-making, and ensures companies recruit top talent with precision.
+        </p>
 
-    <!-- Process Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Our Screening Process</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-600">1</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Initial Review</h3>
-                    <p class="text-gray-600">Automated CV analysis</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-600">2</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Skill Matching</h3>
-                    <p class="text-gray-600">Compare with requirements</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-600">3</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Assessment</h3>
-                    <p class="text-gray-600">Evaluate qualifications</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-600">4</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Final Selection</h3>
-                    <p class="text-gray-600">Shortlist best matches</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            <span class="font-bold">HireGen.com</span> is at the forefront of this revolution, providing an advanced candidate screening solution that uses Artificial Intelligence (AI), machine learning, and predictive analytics to shortlist and assess candidates quickly, fairly, and accurately.
+        </p>
 
-    <!-- CTA Section -->
-    <div class="bg-purple-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Streamline Your Screening Process?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using our smart screening solution today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-6">
+            In this blog, we'll explore how HireGen.com's AI-driven candidate screening software works, its key features, benefits, and how businesses can leverage it to optimize hiring.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Why Traditional Candidate Screening Falls Short</h2>
+        <p class="text-gray-700 mb-4">
+            Conventional hiring methods rely on manual resume screening, keyword matching, and recruiter intuition—leading to inefficiencies such as:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li><span class="font-semibold">Time-Consuming Process</span> – Recruiters spend hours screening resumes, often missing top talent.</li>
+            <li><span class="font-semibold">Human Bias</span> – Unconscious bias can lead to unfair hiring decisions.</li>
+            <li><span class="font-semibold">Limited Data Utilization</span> – Most companies fail to leverage historical hiring data for better decisions.</li>
+            <li><span class="font-semibold">Poor Candidate Experience</span> – Slow responses and lengthy screening processes frustrate applicants.</li>
+            <li><span class="font-semibold">High Cost-Per-Hire</span> – Manual processes increase hiring expenses.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            To solve these challenges, AI-powered candidate screening software like HireGen.com offers a smarter, faster, and more accurate alternative.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">How AI-Powered Candidate Screening Works</h2>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 1: Automated Resume Screening</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI scans resumes using Natural Language Processing (NLP) to extract key information like skills, experience, education, and certifications.</li>
+            <li>AI ranks candidates based on relevance to job descriptions, prioritizing the best-fit applicants.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 2: AI-Powered Skill Matching</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI evaluates candidates' technical skills, soft skills, and domain expertise.</li>
+            <li>Intelligent matching algorithms analyze keywords, past job roles, and industry relevance.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 3: Predictive Candidate Scoring</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Machine learning models analyze past hiring data to predict candidate success.</li>
+            <li>AI assigns a match score, highlighting top contenders for the role.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 4: AI-Powered Video Screening & Analysis</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI-based video screening evaluates facial expressions, speech clarity, and confidence levels.</li>
+            <li>Sentiment analysis helps identify strong communication skills and cultural fit.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 5: Automated Pre-Employment Assessments</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Candidates undergo AI-driven tests for problem-solving, cognitive abilities, and job-related skills.</li>
+            <li>The system generates real-time reports on candidate performance.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 6: Bias-Free Hiring Recommendations</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI eliminates gender, age, or ethnicity bias by focusing solely on skills and qualifications.</li>
+            <li>AI generates a shortlist of top candidates, ensuring fair hiring.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 7: Instant Candidate Engagement</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li>AI-powered chatbots handle candidate queries, schedule interviews, and provide real-time updates.</li>
+            <li>Automated follow-ups improve candidate experience and reduce drop-offs.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Features of HireGen.com's Candidate Screening Software</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Driven Resume Parsing & Matching</span>
+                <ul class="list-disc pl-6">
+                    <li>Extracts and analyzes candidate data from resumes and applications.</li>
+                    <li>Identifies top matches instantly, saving recruiters time.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Intelligent Candidate Ranking</span>
+                <ul class="list-disc pl-6">
+                    <li>Uses machine learning to rank candidates based on job relevance.</li>
+                    <li>Provides a score-based evaluation for easy shortlisting.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Automated Pre-Screening Questions</span>
+                <ul class="list-disc pl-6">
+                    <li>Customizable knockout questions filter unqualified applicants.</li>
+                    <li>AI evaluates responses and automatically disqualifies unsuitable candidates.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">AI-Powered Video Screening</span>
+                <ul class="list-disc pl-6">
+                    <li>Analyzes facial expressions, tone, and confidence levels.</li>
+                    <li>Provides automated insights on candidate performance.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Skill-Based Assessments</span>
+                <ul class="list-disc pl-6">
+                    <li>AI generates adaptive tests for technical, cognitive, and behavioral evaluation.</li>
+                    <li>Customizable assessments for different job roles.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Predictive Analytics & Hiring Success Probability</span>
+                <ul class="list-disc pl-6">
+                    <li>AI predicts candidate success rate based on historical hiring data.</li>
+                    <li>Recommends high-potential candidates.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Diversity & Inclusion Hiring Tools</span>
+                <ul class="list-disc pl-6">
+                    <li>AI removes bias by focusing on skills and performance.</li>
+                    <li>Ensures fair hiring decisions, promoting workplace diversity.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Seamless Integration with ATS & HR Tools</span>
+                <ul class="list-disc pl-6">
+                    <li>Integrates with Applicant Tracking Systems (ATS) and HR platforms.</li>
+                    <li>Ensures smooth hiring workflows.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Automated Interview Scheduling</span>
+                <ul class="list-disc pl-6">
+                    <li>AI schedules interviews based on recruiter and candidate availability.</li>
+                    <li>Syncs with Google Calendar, Outlook, and Zoom.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Real-Time Candidate Engagement</span>
+                <ul class="list-disc pl-6">
+                    <li>AI chatbots provide instant responses and interview guidance.</li>
+                    <li>Automated updates ensure better candidate experience.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of Using HireGen.com's Candidate Screening Software</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Faster Hiring Process</span>
+                <ul class="list-disc pl-6">
+                    <li>AI automates screening, reducing time-to-hire by up to 70%.</li>
+                    <li>Instant candidate ranking speeds up decision-making.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Improved Candidate Quality</span>
+                <ul class="list-disc pl-6">
+                    <li>AI ensures top candidates are shortlisted, increasing hiring success rate.</li>
+                    <li>Data-driven hiring decisions eliminate guesswork.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Unbiased & Fair Hiring</span>
+                <ul class="list-disc pl-6">
+                    <li>AI removes gender, age, and ethnic bias.</li>
+                    <li>Promotes diversity & inclusion in recruitment.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Cost Reduction</span>
+                <ul class="list-disc pl-6">
+                    <li>Automating candidate screening reduces manual workload.</li>
+                    <li>Saves companies thousands of dollars in hiring costs.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Enhanced Candidate Experience</span>
+                <ul class="list-disc pl-6">
+                    <li>AI chatbots provide instant support & interview scheduling.</li>
+                    <li>Faster response times improve employer branding.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Data-Driven Hiring Decisions</span>
+                <ul class="list-disc pl-6">
+                    <li>AI analytics provide insights on hiring trends and candidate performance.</li>
+                    <li>Helps recruiters make smarter hiring choices.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Scalability for Large Hiring Needs</span>
+                <ul class="list-disc pl-6">
+                    <li>Suitable for high-volume recruitment.</li>
+                    <li>Handles thousands of applicants efficiently.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from HireGen.com's Candidate Screening Software?</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Large Enterprises & Corporations</span>
+                <ul class="list-disc pl-6">
+                    <li>Automate high-volume screening for multiple roles.</li>
+                    <li>Reduce hiring time & improve candidate quality.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Recruitment Agencies & Staffing Firms</span>
+                <ul class="list-disc pl-6">
+                    <li>Screen thousands of applicants quickly and accurately.</li>
+                    <li>Enhance client satisfaction with AI-driven insights.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Small & Medium-Sized Businesses (SMBs)</span>
+                <ul class="list-disc pl-6">
+                    <li>Cost-effective AI screening without needing large HR teams.</li>
+                    <li>Find the best talent faster.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Tech Startups & Growing Businesses</span>
+                <ul class="list-disc pl-6">
+                    <li>Optimize hiring processes with AI automation.</li>
+                    <li>Identify high-potential candidates efficiently.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Remote & Gig Workforce Platforms</span>
+                <ul class="list-disc pl-6">
+                    <li>AI-driven candidate screening for freelancers & remote workers.</li>
+                    <li>Automated gig-matching improves recruitment accuracy.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">The Future of AI in Candidate Screening with HireGen.com</h2>
+        <p class="text-gray-700 mb-4">
+            As AI continues to evolve, HireGen.com is investing in next-generation recruitment technologies, including:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Powered Personality & Cultural Fit Analysis</span> – Advanced assessments for deeper candidate insights.</li>
+            <li><span class="font-semibold">Blockchain-Based Background Verification</span> – Secure, tamper-proof candidate credentials.</li>
+            <li><span class="font-semibold">Virtual Reality (VR) Job Simulations</span> – AI-driven immersive candidate evaluations.</li>
+            <li><span class="font-semibold">AI-Powered Employer Branding Insights</span> – Analytics to attract top talent.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            With HireGen.com, businesses can stay ahead in the AI-driven hiring revolution.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+        <p class="text-gray-700 mb-4">
+            AI-powered candidate screening is transforming recruitment by making hiring faster, fairer, and more efficient.
+        </p>
+        <p class="text-gray-700 mb-4">
+            HireGen.com's AI-driven screening tools ensure businesses identify, evaluate, and hire the best talent with accuracy and speed.
+        </p>
+        <p class="text-gray-700 mb-4">
+            From automated resume screening to AI-driven assessments and predictive hiring insights, HireGen.com is the ultimate solution for modern recruitment.
+        </p>
+        <p class="text-gray-700 font-bold">
+            Ready to revolutionize your hiring? <a class="hover:text-blue-700 text-blue-700" href="/register">Get started with HireGen.com today</a>
+        </p>
+</div>
+  </div>
 </div>
 {% endblock %} 

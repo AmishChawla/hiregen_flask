@@ -1,100 +1,84 @@
 {% extends 'common_base.html' %}
-
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-blue-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI-Powered Recruitment Solutions</h1>
-                <p class="text-xl text-white opacity-90">Transform your hiring process with artificial intelligence</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+  ul {margin-left: 1.25rem;}
+  h2 {color:#000;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Smart Automation</h3>
-                    <p class="text-gray-600">Automate repetitive tasks and focus on strategic hiring decisions.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     AI Recruitment: Transforming Hiring with Artificial Intelligence
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Data-Driven Insights</h3>
-                    <p class="text-gray-600">Make informed decisions with AI-powered analytics and recommendations.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-blue-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Enhanced Candidate Experience</h3>
-                    <p class="text-gray-600">Provide a seamless and personalized experience for candidates.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Why Choose AI Recruitment?</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Save Time and Resources</h3>
-                        <p class="text-gray-600">Reduce time-to-hire by up to 50% with AI-powered automation.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-blue-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Better Quality of Hire</h3>
-                        <p class="text-gray-600">Make data-driven decisions to find the best candidates.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="bg-blue-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Transform Your Recruitment?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI-powered recruitment solutions today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+              <p class="mb-4">The recruitment landscape is undergoing a massive transformation with the adoption of Artificial Intelligence (AI). Companies are no longer relying solely on traditional hiring methods; instead, they are leveraging AI-driven recruitment solutions to streamline hiring processes, improve candidate quality, and reduce time-to-hire. HireGen.com is at the forefront of this revolution, offering a cutting-edge AI-powered recruitment platform that helps businesses find, evaluate, and hire top talent faster and more efficiently than ever before.</p>
+        <p class="mb-4">In this blog, we’ll explore how AI recruitment software like HireGen.com is revolutionizing the hiring industry, its key features, benefits, and how your business can leverage AI to build a future-ready workforce.</p>
+        <h2 class="text-xl mt-6">Why AI is the Future of Recruitment</h2>
+        <p class="mb-4">AI in recruitment is more than just automation; it enhances decision-making, reduces bias, and improves efficiency at every stage of the hiring process. Here’s why AI is essential for modern recruitment:</p>
+        <ul class="list-disc pl-5 mb-4">
+            <li>Faster Hiring Process: AI automates resume screening, job matching, and interview scheduling, saving recruiters valuable time.</li>
+            <li>Improved Candidate Experience: AI-powered chatbots provide real-time engagement and instant responses to job seekers.</li>
+            <li>Better Quality of Hire: AI analyzes candidate skills, experience, and culture fit to recommend the best matches.</li>
+            <li>Reduced Hiring Bias: AI-driven hiring removes unconscious bias, ensuring fair and objective hiring decisions.</li>
+            <li>Cost Efficiency: AI reduces recruitment expenses by minimizing manual tasks and improving hiring accuracy.</li>
+        </ul>
+        <p class="mb-4">Let’s explore how HireGen.com’s AI recruitment software incorporates these advantages.</p>
+        <h2 class="text-xl mt-6">Key Features of HireGen.com AI Recruitment Software</h2>
+        <ol class="list-decimal pl-5 mb-4">
+            <li>AI-Powered Resume Screening & Candidate Matching</li>
+            <p class="mb-4">HireGen.com uses advanced natural language processing (NLP) and machine learning algorithms to scan resumes, analyze skills, and match the most suitable candidates for job roles. This eliminates manual screening efforts and shortens the recruitment cycle.</p>
+            <li>Intelligent Job Posting & Distribution</li>
+            <p class="mb-4">With AI-driven job posting, HireGen.com ensures job descriptions are optimized for search engines (SEO) and posted on multiple job boards, social media, and career websites to attract top talent.</p>
+            <li>Automated Candidate Sourcing</li>
+            <p class="mb-4">AI-driven sourcing tools proactively search databases, LinkedIn, and job portals to identify passive candidates who fit the required job roles.</p>
+            <li>AI Chatbots for Candidate Engagement</li>
+            <ul class="list-disc pl-5 mb-4">
+                <li>Answer candidate inquiries in real time.</li>
+                <li>Guide job seekers through the application process.</li>
+                <li>Schedule interviews and send automated reminders.</li>
+            </ul>
+            <li>Video Interviewing & AI Assessments</li>
+            <ul class="list-disc pl-5 mb-4">
+                <li>Facial expressions, speech patterns, and confidence levels.</li>
+                <li>Cognitive ability and job-specific skills to assess candidate suitability.</li>
+            </ul>
+            <li>Automated Interview Scheduling & Coordination</li>
+            <p class="mb-4">The system syncs with Google Calendar, Outlook, and other scheduling tools to automate interview coordination, reducing scheduling conflicts.</p>
+            <li>AI-Powered Predictive Analytics</li>
+            <ul class="list-disc pl-5 mb-4">
+                <li>Candidate job success probability.</li>
+                <li>Best sourcing channels for talent acquisition.</li>
+                <li>Employee retention predictions based on hiring data.</li>
+            </ul>
+        </ol>
+        <h2 class="text-xl mt-6">Benefits of Using HireGen.com AI Recruitment Software</h2>
+        <ul class="list-disc pl-5 mb-4">
+            <li>Reduced Time-to-Hire</li>
+            <li>Improved Candidate Quality</li>
+            <li>Enhanced Candidate Experience</li>
+            <li>Lower Recruitment Costs</li>
+            <li>Unbiased Hiring & Diversity Growth</li>
+            <li>Scalability for Growing Businesses</li>
+            <li>Data-Driven Recruitment Strategy</li>
+        </ul>
+        <h2 class="text-xl mt-6">The Future of AI in Recruitment with HireGen.com</h2>
+        <p class="mb-4">AI recruitment technology is constantly evolving. HireGen.com is shaping the future of hiring with innovations like:</p>
+        <ul class="list-disc pl-5 mb-4">
+            <li>AI-Powered Talent Pipelines – Proactive candidate recommendations.</li>
+            <li>Blockchain-Based Credential Verification – Secure and reliable candidate screening.</li>
+            <li>VR-Based Virtual Hiring Events – Enhanced remote hiring experiences.</li>
+            <li>AI-Driven Employer Branding Analytics – Optimizing employer reputation for top talent attraction.</li>
+        </ul>
+        <p class="mb-4">With HireGen.com, businesses are prepared for the next generation of AI-driven hiring.</p>
+        <h2 class="text-xl mt-6">Conclusion</h2>
+        <p class="mb-4">AI recruitment is not just a trend—it’s the future of hiring. HireGen.com’s AI-powered recruitment software provides businesses with a smarter, faster, and more efficient way to hire top talent.</p>
+        <p class="mb-4">From automated job posting and AI-driven resume screening to intelligent chatbots and predictive hiring analytics, HireGen.com is redefining recruitment for the modern era.</p>
+        <p class="mb-4">Ready to experience AI-driven recruitment? <a class="hover:text-blue-700 text-blue-700" href="/register">Start with HireGen.com today.</a></p>
+</div>
+  </div>
 </div>
 {% endblock %} 

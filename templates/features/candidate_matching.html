@@ -1,30 +1,21 @@
 {% extends 'common_base.html' %}
-
 {% block content %}
-<!--Features-->
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 p-4">
-        <div class="flex flex-wrap gap-2 mt-8">
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-software">Recruitment software</a>
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/applicant-tracking">Applicant Tracking System</a>
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/resume-parsing">Resume Parsing</a>
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/recruitment-crm">Recruitment CRM</a>
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/candidate-matching">Candidate Matching</a>
-            <a class="rounded-full border border-dotted border-gray-300 bg-gray-50 px-2 text-sm/6 font-medium text-gray-500" href="/features/ai-recruitment">AI Recruitment</a>
-        </div>
-        <h1
-            class="mt-4 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-6xl">
-            List of Features in Candidate Matching</h1>
-        <div class="mt-16 grid grid-cols-1 gap-8 pb-24 lg:grid-cols-[15rem_1fr] xl:grid-cols-[15rem_1fr_15rem]">
-            <div class="flex flex-wrap items-center gap-8 max-lg:justify-between lg:flex-col lg:items-start">
+<style>
+    p, ul li {font-size:1.125rem;}
+    ul {margin-left: 1.25rem;}
+    h2 {color:#000;}
+</style>
 
-            </div>
-            <div class="text-gray-700">
-                <div class="max-w-2xl xl:mx-auto"><img alt="Candidate Matching"
-                        src="{{ url_for('static' , filename='images/list-of-features-in-candidate-matching.jpg') }}"
-                        class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     List of Features in Candidate Matching
+    </h1>
 
-                    <div class="max-w-4xl mx-auto p-6">
-                        <h2 class="text-2xl font-semibold mb-4">Why Choose HireGen’s Candidate Matching Technology?</h2>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+          <h2 class="text-2xl font-semibold mb-4">Why Choose HireGen’s Candidate Matching Technology?</h2>
     <p class="mb-4">Finding the right candidate for a job can be challenging, but HireGen’s AI-powered Candidate Matching software simplifies and accelerates the hiring process. Using machine learning, NLP, and predictive analytics, HireGen ensures recruiters connect with the most suitable candidates quickly and efficiently. Here’s a detailed breakdown of the key features that make HireGen’s Candidate Matching solution a game-changer for recruitment.</p>
 
     <h3 class="text-xl font-semibold mb-2">Key Features of HireGen’s Candidate Matching Software</h3>
@@ -117,10 +108,8 @@
                 Sign Up for Free Demo
             </a>
         </div>
+</div>
+  </div>
+</div>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %} 
+{% endblock %}

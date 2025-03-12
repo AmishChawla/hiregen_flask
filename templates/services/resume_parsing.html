@@ -1,137 +1,266 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-emerald-600 to-teal-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Intelligent Resume Parsing</h1>
-                <p class="text-xl text-white opacity-90">Extract and analyze resume data automatically</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+  h2 {color:#000;}
+  ul {margin-bottom:25px;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Multi-Format Support</h3>
-                    <p class="text-gray-600">Parse resumes in PDF, DOC, DOCX, and other formats.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     Resume Parsing: Transforming Recruitment with AI-Powered Automation
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Data Extraction</h3>
-                    <p class="text-gray-600">Extract skills, experience, education, and contact details.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <p class="text-gray-700 mb-4">
+            Recruitment has evolved, and resume parsing technology is now a game-changer in the hiring process.
+        </p>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Structured Data</h3>
-                    <p class="text-gray-600">Convert unstructured resumes into structured data.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            Traditional resume screening is time-consuming, error-prone, and inefficient, often causing recruiters to miss out on top talent due to manual processes.
+        </p>
 
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">How Resume Parsing Works</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">1</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Upload</h3>
-                    <p class="text-gray-600">Upload resumes in bulk</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">2</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Parse</h3>
-                    <p class="text-gray-600">Extract key information</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">3</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Analyze</h3>
-                    <p class="text-gray-600">Process extracted data</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">4</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Store</h3>
-                    <p class="text-gray-600">Save structured data</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-4">
+            Enter AI-powered resume parsing—a revolutionary technology that automates candidate data extraction, enhances efficiency, and ensures recruiters focus on high-potential candidates.
+        </p>
 
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of Resume Parsing</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-emerald-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Save Time</h3>
-                        <p class="text-gray-600">Reduce manual data entry by up to 90%</p>
-                    </div>
-                </div>
+        <p class="text-gray-700 mb-4">
+            <span class="font-bold">HireGen.com</span> offers an advanced resume parsing solution that uses Artificial Intelligence (AI), Natural Language Processing (NLP), and Machine Learning (ML) to extract, analyze, and structure resume data instantly.
+        </p>
 
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-emerald-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Improve Accuracy</h3>
-                        <p class="text-gray-600">Eliminate human error in data extraction</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="text-gray-700 mb-6">
+            In this blog, we'll explore how HireGen.com's AI-driven resume parsing works, its key features, benefits, and how businesses can leverage it to optimize hiring.
+        </p>
 
-    <!-- CTA Section -->
-    <div class="bg-emerald-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Automate Resume Processing?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using our intelligent resume parsing solution today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-emerald-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Why Traditional Resume Screening Is Inefficient</h2>
+        <p class="text-gray-700 mb-4">
+            The traditional resume screening process relies on manual review, keyword matching, and human judgment—leading to several inefficiencies:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li><span class="font-semibold">Time-Consuming Process</span> – Recruiters spend hours screening resumes, delaying hiring decisions.</li>
+            <li><span class="font-semibold">Inconsistent Screening</span> – Human bias leads to unfair or subjective shortlisting.</li>
+            <li><span class="font-semibold">Limited Data Utilization</span> – Manual methods fail to leverage historical hiring data.</li>
+            <li><span class="font-semibold">Risk of Missing Top Talent</span> – Overlooked resumes can lead to lost hiring opportunities.</li>
+            <li><span class="font-semibold">High Cost-Per-Hire</span> – Inefficient screening increases recruitment expenses.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            To overcome these challenges, AI-powered resume parsing software like HireGen.com offers a faster, smarter, and more accurate solution.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">How AI-Powered Resume Parsing Works</h2>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 1: Resume Upload & Data Extraction</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Candidates upload resumes in multiple formats (PDF, DOCX, TXT, etc.).</li>
+            <li>AI extracts relevant data such as contact details, work experience, education, certifications, and skills.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 2: AI-Powered Keyword & Skill Matching</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI scans job descriptions and matches resumes with relevant skills and qualifications.</li>
+            <li>Intelligent algorithms highlight best-fit candidates based on job requirements.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 3: Data Structuring & Standardization</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI converts unstructured resume data into a structured format.</li>
+            <li>Data is categorized into sections (e.g., experience, education, skills, achievements, etc.).</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 4: Candidate Ranking & Scoring</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>AI assigns a match score based on experience, skills, and relevance to the job.</li>
+            <li>Recruiters get an automated shortlist of top candidates.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 5: ATS Integration & Profile Creation</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-4">
+            <li>Parsed data is automatically stored in HireGen.com's ATS or other HR tools.</li>
+            <li>A candidate profile is generated for easy access and tracking.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Step 6: Bias-Free Shortlisting & Fair Hiring</h3>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li>AI eliminates age, gender, or ethnicity bias by focusing solely on qualifications and skills.</li>
+            <li>Ensures diverse and inclusive hiring.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Features of HireGen.com's Resume Parsing Software</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Driven Resume Data Extraction</span>
+                <ul class="list-disc pl-6">
+                    <li>Extracts contact information, work experience, education, certifications, and skills.</li>
+                    <li>Supports multiple file formats (PDF, DOCX, TXT, etc.).</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Advanced Natural Language Processing (NLP)</span>
+                <ul class="list-disc pl-6">
+                    <li>Analyzes complex resume formats and varied structures.</li>
+                    <li>Understands contextual meaning and industry-specific terms.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Intelligent Candidate Matching</span>
+                <ul class="list-disc pl-6">
+                    <li>AI compares candidate resumes with job descriptions.</li>
+                    <li>Identifies top matches based on skills, experience, and job requirements.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Automated Candidate Ranking & Scoring</span>
+                <ul class="list-disc pl-6">
+                    <li>Assigns a match score to each candidate.</li>
+                    <li>Generates a shortlist of best-fit applicants instantly.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Multi-Language Support</span>
+                <ul class="list-disc pl-6">
+                    <li>Parses resumes in multiple languages, ensuring global hiring capabilities.</li>
+                    <li>Recognizes localized job titles, skills, and educational institutions.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">ATS & HR Software Integration</span>
+                <ul class="list-disc pl-6">
+                    <li>Seamlessly integrates with Applicant Tracking Systems (ATS) and HR platforms.</li>
+                    <li>Ensures smooth workflow automation.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Bias-Free Hiring & Diversity Promotion</span>
+                <ul class="list-disc pl-6">
+                    <li>AI removes demographic biases, ensuring fair and inclusive hiring.</li>
+                    <li>Focuses on skills and qualifications only.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Bulk Resume Parsing</span>
+                <ul class="list-disc pl-6">
+                    <li>Handles high-volume resume uploads efficiently.</li>
+                    <li>Enables mass hiring and campus recruitment.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Real-Time Resume Parsing & Profile Creation</span>
+                <ul class="list-disc pl-6">
+                    <li>Instantly converts resumes into structured candidate profiles.</li>
+                    <li>Allows recruiters to search and filter candidates effortlessly.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">API for Custom Integrations</span>
+                <ul class="list-disc pl-6">
+                    <li>Custom API solutions for enterprise-level recruitment automation.</li>
+                    <li>Enables third-party integrations with HR tools.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of Using HireGen.com's Resume Parsing Software</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Faster Hiring Process</span>
+                <ul class="list-disc pl-6">
+                    <li>Reduces resume screening time by up to 80%.</li>
+                    <li>Instantly identifies best-fit candidates, speeding up hiring.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Improved Candidate Quality</span>
+                <ul class="list-disc pl-6">
+                    <li>AI ensures only top candidates are shortlisted.</li>
+                    <li>Reduces manual errors and inconsistencies.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Unbiased & Fair Hiring</span>
+                <ul class="list-disc pl-6">
+                    <li>Eliminates gender, age, and ethnicity bias.</li>
+                    <li>Promotes diversity and inclusion in recruitment.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Cost Savings & Efficiency</span>
+                <ul class="list-disc pl-6">
+                    <li>Automates resume screening, reducing recruiter workload.</li>
+                    <li>Saves businesses thousands of dollars in hiring expenses.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Enhanced Candidate Experience</span>
+                <ul class="list-disc pl-6">
+                    <li>Faster response times improve employer branding.</li>
+                    <li>Automated parsing simplifies job application processing.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Data-Driven Decision Making</span>
+                <ul class="list-disc pl-6">
+                    <li>AI analytics provide valuable hiring insights.</li>
+                    <li>Helps recruiters make smarter hiring choices.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Scalability for Large Hiring Needs</span>
+                <ul class="list-disc pl-6">
+                    <li>Suitable for high-volume recruitment and bulk hiring.</li>
+                    <li>Can process thousands of resumes efficiently.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from HireGen.com's Resume Parsing Software?</h2>
+        <ol class="list-decimal pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">Large Enterprises & Corporations</span>
+                <ul class="list-disc pl-6">
+                    <li>Automate resume screening for multiple roles across departments.</li>
+                    <li>Improve efficiency in large-scale hiring.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Recruitment Agencies & Staffing Firms</span>
+                <ul class="list-disc pl-6">
+                    <li>Handle bulk resume parsing for multiple clients.</li>
+                    <li>Reduce manual screening workload.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Small & Medium-Sized Businesses (SMBs)</span>
+                <ul class="list-disc pl-6">
+                    <li>Cost-effective solution for limited HR resources.</li>
+                    <li>Ensures quick hiring without manual screening hassles.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Tech Startups & Growing Businesses</span>
+                <ul class="list-disc pl-6">
+                    <li>Optimize hiring workflows with AI automation.</li>
+                    <li>Focus on hiring top talent quickly.</li>
+                </ul>
+            </li>
+            <li><span class="font-semibold">Remote & Gig Workforce Platforms</span>
+                <ul class="list-disc pl-6">
+                    <li>AI-driven resume parsing for freelancers and remote workers.</li>
+                    <li>Matches gig workers with relevant projects efficiently.</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">The Future of AI in Resume Parsing with HireGen.com</h2>
+        <p class="text-gray-700 mb-4">
+            As AI continues to advance, HireGen.com is investing in next-generation recruitment technologies, including:
+        </p>
+        <ul class="list-disc pl-6 text-gray-700 mb-6">
+            <li><span class="font-semibold">AI-Powered Resume Enrichment</span> – Enhancing candidate profiles with real-time insights.</li>
+            <li><span class="font-semibold">Blockchain-Based Candidate Credentials</span> – Secure, verified work experience records.</li>
+            <li><span class="font-semibold">Predictive Hiring Analytics</span> – AI-driven insights on candidate success probability.</li>
+            <li><span class="font-semibold">Voice & Chat-Based Resume Submissions</span> – Enabling candidates to submit resumes via voice assistants.</li>
+        </ul>
+        <p class="text-gray-700 mb-6">
+            With HireGen.com, businesses can stay ahead in the AI-driven recruitment revolution.
+        </p>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+        <p class="text-gray-700 mb-4">
+            AI-powered resume parsing is revolutionizing hiring by making resume screening faster, smarter, and more efficient.
+        </p>
+        <p class="text-gray-700 mb-4">
+            HireGen.com's AI-driven resume parsing software ensures businesses extract, analyze, and shortlist the best talent in seconds.
+        </p>
+        <p class="text-gray-700 mb-4">
+            From automated data extraction to AI-powered candidate ranking, HireGen.com is the ultimate solution for modern recruitment.
+        </p>
+        <p class="text-gray-700 font-bold">
+            Ready to revolutionize your hiring? <a class="hover:text-blue-700 text-blue-700" href="/register">Get started with HireGen.com today</a>
+        </p>
+</div>
+  </div>
 </div>
 {% endblock %} 

@@ -1,198 +1,129 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-rose-600 to-pink-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI-Powered Interviews</h1>
-                <p class="text-xl text-white opacity-90">Intelligent interview assistance and assessment</p>
-            </div>
-        </div>
-    </div>
+<style>
+  p, ul li {font-size:1.125rem;}
+  h2 {color:#000;}
+  ul, ol {margin-left: 1.25rem;margin-bottom:25px;}
+</style>
 
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-rose-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Smart Questioning</h3>
-                    <p class="text-gray-600">AI-driven adaptive interview questions.</p>
-                </div>
+<div class="flex justify-center p-16">
+  <div class="max-w-4xl w-full bg-white border rounded-lg py-10 px-24">
+    <!-- Blog Title -->
+    <h1 class="text-4xl font-bold text-center mb-12">
+     AI Interview: The Future of Smarter Hiring
+    </h1>
 
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-rose-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Response Analysis</h3>
-                    <p class="text-gray-600">Real-time analysis of candidate responses.</p>
-                </div>
+    <!-- Blog Content -->
+    <div class="text-left text-gray-700 space-y-4">
+      <section class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <p class="text-gray-700 mb-4">Recruitment has evolved significantly in the past decade, with technology playing a crucial role in optimizing hiring processes.</p>
+            <p class="text-gray-700 mb-4">However, traditional interview methods still pose challenges such as bias, inefficiency, and inconsistent candidate evaluation.</p>
+            <p class="text-gray-700 mb-4">To address these challenges, AI-powered interviews are revolutionizing the hiring landscape.</p>
+            <p class="text-gray-700 mb-4">HireGen.com’s AI Interview technology leverages artificial intelligence (AI), machine learning (ML), and natural language processing (NLP) to streamline the interview process, making it more efficient, data-driven, and unbiased.</p>
+            <p class="text-gray-700 mb-4">By automating key aspects of interviews, AI helps recruiters assess candidates faster and more accurately, leading to better hiring decisions and improved candidate experience.</p>
+            <p class="text-gray-700">In this blog, we will explore how HireGen.com’s AI Interview works, its benefits, and why businesses must embrace AI-driven interviews to stay ahead in the talent acquisition game.</p>
+        </section>
 
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-rose-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Skill Assessment</h3>
-                    <p class="text-gray-600">Comprehensive evaluation of technical and soft skills.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">What is AI Interview Technology?</h2>
+            <p class="text-gray-700 mb-4">An AI Interview is a recruitment tool that uses AI-driven algorithms to assess candidates through automated interviews, real-time analysis, and predictive insights.</p>
+            <p class="text-gray-700 mb-4">This technology ensures structured, objective, and data-backed hiring decisions.</p>
+            <p class="text-gray-700 mb-4">Key Features of AI Interviews:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Automated Video & Audio Interviews:</span> Candidates answer questions in pre-recorded or live AI-assisted sessions.</li>
+                <li><span class="font-semibold">Speech & Tone Analysis:</span> AI evaluates verbal responses for confidence, clarity, and engagement.</li>
+                <li><span class="font-semibold">Facial Recognition & Emotion Detection:</span> Assesses body language and non-verbal cues.</li>
+                <li><span class="font-semibold">Skill-Based Assessments:</span> AI evaluates technical knowledge and problem-solving abilities.</li>
+                <li><span class="font-semibold">Bias-Free Hiring:</span> Reduces unconscious biases by analyzing objective data.</li>
+                <li><span class="font-semibold">Automated Interview Scheduling:</span> AI handles scheduling, reminders, and rescheduling.</li>
+                <li><span class="font-semibold">Real-Time Candidate Ranking:</span> AI assigns scores based on performance and suitability.</li>
+                <li><span class="font-semibold">ATS & HR System Integration:</span> Seamlessly connects with existing recruitment tools.</li>
+            </ul>
+            <p class="text-gray-700 mt-4">With HireGen.com’s AI Interview, businesses can reduce hiring time, enhance candidate quality, and improve the overall recruitment experience.</p>
+        </section>
 
-    <!-- Interview Process -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Interview Process</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <span class="text-2xl font-bold">1</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Setup</h3>
-                        <p class="text-gray-600">Configure interview parameters</p>
-                    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">How HireGen.com’s AI Interview Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">1. AI-Powered Pre-Screening Interviews</h3>
+                    <p class="text-gray-600">Candidates record their responses to pre-set interview questions. AI assesses answers based on speech patterns, sentiment, and relevance. Helps filter top candidates before live interviews.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <span class="text-2xl font-bold">2</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Interview</h3>
-                        <p class="text-gray-600">Conduct AI-assisted interview</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">2. Real-Time AI Video Interviews</h3>
+                    <p class="text-gray-600">AI moderates live interviews and provides real-time insights. Identifies confidence levels, hesitation, and speech clarity. Ensures structured and unbiased evaluations.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <span class="text-2xl font-bold">3</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Analysis</h3>
-                        <p class="text-gray-600">Process responses and data</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">3. Facial & Emotion Analysis</h3>
+                    <p class="text-gray-600">AI detects microexpressions, engagement levels, and stress indicators. Provides insights into non-verbal communication and candidate confidence.</p>
                 </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <span class="text-2xl font-bold">4</span>
-                        </div>
-                        <h3 class="font-semibold mb-2">Report</h3>
-                        <p class="text-gray-600">Generate detailed insights</p>
-                    </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">4. Natural Language Processing (NLP) for Answer Analysis</h3>
+                    <p class="text-gray-600">AI analyzes spoken and written responses to gauge expertise. Identifies key skills, job-related knowledge, and problem-solving abilities. Scores candidates based on accuracy and relevance.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">5. AI-Based Soft Skills Evaluation</h3>
+                    <p class="text-gray-600">Evaluates communication, leadership potential, adaptability, and teamwork. Uses AI to rank candidates on cultural fit and interpersonal strengths.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">6. Automated Candidate Ranking & Shortlisting</h3>
+                    <p class="text-gray-600">AI assigns performance scores based on interview data. Identifies best-fit candidates, reducing recruiter workload. Creates comprehensive interview reports for hiring managers.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">7. AI-Powered Interview Summaries</h3>
+                    <p class="text-gray-600">Generates structured summaries with key takeaways. Provides strengths, weaknesses, and hiring recommendations. Reduces human errors in interview evaluations.</p>
+                </div>
+                <div class="bg-white rounded-lg p-4 shadow">
+                    <h3 class="text-lg font-semibold text-gray-800">8. Seamless ATS & HR System Integration</h3>
+                    <p class="text-gray-600">Connects with HireGen.com’s ATS and third-party HR software. Automates interview scheduling, result tracking, and candidate communication. Reduces administrative burden, allowing recruiters to focus on decision-making.</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Key Features -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Video Analysis</h3>
-                        <p class="text-gray-600">Body language assessment</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Voice Analysis</h3>
-                        <p class="text-gray-600">Speech pattern insights</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Bias Prevention</h3>
-                        <p class="text-gray-600">Fair assessment</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-rose-600 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Detailed Reports</h3>
-                        <p class="text-gray-600">Comprehensive insights</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Benefits of AI Interviews with HireGen.com</h2>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Faster & More Efficient Hiring:</span> AI interviews save time by automating screening and assessments. Reduces time-to-hire by eliminating manual interview scheduling. Enables recruiters to focus on top-tier candidates.</li>
+                <li><span class="font-semibold">Enhanced Candidate Experience:</span> Provides seamless, user-friendly interviews for job seekers. Allows candidates to schedule and complete interviews at their convenience. Offers instant feedback and status updates.</li>
+                <li><span class="font-semibold">Unbiased & Data-Driven Hiring Decisions:</span> AI removes unconscious human biases by analyzing objective data. Evaluates candidates based on skills, experience, and responses. Ensures fair assessments with consistent scoring models.</li>
+                <li><span class="font-semibold">Higher Quality Hires:</span> AI-powered assessments identify top talent with greater precision. Uses real-time analytics to predict job performance. Ensures better cultural fit and long-term employee retention.</li>
+                <li><span class="font-semibold">Significant Cost Savings:</span> Reduces reliance on external recruitment agencies. Lowers operational costs by automating manual hiring processes. Minimizes turnover costs by improving hiring accuracy.</li>
+                <li><span class="font-semibold">Improved Diversity & Inclusion:</span> AI ensures fair hiring by evaluating candidates based on merit. Eliminates gender, ethnicity, and age biases in interviews. Promotes a more diverse and inclusive workforce.</li>
+                <li><span class="font-semibold">Seamless Integration & Scalability:</span> Works with existing HR tech stacks and ATS platforms. Scales easily to handle high-volume hiring. Supports remote and global recruitment strategies.</li>
+            </ul>
+        </section>
 
-    <!-- Benefits Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Benefits</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-rose-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Objective Assessment</h3>
-                        <p class="text-gray-600">Eliminate human bias and ensure fair evaluation.</p>
-                    </div>
-                </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Who Can Benefit from AI Interviews?</h2>
+            <ul class="list-decimal list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">Large Enterprises & Corporations:</span> Handles high-volume hiring with efficiency. Standardizes interviews across multiple locations. Reduces recruitment bottlenecks with AI-driven automation.</li>
+                <li><span class="font-semibold">Staffing & Recruitment Agencies:</span> Speeds up candidate screening and placement. Enhances client satisfaction with AI-driven insights. Helps agencies build a competitive talent pool.</li>
+                <li><span class="font-semibold">Small & Medium-Sized Businesses (SMBs):</span> Enables SMBs to compete with larger firms in hiring top talent. Reduces recruitment costs by automating manual tasks. Provides a cost-effective, scalable hiring solution.</li>
+                <li><span class="font-semibold">Startups & High-Growth Companies:</span> Helps startups scale teams quickly without compromising quality. Matches candidates to fast-paced, evolving job roles. Supports lean hiring teams with AI automation.</li>
+                <li><span class="font-semibold">Remote & Global Hiring Teams:</span> Supports international recruitment with AI-driven assessments. Ensures consistent evaluations across different time zones. Facilitates remote hiring and virtual workforce management.</li>
+            </ul>
+        </section>
 
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-rose-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Time Efficiency</h3>
-                        <p class="text-gray-600">Conduct more interviews in less time.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">The Future of AI in Recruitment</h2>
+            <p class="text-gray-700 mb-4">AI-driven interviews are set to reshape the hiring landscape with advancements such as:</p>
+            <ul class="list-disc list-inside text-gray-700 space-y-2">
+                <li><span class="font-semibold">AI-Powered Real-Time Coaching:</span> Provides instant suggestions for candidate improvement.</li>
+                <li><span class="font-semibold">Virtual Reality (VR) Interviews:</span> Simulates workplace environments for role-based assessments.</li>
+                <li><span class="font-semibold">Advanced Sentiment Analysis:</span> Identifies candidate enthusiasm and engagement levels.</li>
+                <li><span class="font-semibold">AI-Powered Job Fit Predictions:</span> Predicts long-term job success based on historical data.</li>
+            </ul>
+            <p class="text-gray-700 mt-4">Companies that embrace AI-powered interviews will gain a competitive advantage in hiring, ensuring they attract and retain the best talent with greater accuracy and efficiency.</p>
+        </section>
 
-    <!-- CTA Section -->
-    <div class="bg-rose-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Transform Your Interview Process?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI-powered interviews today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-rose-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">Get Started</a>
-        </div>
-    </div>
+        <footer class="text-center bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Conclusion</h2>
+            <p class="text-gray-700 mb-4">AI-powered interviews are the future of recruitment, and HireGen.com’s AI Interview technology is leading the way in transforming the hiring process.</p>
+            <p class="text-gray-700 mb-4">With AI-driven candidate assessments, structured evaluations, and bias-free hiring, businesses can make smarter, faster, and more effective hiring decisions.</p>
+            <p class="text-gray-700 font-semibold">Transform your hiring process today — <a class="hover:text-blue-700 text-blue-700" href="/register">Try HireGen.com’s AI Interview</a></p>
+        </footer>
+</div>
+  </div>
 </div>
 {% endblock %} 
