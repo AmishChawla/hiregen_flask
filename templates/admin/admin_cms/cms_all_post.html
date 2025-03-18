@@ -8,14 +8,15 @@
 <div class="min-h-screen bg-gray-100 py-8">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded px-8 py-6">
+
             <div class="flex justify-between items-center mb-6">
                 <div>
                     <h1 class="text-2xl font-bold text-gray-800">Posts</h1>
-                    <p class="mt-1 text-sm text-gray-700">Create, edit, and manage the posts on your site. <a class="text-indigo-600 hover:underline" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>.</p>
+                    <p class="mt-1 text-sm text-gray-700">Create, edit, and manage the posts on your site. <a class="text-blue-600 hover:underline" href="#" target="_blank" rel="noopener noreferrer">Learn more</a>.</p>
                 </div>
                 <div>
-                    <a href="{{ url_for('add_cms_post') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-500 focus:outline-none">
-                        Add Post
+                    <a href="{{ url_for('add_cms_post') }}" class="inline-flex items-center px-4 py-2 bg-blue-700 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none">
+                        New Post
                     </a>
                 </div>
             </div>
@@ -23,7 +24,7 @@
             <div class="hidden sm:block">
                 <div class="border-b border-gray-200 mb-6">
                     <nav class="-mb-px flex space-x-8" id="postTabs">
-                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-indigo-500 px-1 py-4 text-sm font-medium text-indigo-600" id="published-tab">Published</a>
+                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-blue-500 px-1 py-4 text-sm font-medium text-blue-600" id="published-tab">Published</a>
                         <a href="#draft-posts" class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700" id="drafts-tab">Drafts</a>
                     </nav>
                 </div>
@@ -46,7 +47,7 @@
                         {% for data in result %}
                         {%  if data.status == 'published' %}
                         <tr>
-                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.username }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.category_name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
@@ -79,7 +80,7 @@
                         {% for data in result if data.status == 'draft' %}
                         {%  if data.status == 'draft' %}
                         <tr>
-                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-indigo-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.username }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.category_name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
@@ -136,15 +137,15 @@
         const draftTable = document.getElementById('draft-posts');
 
         publishedTab.addEventListener('click', () => {
-            publishedTab.classList.add('text-indigo-600', 'border-indigo-500');
-            draftsTab.classList.remove('text-indigo-600', 'border-indigo-500');
+            publishedTab.classList.add('text-blue-600', 'border-blue-500');
+            draftsTab.classList.remove('text-blue-600', 'border-blue-500');
             publishedTable.classList.remove('hidden');
             draftTable.classList.add('hidden');
         });
 
         draftsTab.addEventListener('click', () => {
-            draftsTab.classList.add('text-indigo-600', 'border-indigo-500');
-            publishedTab.classList.remove('text-indigo-600', 'border-indigo-500');
+            draftsTab.classList.add('text-blue-600', 'border-blue-500');
+            publishedTab.classList.remove('text-blue-600', 'border-blue-500');
             draftTable.classList.remove('hidden');
             publishedTable.classList.add('hidden');
         });

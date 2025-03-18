@@ -4,35 +4,39 @@
 
 {% block content %}
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
-<div class="px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900">Order History</h1>
-      <p class="mt-2 text-sm text-gray-700">A detailed list of all orders including user details, plan, price, status, and purchase date.</p>
-    </div>
-  </div>
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
+
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Order History</h1>
+                    <p class="mt-1 text-sm text-gray-700">A detailed list of all orders including user details, plan, price, status, and purchase date.</p>
+                </div>
+            </div>
+
   {% if purchase_data %}
   <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table id="subscriptionTable" class="min-w-full divide-y divide-gray-300">
-          <thead>
+        <table id="draftTable" class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">User</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Plan</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Price</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Date of Purchase</th>
+              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">User</th>
+              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Plan</th>
+              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Price</th>
+              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Status</th>
+              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Date of Purchase</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for data in purchase_data | reverse %}
             <tr>
-              <td class="whitespace-nowrap py-9 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{ data.user.username }}</td>
-              <td class="whitespace-nowrap px-3 py-9 text-sm text-gray-500">{{ data.plan.plan_type_name }}</td>
-              <td class="whitespace-nowrap px-3 py-9 text-sm text-gray-500">{{ data.plan.fees }}</td>
-              <td class="whitespace-nowrap px-3 py-9 text-sm text-gray-500">{{ data.status }}</td>
-              <td class="whitespace-nowrap px-3 py-9 text-sm text-gray-500">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.user.username }}</td>
+              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.plan.plan_type_name }}</td>
+              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.plan.fees }}</td>
+              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.status }}</td>
+              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -40,6 +44,9 @@
       </div>
     </div>
   </div>
+  </div>
+          </div>
+
   {% else %}
   <div class="flex justify-center items-center" style="height: 50vh;">
     <p class="text-gray-500">No Orders yet</p>

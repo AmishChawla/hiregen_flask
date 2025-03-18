@@ -3,58 +3,60 @@
 {% block title %}Employer{% endblock %}
 
 {% block content %}
-<div class="px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900">Employers</h1>
-      <p class="mt-2 text-sm text-gray-700">Manage all registered employers, including their profiles, roles, and companies.</p>
-    </div>
-    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <button onclick="openModal('#add-user-modal')" type="button" data-modal-target="#addUserModal" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-        Add User
-     </button>
-    </div>
-  </div>
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
+
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Employers</h1>
+                    <p class="mt-1 text-sm text-gray-700">Manage all registered employers, including their profiles, roles, and companies.</p>
+                </div>
+                <div>
+            <button onclick="openModal('#add-user-modal')" type="button" data-modal-target="#addUserModal" class="block rounded-md bg-blue-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            New User
+            </button>
+                </div>
+            </div>
+
   <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
+        <table id="draftTable" class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Email</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Role</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Company Name</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Creation Time</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Action</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Name</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Email</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Role</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Company Name</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Creation Time</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Status</th>
+              <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for row in result|reverse %}
             <tr>
-              <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
-                <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ row.username }}</a>
+              <td class="px-4 py-2 text-sm text-gray-900">
+                <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}" class="text-blue-700 hover:text-blue-900">{{ row.username }}</a>
               </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ row.email }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ row.role }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <td class="px-4 py-2 text-sm text-gray-900">{{ row.email }}</td>
+              <td class="px-4 py-2 text-sm text-gray-900">{{ row.role }}</td>
+              <td class="px-4 py-2 text-sm text-gray-900">
                 {% if row["company"] %}
-                <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=row['company'][0]['company_subdomain']) }}" class="text-indigo-600 hover:text-indigo-900">{{ row["company"][0]["name"] }}</a>
+                <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=row['company'][0]['company_subdomain']) }}" class="text-indigo-blue hover:text-blue-900">{{ row["company"][0]["name"] }}</a>
                 {% else %}
                 Not Registered
                 {% endif %}
               </td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ row.created_datetime.split('T')[0] }} {{ row.created_datetime.split('T')[1][:8] }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ row.status }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <td class="px-4 py-2 text-sm text-gray-900">{{ row.created_datetime.split('T')[0] }} {{ row.created_datetime.split('T')[1][:8] }}</td>
+              <td class="px-4 py-2 text-sm text-gray-900">{{ row.status }}</td>
+              <td class="px-4 py-2 text-sm text-gray-900">
                 <a href="{{ url_for('admin_edit_user_profile', user_id=row.id) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">
                   <i class="bi bi-pen"></i>
                 </a>
                 <button data-modal-target="#deleteModal_{{ row.id }}" class="text-red-600 hover:text-red-900">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                  </svg>
+                  Delete
                 </button>
 
                 <!-- Modal -->
@@ -81,7 +83,8 @@
     </div>
   </div>
 </div>
-
+      </div>
+  </div>
 
 <div class="hidden relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="add-user-modal">
   <!-- Background backdrop -->

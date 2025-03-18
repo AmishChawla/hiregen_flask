@@ -13,11 +13,11 @@
                     <p class="mt-1 text-sm text-gray-700">Manage your categories and view associated posts.</p>
                 </div>
                 <div class="mt-4 sm:mt-0 sm:flex sm:space-x-4">
-                    <a class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-500 focus:outline-none" href="{{ url_for('add_category')}}">
-                        Add New Category
+                    <a class="inline-flex items-center px-4 py-2 bg-blue-700 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none" href="{{ url_for('add_category')}}">
+                        New Category
                     </a>
                     <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="window.location.href='{{ url_for('add_subcategory') }}'">
-                        Add New Subcategory
+                        New Subcategory
                     </button>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                                 {% for data in result %}
                                 <tr>
                                     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                                        <a href="{{ url_for('admin_cms_all_subcategory', category_id=data.id) }}" class="text-indigo-600 hover:underline">{{ data.category }}</a>
+                                        <a href="{{ url_for('admin_cms_all_subcategory', category_id=data.id) }}" class="text-blue-600 hover:underline">{{ data.category }}</a>
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.count }}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>

@@ -8,9 +8,9 @@
 
 {% block content %}
 <div class="min-h-screen bg-gray-100 flex flex-col">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container max-w-2xl px-4 py-8">
         <div class="bg-white shadow-md rounded px-8 py-6">
-            <h2 class="text-center text-2xl font-bold text-gray-900 mb-6">Add Category</h2>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Add Category</h2>
 
             <form method="post" action="{{ url_for('add_category') }}">
                 {{ form.hidden_tag() }}
@@ -18,12 +18,12 @@
                 <div class="mb-4">
                     {{ form.category.label(class="block text-sm font-medium text-gray-900") }}
                     <div class="mt-2">
-                        {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-indigo-600") }}
+                        {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-600") }}
                     </div>
                 </div>
 
-                <div class="flex justify-center">
-                    {{ form.submit(class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none") }}
+                <div class="flex">
+                    {{ form.submit(class="inline-flex items-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none") }}
                 </div>
             </form>
         </div>

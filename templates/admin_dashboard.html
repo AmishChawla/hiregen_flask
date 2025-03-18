@@ -4,39 +4,65 @@
 
 {% block content %}
 <div class="py-6">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-full px-4 sm:px-6 lg:px-8">
     <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-
     <!-- Metric Cards -->
-    <div class="mt-8">
-      <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
-          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Employers</dt>
-          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_employers }}</dd>
-        </div>
-        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
-          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Jobseekers</dt>
-          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_jobseekers }}</dd>
-        </div>
-        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
-          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Jobs</dt>
-          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_jobs }}</dd>
-        </div>
-        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
-          <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">Contact Form Submissions</dt>
-          <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ stats.total_contact_forms }}</dd>
-        </div>
-      </dl>
-    </div>
+   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person h-6 w-6" viewBox="0 0 16 16">
+  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+</svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{ stats.total_employers }}</span>
+                        <span class="block text-gray-500">Employers</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
+                        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{ stats.total_jobseekers }}</span>
+                        <span class="block text-gray-500">Job seekers</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase h-6 w-6" viewBox="0 0 16 16">
+  <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5"/>
+</svg>
+                    </div>
+                    <div>
+                        <span class="inline-block text-2xl font-bold">{{ stats.total_jobs }}</span>
+                        <span class="block text-gray-500">Jobs</span>
+                    </div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow rounded-lg">
+                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
+  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+</svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{ stats.total_contact_forms }}</span>
+                        <span class="block text-gray-500">Leads</span>
+                    </div>
+                </div>
+            </section>
 
     <!-- Charts Section -->
     <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
       <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
-        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Jobseekers Over Time</h3>
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Job seekers</h3>
         <canvas id="jobseekersChart" class="mt-6"></canvas>
       </div>
       <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6 relative h-64">
-        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Employers Over Time</h3>
+        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Employers</h3>
         <canvas id="employersChart" class="mt-6"></canvas>
       </div>
     </div>
@@ -44,7 +70,7 @@
     <!-- Contact Form Submissions Table -->
     <div class="mt-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
       <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Contact Form Submissions</h3>
+        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Website leads</h3>
       </div>
       <div class="px-4 py-4 sm:px-6 lg:px-8">
         <div class="overflow-hidden rounded-lg">
@@ -60,10 +86,10 @@
             <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
               {% for form in stats.contact_forms_table %}
               <tr>
-                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.name }}</td>
-                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.email }}</td>
-                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.message }}</td>
-                <td class="px-6 py-2 text-xs whitespace-nowrap">{{ form.created_at.split('T')[0] }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.name }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.email }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.message }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.created_at.split('T')[0] }}</td>
               </tr>
               {% endfor %}
             </tbody>
