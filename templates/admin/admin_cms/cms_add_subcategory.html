@@ -7,36 +7,37 @@
 {% block title %}Add Subcategory{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white shadow-md rounded px-8 py-6">
-        <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-900">Add Subcategory</h2>
-        </div>
+<div class="min-h-screen bg-gray-100 flex flex-col">
+    <div class="container max-w-2xl px-4 py-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Add Subcategory</h2>
 
-        <form method="post" action="{{ url_for('add_subcategory') }}" class="space-y-4">
+            <form method="post" action="{{ url_for('add_subcategory') }}" class="space-y-4">
             {{ form.hidden_tag() }}
 
             <!-- Subcategory Input -->
-            <div>
-                {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
-                <div class="mt-1">
-                    {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600", placeholder="Subcategory", required=True) }}
-                </div>
-            </div>
 
-            <!-- Category Dropdown -->
+                <div class="mb-4">
+                    {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
+                    <div class="mt-2">
+                        {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600", placeholder="Subcategory", required=True) }}
+                    </div>
+                </div>
+                
+                <!-- Category Dropdown -->
             <div>
                 {{ form.category.label(class="block text-sm font-medium text-gray-900") }}
                 <div class="mt-1">
-                    {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600", placeholder="Category", id="category", required=True) }}
+                    {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600", placeholder="Category", id="category", required=True) }}
                 </div>
             </div>
 
-            <!-- Submit Button -->
-            <div class="text-center">
-                {{ form.submit(class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2") }}
-            </div>
-        </form>
+                <div class="flex">
+                    {{ form.submit(class="inline-flex items-center px-4 py-2 bg-blue-700 text-white text-sm font-medium rounded-md hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2") }}
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
 {% endblock %}

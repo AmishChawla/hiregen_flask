@@ -1,15 +1,19 @@
 {% extends 'admin_base.html' %}
 
 {% block title %}Jobs{% endblock %}
-
 {% block content %}
-<div class="px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900">Jobs</h1>
-      <p class="mt-2 text-sm text-gray-700">Manage all job listings, including published and draft jobs.</p>
-    </div>
-  </div>
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
+
+
+          <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Jobs</h1>
+                    <p class="mt-1 text-sm text-gray-700">Manage all job listings, including published and draft jobs.</p>
+                </div>
+            </div>
+
   <div class="mt-8">
     <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
@@ -22,41 +26,42 @@
       </nav>
     </div>
     <div class="mt-4" id="published-posts">
-      <table class="min-w-full divide-y divide-gray-300">
-        <thead>
+      <table id="draftTable" class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Position</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Salary</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Job Status</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Visibility</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Views</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Created Date</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Updated Date</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Applicants</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Position</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Salary</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Job Status</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Visibility</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Views</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Updated Date</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Applicants</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
           {% for data in result %}
           {% if data.JobOpening.status == 'published' %}
           <tr class="hover:bg-gray-100">
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-              <a href="{{ url_for('get_post_by_company_subdomain_and_slug',company_subdomain=data.JobOpening.company_subdomain,job_date=data.JobOpening.created_at.split('T')[0],job_slug=data.JobOpening.slug) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.JobOpening.job_title }}</a>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+              <a href="{{ url_for('get_post_by_company_subdomain_and_slug',company_subdomain=data.JobOpening.company_subdomain,job_date=data.JobOpening.created_at.split('T')[0],job_slug=data.JobOpening.slug) }}" class="text-blue-700 hover:text-blue-900">{{ data.JobOpening.job_title }}</a>
             </td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.salary }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_status }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.status }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_views }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <span class="text-indigo-600 hover:text-indigo-900">{{ data.applicant_count }}</span>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">
+              <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
               <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                Delete
               </button>
 
-                            <div
+              <div
                 id="deleteModal_{{ data.JobOpening.id }}"
                 class="hidden relative z-10"
                 aria-labelledby="modal-title"
@@ -154,8 +159,6 @@
                 </div>
               </div>
               <!-- End of Delete Modal -->
-
-
             </td>
           </tr>
           {% endif %}
@@ -164,17 +167,18 @@
       </table>
     </div>
     <div class="mt-4 hidden" id="draft-posts">
-      <table class="min-w-full divide-y divide-gray-300">
-        <thead>
+      <table id="draftTable2" class="min-w-full divide-y divide-gray-300">
+          <thead class="bg-gray-50">
           <tr>
             <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Position</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Salary</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Job Status</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Visibility</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Views</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Created Date</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Updated Date</th>
-            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Applicants</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Salary</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Job Status</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Visibility</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 text-center">Views</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Updated Date</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 text-center">Applicants</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
@@ -182,20 +186,20 @@
           {% if data.JobOpening.status == 'draft' %}
           <tr class="hover:bg-gray-100">
             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-              <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-indigo-600 hover:text-indigo-900">{{ data.JobOpening.job_title }}</a>
+              <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-blue-700 hover:text-blue-900">{{ data.JobOpening.job_title }}</a>
             </td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.salary }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_status }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.status }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.job_opening_views }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <span class="text-indigo-600 hover:text-indigo-900">{{ data.applicant_count }}</span>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.created_at.split('T')[0] }} {{ data.JobOpening.created_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.updated_at.split('T')[0] }} {{ data.JobOpening.updated_at.split('T')[1][:8] }}</td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">
+              <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
+            </td>
+            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
               <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                Delete
               </button>
 
                             <div
@@ -295,15 +299,15 @@
                   </div>
                 </div>
               </div>
+
               <!-- End of Delete Modal -->
-
-
             </td>
           </tr>
           {% endif %}
           {% endfor %}
         </tbody>
       </table>
+    </div>
     </div>
   </div>
 </div>
