@@ -245,14 +245,14 @@ class EmployerProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), validators.Email()])
     phone_number = StringField('Phone Number', validators=[DataRequired()])
-    profile_picture = FileField('Profile Picture')
+    profile_picture = FileField('')
 
     # Company Details
     company_name = StringField('Company Name', validators=[DataRequired()])
     company_location = StringField('Location', validators=[DataRequired()])
     company_website = StringField('Company Website', validators=[DataRequired()])
     company_description = TextAreaField('Company Description', validators=[DataRequired()])
-    company_logo = FileField('Company Logo')
+    company_logo = FileField('')
 
     # Submit buttons
     submit = SubmitField('Save Changes')

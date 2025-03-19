@@ -3,13 +3,14 @@
 {% block content %}
 
 <div class="py-6">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+  <div class="max-w-full px-4 sm:px-6 lg:px-8">
+    <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Dashboard</h1>
 
-    <!-- Metric Cards -->
-<div class="mt-8">
-  <dl class="mx-auto grid grid-cols-1 gap-px bg-gray-900/5 sm:grid-cols-2 lg:grid-cols-4">
-    <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
+  <!-- Metric Cards -->
+   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
+                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
+    <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800">
+
       <div class="flex items-center">
         {% if current_user.profile_picture %}
         <img src="{{ current_user.profile_picture }}" alt="User Profile Picture" class="rounded-full w-20 h-20">
@@ -31,15 +32,26 @@
         <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
       </div>
     </div>
-    <div class="col-span-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 bg-white dark:bg-gray-800 px-4 py-10 sm:px-6 xl:px-8">
-      <dt class="text-sm/6 font-medium text-gray-500 dark:text-gray-400">My Applications</dt>
-      <dd class="w-full flex-none text-3xl/10 font-medium tracking-tight text-gray-900 dark:text-white">{{ total_applications }}</dd>
-    </div>
-  </dl>
-</div>
+                </div>
+                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
+                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
+  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+</svg>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold">{{ total_applications }}</span>
+                        <span class="block text-gray-500">My Applications</span>
+                    </div>
+                </div>
+
+</section>
 
 
-    <h1 class="mt-8 text-2xl font-semibold text-gray-900 dark:text-white">Recommended for you</h1>
+    <!-- Metric Cards -->
+
+    <h1 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white">Recommended for you</h1>
 <div>
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     {% if recommendations %}
@@ -115,7 +127,7 @@
 </div>
     {% endfor %}
     {% else %}
-    <p class="text-gray-600 dark:text-gray-400">Complete profile to get recommendations</p>
+    <p class="text-sm text-gray-500 dark:text-gray-400">Complete profile to get recommendations</p>
     {% endif %}
   </div>
 </div>

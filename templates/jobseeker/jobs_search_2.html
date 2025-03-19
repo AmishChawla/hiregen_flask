@@ -10,17 +10,21 @@
 
 
 {% block content %}
-    <div class="bg-white shadow-md p-6 w-full">
-        <div class="container mx-auto">
+
+<div class="flex gap-12">
+    <!--Left Sidebar -->
+    <div class="w-[25%]">
+        <div class="bg-white shadow-lg rounded-lg border w-full">
+        <div class="container p-6">
             <form method="GET" action="{{ url_for('jobs_search') }}">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                <div class="gap-4">
                     <div>
                         <label class="block text-gray-700 font-medium" for="keyword">Search</label>
-                        <input type="text" id="keyword" name="keyword" class="w-full border rounded-md p-2" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword }}">
+                        <input type="text" id="keyword" name="keyword" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword }}">
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium" for="country">Country</label>
-                        <select id="country" name="country" class="w-full border rounded-md p-2">
+                        <label class="mt-4 block text-gray-700 font-medium" for="country">Country</label>
+                        <select id="country" name="country" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
                             <option value="">Select Country</option>
                             {% for country in countries %}
                                 <option value="{{ country }}" {% if country == prefilled_data.country %}selected{% endif %}>{{ country }}</option>
@@ -28,12 +32,12 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium" for="state">State</label>
-                        <input type="text" id="state" name="state" class="w-full border rounded-md p-2" placeholder="Enter State" value="{{ prefilled_data.state }}">
+                        <label class="mt-4 block text-gray-700 font-medium" for="state">State</label>
+                        <input type="text" id="state" name="state" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter State" value="{{ prefilled_data.state }}">
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium" for="job_type">Job Type</label>
-                        <select id="job_type" name="job_type" class="w-full border rounded-md p-2">
+                        <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label>
+                        <select id="job_type" name="job_type" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
                             <option value="">Select Job Type</option>
                             {% for value, label in job_types %}
                                 <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
@@ -41,8 +45,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium" for="industry">Industry</label>
-                        <select id="industry" name="industry" class="w-full border rounded-md p-2">
+                        <label class="mt-4 block text-gray-700 font-medium" for="industry">Industry</label>
+                        <select id="industry" name="industry" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
                             <option value="">Select Industry</option>
                             {% for value, label in industries %}
                                 <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
@@ -50,8 +54,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-gray-700 font-medium" for="posted_on">Posted On</label>
-                        <select id="posted_on" name="date_filter" class="w-full border rounded-md p-2">
+                        <label class="mt-4 block text-gray-700 font-medium" for="posted_on">Posted On</label>
+                        <select id="posted_on" name="date_filter" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
                             <option value="">Select Date Range</option>
                             <option value="last_24_hours" {% if prefilled_data.date_filter =='last_24_hours' %}selected{% endif %}>Last 24 hours</option>
                             <option value="last_week" {% if prefilled_data.date_filter =='last_week' %}selected{% endif %}>Last Week</option>
@@ -60,28 +64,47 @@
                     </div>
                 </div>
                 <div class="mt-4">
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700">Search Jobs</button>
+                    <button type="submit" class="w-full bg-blue-700 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-600">Search Jobs</button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="container mx-auto mt-6">
+    </div>
+    <!--Left Sidebar -->
+
+    <!--Right Sidebar -->
+    <div class="w-[75%]">
+            <div class="container">
         {% for job in jobs %}
-        <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.id) }}" class="block mb-4 bg-white shadow-md rounded-md p-4 hover:shadow-lg transition">
-            <div class="flex items-center">
-                <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo" class="w-16 h-16 rounded-md object-cover mr-4">
-                <div>
-                    <h2 class="text-xl font-semibold text-gray-800">{{ job.job_title }}</h2>
-                    <p class="text-gray-600 text-sm">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</p>
-                    <p class="text-gray-500 text-sm">{{ job.opening_date.split('T')[0] }}</p>
-                    <div class="flex space-x-4 text-gray-600 text-sm mt-2">
-                        <p><strong>Salary:</strong> {{ job.salary }}</p>
-                        <p><strong>Type:</strong> {{ job.job_type }}</p>
-                        <p><strong>Industry:</strong> {{ job.industry }}</p>
-                    </div>
+<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.id) }}"
+   class="block mb-3 bg-white shadow rounded-lg border p-4 hover:shadow-lg transition">
+
+    <div class="flex justify-between items-center">
+        <!-- Left Side: Logo + Job Title + Salary/Type/Industry -->
+        <div class="flex items-start space-x-4">
+            <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo" class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">{{ job.job_title }}</h2>
+                <div class="mt-2 text-gray-600 text-sm">
+                    <span class="me-6 text-sm text-gray-500 dark:text-gray-400">{{ job.salary }}</span>
+                    <span class="me-6 text-sm text-gray-500 dark:text-gray-400">{{ job.job_type }}</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ job.industry }}</span>
                 </div>
             </div>
-        </a>
+        </div>
+
+        <!-- Right Side: Location & Date -->
+        <div class="text-right text-gray-600 text-sm">
+            <span class="me-6">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
+            <span class="text-gray-500">{{ job.opening_date.split('T')[0] }}</span>
+        </div>
+    </div>
+
+</a>
+
         {% endfor %}
     </div>
+    </div>
+    <!--Right Sidebar -->
+</div>
 {% endblock %}

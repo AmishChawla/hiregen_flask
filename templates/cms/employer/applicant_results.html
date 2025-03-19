@@ -3,9 +3,13 @@
 {% block title %} Applicant Tracking {% endblock %}
 
 {% block content %}
-<div class="px-6 py-4 sm:px-8 sm:py-6 bg-white rounded-lg shadow-md dark:bg-gray-800">
+
+<div class="min-h-screen bg-gray-100 py-8">
+    <div class="container max-w-full px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded px-8 py-6">
   <div class="mb-6">
-    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">Search Results</h1>
+    <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Search Results</h1>
+    <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Manage all your applicants here.</p>
   </div>
 
 
@@ -13,12 +17,12 @@
     <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
       <thead class="bg-white dark:bg-gray-700">
         <tr>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Name</th>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Job</th>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</th>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Score</th>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Date</th>
-          <th class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Actions</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Job</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Score</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Date</th>
+          <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Actions</th>
         </tr>
       </thead>
       <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -33,11 +37,11 @@
               </div>
             </div>
           </td>
-          <td class="px-6 py-4 text-sm text-indigo-600 dark:text-indigo-400">
+          <td class="px-6 py-4 text-sm text-blue-600 dark:text-blue-400">
             <a href="{{ data.job_url }}">{{ data.job_title }}</a>
           </td>
           <td class="px-6 py-4 text-sm">
-            <select id="status-select-{{ data.id }}" class="block w-full rounded-md border-gray-300 bg-white text-gray-800 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" onchange="updateApplicationStatus('{{ data.id }}')">
+            <select id="status-select-{{ data.id }}" class="block w-full rounded-md border-gray-300 bg-white text-gray-800 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" onchange="updateApplicationStatus('{{ data.id }}')">
               {% for s in statuses %}
               <option value="{{ s.job_status }}" {% if data.application_status == s.job_status %}selected{% endif %}>{{ s.name.capitalize() }}</option>
               {% endfor %}
@@ -54,7 +58,7 @@
           </td>
           <td class="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">{{ data.application_date }}</td>
           <td class="px-6 py-4 text-sm">
-            <button onclick="viewApplicantDetails('{{ data.id }}', '{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{ data.applicant_score }}', '{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}')" class="text-indigo-600 dark:text-indigo-400">
+            <button onclick="viewApplicantDetails('{{ data.id }}', '{{ data.applicant_name }}', '{{ data.application_status }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{ data.applicant_score }}', '{{ data.job_seeker_profile_picture or url_for('static', filename='images/man.png') }}')" class="text-blue-600 dark:text-blue-400">
               View Details
             </button>
           </td>
@@ -64,7 +68,8 @@
     </table>
   </div>
 </div>
-
+</div>
+  </div>
 <!-- Filter Drawer -->
 <div id="filterDrawer" class="fixed inset-0 z-10 hidden">
   <div class="absolute inset-0 bg-gray-500/75" onclick="closeFilterDrawer()"></div>
@@ -81,10 +86,10 @@
       <form id="filter-form" action="{{ url_for('employer_applicants_filter') }}" method="get" class="mt-4">
         <div class="mb-4">
           <label for="application_start_date" class="block text-sm font-medium text-gray-900 dark:text-gray-200">Start Date</label>
-          <input type="date" id="application_start_date" name="application_start_date" class="block w-full rounded-md border-gray-300 bg-gray-100 px-3 py-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-gray-200">
+          <input type="date" id="application_start_date" name="application_start_date" class="block w-full rounded-md border-gray-300 bg-gray-100 px-3 py-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200">
         </div>
         <!-- Other filters -->
-        <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2">Apply Filters</button>
+        <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2">Apply Filters</button>
       </form>
     </div>
   </div>
@@ -98,7 +103,7 @@
       <div class="flex h-full flex-col overflow-y-scroll py-6">
         <div class="px-4 sm:px-6">
           <div class="flex items-start justify-between">
-            <h2 class="text-base font-semibold text-gray-900 dark:text-gray-100" id="applicantDetailsTitle">Applicant Details</h2>
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white" id="applicantDetailsTitle">Applicant Details</h2>
             <button type="button" class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 dark:bg-gray-800 dark:hover:text-gray-300" onclick="closeApplicantDetailsDrawer()">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -106,7 +111,7 @@
             </button>
           </div>
         </div>
-        <div id="applicantDetailsContent" class="relative mt-6 flex-1 px-4 sm:px-6">
+        <div id="applicantDetailsContent" class="relative mt-6 flex-1">
           <!-- Dynamic content -->
         </div>
       </div>
@@ -149,10 +154,10 @@ function viewApplicantDetails(id, name, status, email, date, resume, score, prof
   const content = document.getElementById('applicantDetailsContent');
   content.innerHTML = `
     <div class="pb-6">
-      <div class="relative h-40 sm:h-56">
-        <img class="absolute h-full w-full object-cover" src="${profilePicture}" alt="Applicant Photo">
+      <div class="relative h-10 sm:h-16 text-center">
+        <img class="h-20 w-20 rounded-full object-cover mx-auto" src="${profilePicture}" alt="Applicant Photo">
       </div>
-      <div class="mt-6 px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
+      <div class="px-4 sm:mt-8 sm:flex sm:items-end sm:px-6">
         <div class="sm:flex-1">
             <div>
               <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Name</dt>
@@ -176,7 +181,7 @@ function viewApplicantDetails(id, name, status, email, date, resume, score, prof
               <dt class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">Status</dt>
               <dd class="mt-1">
                 <div class="relative mt-2 px-3">
-                  <select class="rounded-md border-gray-300 shadow-sm focus:ring-indigo-600" id="status-select-drawer-${id}" onchange="updateApplicationStatus(${id}, true)">
+                  <select class="rounded-md border-gray-300 shadow-sm focus:ring-blue-600" id="status-select-drawer-${id}" onchange="updateApplicationStatus(${id}, true)">
                     {% for s in statuses %}
                     <option value="{{ s.job_status }}" ${status === '{{ s.job_status }}' ? 'selected' : ''}>{{ s.name.capitalize() }}</option>
                     {% endfor %}
@@ -185,7 +190,7 @@ function viewApplicantDetails(id, name, status, email, date, resume, score, prof
               </dd>
             </div>
             <div>
-              <a href="${resume}" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-indigo-600">View Resume</a>
+              <a href="${resume}" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-blue-600">View Resume</a>
             </div>
           </dl>
         </div>

@@ -3,32 +3,32 @@
 {% block title %} Applications {% endblock %}
 
 {% block content %}
-<div class="px-4 sm:px-6 lg:px-8">
+<div class="bg-white shadow-md rounded px-8 py-6">
   <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900 dark:text-gray-200">Applications</h1>
+      <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Applications</h1>
       <p class="mt-2 text-sm text-gray-700 dark:text-gray-400">A list of all your applications including their job title, status, date, and related links.</p>
     </div>
   </div>
   <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700 rounded-lg overflow-hidden shadow-lg">
-          <thead class="bg-white dark:bg-gray-800">
+        <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700 overflow-hidden">
+          <thead class="bg-gray-50 dark:bg-gray-900">
             <tr>
-              <th scope="col" class=" bg-white dark:bg-gray-800 py-3 pl-6 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400 sm:pl-6">Job</th>
-              <th scope="col" class=" bg-white dark:bg-gray-800 px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Application Status</th>
-              <th scope="col" class=" bg-white dark:bg-gray-800 px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Date</th>
-              <th scope="col" class=" bg-white dark:bg-gray-800 px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Visit</th>
+              <th scope="col" class=" bg-white dark:bg-gray-800 px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400 sm:pl-6">Job</th>
+              <th scope="col" class=" bg-white dark:bg-gray-800 px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Application Status</th>
+              <th scope="col" class=" bg-white dark:bg-gray-800 px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Date</th>
+              <th scope="col" class=" bg-white dark:bg-gray-800 px-6 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">Visit</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
             {% for data in result %}
             <tr>
-              <td class="whitespace-nowrap py-4 pl-6 pr-3 text-sm font-medium text-gray-900 dark:text-gray-200 sm:pl-6">{{ data.job_title }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">{{ data.job_application_status.capitalize() }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:textpython-gray-400">{{ data.application_date.split('T')[0] }}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400"> <a href="{{ data.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-400">Job</a></td>
+              <td class="whitespace-nowrap py-2 px-4 text-sm font-medium text-gray-900 dark:text-gray-200 sm:pl-6">{{ data.job_title }}</td>
+              <td class="whitespace-nowrap py-2 px-4 text-sm text-gray-500 dark:text-gray-400">{{ data.job_application_status.capitalize() }}</td>
+              <td class="whitespace-nowrap py-2 px-4 text-sm text-gray-500 dark:textpython-gray-400">{{ data.application_date.split('T')[0] }}</td>
+              <td class="whitespace-nowrap py-2 px-4 text-sm text-gray-500 dark:text-gray-400"> <a href="{{ data.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-400">Job</a></td>
             </tr>
             {% endfor %}
           </tbody>
