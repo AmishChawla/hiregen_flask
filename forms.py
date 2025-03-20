@@ -30,7 +30,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password')
     submit = SubmitField('Log In')
 
-
 class RegisterForm(FlaskForm):
     firstname = StringField('First Name')
     lastname = StringField('Last Name')
@@ -41,7 +40,7 @@ class RegisterForm(FlaskForm):
         validators.DataRequired(),
         validators.Length(min=6),
         validators.Regexp(
-            regex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]",
+            regex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{6,}$",
             message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
         )
     ])
