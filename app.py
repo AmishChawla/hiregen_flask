@@ -4035,6 +4035,7 @@ def employer_applicants_search():
 
         print('here')
         applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
+        print(applicants)
         print(len(applicants))
     return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
 

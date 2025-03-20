@@ -59,9 +59,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <header class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex justify-between items-center p-4">
     <div class="flex items-center">
       <div class="logo">
-        <Link href="{{url_for('index')}}">
-          <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
-        </Link>
+        <a href="{{url_for('index')}}">
+          <img src="{{url_for('static', filename='images/logo.webp')}}" alt="Logo" width="144" height="36" />
+        </a>
       </div>
       <button class="ml-auto md:hidden" onClick={toggleMenu} aria-label="Toggle Menu">
 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -161,73 +161,85 @@ Free Trial
 <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
 </body>
 
-      <footer class="bg-white py-10 sm:py-20 border-y border-gray-200">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div>
-              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">Services</h3>
-              <ul class="flex flex-col gap-y-3 text-base">
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_recruitment_service')}}">AI Recruitment</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('candidate_screening_service')}}">Candidate Screening</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('resume_parsing_service')}}">Resume Parsing</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('career_site_service')}}">Career Site</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('interview_scheduling_service')}}">Interview Scheduling</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">Products</h3>
-              <ul class="flex flex-col gap-y-3 text-base">
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_software_product')}}">Recruitment Software</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('applicant_tracking_product')}}">Applicant Tracking Software</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_crm_product')}}">Recruitment CRM</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('staffing_software_product')}}">Staffing Software</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('job_board_product')}}">Job Board Software</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="mb-4 font-semibold text-slate-900 dark:text-slate-100">AI Recruitment Tools</h3>
-              <ul class="flex flex-col gap-y-3 text-base">
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_agents')}}">AI Agents</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_chatbots')}}">Recruitment Chatbots</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_candidate_matching')}}">AI Candidate Matching</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_job_matching')}}">AI Job Matching</a></li>
-                <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_interview')}}">AI Interview</a></li>
-              </ul>
-            </div>
-            <div>
-              <div class="logo"><a href="{{url_for('index')}}">
-              <Image
-          alt="Logo"
-          src="/static/images/logo.webp"
-          class="w-auto h-6"
-          width="6659"
-          height="1086"
-      />
-              </a></div>
-              <p class="mt-5 text-base text-slate-500">Hiregen.com leverages AI-driven recruitment software to streamline hiring, saving time and ensuring you attract, evaluate, and hire top talent effortlessly for your organization.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
-      <section class="bg-white py-6 sm:py-6">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <nav class="flex flex-wrap justify-center sm:justify-start space-x-4 gap-y-3 text-sm text-slate-600">
-              <a class="hover:text-indigo-600" href="{{url_for('privacy_policy')}}">Privacy Policy</a>
-              <a class="hover:text-indigo-600" href="{{url_for('terms_of_service')}}">Terms of Service</a>
-              <a class="hover:text-indigo-600" href="{{url_for('index')}}#contact">Contact</a>
-              <a class="hover:text-indigo-600" href="{{url_for('faqs')}}">FAQ</a>
-              <a class="hover:text-indigo-600" href="{{url_for('about_us')}}">About</a>
-              <a class="hover:text-indigo-600" href="{{url_for('sitemap_table')}}">SiteMap</a>
-            </nav>
-            <div class="flex justify-center sm:justify-end space-x-4">
-              <a href="#" class="hover:text-indigo-600"><i class="fab fa-facebook"></i></a>
-              <a href="#" class="hover:text-indigo-600"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="hover:text-indigo-600"><i class="fab fa-linkedin"></i></a>
-              <a href="#" class="hover:text-indigo-600"><i class="fab fa-youtube"></i></a>
-              <a href="#" class="hover:text-indigo-600"><i class="fas fa-rss"></i></a>
-            </div>
-          </div>
-        </div>
-      </section>
+<footer class="bg-white py-10 sm:py-20 border-y border-gray-200">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <h3 class="mb-4 font-semibold">Services</h3>
+        <ul class="flex flex-col gap-y-3 text-base">
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_recruitment_service')}}">AI Recruitment</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('candidate_screening_service')}}">Candidate Screening</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('resume_parsing_service')}}">Resume Parsing</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('career_site_service')}}">Career Site</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('interview_scheduling_service')}}">Interview Scheduling</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="mb-4 font-semibold">Products</h3>
+        <ul class="flex flex-col gap-y-3 text-base">
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_software_product')}}">Recruitment Software</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('applicant_tracking_product')}}">Applicant Tracking Software</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_crm_product')}}">Recruitment CRM</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('staffing_software_product')}}">Staffing Software</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('job_board_product')}}">Job Board Software</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="mb-4 font-semibold">AI Recruitment Tools</h3>
+        <ul class="flex flex-col gap-y-3 text-base">
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_agents')}}">AI Agents</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_chatbots')}}">Recruitment Chatbots</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_candidate_matching')}}">AI Candidate Matching</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_job_matching')}}">AI Job Matching</a></li>
+          <li><a class="text-slate-500 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_interview')}}">AI Interview</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="logo"><a href="{{url_for('index')}}">
+        <Image
+    alt="Logo"
+    src="/static/images/logo.webp"
+    class="w-auto h-6"
+    width="6659"
+    height="1086"
+/>
+        </a></div>
+        <p class="mt-5 text-base text-slate-500">Hiregen.com leverages AI-driven recruitment software to streamline hiring, saving time and ensuring you attract, evaluate, and hire top talent effortlessly for your organization.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<section class="bg-white py-6 sm:py-6">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+      <nav class="flex flex-wrap justify-center sm:justify-start space-x-4 gap-y-3 text-sm text-slate-600">
+        <a class="hover:text-indigo-600" href="{{url_for('privacy_policy')}}">Privacy Policy</a>
+        <a class="hover:text-indigo-600" href="{{url_for('terms_of_service')}}">Terms of Service</a>
+        <a class="hover:text-indigo-600" href="{{url_for('index')}}#contact">Contact</a>
+        <a class="hover:text-indigo-600" href="{{url_for('faqs')}}">FAQ</a>
+        <a class="hover:text-indigo-600" href="{{url_for('about_us')}}">About</a>
+        <a class="hover:text-indigo-600" href="{{url_for('sitemap_table')}}">SiteMap</a>
+
+      </nav>
+      <div class="flex justify-center sm:justify-end space-x-4">
+<a href="https://facebook.com/" class="text-gray-400 hover:text-indigo-600" aria-label="Facebook">
+<i class="bi bi-facebook"></i>
+</a>
+<a href="https://twitter.com/" class="text-gray-400 hover:text-indigo-600" aria-label="Twitter">
+<i class="bi bi-twitter-x"></i>
+</a>
+<a href="https://linkedin.com/" class="text-gray-400 hover:text-indigo-600" aria-label="LinkedIn">
+<i class="bi bi-linkedin"></i>
+</a>
+<a href="https://youtube.com/" class="text-gray-400 hover:text-indigo-600" aria-label="YouTube">
+<i class="bi bi-youtube"></i>
+</a>
+<a href="https://hiregen.com/sitemap/table" class="text-gray-400 hover:text-indigo-600" aria-label="RSS Feed">
+<i class="bi bi-rss-fill"></i>
+</a>
+
+      </div>
+    </div>
+  </div>
+</section>
 </html>
