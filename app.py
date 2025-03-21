@@ -4216,7 +4216,6 @@ def add_cms_post():
     form = forms.AddPost()
     media_form = forms.AddMediaForm()
 
-    # Fetch categories and format them for the form choices
     try:
         categories = api_calls.get_cms_all_categories(access_token=current_user.id)
         category_choices = [('', 'Select a category')] + [(category['id'], category['category']) for category in categories]
@@ -4238,8 +4237,6 @@ def add_cms_post():
 
     if form.validate_on_submit():
 
-        # if form.preview.data:
-        #     return redirect(url_for('preview_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
         tags = form.tags.data
 
         # Split tags into a list
@@ -4247,12 +4244,26 @@ def add_cms_post():
 
         post_data = {
             'title': form.title.data,
+            'short_description': form.short_description.data,
             'content': form.content.data,
             'category_id': form.category.data,
             'subcategory_id': form.subcategory.data,
             'access_token': current_user.id,
             'tags': tags_list
         }
+
+        if form.featured_image.data:
+            image_file = form.featured_image.data
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join("uploads", image_filename)  # Adjust upload path as needed
+            image_file.save(image_path)
+
+            # Convert image to binary for API upload
+            with open(image_path, "rb") as img:
+                image_binary = img.read()
+
+            post_data['featured_image'] = image_binary  # Send as binary data or Base64 if API requires
+
 
         try:
             if form.save_draft.data:
@@ -4281,14 +4292,6 @@ def add_cms_post():
 
     # Fetch media and forms
     root_url = constants.ROOT_URL + '/'
-    # media_result = api_calls.get_user_all_medias(access_token=current_user.id) or []
-    # forms_result = api_calls.get_user_all_forms(access_token=current_user.id) or []
-
-    # Check if service is allowed for the user
-    # if current_user.role == 'user':
-    #     is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
-    #     if not is_service_allowed:
-    #         return redirect(url_for('user_view_plan'))
 
     return render_template('admin/admin_cms/cms_add_post.html', form=form, media_form=media_form,categories=category_choices)
 

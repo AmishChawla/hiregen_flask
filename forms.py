@@ -309,6 +309,13 @@ class AddPost(FlaskForm):
         'placeholder': 'Enter tags, separated by commas',
         'id': 'tags'
     })  # New field for tags
+    short_description = TextAreaField('Short Description', render_kw={
+    'rows': 3, 'cols': 30, 'id': 'short_description',
+    'placeholder': 'Enter a brief summary of the post.'
+    })  # New field for short description
+    featured_image = FileField('Featured Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])  
+
+
 
     publish = SubmitField('Publish')
     save_draft = SubmitField('Save Draft')

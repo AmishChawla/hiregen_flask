@@ -32,8 +32,9 @@
            <tbody class="divide-y divide-gray-200 bg-white">
             {% for data in result %}
             <tr>
-              <td class="px-4 py-2 text-sm text-gray-900">
-                <a href="{{url_for('company_details_by_company_subdomain', company_subdomain=data.company_subdomain)}}" class="text-blue-700 hover:text-blue-900">{{ data.name }}</a>
+              <td class="flex px-4 py-2 text-sm text-gray-900">
+                <img src="{{ data.company_logo or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-8 w-8 rounded-full">
+                <a href="{{url_for('company_details_by_company_subdomain', company_subdomain=data.company_subdomain)}}" class="m-2 text-blue-700 hover:text-blue-900">{{ data.name }}</a>
               </td>
               <td class="px-4 py-2 text-sm text-gray-900">{{ data.website_url }}</td>
               <td class="px-4 py-2 text-sm text-gray-900">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
