@@ -42,7 +42,7 @@
 
     <div class="border-b px-4 ">
         <div class="text-center sm:text-left sm:flex mb-4">
-            <img class="h-32 w-32 rounded-full border-4 border-white -mt-16 mr-4" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="profile_picture">
+            <img class="h-32 w-32 rounded-full border-4 border-white -mt-16 mr-4" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="profile_picture_img">
             <form method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
 
@@ -260,7 +260,7 @@
 
     // Company Logo Preview (circular img)
     const companyLogoInput = document.getElementById("{{ form.company_logo.id }}");
-    const companyLogoImg = document.getElementById("profile_picture");
+    const companyLogoImg = document.getElementById("profile_picture_img");
 
     if (companyLogoInput) {
         companyLogoInput.addEventListener("change", function (e) {
