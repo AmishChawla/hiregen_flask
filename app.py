@@ -4235,8 +4235,11 @@ def add_cms_post():
             subcategory_choices = [('', 'Select Subcategory')]
         form.subcategory.choices = subcategory_choices
 
+    
+    print("validating form")
+    
     if form.validate_on_submit():
-
+        print("validated form")
         tags = form.tags.data
 
         # Split tags into a list
@@ -4270,10 +4273,20 @@ def add_cms_post():
                 post_data['status'] = 'draft'
             elif form.publish.data:
                 post_data['status'] = 'published'
-
-            result = api_calls.create_post(**post_data)
-
-            if result:
+            print('sendding api call function')
+            post_sent = api_calls.create_post(
+                            title=form.title.data,
+                            short_description=form.short_description.data,
+                            featured_image=image_binary if form.featured_image.data else None,
+                            content=form.content.data,
+                            category_id=form.category.data,
+                            subcategory_id=form.subcategory.data,
+                            status='draft' if form.save_draft.data else 'published',
+                            access_token=current_user.id,
+                            tags=tags_list
+                        )
+            print(post_sent)
+            if post_sent:
                 # if form.publish.data:
                 #     flash("Post created successfully", "success")
                 #     try:

@@ -3287,23 +3287,22 @@ def create_post(title, short_description, featured_image, content, category_id, 
         "content": content,
         "category_id": category_id,
         "subcategory_id": subcategory_id,
-        "status": status,
-        "tags": tags  # This is already a list
+        "status": status,  # This is already a list
     }
+    print(post_data)
 
-    # Ensure FastAPI receives post data as a dict
-    data = {
-        "post": json.dumps(post_data)  # Convert dictionary to JSON string
-    }
+
+    post_data["tags"] = json.dumps(tags)  # <-- FastAPI will need to parse this
+   
 
     files = {}
     if featured_image:
-        files["featured_image"] = ('image.jpg', featured_image, 'image/jpeg')  # Adjust MIME type if needed
+        files["featured_image"] = ("featured.jpg", featured_image, "image/jpeg")  # or detect mime-type
 
     try:
         response = requests.post(
             constants.BASE_URL + "/posts/create-post",
-            data=data,  # Send post as form-data
+            data=post_data,  # Send post as form-data
             files=files,  # Attach image
             headers=headers
         )
