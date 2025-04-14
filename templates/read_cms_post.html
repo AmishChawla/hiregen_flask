@@ -218,7 +218,7 @@ article .ql-indent-9 {
 
             <div class="text-gray-700">
                 <div class="max-w-2xl xl:mx-auto"><img alt="A crossed out European emblem"
-                        src="{{ url_for('static' , filename='images/blog-bg.jpg') }}"
+                        src="{{ post.featured_image or url_for('static' , filename='images/blog-bg.jpg') }}"
                         class="mb-10 aspect-3/2 w-full rounded-2xl object-cover shadow-xl">
                     <p class="my-10 text-base/8 first:mt-0 last:mb-0">{{post.content | safe}}</p>
                 </div>

@@ -3299,6 +3299,8 @@ def create_post(title, short_description, featured_image, content, category_id, 
     if featured_image:
         files["featured_image"] = ("featured.jpg", featured_image, "image/jpeg")  # or detect mime-type
 
+    print(post_data)
+
     try:
         response = requests.post(
             constants.BASE_URL + "/posts/create-post",

@@ -33,10 +33,10 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
 # app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SERVER_NAME'] = 'hiregen.com'  
+# # app.config['SERVER_NAME'] = 'hiregen.com'  
 #TODO CHANGE TO '.hiregen.com' before deploying
 # app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains  
+# # app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains  
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
@@ -4266,7 +4266,7 @@ def add_cms_post():
                 image_binary = img.read()
 
             post_data['featured_image'] = image_binary  # Send as binary data or Base64 if API requires
-
+        print("Post content: ",form.content.data)
 
         try:
             if form.save_draft.data:
@@ -4555,9 +4555,10 @@ def admin_update_cms_post(post_id):
 def read_post(slug):
     import html
     response = api_calls.get_post_by_slug(slug)
+    print(response)
 
     response["content"] = html.unescape(response["content"])
-    print(response["content"])
+    # print(response["content"])
     return render_template('read_cms_post.html', post=response)
 
 
