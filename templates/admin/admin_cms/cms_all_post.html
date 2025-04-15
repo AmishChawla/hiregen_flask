@@ -159,13 +159,14 @@
         const confirmDeleteButton = document.getElementById('confirmDelete');
         const cancelModalButton = document.getElementById('cancelModal');
 
-        document.querySelectorAll('.deleteModalTrigger').forEach(button => {
-            button.addEventListener('click', function () {
-                const postId = this.getAttribute('data-post-id');
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('deleteModalTrigger')) {
+                const postId = e.target.getAttribute('data-post-id');
                 confirmDeleteButton.href = `/admin/delete-posts/${postId}`;
                 deleteModal.classList.remove('hidden');
-            });
+            }
         });
+
 
         cancelModalButton.addEventListener('click', () => {
             deleteModal.classList.add('hidden');
