@@ -3275,33 +3275,52 @@ def admin_delete_post(post_id, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def create_post(title, content, category_id, subcategory_id, status, access_token, tags):
-    print('trying to create post')
-    print("2")
+def create_post(title, short_description, featured_image, content, category_id, subcategory_id, status, access_token, tags):
+    print('Trying to create post')
+
     headers = {'Authorization': f'Bearer {access_token}'}
-    params = {
+
+    # Correctly format the post data as JSON
+    post_data = {
         "title": title,
+        "short_description": short_description,
         "content": content,
         "category_id": category_id,
         "subcategory_id": subcategory_id,
-        "status": status,
-        "tags": tags
+        "status": status,  # This is already a list
     }
+    print(post_data)
+
+
+    post_data["tags"] = json.dumps(tags)  # <-- FastAPI will need to parse this
+   
+
+    files = {}
+    if featured_image:
+        files["featured_image"] = ("featured.jpg", featured_image, "image/jpeg")  # or detect mime-type
+
+    print(post_data)
+
     try:
-        response = requests.post(constants.BASE_URL + '/posts/create-post', json=params, headers=headers)
+        response = requests.post(
+            constants.BASE_URL + "/posts/create-post",
+            data=post_data,  # Send post as form-data
+            files=files,  # Attach image
+            headers=headers
+        )
+
+        # Debugging response
+        print(response.status_code, response.text)
+
         if response.status_code == 200:
             return response.json()
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
+        else:
+            return response.text  # Return error details if not 200 OK
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
 
 
-def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token, tags):
+def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token, tags, short_description, featured_image=None):
     print('trying3')
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
@@ -3310,11 +3329,20 @@ def admin_update_post(post_id, title, content, category_id, subcategory_id, stat
           "category_id": category_id,
           "subcategory_id": subcategory_id,
           "status": status,
-          "tags":tags
+          "tags":tags,
+          "short_description": short_description
         }
+    
+    params["tags"] = json.dumps(tags)  # <-- FastAPI will need to parse this
+   
+
+    files = {}
+    if featured_image:
+        files["featured_image"] = ("featured.jpg", featured_image, "image/jpeg")  # or detect mime-type
+
 
     try:
-        response = requests.put(constants.BASE_URL + f'/posts/update-post/{post_id}', json=params, headers=headers)
+        response = requests.put(constants.BASE_URL + f'/posts/update-post/{post_id}', data=params, files=files, headers=headers)
         print(response.status_code)
         if response.status_code == 200:
             return response.json()

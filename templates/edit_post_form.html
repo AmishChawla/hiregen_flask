@@ -5,7 +5,7 @@
 {% block content %}
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <form method="post" action="{{ url_for('admin_edit_post', job_id=job_id) }}" id="postForm" class="">
+  <form method="post" action="{{ url_for('admin_edit_post', job_id=job_id) }}" id="editJobForm" class="">
   {{ form.hidden_tag() }}
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 px-6 py-6">
@@ -71,17 +71,20 @@
 
     <div class="form-group mt-4">
       <label for="job_description" class="block text-sm font-medium text-gray-900">{{ form.job_description.label }}</label>
-      {{ form.job_description(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="job_description") }}
+      <div id="job_description"></div>
+      {{ form.job_description(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_description") }}
     </div>
 
     <div class="form-group mt-4">
       <label for="job_requirements" class="block text-sm font-medium text-gray-900">{{ form.job_requirements.label }}</label>
-      {{ form.job_requirements(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="job_requirements") }}
+      <div id="job_requirements"></div>
+      {{ form.job_requirements(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_requirements") }}
     </div>
 
     <div class="form-group mt-4">
       <label for="job_benefits" class="block text-sm font-medium text-gray-900">{{ form.job_benefits.label }}</label>
-      {{ form.job_benefits(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="job_benefits") }}
+      <div id="job_benefits"></div>
+      {{ form.job_benefits(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_benefits") }}
     </div>
   </div>
 
@@ -105,17 +108,46 @@
   </aside>
 
 </div>
-          </form>
+  </form>
+          <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+          <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+          <script>
+            // Initialize Quill Editor
+            var quillOptions = {
+              theme: 'snow',
+              placeholder: 'Write something...',
+              modules: {
+                toolbar: [
+                  [{ 'header': [1, 2, false] }],
+                  ['bold', 'italic', 'underline'],
+                  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                  ['link', 'blockquote', 'code-block'],
+                  ['clean']
+                ]
+              }
+            };
+          
+            var quillRequirements = new Quill('#job_requirements', quillOptions);
+            var quillBenefits = new Quill('#job_benefits', quillOptions);
+            var quillDescription = new Quill('#job_description', quillOptions);
+          
+          
+            document.addEventListener("DOMContentLoaded", function () {
+    // Replace `form.content` with actual content retrieval
+                var jobDescriptionContent = document.getElementById("hidden_job_description").value;
+                var jobRequirementsContent = document.getElementById("hidden_job_requirements").value;
+                var jobBenefitsContent = document.getElementById("hidden_job_benefits").value;
 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('#job_description, #job_requirements, #job_benefits').summernote({
-    height: 300,
-    minHeight: null,
-    maxHeight: null,
-    focus: true
-  });
-});
-</script>
+                quillDescription.root.innerHTML = jobDescriptionContent;
+                quillRequirements.root.innerHTML = jobRequirementsContent;
+                quillBenefits.root.innerHTML = jobBenefitsContent;
+              });
+
+          
+            document.querySelector("#editjobForm").addEventListener('submit', function () {
+                document.getElementById("hidden_job_description").value = quillDescription.root.innerHTML;
+                document.getElementById("hidden_job_requirements").value = quillRequirements.root.innerHTML;
+                document.getElementById("hidden_job_benefits").value = quillBenefits.root.innerHTML;
+            });
+          </script>
 {% endblock %}

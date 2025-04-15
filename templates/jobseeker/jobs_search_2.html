@@ -76,7 +76,7 @@
     <div class="w-[75%]">
             <div class="container">
         {% for job in jobs %}
-<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.id) }}"
+<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.job_slug) }}"
    class="block mb-3 bg-white shadow rounded-lg border p-4 hover:shadow-lg transition">
 
     <div class="flex justify-between items-center">

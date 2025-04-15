@@ -30,7 +30,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password')
     submit = SubmitField('Log In')
 
-
 class RegisterForm(FlaskForm):
     firstname = StringField('First Name')
     lastname = StringField('Last Name')
@@ -41,7 +40,7 @@ class RegisterForm(FlaskForm):
         validators.DataRequired(),
         validators.Length(min=6),
         validators.Regexp(
-            regex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]",
+            regex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[A-Za-z\d@#$!%*?&]{6,}$",
             message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
         )
     ])
@@ -310,6 +309,13 @@ class AddPost(FlaskForm):
         'placeholder': 'Enter tags, separated by commas',
         'id': 'tags'
     })  # New field for tags
+    short_description = TextAreaField('Short Description', render_kw={
+    'rows': 3, 'cols': 30, 'id': 'short_description',
+    'placeholder': 'Enter a brief summary of the post.'
+    })  # New field for short description
+    featured_image = FileField('Featured Image', validators=[FileAllowed(['jpg', 'jpeg', 'png', 'gif'], 'Images only!')])  
+
+
 
     publish = SubmitField('Publish')
     save_draft = SubmitField('Save Draft')

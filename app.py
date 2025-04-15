@@ -4035,6 +4035,7 @@ def employer_applicants_search():
 
         print('here')
         applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
+        print(applicants)
         print(len(applicants))
     return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
 
@@ -4215,7 +4216,6 @@ def add_cms_post():
     form = forms.AddPost()
     media_form = forms.AddMediaForm()
 
-    # Fetch categories and format them for the form choices
     try:
         categories = api_calls.get_cms_all_categories(access_token=current_user.id)
         category_choices = [('', 'Select a category')] + [(category['id'], category['category']) for category in categories]
@@ -4235,10 +4235,11 @@ def add_cms_post():
             subcategory_choices = [('', 'Select Subcategory')]
         form.subcategory.choices = subcategory_choices
 
+    
+    print("validating form")
+    
     if form.validate_on_submit():
-
-        # if form.preview.data:
-        #     return redirect(url_for('preview_post', username=current_user.username, root_url=ROOT_URL.replace('http://', '').replace('/', '')))
+        print("validated form")
         tags = form.tags.data
 
         # Split tags into a list
@@ -4246,6 +4247,7 @@ def add_cms_post():
 
         post_data = {
             'title': form.title.data,
+            'short_description': form.short_description.data,
             'content': form.content.data,
             'category_id': form.category.data,
             'subcategory_id': form.subcategory.data,
@@ -4253,15 +4255,38 @@ def add_cms_post():
             'tags': tags_list
         }
 
+        if form.featured_image.data:
+            image_file = form.featured_image.data
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join("uploads", image_filename)  # Adjust upload path as needed
+            image_file.save(image_path)
+
+            # Convert image to binary for API upload
+            with open(image_path, "rb") as img:
+                image_binary = img.read()
+
+            post_data['featured_image'] = image_binary  # Send as binary data or Base64 if API requires
+        print("Post content: ",form.content.data)
+
         try:
             if form.save_draft.data:
                 post_data['status'] = 'draft'
             elif form.publish.data:
                 post_data['status'] = 'published'
-
-            result = api_calls.create_post(**post_data)
-
-            if result:
+            print('sendding api call function')
+            post_sent = api_calls.create_post(
+                            title=form.title.data,
+                            short_description=form.short_description.data,
+                            featured_image=image_binary if form.featured_image.data else None,
+                            content=form.content.data,
+                            category_id=form.category.data,
+                            subcategory_id=form.subcategory.data,
+                            status='draft' if form.save_draft.data else 'published',
+                            access_token=current_user.id,
+                            tags=tags_list
+                        )
+            print(post_sent)
+            if post_sent:
                 # if form.publish.data:
                 #     flash("Post created successfully", "success")
                 #     try:
@@ -4280,14 +4305,6 @@ def add_cms_post():
 
     # Fetch media and forms
     root_url = constants.ROOT_URL + '/'
-    # media_result = api_calls.get_user_all_medias(access_token=current_user.id) or []
-    # forms_result = api_calls.get_user_all_forms(access_token=current_user.id) or []
-
-    # Check if service is allowed for the user
-    # if current_user.role == 'user':
-    #     is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
-    #     if not is_service_allowed:
-    #         return redirect(url_for('user_view_plan'))
 
     return render_template('admin/admin_cms/cms_add_post.html', form=form, media_form=media_form,categories=category_choices)
 
@@ -4431,6 +4448,7 @@ def admin_cms_delete_subcategory(subcategory_id):
 def admin_update_cms_post(post_id):
     form = forms.AddPost()
     post = api_calls.get_post(post_id=post_id)
+    print("Post: ", post)
 
     # Fetch categories and format them for the form choices
     try:
@@ -4466,6 +4484,21 @@ def admin_update_cms_post(post_id):
         content = form.content.data
         category = form.category.data
         subcategory = form.subcategory.data
+        short_description = form.short_description.data
+
+        featured_img = None
+        if form.featured_image.data:
+            image_file = form.featured_image.data
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join("uploads", image_filename)  # Adjust upload path as needed
+            image_file.save(image_path)
+
+            # Convert image to binary for API upload
+            with open(image_path, "rb") as img:
+                image_binary = img.read()
+
+            featured_img = image_binary or None  # Send as binary data or Base64 if API requires
+
 
 
         if form.publish.data:
@@ -4474,6 +4507,8 @@ def admin_update_cms_post(post_id):
                     post_id=post_id,
                     title=title,
                     content=content,
+                    short_description=short_description,
+                    featured_image=featured_img or None,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='published',
@@ -4510,6 +4545,8 @@ def admin_update_cms_post(post_id):
                     post_id=post_id,
                     title=title,
                     content=content,
+                    short_description=short_description,
+                    featured_image=featured_image,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='draft',
@@ -4528,19 +4565,21 @@ def admin_update_cms_post(post_id):
     form.title.data = post['title']
     form.category.data = post['category_id']
     form.subcategory.data = post['subcategory_id']
+    form.short_description.data = post['short_description']
     form.content.data = post['content']
     form.tags.data= tags_string
 
-    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id)
+    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id,post=post)
 
 
 @app.route("/posts/<slug>", methods=['GET', 'POST'])
 def read_post(slug):
     import html
     response = api_calls.get_post_by_slug(slug)
+    print(response)
 
     response["content"] = html.unescape(response["content"])
-    print(response["content"])
+    # print(response["content"])
     return render_template('read_cms_post.html', post=response)
 
 
@@ -4902,4 +4941,4 @@ def robots_txt():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
