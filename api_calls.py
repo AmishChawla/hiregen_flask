@@ -3320,7 +3320,7 @@ def create_post(title, short_description, featured_image, content, category_id, 
         print(f"An unexpected error occurred: {err}")
 
 
-def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token, tags):
+def admin_update_post(post_id, title, content, category_id, subcategory_id, status, access_token, tags, short_description, featured_image=None):
     print('trying3')
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
@@ -3329,11 +3329,20 @@ def admin_update_post(post_id, title, content, category_id, subcategory_id, stat
           "category_id": category_id,
           "subcategory_id": subcategory_id,
           "status": status,
-          "tags":tags
+          "tags":tags,
+          "short_description": short_description
         }
+    
+    params["tags"] = json.dumps(tags)  # <-- FastAPI will need to parse this
+   
+
+    files = {}
+    if featured_image:
+        files["featured_image"] = ("featured.jpg", featured_image, "image/jpeg")  # or detect mime-type
+
 
     try:
-        response = requests.put(constants.BASE_URL + f'/posts/update-post/{post_id}', json=params, headers=headers)
+        response = requests.put(constants.BASE_URL + f'/posts/update-post/{post_id}', data=params, files=files, headers=headers)
         print(response.status_code)
         if response.status_code == 200:
             return response.json()

@@ -3,11 +3,11 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="py-6">
-  <div class="max-w-full px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen py-6">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
     <!-- Metric Cards -->
-   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
+   <section class="min-w-full grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
                 <div class="flex items-center p-8 bg-white shadow rounded-lg">
                     <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person h-6 w-6" viewBox="0 0 16 16">
@@ -87,8 +87,8 @@
               {% for form in stats.contact_forms_table %}
               <tr>
                 <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.name }}</td>
-                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.email }}</td>
-                <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.message }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap truncate max-w-[200px]">{{ form.email }}</td>
+                <td class="px-6 py-2 text-sm whitespace-nowrap truncate max-w-[200px] break-words" title="{{ form.message }}">{{ form.message }}</td>
                 <td class="px-6 py-2 text-sm whitespace-nowrap">{{ form.created_at.split('T')[0] }}</td>
               </tr>
               {% endfor %}

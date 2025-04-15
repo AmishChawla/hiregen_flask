@@ -4448,6 +4448,7 @@ def admin_cms_delete_subcategory(subcategory_id):
 def admin_update_cms_post(post_id):
     form = forms.AddPost()
     post = api_calls.get_post(post_id=post_id)
+    print("Post: ", post)
 
     # Fetch categories and format them for the form choices
     try:
@@ -4483,6 +4484,21 @@ def admin_update_cms_post(post_id):
         content = form.content.data
         category = form.category.data
         subcategory = form.subcategory.data
+        short_description = form.short_description.data
+
+        featured_img = None
+        if form.featured_image.data:
+            image_file = form.featured_image.data
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join("uploads", image_filename)  # Adjust upload path as needed
+            image_file.save(image_path)
+
+            # Convert image to binary for API upload
+            with open(image_path, "rb") as img:
+                image_binary = img.read()
+
+            featured_img = image_binary or None  # Send as binary data or Base64 if API requires
+
 
 
         if form.publish.data:
@@ -4491,6 +4507,8 @@ def admin_update_cms_post(post_id):
                     post_id=post_id,
                     title=title,
                     content=content,
+                    short_description=short_description,
+                    featured_image=featured_img or None,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='published',
@@ -4527,6 +4545,8 @@ def admin_update_cms_post(post_id):
                     post_id=post_id,
                     title=title,
                     content=content,
+                    short_description=short_description,
+                    featured_image=featured_image,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='draft',
@@ -4545,10 +4565,11 @@ def admin_update_cms_post(post_id):
     form.title.data = post['title']
     form.category.data = post['category_id']
     form.subcategory.data = post['subcategory_id']
+    form.short_description.data = post['short_description']
     form.content.data = post['content']
     form.tags.data= tags_string
 
-    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id)
+    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id,post=post)
 
 
 @app.route("/posts/<slug>", methods=['GET', 'POST'])

@@ -47,7 +47,7 @@
                         {% for data in result %}
                         {%  if data.status == 'published' %}
                         <tr>
-                            <td class="px-4 py-2 text-sm text-gray-900"><a href="#" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="px-4 py-2 text-sm text-gray-900"><a href="{{ url_for('read_post', slug=data.slug) }}" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.username }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{{ data.category_name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-600">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
