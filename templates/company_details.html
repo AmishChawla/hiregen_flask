@@ -78,7 +78,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                             {% for data in job_posts %}
-                                {% if data.job_opening_status == 'Active' and data.status == 'published' %}
+                                <!-- {% if data.job_opening_status == 'Active' and data.status == 'published' %} -->
                                     <tr>
                                         <td class="px-4 py-2">
                                             <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800">
@@ -87,7 +87,7 @@
                                         </td>
                                         <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ data.created_at.split('T')[0] }}</td>
                                     </tr>
-                                {% endif %}
+                                <!-- {% endif %} -->
                             {% endfor %}
                         </tbody>
                     </table>

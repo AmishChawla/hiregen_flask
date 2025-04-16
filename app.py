@@ -911,7 +911,7 @@ def company_details_by_company_subdomain(company_subdomain):
     # Retrieve jobs associated with the company
     company_id = result["id"]
     jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
-
+    print(jobs_by_company)
     # Render the template with company details and job postings
     return render_template('company_details.html', company=result, job_posts=jobs_by_company)
 
@@ -1389,7 +1389,7 @@ def add_post():
         job_description = form.job_description.data
         job_requirements = form.job_requirements.data
         job_benefits = form.job_benefits.data
-        job_opening_status = 'Acitve'
+        job_opening_status = 'Active'
 
 
         print(form.data)
