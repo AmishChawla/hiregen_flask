@@ -843,6 +843,7 @@ def admin_edit_company(company_id):
 
 
 @app.route("/company-register", methods=['GET', 'POST'])
+@login_required
 def company_register():
     form = forms.CompanyRegisterForm()
     print("outside")
@@ -1304,34 +1305,6 @@ def admin_all_jobseekers():
 #             return redirect(url_for('user_post_list', username=username, toast='null'))
 #
 #     return render_template('user_post_list.html', result=result, response=response, form=form, username=username, toast=toast)
-
-
-@app.route('/jobs',subdomain='<company_subdomain>', methods=['GET', 'POST'])
-def user_post_list_by_company_subdomain(company_subdomain):
-    toast = 'null'
-    form = forms.SubscribeToNewsletterForm()
-    result = api_calls.get_job_opening_by_company_subdomain(company_subdomain=company_subdomain)
-
-    if result is None:
-        result = []  # Set result to an empty list
-
-    response = []
-
-    if form.validate_on_submit():
-        print('inside validating')
-        name = form.name.data
-        email = form.email.data
-        print('sending call')
-        response_status = api_calls.subscribe_to_newsletter(name=name, email=email, username=username)
-        if response_status == 200:
-            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='new_sub'))
-        elif response_status == 409:
-            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='already_sub'))
-        else:
-            return redirect(url_for('user_post_list_by_company_subdomain', company_subdomain=company_subdomain, toast='null'))
-
-    return render_template('user_post_list.html', result=result, response=response, form=form, toast=toast)
-
 
 
 @app.route("/admin/delete-job/<job_id>", methods=['GET', 'POST'])

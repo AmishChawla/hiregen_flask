@@ -111,6 +111,24 @@
         companyLogoInput.addEventListener("change", function () {
             if (companyLogoInput.files.length > 0) {
                 const file = companyLogoInput.files[0];
+                const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+                const maxSize = 2 * 1024 * 1024; // 2MB
+
+                // Validate file type
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Only PNG, JPG, and GIF files are allowed.");
+                    companyLogoInput.value = ""; // Clear the input
+                    return;
+                }
+
+                // Validate file size
+                if (file.size > maxSize) {
+                    alert("File size must be 2MB or less.");
+                    companyLogoInput.value = ""; // Clear the input
+                    return;
+                }
+
+                // Show selected file info
                 fileName.textContent = file.name;
                 uploadContainer.classList.add("hidden");
                 fileInfo.classList.remove("hidden");

@@ -87,16 +87,20 @@
 </div>
 
 <!-- Job Requirements -->
+{% if job_details.job_requirements %} 
 <div class="mt-6">
   <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Requirements</h2>
   <p class="mt-4 text-gray-700 dark:text-gray-300">{{ job_details.job_requirements | safe or "No Requirements" }}</p>
 </div>
+{% endif %}
 
 <!-- Job Benefits -->
+{% if job_details.job_benefits %}
 <div class="mt-6">
   <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Benefits</h2>
   <p class="mt-4 text-gray-700 dark:text-gray-300">{{ job_details.job_benefits | safe or "No Benefits" }}</p>
 </div>
+{% endif %}
 
 
 <div class="relative z-10 hidden" id="applyModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">

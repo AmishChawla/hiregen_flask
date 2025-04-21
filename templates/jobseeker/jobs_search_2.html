@@ -20,7 +20,7 @@
                 <div class="gap-4">
                     <div>
                         <label class="block text-gray-700 font-medium" for="keyword">Search</label>
-                        <input type="text" id="keyword" name="keyword" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword }}">
+                        <input type="text" id="keyword" name="keyword" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
                     </div>
                     <div>
                         <label class="mt-4 block text-gray-700 font-medium" for="country">Country</label>
@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <label class="mt-4 block text-gray-700 font-medium" for="state">State</label>
-                        <input type="text" id="state" name="state" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter State" value="{{ prefilled_data.state }}">
+                        <input type="text" id="state" name="state" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
                     </div>
                     <div>
                         <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label>

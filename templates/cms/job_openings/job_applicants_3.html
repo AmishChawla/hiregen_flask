@@ -132,10 +132,11 @@
             Apply Filter
         </button>
     </div>
+            {% if not loop.last %}
             <button id="move-btn-{{ status }}" class="hidden my-1 w-full rounded bg-indigo-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="moveToNextStage('{{ status }}')">
                 Move to Next Stage
             </button>
-
+            {% endif %}
 
             <ul class="space-y-4 draggable-list w-72" data-status="{{ status }}">
                 {% if result | selectattr('application_status', 'equalto', status) | list | length == 0 %}
@@ -217,7 +218,7 @@
                                 <tr>
                                     <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                                         <div class="flex items-center">
-                                            <img class="w-10 h-10 rounded-full" src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/default.png') }}" alt="">
+                                            <img class="w-10 h-10 rounded-full" src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/man.png') }}" alt="">
                                             <div class="ml-4">
                                                 <div class="font-medium text-gray-900">{{ data.applicant_name }}</div>
                                                 <div class="mt-1 text-gray-500">{{ data.applicant_email }}</div>
