@@ -4,39 +4,36 @@
 
 {% block content %}
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
-<div class="min-h-screen bg-gray-100 py-8">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded px-8 py-6">
 
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Order History</h1>
-                    <p class="mt-1 text-sm text-gray-700">A detailed list of all orders including user details, plan, price, status, and purchase date.</p>
-                </div>
-            </div>
+
+<div class="">
+  <div class="min-h-screen py-6">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Order History</h1>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
 
   {% if purchase_data %}
-  <div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table id="draftTable" class="min-w-full divide-y divide-gray-300">
+  <div class="flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
+      <div class="inline-block min-w-full align-middle">
+        <table id="draftTable" class="min-w-full border-separate border-spacing-0">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">User</th>
-              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Plan</th>
-              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Price</th>
-              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Status</th>
-              <th scope="col" class="px-4 py-2 text-left text-sm font-medium text-gray-500 tracking-wide">Date of Purchase</th>
+              <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">User</th>
+              <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Plan</th>
+              <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Price</th>
+              <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Status</th>
+              <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Date of Purchase</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for data in purchase_data | reverse %}
-            <tr>
-              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.user.username }}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.plan.plan_type_name }}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.plan.fees }}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.status }}</td>
-              <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-600">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
+            <tr class="hover:bg-gray-50">
+              <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{ data.user.username }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.plan_type_name }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.fees }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.status }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
             </tr>
             {% endfor %}
           </tbody>
@@ -45,6 +42,7 @@
     </div>
   </div>
   </div>
+          </div>
           </div>
 
   {% else %}

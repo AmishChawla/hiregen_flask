@@ -2,24 +2,24 @@
 
 {% block content %}
 
-<div class="py-6">
-  <div class="max-w-full px-4 sm:px-6 lg:px-8">
-    <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-
+<div class="">
+  <div class="min-h-screen py-6">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
   <!-- Metric Cards -->
-   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
+   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
     <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800">
 
       <div class="flex items-center">
         {% if current_user.profile_picture %}
-        <img src="{{ current_user.profile_picture }}" alt="User Profile Picture" class="rounded-full w-20 h-20">
+        <img src="{{ current_user.profile_picture }}" alt="User Profile Picture" class="rounded-full w-14 h-14">
         {% else %}
-        <img src="{{ url_for('static', filename='images/man.png') }}" alt="User Profile Picture" class="rounded-full w-20 h-20">
+        <img src="{{ url_for('static', filename='images/man.png') }}" alt="User Profile Picture" class="rounded-full w-14 h-14">
         {% endif %}
       </div>
       <div class="ml-4">
-        <div class="text-xl font-semibold text-gray-900 dark:text-white">{{ profile_completion_percentage }}%</div>
+        <div class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ profile_completion_percentage }}%</div>
         <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mt-2">
           {% if profile_completion_percentage < 40 %}
           <div class="bg-red-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
@@ -29,20 +29,20 @@
           <div class="bg-green-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% endif %}
         </div>
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
+        <p class="mt-2 block text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
       </div>
     </div>
                 </div>
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
-                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
+                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
   <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
   <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">{{ total_applications }}</span>
-                        <span class="block text-gray-500">My Applications</span>
+                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ total_applications }}</span>
+                        <span class="block text-sm text-gray-500 dark:text-gray-400">My Applications</span>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
 
     <!-- Metric Cards -->
 
-    <h1 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white">Recommended for you</h1>
+    <h2 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white">Recommended for you</h2>
 <div>
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
     {% if recommendations %}
@@ -130,6 +130,7 @@
     <p class="text-sm text-gray-500 dark:text-gray-400">Complete profile to get recommendations</p>
     {% endif %}
   </div>
+</div>
 </div>
 
 {% endblock %}

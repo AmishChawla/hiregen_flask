@@ -8,17 +8,27 @@
 
       <form method="post" action="{{ url_for('add_post') }}" id="addjobForm">
         {{ form.hidden_tag() }}
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 px-6 py-6">
+
+<div class="py-6 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-6">
+    <div class="container max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-6">
+        <div class="sm:flex-auto">
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Add new job</h1>
+        </div>
+        <div class="flex space-x-4">  
+          {{ form.save_draft(class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 me-2") }}
+          {{form.publish(class="rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600")}}
+        </div>
+    </div>
+
+        <div class="">
         <!-- Middle Column: Job Fields -->
-        <div class="col-span-2 bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pb-8">
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
           <div id="errorMessages" class="mb-4 text-red-600 dark:text-red-400"></div>
-          <div class="mb-6">
-            <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Add new job</h1>
-            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Manage all your jobs here.</p>
-          </div>
           <div class="mb-4">
             <label for="job_title" class="block text-sm font-medium text-gray-900">{{ form.job_title.label }}</label>
-            {{ form.job_title(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="job_title", placeholder="Position") }}
+            {{ form.job_title(class="mt-2 block w-full rounded-md bg-white px-3 py-1 text-lg font-semibold text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="job_title") }}
             {% if form.job_title.errors %}
             <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ form.job_title.errors[0] }}</p>
             {% endif %}
@@ -27,51 +37,63 @@
           <div class="grid grid-cols-1 gap-10 sm:grid-cols-2">
             <div>
               <label for="salary" class="block text-sm font-medium text-gray-900">{{ form.salary.label }}</label>
-              {{ form.salary(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.salary(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
             <div>
               <label for="work_experience" class="block text-sm font-medium text-gray-900">{{ form.work_experience.label }}</label>
-              {{ form.work_experience(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.work_experience(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
             <div>
               <label for="job_type" class="block text-sm font-medium text-gray-900">{{ form.job_type.label }}</label>
-              {{ form.job_type(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.job_type(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
             <div>
               <label for="industry" class="block text-sm font-medium text-gray-900">{{ form.industry.label }}</label>
-              {{ form.industry(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.industry(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
           <div>
             <label for="address_country" class="block text-sm font-medium text-gray-900">{{ form.address_country.label }}</label>
-            {{ form.address_country(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+            {{ form.address_country(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
           </div>
             <div>
               <label for="address_province" class="block text-sm font-medium text-gray-900">{{ form.address_province.label }}</label>
-              {{ form.address_province(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.address_province(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
             <div>
               <label for="address_city" class="block text-sm font-medium text-gray-900">{{ form.address_city.label }}</label>
-              {{ form.address_city(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+              {{ form.address_city(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
             </div>
             <div>
             <label for="address_postal_code" class="block text-sm font-medium text-gray-900">{{ form.address_postal_code.label }}</label>
-            {{ form.address_postal_code(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700") }}
+            {{ form.address_postal_code(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600") }}
           </div>
           </div>
+
+          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
+            <div>
+              <label for="target_date" class="block text-sm font-medium text-gray-900">{{ form.target_date.label }}</label>
+            {{ form.target_date(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600", id="target_date") }}
+            </div>
+            <div>
+              <label for="opening_date" class="block text-sm font-medium text-gray-900">{{ form.opening_date.label }}</label>
+              {{ form.opening_date(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600", id="opening_date") }}
+          </div>
+          </div>
+
 
 <div class="mt-4">
   <div class="flex items-center justify-between">
   <label for="job_description" class="block text-sm font-medium text-gray-900 mb-2">{{ form.job_description.label }}</label>
-      <button type="button" id="generateAI" class="mt-0 flex bg-blue-600 text-white text-sm font-semibold px-3 py-1.5 justify-center rounded-md rounded-b-none shadow-sm hover:bg-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+      <button type="button" id="generateAI" class="mt-0 flex bg-slate-600 text-white text-sm font-semibold px-3 py-1.5 justify-center rounded-md rounded-b-none shadow-sm hover:bg-slate-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mr-2 size-5 text-yellow-500">
   <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z" clip-rule="evenodd" />
 </svg>
@@ -81,7 +103,7 @@
 
   <div class="relative">
     <div id="job_description"></div>
-    {{ form.job_description(class="hidden block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_description", rows="6") }}
+    {{ form.job_description(class="hidden block w-full rounded-md bg-white px-3 py-1.5 text-lg font-semibold text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_description", rows="6") }}
   </div>
 </div>
 
@@ -89,40 +111,20 @@
           <div class="mt-4">
             <label for="job_requirements" class="block text-sm font-medium text-gray-900 mb-2">{{ form.job_requirements.label }}</label>
             <div id="job_requirements"></div>
-            {{ form.job_requirements(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_requirements", rows="6") }}
+            {{ form.job_requirements(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600", id="hidden_job_requirements", rows="6") }}
           </div>
 
           <div class="mt-4">
             <label for="job_benefits" class="block text-sm font-medium text-gray-900 mb-2">{{ form.job_benefits.label }}</label>
             <div id="job_benefits"></div>
-            {{ form.job_benefits(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="hidden_job_benefits", rows="6") }}
+            {{ form.job_benefits(class="hidden mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600", id="hidden_job_benefits", rows="6") }}
           </div>
         </div>
-
-        <!-- Third Column: Publish Options -->
-        <aside class="col-span-1 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
-
-          <div class="mb-6">
-            {{form.publish(class="w-full rounded-md bg-blue-700 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900")}}
-          </div>
-
-          <div class="mb-6">
-            {{ form.save_draft(class="w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-300 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900") }}
-          </div>
-
-          <div class="mb-4">
-            <label for="target_date" class="block text-sm font-medium text-gray-900">{{ form.target_date.label }}</label>
-            {{ form.target_date(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="target_date") }}
-          </div>
-
-          <div class="mb-4">
-            <label for="opening_date" class="block text-sm font-medium text-gray-900">{{ form.opening_date.label }}</label>
-            {{ form.opening_date(class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700", id="opening_date") }}
-          </div>
-        </aside>
       </form>
     </div>
-
+  </div>
+  </div>
+  </div>
 <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 <script>

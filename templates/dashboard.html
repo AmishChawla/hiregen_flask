@@ -22,90 +22,90 @@
 </div>
 {% endif %}
 
-<div class="py-6">
-  <div class="max-w-full px-4 sm:px-6 lg:px-8">
-    <h1 class="text-lg font-semibold text-gray-900 dark:text-white">Dashboard</h1>
-
+<div class="py-6 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-6">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
   <!-- Metric Cards -->
-   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-5">
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
-                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-purple-600 bg-purple-100 rounded-full mr-6">
+   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
+                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase h-6 w-6" viewBox="0 0 16 16">
   <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5"/>
 </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">{{ total_jobs }}</span>
-                        <span class="block text-gray-500">Jobs</span>
+                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ total_jobs }}</span>
+                        <span class="block text-sm text-gray-500 dark:text-gray-400">Jobs</span>
                     </div>
                 </div>
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
-                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-green-600 bg-green-100 rounded-full mr-6">
+                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
   <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
   <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">{{ in_progress_jobs }}</span>
-                        <span class="block text-gray-500">Active Jobs</span>
+                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ in_progress_jobs }}</span>
+                        <span class="block text-sm text-gray-500 dark:text-gray-400">Active Jobs</span>
                     </div>
                 </div>
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
-                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-red-600 bg-red-100 rounded-full mr-6">
+                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
                        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
                     </div>
                     <div>
-                        <span class="inline-block text-2xl font-bold">{{ applicants_count }}</span>
-                        <span class="block text-gray-500">Applicants</span>
+                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ applicants_count }}</span>
+                        <span class="block text-sm text-gray-500 dark:text-gray-400">Applicants</span>
                     </div>
                 </div>
-                <div class="flex items-center p-8 bg-white shadow-md rounded-lg">
-                    <div class="inline-flex flex-shrink-0 items-center justify-center h-16 w-16 text-blue-600 bg-blue-100 rounded-full mr-6">
+                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye h-6 w-6" viewBox="0 0 16 16">
   <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
 </svg>
                     </div>
                     <div>
-                        <span class="block text-2xl font-bold">{{ total_views or 0 }}</span>
-                        <span class="block text-gray-500">Total Views</span>
+                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ total_views or 0 }}</span>
+                        <span class="block text-sm text-gray-500 dark:text-gray-400">Total Views</span>
                     </div>
                 </div>
 </section>
 
     <!-- Charts Section -->
     <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <div class="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 relative h-64">
-        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Job Status</h3>
+      <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 h-64">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Job Status</h3>
         <canvas id="jobsChart" class="mt-6"></canvas>
       </div>
-      <div class="bg-white dark:bg-gray-800 shadow-md sm:rounded-lg p-6 relative h-64">
-        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white">Hiring Pipeline</h3>
+      <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 h-64">
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Hiring Pipeline</h3>
         <canvas id="applicantsChart" class="mt-6"></canvas>
       </div>
     </div>
 
     <!-- Latest Jobs Table -->
-    <div class="mt-6 bg-white dark:bg-gray-800 shadow-md sm:rounded-lg">
-      <div class="px-4 py-5 sm:px-6">
-        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Latest Jobs</h3>
-      </div>
-      <div class="px-4 py-4 sm:px-6 lg:px-8">
+    <div class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+      
+        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Latest Jobs</h3>
+      
+      <div class="py-4">
         <div class="overflow-hidden rounded-lg">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <table class="min-w-full border-separate border-spacing-0">
             <thead class="bg-gray-50 dark:bg-gray-900">
               <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Position</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Salary</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Job Status</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Visibility</th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Views</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Created Date</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Updated Date</th>
-                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Applicants</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Salary</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
+                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Applicants</th>
               </tr>
             </thead>
             <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
@@ -133,6 +133,7 @@
       </div>
     </div>
   </div>
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>

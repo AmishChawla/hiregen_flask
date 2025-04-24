@@ -7,63 +7,59 @@
 {% block title %}Email Config{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100 py-8">
-    <div class="container max-w-2xl px-4 sm:px-6 lg:px-8">
-        <div class="bg-white shadow-md rounded px-8 py-6">
+<div class="">
+    <div class="min-h-screen py-6">
+      <div class="container max-w-3xl px-4 sm:px-6 lg:px-10">
+        <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Email Setup</h1>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
 
-             <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Email Setup</h1>
-                    <p class="mt-1 text-sm text-gray-700">Configure your SMTP email settings below.</p>
-                </div>
-            </div>
-
-    <div class="mt-8">
+    <div class="">
         <form method="post" action="{{ url_for('admin_email_setup') }}">
             {{ form.hidden_tag() }}
             <div class="space-y-6">
                 <div>
                     <label for="smtp_server" class="block text-sm/6 font-medium text-gray-900">SMTP Server</label>
                     <div class="mt-2">
-                        {{ form.smtp_server(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Server", required=True) }}
+                        {{ form.smtp_server(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Server", required=True) }}
                     </div>
                 </div>
 
                 <div>
                     <label for="smtp_port" class="block text-sm/6 font-medium text-gray-900">SMTP Port</label>
                     <div class="mt-2">
-                        {{ form.smtp_port(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Port", required=True) }}
+                        {{ form.smtp_port(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Port", required=True) }}
                     </div>
                 </div>
 
                 <div>
                     <label for="smtp_username" class="block text-sm/6 font-medium text-gray-900">SMTP Username</label>
                     <div class="mt-2">
-                        {{ form.smtp_username(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Username", required=True) }}
+                        {{ form.smtp_username(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Username", required=True) }}
                     </div>
                 </div>
 
                 <div>
                     <label for="smtp_password" class="block text-sm/6 font-medium text-gray-900">SMTP Password</label>
                     <div class="mt-2">
-                        {{ form.smtp_password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Password", required=True) }}
+                        {{ form.smtp_password(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter SMTP Password", required=True) }}
                     </div>
                 </div>
 
                 <div>
                     <label for="sender_email" class="block text-sm/6 font-medium text-gray-900">Sender Email</label>
                     <div class="mt-2">
-                        {{ form.sender_email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter Sender Email", required=True) }}
+                        {{ form.sender_email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 sm:text-sm/6", placeholder="Enter Sender Email", required=True) }}
                     </div>
                 </div>
             </div>
 
             <div class="mt-8">
-                {{ form.submit(class="inline-flex items-center rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus:outline focus:outline-2 focus:outline-blue-600 focus:outline-offset-2") }}
+                {{ form.submit(class="rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600") }}
             </div>
         </form>
     </div>
 </div>
         </div>
+    </div>
     </div>
 {% endblock %}
