@@ -4597,8 +4597,8 @@ def jobseeker_create_profile():
 
 
 @app.route('/jobseeker/jobseeker-update-profile', methods=['GET', 'POST'])
-# @requires_any_permission("applicants")
-# @login_required
+@requires_any_permission("applicants")
+@login_required
 def jobseeker_update_profile():
     about_form = forms.AboutForm()
     education_form = forms.EducationForm()
@@ -4634,8 +4634,8 @@ def jobseeker_update_profile():
 
 
 @app.route('/jobseeker/submit-profile', methods=['GET', 'POST'])
-# @requires_any_permission("applicants")
-# @login_required
+@requires_any_permission("applicants")
+@login_required
 def submit_jobseeker_profile():
     # Retrieve the JSON payload from the request
     if request.method == 'POST':
@@ -4650,8 +4650,8 @@ def submit_jobseeker_profile():
         return jsonify({"success": True, "message": "Profile submitted successfully!"}), 200
 
 @app.route('/jobseeker-profile-choice', methods=['GET', 'POST'])
-# @requires_any_permission("applicants")
-# @login_required
+@requires_any_permission("applicants")
+@login_required
 def jobseeker_profile_choice():
     if request.method == 'POST':
         pdf_file = request.files.get('pdf_file')

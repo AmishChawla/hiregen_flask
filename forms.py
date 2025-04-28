@@ -119,7 +119,13 @@ class CompanyRegisterForm(FlaskForm):
         FileRequired(message="Logo file is required")
     ])
     name = StringField('Name', validators=[DataRequired()])
-    company_subdomain = StringField('Subdomain', validators=[DataRequired()])
+    company_subdomain = StringField('Subdomain', validators=[
+        DataRequired(),        
+        validators.Regexp(
+            regex="^[a-z]+$",
+            message="Subdomain can only contain lowercase letters (a-z) with no spaces, numbers, or special characters."
+        )
+    ])
     website_url = StringField('Website URL', validators=[DataRequired()])
     location = StringField('Location',  validators=[DataRequired(message='This field is required.')])
     description = TextAreaField('Descripton')
@@ -132,7 +138,7 @@ class CompanyRegisterForm(FlaskForm):
     def validate_website_url(self, field):
         if not field.data:
             raise ValidationError("Website URL cannot be empty")
-
+        
 
 class AdminAddUserForm(FlaskForm):
     username = StringField('Username', validators=[validators.Length(min=4, max=25), validators.DataRequired()])

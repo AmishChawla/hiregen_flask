@@ -37,7 +37,7 @@
             {% endif %}
 
             <!-- Company Name -->
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ company.name }}</h2>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100">{{ company.name }}</h2>
 
             <!-- Location -->
             <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center space-x-2">
@@ -69,7 +69,7 @@
             <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Openings</h3>
             <div class="overflow-x-auto">
                 {% if job_posts and job_posts|length > 0 %}
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <table class="min-w-full border-separate border-spacing-0">
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300">Position</th>

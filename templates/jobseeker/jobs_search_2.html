@@ -10,74 +10,74 @@
 
 
 {% block content %}
-
-<div class="flex gap-12">
+<div class="">
+    <div class="min-h-screen py-6">
+      <div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
     <!--Left Sidebar -->
-    <div class="w-[25%]">
-        <div class="bg-white shadow-lg rounded-lg border w-full">
-        <div class="container p-6">
+        <div class="rounded-2xl border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-5 mb-5">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Quick job search</h2>
             <form method="GET" action="{{ url_for('jobs_search') }}">
-                <div class="gap-4">
-                    <div>
-                        <label class="block text-gray-700 font-medium" for="keyword">Search</label>
-                        <input type="text" id="keyword" name="keyword" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
-                    </div>
-                    <div>
-                        <label class="mt-4 block text-gray-700 font-medium" for="country">Country</label>
-                        <select id="country" name="country" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
-                            <option value="">Select Country</option>
-                            {% for country in countries %}
-                                <option value="{{ country }}" {% if country == prefilled_data.country %}selected{% endif %}>{{ country }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label class="mt-4 block text-gray-700 font-medium" for="state">State</label>
-                        <input type="text" id="state" name="state" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
-                    </div>
-                    <div>
-                        <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label>
-                        <select id="job_type" name="job_type" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
-                            <option value="">Select Job Type</option>
-                            {% for value, label in job_types %}
-                                <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label class="mt-4 block text-gray-700 font-medium" for="industry">Industry</label>
-                        <select id="industry" name="industry" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
-                            <option value="">Select Industry</option>
-                            {% for value, label in industries %}
-                                <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div>
-                        <label class="mt-4 block text-gray-700 font-medium" for="posted_on">Posted On</label>
-                        <select id="posted_on" name="date_filter" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-blue-700">
-                            <option value="">Select Date Range</option>
-                            <option value="last_24_hours" {% if prefilled_data.date_filter =='last_24_hours' %}selected{% endif %}>Last 24 hours</option>
-                            <option value="last_week" {% if prefilled_data.date_filter =='last_week' %}selected{% endif %}>Last Week</option>
-                            <option value="last_month" {% if prefilled_data.date_filter =='last_month' %}selected{% endif %}>Last Month</option>
-                        </select>
-                    </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
+                <div>
+                    <!-- <label class="block text-gray-700 font-medium" for="keyword">Search</label> -->
+                    <input type="text" id="keyword" name="keyword" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
                 </div>
-                <div class="mt-4">
-                    <button type="submit" class="w-full bg-blue-700 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-600">Search Jobs</button>
+                <div>
+                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="country">Country</label> -->
+                    <select id="country" name="country" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
+                        <option value="">Select Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country }}" {% if country == prefilled_data.country %}selected{% endif %}>{{ country }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-            </form>
+                <div>
+                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="state">State</label> -->
+                    <input type="text" id="state" name="state" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+                <div>
+                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label> -->
+                    <select id="job_type" name="job_type" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
+                        <option value="">Select Job Type</option>
+                        {% for value, label in job_types %}
+                            <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="industry">Industry</label> -->
+                    <select id="industry" name="industry" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
+                        <option value="">Select Industry</option>
+                        {% for value, label in industries %}
+                            <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="posted_on">Posted On</label> -->
+                    <select id="posted_on" name="date_filter" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
+                        <option value="">Select Date Range</option>
+                        <option value="last_24_hours" {% if prefilled_data.date_filter =='last_24_hours' %}selected{% endif %}>Last 24 hours</option>
+                        <option value="last_week" {% if prefilled_data.date_filter =='last_week' %}selected{% endif %}>Last Week</option>
+                        <option value="last_month" {% if prefilled_data.date_filter =='last_month' %}selected{% endif %}>Last Month</option>
+                    </select>
+                </div>
+            
+            <div>
+                <button type="submit" class="w-full rounded-md bg-slate-600 px-3.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Search Jobs</button>
+            </div>
         </div>
-    </div>
-    </div>
-    <!--Left Sidebar -->
-
-    <!--Right Sidebar -->
-    <div class="w-[75%]">
-            <div class="container">
+            </div>
+        </form>
+    <div>
+    <div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-base text-gray-600 dark:text-white mb-4">1053 jobs found</h1>
         {% for job in jobs %}
 <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.job_slug) }}"
-   class="block mb-3 bg-white shadow rounded-lg border p-4 hover:shadow-lg transition">
+   class="block rounded-2xl border mb-3 border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-4 hover:shadow-lg transition">
 
     <div class="flex justify-between items-center">
         <!-- Left Side: Logo + Job Title + Salary/Type/Industry -->
@@ -99,12 +99,13 @@
             <span class="text-gray-500">{{ job.opening_date.split('T')[0] }}</span>
         </div>
     </div>
-
 </a>
-
-        {% endfor %}
+    {% endfor %}
     </div>
     </div>
     <!--Right Sidebar -->
+</div>
+</div>
+</div>
 </div>
 {% endblock %}

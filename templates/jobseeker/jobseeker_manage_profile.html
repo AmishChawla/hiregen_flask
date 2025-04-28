@@ -1,178 +1,180 @@
 {% extends 'jobseeker/jobseeker_base.html' %}
 
 {% block content %}
-<section class="content">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Profile Section -->
-    <div class="text-center">
-      <div class="relative inline-block">
-        {% if profile_info.profile_picture %}
-        <img class="w-32 h-32 rounded-full mx-auto" src="{{ profile_info.profile_picture }}" alt="User profile picture">
-        {% else %}
-        <img class="w-32 h-32 rounded-full mx-auto" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
-        {% endif %}
-        <button type="button" onclick="openModal('changePictureModal')" class="absolute top-0 right-0 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+
+  <div class="min-h-screen py-6">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Profile</h1>
+        </div>
+        <div>
+          <a href="{{url_for('jobseeker_update_profile')}}" class="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+            <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158 3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814 8.11172 14.2693 8.42013 13.9609L15.7541 6.62695C16.6327 5.74827 16.6327 4.32365 15.7541 3.44497L15.0911 2.78206ZM12.9698 3.84272C13.2627 3.54982 13.7376 3.54982 14.0305 3.84272L14.6934 4.50563C14.9863 4.79852 14.9863 5.2734 14.6934 5.56629L14.044 6.21573L12.3204 4.49215L12.9698 3.84272ZM11.2597 5.55281L5.6359 11.1766C5.53309 11.2794 5.46238 11.4099 5.43238 11.5522L5.01758 13.5185L6.98394 13.1037C7.1262 13.0737 7.25666 13.003 7.35947 12.9002L12.9833 7.27639L11.2597 5.55281Z" fill=""></path>
+            </svg>
+            Resume builder
+          </a>
+        </div>
+    </div>
+
+  <div class="max-w-5xl mx-auto my-10 p-6 grid grid-cols-1 md:grid-cols-3 gap-8 bg-white rounded-2xl shadow border">
+    <!-- Left Side -->
+    <div class="bg-slate-100 p-6 rounded-lg flex flex-col">
+      <div class="text-center">
+        <div class="overflow-hidden">
+          <div class="relative inline-block">
+      {% if profile_info.profile_picture %}
+      <img class="rounded-full w-32 h-32 mx-auto object-cover mb-2 border-4" src="{{ profile_info.profile_picture }}" alt="User profile picture">
+      {% else %}
+      <img class="rounded-full w-32 h-32 mx-auto object-cover mb-2 border-4" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
+      {% endif %}
+      <button type="button" onclick="openModal('changePictureModal')" class="absolute top-0 right-0 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
 </svg>
-
-        </button>
-      </div>
-    </div>
-
-    <section class="content">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Profile Section -->
-    <div class="overflow-hidden bg-white shadow sm:rounded-lg">
-      <div class="px-4 py-6 sm:px-6">
-        <h3 class="text-base/7 font-semibold text-gray-900">Profile Information</h3>
-        <p class="mt-1 max-w-2xl text-sm/6 text-gray-500">Personal details and contact information.</p>
-      </div>
-      <div class="border-t border-gray-100">
-        <dl class="divide-y divide-gray-100">
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-900">Full Name</dt>
-            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-              <span class="grow">{{ profile_info.name }}</span>
-        <span class="ml-4 shrink-0">
-          <button onclick="openModal('updateNameModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
+</button>
+</div>
+</div>
+      
+<div class="">
+  <div class="relative inline-block">
+      <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+        <h1 class="text-2xl font-bold leading-tight">{{ profile_info.name }}</h1> <span class="shrink-0">
+          
         </span>
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-900">Email Address</dt>
-            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-        <span class="grow">{{ profile_info.email }}</span>
-        <span class="ml-4 shrink-0">
-          <button onclick="openModal('updateEmailModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
-        </span>
-            </dd>
-          </div>
-          <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-900">Phone Number</dt>
-            <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-                      <span class="grow">{{ profile_info.phone_number }}</span>
-        <span class="ml-4 shrink-0">
-          <button onclick="openModal('updatePhoneModal')" type="button" class="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500">Update</button>
-        </span>
-
-            </dd>
-          </div>
-        </dl>
-          <div class="px-4 py-6 sm:px-6 text-right">
-    <a href="{{url_for('jobseeker_update_profile')}}" class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-      Update Profile
-    </a>
-  </div>
-
-      </div>
+      </p>
+      <button type="button" onclick="openModal('updateNameModal')" class="absolute -top-4 -right-4 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+        </svg>
+</button>
     </div>
   </div>
-</section>
+      <!-- <p class="text-md text-gray-600 mb-3">Graphics Designer</p> -->
+    </div>
+    <div class="flex justify-center  gap-1 grow mb-3">
+      <button class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-xs font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+        <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.6666 11.2503H13.7499L14.5833 7.91699H11.6666V6.25033C11.6666 5.39251 11.6666 4.58366 13.3333 4.58366H14.5833V1.78374C14.3118 1.7477 13.2858 1.66699 12.2023 1.66699C9.94025 1.66699 8.33325 3.04771 8.33325 5.58342V7.91699H5.83325V11.2503H8.33325V18.3337H11.6666V11.2503Z" fill=""></path>
+        </svg>
+      </button>
 
+      <button class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+        <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.1708 1.875H17.9274L11.9049 8.75833L18.9899 18.125H13.4424L9.09742 12.4442L4.12578 18.125H1.36745L7.80912 10.7625L1.01245 1.875H6.70078L10.6283 7.0675L15.1708 1.875ZM14.2033 16.475H15.7308L5.87078 3.43833H4.23162L14.2033 16.475Z" fill=""></path>
+        </svg>
+      </button>
 
-    <!-- Sidebar & Main Content -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
-      <!-- Sidebar Navigation -->
-      <div class="overflow-hidden rounded-md bg-white shadow">
-        <ul role="list" class="divide-y divide-gray-200">
-          <li class="px-6 py-4"><a href="#profileSummary" class="text-gray-800 hover:text-blue-600">Profile Summary</a></li>
-          <li class="px-6 py-4"><a href="#education" class="text-gray-800 hover:text-blue-600">Education</a></li>
-          <li class="px-6 py-4"><a href="#experience" class="text-gray-800 hover:text-blue-600">Experience</a></li>
-          <li class="px-6 py-4"><a href="#internships" class="text-gray-800 hover:text-blue-600">Internships</a></li>
-          <li class="px-6 py-4"><a href="#projects" class="text-gray-800 hover:text-blue-600">Projects</a></li>
-          <li class="px-6 py-4"><a href="#accomplishments" class="text-gray-800 hover:text-blue-600">Accomplishments</a></li>
+      <button class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+        <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.78381 4.16645C5.78351 4.84504 5.37181 5.45569 4.74286 5.71045C4.11391 5.96521 3.39331 5.81321 2.92083 5.32613C2.44836 4.83904 2.31837 4.11413 2.59216 3.49323C2.86596 2.87233 3.48886 2.47942 4.16715 2.49978C5.06804 2.52682 5.78422 3.26515 5.78381 4.16645ZM5.83381 7.06645H2.50048V17.4998H5.83381V7.06645ZM11.1005 7.06645H7.78381V17.4998H11.0672V12.0248C11.0672 8.97475 15.0422 8.69142 15.0422 12.0248V17.4998H18.3338V10.8914C18.3338 5.74978 12.4505 5.94145 11.0672 8.46642L11.1005 7.06645Z" fill=""></path>
+        </svg>
+      </button>
+
+      <button class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
+        <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.8567 1.66699C11.7946 1.66854 12.2698 1.67351 12.6805 1.68573L12.8422 1.69102C13.0291 1.69766 13.2134 1.70599 13.4357 1.71641C14.3224 1.75738 14.9273 1.89766 15.4586 2.10391C16.0078 2.31572 16.4717 2.60183 16.9349 3.06503C17.3974 3.52822 17.6836 3.99349 17.8961 4.54141C18.1016 5.07197 18.2419 5.67753 18.2836 6.56433C18.2935 6.78655 18.3015 6.97088 18.3081 7.15775L18.3133 7.31949C18.3255 7.73011 18.3311 8.20543 18.3328 9.1433L18.3335 9.76463C18.3336 9.84055 18.3336 9.91888 18.3336 9.99972L18.3335 10.2348L18.333 10.8562C18.3314 11.794 18.3265 12.2694 18.3142 12.68L18.3089 12.8417C18.3023 13.0286 18.294 13.213 18.2836 13.4351C18.2426 14.322 18.1016 14.9268 17.8961 15.458C17.6842 16.0074 17.3974 16.4713 16.9349 16.9345C16.4717 17.397 16.0057 17.6831 15.4586 17.8955C14.9273 18.1011 14.3224 18.2414 13.4357 18.2831C13.2134 18.293 13.0291 18.3011 12.8422 18.3076L12.6805 18.3128C12.2698 18.3251 11.7946 18.3306 10.8567 18.3324L10.2353 18.333C10.1594 18.333 10.0811 18.333 10.0002 18.333H9.76516L9.14375 18.3325C8.20591 18.331 7.7306 18.326 7.31997 18.3137L7.15824 18.3085C6.97136 18.3018 6.78703 18.2935 6.56481 18.2831C5.67801 18.2421 5.07384 18.1011 4.5419 17.8955C3.99328 17.6838 3.5287 17.397 3.06551 16.9345C2.60231 16.4713 2.3169 16.0053 2.1044 15.458C1.89815 14.9268 1.75856 14.322 1.7169 13.4351C1.707 13.213 1.69892 13.0286 1.69238 12.8417L1.68714 12.68C1.67495 12.2694 1.66939 11.794 1.66759 10.8562L1.66748 9.1433C1.66903 8.20543 1.67399 7.73011 1.68621 7.31949L1.69151 7.15775C1.69815 6.97088 1.70648 6.78655 1.7169 6.56433C1.75786 5.67683 1.89815 5.07266 2.1044 4.54141C2.3162 3.9928 2.60231 3.52822 3.06551 3.06503C3.5287 2.60183 3.99398 2.31641 4.5419 2.10391C5.07315 1.89766 5.67731 1.75808 6.56481 1.71641C6.78703 1.70652 6.97136 1.69844 7.15824 1.6919L7.31997 1.68666C7.7306 1.67446 8.20591 1.6689 9.14375 1.6671L10.8567 1.66699ZM10.0002 5.83308C7.69781 5.83308 5.83356 7.69935 5.83356 9.99972C5.83356 12.3021 7.69984 14.1664 10.0002 14.1664C12.3027 14.1664 14.1669 12.3001 14.1669 9.99972C14.1669 7.69732 12.3006 5.83308 10.0002 5.83308ZM10.0002 7.49974C11.381 7.49974 12.5002 8.61863 12.5002 9.99972C12.5002 11.3805 11.3813 12.4997 10.0002 12.4997C8.6195 12.4997 7.50023 11.3809 7.50023 9.99972C7.50023 8.61897 8.61908 7.49974 10.0002 7.49974ZM14.3752 4.58308C13.8008 4.58308 13.3336 5.04967 13.3336 5.62403C13.3336 6.19841 13.8002 6.66572 14.3752 6.66572C14.9496 6.66572 15.4169 6.19913 15.4169 5.62403C15.4169 5.04967 14.9488 4.58236 14.3752 4.58308Z" fill=""></path>
+        </svg>
+      </button>
+    </div>
+    <hr />
+
+      <div class="mt-6 w-full">
+        <h3 class="text-lg font-semibold mb-2">Contact</h3>
+          <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+            📞 {{ profile_info.phone_number }}<span class="ml-4 shrink-0">
+              <button onclick="openModal('updatePhoneModal')" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</button>
+            </span>
+        </p>
+        <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+          ✉️ {{ profile_info.email }} <span class="ml-4 shrink-0">
+            <button onclick="openModal('updateEmailModal')" type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</button>
+          </span>
+        </p>
+
+        <p class="text-sm">📍 123 Anywhere Street, Any City</p>
+      </div>
+
+      <div class="mt-6 w-full">
+        <h3 class="text-lg font-semibold mb-2">Skills</h3>
+        <ul class="text-sm list-disc list-inside">
+          {% for skill in profile_info.skills %}
+            <li>{{ skill }}</li>
+          {% else %}
+            <li>No skills added yet.</li>
+          {% endfor %}
         </ul>
       </div>
 
-      <!-- Main Content -->
-      <div class="col-span-3 space-y-6">
-        <!-- Profile Summary -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="profileSummary">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">About</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            <p class="text-sm">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
-          </div>
-        </div>
-
-        <!-- Education -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="education">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">Education</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            {% for education in profile_info.education %}
-            <p class="text-sm">{{ education.degree }} in {{ education.field_of_study }} from {{ education.institution_name }}</p>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Experience -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="experience">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">Experience</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            {% for experience in profile_info.experiences %}
-            <p><span class="font-semibold">{{ experience.position }} </span> <em class="font-light text-sm">at</em> <span class="font-semibold">{{ experience.company_name }}</span></p>
-            <p class="text-sm">({{ experience.start_date }} - {{ experience.end_date or 'Present' }})</p>
-            <p class="text-xs">{{ experience.responsibilities }}</p>
-            {% endfor %}
-          </div>
-        </div>
-
-                <!-- Internships -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="internships">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">Internships</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            {% for internship in profile_info.internships %}
-            <p><span class="font-semibold">{{ internship.position }} </span> <em class="font-light text-sm"> at </em> <span class="font-semibold"> {{ internship.company_name }} </span> </p>
-            <p class="text-sm">({{ internship.start_date }} - {{ internship.end_date or 'Present' }})</p>
-            <p class="text-xs">{{ internship.job_description }}</p>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Projects -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="projects">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">Projects</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            {% for project in profile_info.projects %}
-            <p class="font-semibold">{{ project.title }}</p>
-            <p class="text-xs">{{ project.description }}</p>
-            <p><a href="{{ project.project_url }}" class="text-blue-600 hover:underline">{{ project.project_url }}</a></p>
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Accomplishments -->
-        <div class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow" id="accomplishments">
-          <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-            <h3 class="text-base font-semibold text-gray-900">Accomplishments</h3>
-          </div>
-          <div class="px-4 py-5 sm:p-6">
-            {% for accomplishment in profile_info.accomplishments %}
-            <p class="font-semibold">{{ accomplishment.title }} - {{ accomplishment.achievement_date }}</p>
-            <p class="text-xs">{{ accomplishment.description }}</p>
-            {% endfor %}
-          </div>
-        </div>
-
-
-
-
-        <!-- Other Sections: Internships, Projects, Accomplishments -->
-        <!-- Repeat similar structure as above for each section -->
+      <div class="mt-6 w-full">
+        <h3 class="text-lg font-semibold mb-2">Language</h3>
+        <p class="text-sm">English</p>
+        <p class="text-sm">French</p>
       </div>
     </div>
+
+    <!-- Right Side -->
+    <div class="md:col-span-2">
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">About Me</h2>
+        <div class="mb-4">
+          <p class="text-sm">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
+        </div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Education</h2>
+        <div class="mb-4">
+          {% for education in profile_info.education %}
+          <p class="text-sm">{{ education.degree }} in {{ education.field_of_study }} from {{ education.institution_name }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Experience</h2>
+        <div class="mb-4">
+          {% for experience in profile_info.experiences %}
+          <p><span class="font-semibold">{{ experience.position }} </span> <em class="font-light text-sm">at</em> <span class="font-semibold">{{ experience.company_name }}</span></p>
+          <p class="text-sm">({{ experience.start_date }} - {{ experience.end_date or 'Present' }})</p>
+          <p class="text-xs">{{ experience.responsibilities }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Internships</h2>
+        <div class="mb-4">
+          {% for internship in profile_info.internships %}
+          <p><span class="font-semibold">{{ internship.position }} </span> <em class="font-light text-sm"> at </em> <span class="font-semibold"> {{ internship.company_name }} </span> </p>
+          <p class="text-sm">({{ internship.start_date }} - {{ internship.end_date or 'Present' }})</p>
+          <p class="text-xs">{{ internship.job_description }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Projects</h2>
+        <div class="mb-4">
+          {% for project in profile_info.projects %}
+          <p class="font-semibold">{{ project.title }}</p>
+          <p class="text-xs">{{ project.description }}</p>
+          <p><a href="{{ project.project_url }}" class="text-blue-600 hover:underline">{{ project.project_url }}</a></p>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Accomplishments</h2>
+        <div class="mb-4">
+          {% for accomplishment in profile_info.accomplishments %}
+          <p class="font-semibold">{{ accomplishment.title }} - {{ accomplishment.achievement_date }}</p>
+          <p class="text-xs">{{ accomplishment.description }}</p>
+          {% endfor %}
+        </div>
+      </div>
+
+
+    </div>
   </div>
-</section>
+
 
 <div id="updateNameModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
@@ -190,7 +192,7 @@
           {{name_form.lastname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
-          {{ name_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          {{ name_form.submit(class="bg-slate-600 text-white px-3 py-2 rounded-md hover:bg-slate-500") }}
           <button type="button" onclick="closeModal('updateNameModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
         </div>
       </form>
@@ -210,7 +212,7 @@
         {{email_form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
-          {{ email_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          {{ email_form.submit(class="bg-slate-600 text-white px-3 py-2 rounded-md hover:bg-slate-500") }}
           <button type="button" onclick="closeModal('updateEmailModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
         </div>
       </form>
@@ -230,7 +232,7 @@
           {{ phone_form.phone_number(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
-          {{ phone_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          {{ phone_form.submit(class="bg-slate-600 text-white px-3 py-2 rounded-md hover:bg-slate-500") }}
           <button type="button" onclick="closeModal('updatePhoneModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
         </div>
       </form>
@@ -270,13 +272,15 @@
 
         <!-- Submit & Cancel Buttons -->
         <div class="mt-5 sm:mt-6 text-right">
-          {{ profile_picture_form.submit(class="bg-indigo-600 text-white px-3 py-2 rounded-md hover:bg-indigo-500") }}
+          {{ profile_picture_form.submit(class="bg-slate-600 text-white px-3 py-2 rounded-md hover:bg-slate-500") }}
           <button type="button" onclick="closeModal('changePictureModal')" class="bg-gray-300 px-3 py-2 rounded-md hover:bg-gray-400">Cancel</button>
         </div>
       </form>
 
     </div>
   </div>
+</div>
+</div>
 </div>
 
 <script>

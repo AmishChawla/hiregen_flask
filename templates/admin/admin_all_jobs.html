@@ -2,18 +2,11 @@
 
 {% block title %}Jobs{% endblock %}
 {% block content %}
-<div class="min-h-screen bg-gray-100 py-0">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-0">
-        <div class="bg-white shadow-md rounded px-8 py-6">
-
-
-          <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-800">Jobs</h1>
-                    <p class="mt-1 text-sm text-gray-700">Manage all job listings, including published and draft jobs.</p>
-                </div>
-            </div>
-
+<div class="">
+  <div class="min-h-screen py-6">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Jobs</h1>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
   <div class="mt-8">
     <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
@@ -26,39 +19,40 @@
       </nav>
     </div>
     <div class="mt-4" id="published-posts">
-      <div class="inline-block min-w-full align-middle">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-          <table id="draftTable" class="min-w-full divide-y divide-gray-300 overflow-x-auto">
+      
+        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
+          <div class="inline-block min-w-full align-middle">
+            <table id="draftTable" class="min-w-full border-separate border-spacing-0">
               <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Position</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Salary</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Job Status</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Visibility</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Views</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Updated Date</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Applicants</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Position</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Salary</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Job Status</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Visibility</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Views</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Created Date</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Updated Date</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Applicants</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
           {% for data in result %}
           {% if data.JobOpening.status == 'published' %}
-          <tr class="hover:bg-gray-100">
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+          <tr class="hover:bg-gray-50">
+            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
               <a href="{{ url_for('get_post_by_company_subdomain_and_slug',company_subdomain=data.JobOpening.company_subdomain,job_date=data.JobOpening.created_at.split('T')[0],job_slug=data.JobOpening.slug) }}" class="text-blue-700 hover:text-blue-900 truncate max-w-[40px]" title="{{ data.JobOpening.job_title }}">{{ data.JobOpening.job_title }}</a>
             </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.salary }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.job_opening_status }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.status }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">{{ data.JobOpening.job_opening_views }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.created_at.split('T')[0] }} </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.updated_at.split('T')[0] }} </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.created_at.split('T')[0] }} </td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.updated_at.split('T')[0] }} </td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">
               <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
             </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
               <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
                 Delete
               </button>
@@ -171,39 +165,39 @@
   </div>
 </div>
 <div class="mt-4 hidden" id="draft-posts">
-  <div class="inline-block min-w-full align-middle">
-    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-      <table id="draftTable2" class="min-w-full divide-y divide-gray-300 overflow-x-auto">
+  <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
+    <div class="inline-block min-w-full align-middle">
+      <table id="draftTable" class="min-w-full border-separate border-spacing-0">
           <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">Position</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Salary</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Job Status</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Visibility</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 text-center">Views</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Created Date</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Updated Date</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500 text-center">Applicants</th>
-            <th class="px-4 py-2 text-left text-sm font-medium text-gray-500">Action</th>
+            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Position</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Salary</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Job Status</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Visibility</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2 text-center">Views</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Created Date</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Updated Date</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2 text-center">Applicants</th>
+            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
           {% for data in result %}
           {% if data.JobOpening.status == 'draft' %}
-          <tr class="hover:bg-gray-100">
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+          <tr class="hover:bg-gray-50">
+            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
               <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-blue-700 hover:text-blue-900">{{ data.JobOpening.job_title }}</a>
             </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.salary }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.job_opening_status }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.status }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">{{ data.JobOpening.job_opening_views }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.created_at.split('T')[0] }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 text-center">
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.salary }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.job_opening_status }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.status }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">{{ data.JobOpening.job_opening_views }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.created_at.split('T')[0] }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">
               <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
             </td>
-            <td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
               <button onclick="openModal('#deleteModal_{{ data.JobOpening.id }}')" class="ml-2 text-red-600 hover:text-red-900">
                 Delete
               </button>
@@ -318,6 +312,7 @@
 </div>
     </div>
   </div>
+</div>
 </div>
 <script>
   function showTab(tabId) {

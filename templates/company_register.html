@@ -56,7 +56,7 @@
             <div class="mb-6">
                 <label for="company_subdomain" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Company Subdomain:</label>
                 <div class="mt-2">
-                    <div class="flex items-center rounded-md bg-white dark:bg-gray-700 px-3 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                    <div class="flex items-center rounded-md bg-white dark:bg-gray-700 px-3 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                         <input type="text" name="company_subdomain" id="company_subdomain" class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none sm:text-sm" placeholder="example" required>
                         <span class="shrink-0 select-none text-base text-gray-500 dark:text-gray-400 sm:text-sm">.hiregen.com</span>
                     </div>
@@ -68,7 +68,7 @@
                 <label for="website_url" class="block text-sm font-medium text-gray-900 dark:text-gray-100">Website URL:</label>
                 <div class="mt-2 flex">
                     <div class="flex shrink-0 items-center rounded-l-md bg-white dark:bg-gray-700 px-3 text-base text-gray-500 dark:text-gray-400 sm:text-sm">https://</div>
-                    {{ form.website_url(class="-ml-px block w-full grow rounded-r-md bg-white dark:bg-gray-700 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", placeholder="google.com", required=True) }}
+                    {{ form.website_url(class="-ml-px block w-full grow rounded-r-md bg-white dark:bg-gray-700 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", placeholder="google.com", required=True) }}
                 </div>
                 <small class="text-red-500">{{ form.website_url.errors[0] }}</small>
             </div>
@@ -90,7 +90,7 @@
             </div>
 
             <div class="flex justify-center mt-6">
-                {{ form.submit(class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500") }}
+                {{ form.submit(class="rounded-md bg-slate-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500") }}
             </div>
         </form>
     </div>

@@ -1,20 +1,21 @@
 {% extends 'jobseeker/jobseeker_base.html' %}
-
 {% block content %}
-<div class="max-w-7xl mx-auto py-10">
-  <h1 class="text-2xl font-semibold text-gray-900">Update Your Profile</h1>
 
+
+<div class="min-h-screen py-6">
+  <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+  <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Update your profile</h1>
   <!-- Progress Bar -->
   <nav aria-label="Progress">
     <ol
       role="list"
       id="progressBar"
-      class="divide-y divide-gray-300 rounded-md border border-gray-300 md:flex md:divide-y-0"
+      class="divide-y divide-gray-300 rounded-2xl bg-white border border-gray-300 md:flex md:divide-y-0"
     >
       <!-- Step 1: About -->
       <li class="relative md:flex md:flex-1 step" data-step="1">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -49,7 +50,7 @@
       <!-- Step 2: Education -->
       <li class="relative md:flex md:flex-1 step" data-step="2">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -83,7 +84,7 @@
       <!-- Step 3: Experience -->
       <li class="relative md:flex md:flex-1 step" data-step="3">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -117,7 +118,7 @@
       <!-- Step 4: Internships -->
       <li class="relative md:flex md:flex-1 step" data-step="4">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -151,7 +152,7 @@
       <!-- Step 5: Projects -->
       <li class="relative md:flex md:flex-1 step" data-step="5">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -185,7 +186,7 @@
       <!-- Step 6: Accomplishments -->
       <li class="relative md:flex md:flex-1 step" data-step="6">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-4 text-sm font-medium">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -197,221 +198,336 @@
           </span>
         </a>
       </li>
+            <!-- Step 7: Skills -->
+      <li class="relative md:flex md:flex-1 step" data-step="7">
+        <a href="#" class="group flex w-full items-center">
+          <span class="flex items-center px-6 py-2 text-sm font-medium">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
+              <span class="text-gray-500">7</span>
+            </span>
+            <span class="ml-4 text-sm font-medium text-gray-500 group-hover:text-gray-900">
+              Skills
+            </span>
+          </span>
+        </a>
+      </li>
     </ol>
   </nav>
 
-
+  <div class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
   <!-- Step Forms -->
-<form id="jobseeker-form" method="POST" action="{{url_for('jobseeker_update_profile')}}" novalidate class="space-y-12">
+<form id="jobseeker-form" method="POST" action="{{url_for('jobseeker_update_profile')}}" novalidate class="spacey-12">
   <!-- Step 1: About -->
   <div class="step-content" id="step-1">
-    <div class="border-b border-gray-900/10 pb-12">
-      <h2 class="text-base font-semibold text-gray-900">About</h2>
-      <p class="mt-1 text-sm text-gray-600">Write a brief introduction about yourself.</p>
+    <div class="border-b border-gray-900/10 pb-5">
+      <h2 class="text-xl font-semibold text-gray-900">About</h2>
+      <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
 
-      <div class="mt-10 mb-2">
+      <div class="mt-4">
         {{ about_form.hidden_tag() }}
-        <label for="about" class="block text-sm font-medium text-gray-900">About</label>
-        {{ about_form.about(class_="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600") }}
-        <p class="mt-3 text-sm text-gray-600">This information will be displayed publicly.</p>
+        <!-- <label for="about" class="block text-sm font-medium text-gray-900">About</label> -->
+        {{ about_form.about(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 h-24 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        <p class="mt-1 text-sm text-gray-400">This information will be displayed publicly.</p>
       </div>
     </div>
     <div class="mt-6 flex justify-end">
-      <button type="button" class="next bg-indigo-600 text-white px-4 py-2 rounded-md">Next</button>
+      <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
     </div>
   </div>
 
 <!-- Step 2: Education -->
 <div class="step-content hidden" id="step-2">
-  <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base font-semibold text-gray-900">Education</h2>
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Education</h2>
     <p class="mt-1 text-sm text-gray-600">List your educational background.</p>
 
-    <div id="education-container" class="mt-10">
-      <div class="entry-form card p-6 shadow border border-gray-200 rounded-md mb-4">
+    <div id="education-container" class="mt-4">
+      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         {{ education_form.hidden_tag() }}
 
-        <label for="institution_name" class="block m-2 text-sm font-medium text-gray-900">Institution Name</label>
-        {{ education_form.institution_name(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="institution_name" class="block mb-3 text-sm font-medium text-gray-900">Institution Name</label>
+        {{ education_form.institution_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
-        <label for="degree" class="block m-2 text-sm font-medium text-gray-900">Degree</label>
-        {{ education_form.degree(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="degree" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Degree</label>
+            {{ education_form.degree(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="field_of_study" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Field of Study</label>
+        {{ education_form.field_of_study(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
 
-        <label for="field_of_study" class="block m-2 text-sm font-medium text-gray-900">Field of Study</label>
-        {{ education_form.field_of_study(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
+        {{ education_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
+        {{ education_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
 
-        <label for="start_date" class="block m-2 text-sm font-medium text-gray-900">Start Date</label>
-        {{ education_form.start_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="end_date" class="block m-2 text-sm font-medium text-gray-900">End Date</label>
-        {{ education_form.end_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 ml-2 mt-2">
           {{ education_form.ongoing }}
-          <span class="text-sm text-gray-900">Currently studying here</span>
+          <span class="text-sm text-gray-600">Currently studying here</span>
         </label>
       </div>
     </div>
 
-    <button type="button" id="add-education" class="mt-4 text-indigo-600">Add More</button>
+    <div class="flex justify-end mt-4">
+    <button type="button" id="add-education" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+      <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
+      </svg>      
+      Add
+    </button>
+  </div>
+
+
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"">Previous</button>
-    <button type="button" class="next bg-indigo-600 text-white px-4 py-2 rounded-md">Next</button>
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
   </div>
 </div>
 
 <!-- Step 3: Experience -->
 <div class="step-content hidden" id="step-3">
-  <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base font-semibold text-gray-900">Experience</h2>
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Experience</h2>
     <p class="mt-1 text-sm text-gray-600">List your work experience.</p>
 
-    <div id="experience-container" class="mt-10">
-      <div class="entry-form card p-6 shadow border border-gray-200 rounded-md mb-4">
+    <div id="experience-container" class="mt-4">
+      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         {{ experience_form.hidden_tag() }}
 
-        <label for="company_name" class="block m-2 text-sm font-medium text-gray-900">Company Name</label>
-        {{ experience_form.company_name(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="company_name" class="block mb-3 text-sm font-medium text-gray-900">Company Name</label>
+            {{ experience_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="position" class="block mb-3 text-sm font-medium text-gray-900">Position</label>
+            {{ experience_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
+        
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
+            {{ experience_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
+            {{ experience_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
 
-        <label for="position" class="block m-2 text-sm font-medium text-gray-900">Position</label>
-        {{ experience_form.position(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="start_date" class="block m-2 text-sm font-medium text-gray-900">Start Date</label>
-        {{ experience_form.start_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="end_date" class="block m-2 text-sm font-medium text-gray-900">End Date</label>
-        {{ experience_form.end_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 ml-2 mt-2">
           {{ experience_form.ongoing }}
-          <span class="text-sm text-gray-900">Currently working here</span>
+          <span class="text-sm text-gray-600">Currently working here</span>
         </label>
 
-        <label for="responsibilities" class="block m-2 text-sm font-medium text-gray-900">Responsibilities</label>
-        {{ experience_form.responsibilities(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="responsibilities" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Responsibilities</label>
+        {{ experience_form.responsibilities(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
-    <button type="button" id="add-experience" class="mt-4 text-indigo-600">Add More</button>
+    <div class="flex justify-end mt-4">
+    <button type="button" id="add-experience" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+      <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
+      </svg>      
+      Add
+    </button>
+  </div>
+
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"">Previous</button>
-    <button type="button" class="next bg-indigo-600 text-white px-4 py-2 rounded-md">Next</button>
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
   </div>
 </div>
 
 
 <!-- Step 4: Internships -->
 <div class="step-content hidden" id="step-4">
-  <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base font-semibold text-gray-900">Internships</h2>
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Internships</h2>
     <p class="mt-1 text-sm text-gray-600">Add your internship experience.</p>
 
-    <div id="internship-container" class="mt-10">
-      <div class="entry-form card p-6 shadow border border-gray-200 rounded-md mb-4">
+    <div id="internship-container" class="mt-4">
+      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         {{ internship_form.hidden_tag() }}
 
-        <label for="company_name" class="block m-2 text-sm font-medium text-gray-900">Company Name</label>
-        {{ internship_form.company_name(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="position" class="block m-2 text-sm font-medium text-gray-900">Position</label>
-        {{ internship_form.position(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="start_date" class="block m-2 text-sm font-medium text-gray-900">Start Date</label>
-        {{ internship_form.start_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="end_date" class="block m-2 text-sm font-medium text-gray-900">End Date</label>
-        {{ internship_form.end_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label class="flex items-center gap-2">
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="company_name" class="block mb-3 text-sm font-medium text-gray-900">Company Name</label>
+            {{ internship_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="position" class="block mb-3 text-sm font-medium text-gray-900">Position</label>
+            {{ internship_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
+        
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
+        {{ internship_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
+        {{ internship_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
+        <label class="flex items-center gap-2 ml-2 mt-2">
           {{ internship_form.ongoing }}
-          <span class="text-sm text-gray-900">Currently interning here</span>
+          <span class="text-sm text-gray-600">Currently interning here</span>
         </label>
 
-        <label for="job_description" class="block text-sm font-medium text-gray-900">Job Description</label>
-        {{ internship_form.job_description(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="job_description" class="mt-6 mb-3 block text-sm font-medium text-gray-900">Job Description</label>
+        {{ internship_form.job_description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
-    <button type="button" id="add-internship" class="mt-4 text-indigo-600">Add More</button>
+    <div class="flex justify-end mt-4">
+    <button type="button" id="add-internship" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+      <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
+      </svg>      
+      Add
+    </button>
+  </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Previous</button>
-    <button type="button" class="next bg-indigo-600 text-white px-4 py-2 rounded-md">Next</button>
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
   </div>
 </div>
 
 <!-- Step 5: Projects -->
 <div class="step-content hidden" id="step-5">
-  <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base font-semibold text-gray-900">Projects</h2>
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Projects</h2>
     <p class="mt-1 text-sm text-gray-600">Add any projects you have worked on.</p>
 
-    <div id="project-container" class="mt-10">
-      <div class="entry-form card p-6 shadow border border-gray-200 rounded-md mb-4">
+    <div id="project-container" class="mt-4">
+      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         {{ project_form.hidden_tag() }}
 
-        <label for="title" class="block m-2 text-sm font-medium text-gray-900">Project Title</label>
-        {{ project_form.title(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="description" class="block m-2 text-sm font-medium text-gray-900">Description</label>
-        {{ project_form.description(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
-
-        <label for="project_url" class="block m-2 text-sm font-medium text-gray-900">Project URL</label>
-        {{ project_form.project_url(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <div class="flex space-x-6">
+          <div class="w-1/2">
+            <label for="title" class="block mb-3 text-sm font-medium text-gray-900">Project Title</label>
+        {{ project_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="w-1/2">
+            <label for="project_url" class="block mb-3 text-sm font-medium text-gray-900">Project URL</label>
+        {{ project_form.project_url(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
+        <label for="description" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Description</label>
+        {{ project_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        
       </div>
     </div>
 
-    <button type="button" id="add-project" class="mt-4 text-indigo-600">Add More</button>
+    <div class="flex justify-end mt-4">
+    <button type="button" id="add-project" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+      <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
+      </svg>      
+      Add
+    </button>
+  </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"">Previous</button>
-    <button type="button" class="next bg-indigo-600 text-white px-4 py-2 rounded-md">Next</button>
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
   </div>
 </div>
 
 
 <!-- Step 6: Accomplishments -->
 <div class="step-content hidden" id="step-6">
-  <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base font-semibold text-gray-900">Accomplishments</h2>
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Accomplishments</h2>
     <p class="mt-1 text-sm text-gray-600">List any achievements or awards you have received.</p>
 
-    <div id="accomplishment-container" class="mt-10">
-      <div class="entry-form card p-6 shadow border border-gray-200 rounded-md mb-4">
+    <div id="accomplishment-container" class="mt-4">
+      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
         {{ accomplishment_form.hidden_tag() }}
 
-        <label for="title" class="block m-2 text-sm font-medium text-gray-900">Title</label>
-        {{ accomplishment_form.title(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="title" class="block mb-3 text-sm font-medium text-gray-900">Title</label>
+        {{ accomplishment_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
-        <label for="description" class="block m-2 text-sm font-medium text-gray-900">Description</label>
-        {{ accomplishment_form.description(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="description" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Description</label>
+        {{ accomplishment_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
-        <label for="achievement_date" class="block m-2 text-sm font-medium text-gray-900">Achievement Date</label>
-        {{ accomplishment_form.achievement_date(class_="block w-full rounded-md bg-white px-3 py-1.5") }}
+        <label for="achievement_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Achievement Date</label>
+        {{ accomplishment_form.achievement_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
-    <button type="button" id="add-accomplishment" class="mt-4 text-indigo-600">Add More</button>
+    <div class="flex justify-end mt-4">
+    <button type="button" id="add-accomplishment" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+      <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
+      </svg>      
+      Add
+    </button>
+  </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"">Previous</button>
-    <button type="submit" class="submit bg-indigo-600 text-white px-4 py-2 rounded-md">Submit</button>
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="button" class="next rounded-md bg-slate-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600">Next</button>
   </div>
 </div>
+<!-- Step 7: Skills -->
+<div class="step-content hidden" id="step-7">
+  <div class="border-b border-gray-900/10 pb-5">
+    <h2 class="text-xl font-semibold text-gray-900">Skills & Keywords</h2>
+    <p class="mt-1 text-sm text-gray-600">Provide relevant skills and keywords for better job matching.</p>
+
+    <div class="mt-6">
+      <label for="skills" class="block text-sm font-medium text-gray-900">Skills</label>
+      <textarea name="skills" class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400"></textarea>
+    </div>
+
+    <div class="mt-6">
+      <label for="industry_keywords" class="block text-sm font-medium text-gray-900">Industry Keywords</label>
+      <textarea name="industry_keywords" class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400"></textarea>
+    </div>
+
+    <div class="mt-6">
+      <label for="leadership_keywords" class="block text-sm font-medium text-gray-900">Leadership Keywords</label>
+      <textarea name="leadership_keywords" class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400"></textarea>
+    </div>
+  </div>
+
+  <div class="mt-6 flex justify-between">
+    <button type="button" class="prev rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">Previous</button>
+    <button type="submit" class="submit bg-slate-600 text-white px-4 py-2 rounded-md">Submit</button>
+  </div>
+</div>
+
 </form>
+</div>
+</div>
 </div>
 
 <script>
   // Global step variables
   let currentStep = 1;
-  const totalSteps = 6;
+  const totalSteps = 7;
 
   // Show/hide the correct form content for each step
   function showStep(step) {
@@ -447,7 +563,7 @@
       // If this step is completed
       if (stepNumber < step) {
         // COMPLETED: Blue background circle with check icon
-        circle.classList.add('bg-indigo-600', 'group-hover:bg-indigo-800');
+        circle.classList.add('bg-slate-600', 'group-hover:bg-slate-800');
         circleText.innerHTML = `
           <svg class="size-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd" />
@@ -458,9 +574,9 @@
       // If this step is the current step
       else if (stepNumber === step) {
         // CURRENT: Blue border circle, number in blue
-        circle.classList.add('border-2', 'border-indigo-600');
-        circleText.classList.add('text-indigo-600');
-        titleText.classList.add('text-indigo-600');
+        circle.classList.add('border-2', 'border-slate-600');
+        circleText.classList.add('text-slate-900');
+        titleText.classList.add('text-slate-900');
         anchor.setAttribute('aria-current', 'step');
       }
       // Otherwise it's an upcoming step
@@ -640,6 +756,12 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
     { name: 'achievement_date',  type: 'text' }
   ]);
 
+  // Step 7: Skills
+  rawData.skills = document.querySelector('textarea[name="skills"]')?.value.trim() || '';
+  rawData.industry_keywords = document.querySelector('textarea[name="industry_keywords"]')?.value.trim() || '';
+  rawData.leadership_keywords = document.querySelector('textarea[name="leadership_keywords"]')?.value.trim() || '';
+
+
   /**
    * 2. Transform rawData -> Final JSON structure:
    *    - "about" -> "profile_summary.content"
@@ -732,8 +854,17 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
       finalData.accomplishments = accomFiltered;
     }
   }
+    // (G) Skills & Keywords
+  if (rawData.skills) {
+    finalData.skills = rawData.skills.split(',').map(skill => skill.trim());
+  }
+  if (rawData.industry_keywords) {
+    finalData.industry_keywords = rawData.industry_keywords.split(',').map(keyword => keyword.trim());
+  }
+  if (rawData.leadership_keywords) {
+    finalData.leadership_keywords = rawData.leadership_keywords.split(',').map(keyword => keyword.trim());
+  }
 
-  // If you have "skills" or other fields, handle similarly and filter if needed.
 
   // 3. Convert finalData to JSON string
   const jsonPayload = JSON.stringify(finalData);
@@ -864,11 +995,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ Populate Skills (if applicable)
     if (resumeData.skills && resumeData.skills.length > 0) {
-        const skillsInput = document.querySelector('input[name="skills"]');
-        if (skillsInput) {
-            skillsInput.value = resumeData.skills.join(", "); // Convert array to comma-separated string
+        const skillsTextarea = document.querySelector('textarea[name="skills"]');
+        if (skillsTextarea) {
+            skillsTextarea.value = resumeData.skills.join(", ");
         }
     }
+
+    if (resumeData.industry_keywords && resumeData.industry_keywords.length > 0) {
+        const industryKeywordsTextarea = document.querySelector('textarea[name="industry_keywords"]');
+        if (industryKeywordsTextarea) {
+            industryKeywordsTextarea.value = resumeData.industry_keywords.join(", ");
+        }
+    }
+
+    if (resumeData.leadership_keywords && resumeData.leadership_keywords.length > 0) {
+        const leadershipKeywordsTextarea = document.querySelector('textarea[name="leadership_keywords"]');
+        if (leadershipKeywordsTextarea) {
+            leadershipKeywordsTextarea.value = resumeData.leadership_keywords.join(", ");
+        }
+    }
+
 });
 </script>
 
