@@ -24,20 +24,22 @@
 
 
 <!-- Main Container -->
-<div class="container mx-auto mt-8">
+ <div class="py-6 px-4 sm:px-6 lg:px-8">
+ <div class="min-h-screen py-6">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Company Card -->
-    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 space-y-6">
+    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
         <!-- Company Details -->
-        <div class="text-center space-y-4">
+        <div class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
             <!-- Company Logo -->
             {% if company.company_logo %}
-                <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600">
+                <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
             {% else %}
-                <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600">
+                <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
             {% endif %}
 
             <!-- Company Name -->
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100">{{ company.name }}</h2>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100 mb-3">{{ company.name }}</h2>
 
             <!-- Location -->
             <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center space-x-2">
@@ -53,39 +55,39 @@
 
         </div>
 
-                    <!-- Company Description -->
-                    <h3 class="mt-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">Description</h3>
-
+            <!-- Company Description -->
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 my-5">
+            <h3 class="mt-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">About company</h3>
             <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
                 <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}</p>
                 <button @click="expanded = !expanded" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 font-medium">
                     <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
                 </button>
             </div>
-
+        </div>
 
         <!-- Job Posts -->
         <div class="space-y-4">
             <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Openings</h3>
             <div class="overflow-x-auto">
                 {% if job_posts and job_posts|length > 0 %}
-                    <table class="min-w-full border-separate border-spacing-0">
+                    <table class="min-w-full divide-y divide-gray-300">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300">Position</th>
-                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300">Posted On</th>
+                                <th class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Position</th>
+                                <th class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 sm:pl-0">Posted On</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                             {% for data in job_posts %}
                                 <!-- {% if data.job_opening_status == 'Active' and data.status == 'published' %} -->
                                     <tr>
-                                        <td class="px-4 py-2">
+                                        <td class="py-5 pr-3 pl-4 text-sm whitespace-nowrap sm:pl-0">
                                             <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800">
                                                 {{ data.job_title }}
                                             </a>
                                         </td>
-                                        <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ data.created_at.split('T')[0] }}</td>
+                                        <td class="px-3 py-5 text-sm whitespace-nowrap text-gray-500">{{ data.created_at.split('T')[0] }}</td>
                                     </tr>
                                 <!-- {% endif %} -->
                             {% endfor %}
@@ -122,7 +124,8 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Format Date
