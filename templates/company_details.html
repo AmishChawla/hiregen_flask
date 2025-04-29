@@ -1,13 +1,13 @@
 {% if current_user %}
-    {% if current_user.role == 'user' %}
-        {% extends 'base.html' %}
-    {% elif current_user.role == 'jobseeker' %}
-        {% extends 'jobseeker/jobseeker_base.html' %}
-    {% elif current_user.role == 'admin' %}
-        {% extends 'admin_base.html' %}
-    {% endif %}
+{% if current_user.role == 'user' %}
+{% extends 'base.html' %}
+{% elif current_user.role == 'jobseeker' %}
+{% extends 'jobseeker/jobseeker_base.html' %}
+{% elif current_user.role == 'admin' %}
+{% extends 'admin_base.html' %}
+{% endif %}
 {% elif current_user.is_authenticated is None %}
-    {% extends 'common_base.html' %}
+{% extends 'common_base.html' %}
 {% endif %}
 
 {% block content %}
@@ -15,128 +15,207 @@
 <!-- Tailwind CSS Integration -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
     tailwind.config = {
-      darkMode: 'class',
+        darkMode: 'class',
     };
-  </script>
+</script>
+
+<nav aria-label="primary" class="px-fluid-base 4xl:px-0 my-auto relative z-10 h-[var(--thd-nav-h)]">
+    <div class="flex items-center justify-between max-w-screen-3xl mx-auto h-full">
+        <div class="h-[48px]"><a aria-label="Atlassian Loom Logo" href="/">
+            {% if company.company_logo %}
+                    <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo"
+                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Logo"
+                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                    {% endif %}
+
+            </a></div>
+        <div class="w-full flex items-center justify-end">
+            <div>
+            </div><a class="thd-button-xs xl:thd-button-sm thd-focus-thick thd-focus-bg"
+                href="#" style="--focus-color-bg: var(--thd-color-violet-10);">About Us</a>
+                <a
+                class="ml-16 block flex-shrink-0 thd-button-nav thd-button-secondary w-content thd-button-md thd-body-sm gap-[1em] flex items-center whitespace-nowrap"
+                href="#"
+                style="--button-color-bg: var(--thd-color-violet-10); --button-color-fg: var(--thd-color-violet-70); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: transparent; --button-color-bg-ac: var(--thd-color-violet-20); --button-color-fg-ac: var(--thd-color-violet-80); --button-color-bx-ac: hsla(245, 45%, 47%, 0.2); --button-color-bx-hv: #7E75E680;">Contact
+                Us</a>
+        </div>
+    </div>
+</nav>
+
+<section class="relative pb-fluid-lg bg-thd-color-violet-20 relative pt-fluid-lg">
+    <div
+        class="max-w-screen-3xl mx-auto flex flex-col h-full justify-center items-start md:items-center lg:text-center px-fluid-base relative z-10 mb-fluid-sm">
+        <header
+            class="mb-xl w-full whitespace-pre-line flex flex-col md:text-center md:items-center mx-auto flex flex-col justify-center">
+            <div class="flex items-center gap-x-fixed-md">
+                <h1 class="text-thd-color-violet-90 thd-max-2xl thd-heading-lg mb-md">One video is worth a thousand
+                    words</h1>
+            </div>
+            <div class="SanityPortableText_portableText__mUFJ4 text-thd-color-violet-80 thd-body-lg thd-max-3xl">
+                <p>Easily record and share AI-powered video messages with your teammates and customers to supercharge
+                    productivity</p>
+            </div>
+        </header>
+        <div class="justify-start flex flex-wrap gap-lg items-center md:h-[75px] lg:h-[100px]">
+            <div><a class="thd-button-primary w-content md:mx-auto thd-button-lg thd-body-sm gap-[1em] flex items-center whitespace-nowrap"
+                    href="#"
+                    style="--button-color-bg: var(--thd-color-violet-60); --button-color-fg: var(--thd-color-violet-10); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: var(--thd-color-button-ol); --button-color-bg-ac: var(--thd-color-violet-70); --button-color-fg-ac: var(--thd-color-violet-10); --button-color-bx-ac: #7E75E650; --button-color-bx-hv: #7E75E680;">Get
+                    About Us</a></div>
+            <div><a class="thd-button-primary w-content thd-button-lg thd-body-sm gap-[.5em] flex items-center whitespace-nowrap"
+                    href="#"
+                    rel="noopener" target="_blank"
+                    style="--button-color-bg: var(--thd-color-violet-10); --button-color-fg: var(--thd-color-violet-70); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: transparent; --button-color-bg-ac: var(--thd-color-violet-20); --button-color-fg-ac: var(--thd-color-violet-80); --button-color-bx-ac: hsla(245, 45%, 47%, 0.2); --button-color-bx-hv: #7E75E680;"><span
+                        color="currentColor" class="css-119njta"><svg viewBox="0 0 24 24">
+                            <path
+                                d="M18.22 21H5.78A2.77 2.77 0 013 18.22v-3.55a1 1 0 012 0v3.55a.76.76 0 00.23.55.75.75 0 00.55.23h12.44a.79.79 0 00.78-.78v-3.55a1 1 0 012 0v3.55A2.77 2.77 0 0118.22 21zM12 15.67a1 1 0 01-.35-.08.83.83 0 01-.34-.22l-4.46-4.44a1 1 0 01-.29-.71 1 1 0 01.29-.7 1 1 0 011.41 0L11 12.25V4a1 1 0 012 0v8.25l2.74-2.73a1 1 0 011.41 0 1 1 0 01.29.7 1 1 0 01-.29.71l-4.44 4.44a1 1 0 01-.33.22 1.05 1.05 0 01-.36.08z"
+                                fill="currentColor"></path>
+                        </svg></span>Contact Us</a></div>
+        </div>
+    </div>
+</section>
 
 
 <!-- Main Container -->
- <div>
- <div class="min-h-screen py-6">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Company Card -->
-    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-        <!-- Company Details -->
-        <div class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-            <!-- Company Logo -->
-            {% if company.company_logo %}
-                <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
-            {% else %}
-                <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
-            {% endif %}
+<div>
+    <div class="min-h-screen py-6">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Company Card -->
+            <div
+                class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                <!-- Company Details -->
+                <div
+                    class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <!-- Company Logo -->
+                    {% if company.company_logo %}
+                    <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo"
+                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                    {% else %}
+                    <img src="https://via.placeholder.com/150" alt="Default Logo"
+                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                    {% endif %}
 
-            <!-- Company Name -->
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100 mb-3">{{ company.name }}</h2>
+                    <!-- Company Name -->
+                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100 mb-3">{{
+                        company.name }}</h2>
 
-            <!-- Location -->
-            <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center space-x-2">
-                <i class="bi bi-geo-alt-fill text-red-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-</svg>
+                    <!-- Location -->
+                    <p class="text-gray-600 dark:text-gray-400 flex items-center justify-center space-x-2">
+                        <i class="bi bi-geo-alt-fill text-red-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
 
-                </i>
-                <span>{{ company.location }}</span>
-            </p>
+                        </i>
+                        <span>{{ company.location }}</span>
+                    </p>
 
-        </div>
-
-            <!-- Company Description -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 my-5">
-            <h3 class="mt-2 text-2xl font-semibold text-gray-800 dark:text-gray-100">About company</h3>
-            <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
-                <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}</p>
-                <button @click="expanded = !expanded" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 font-medium">
-                    <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Job Posts -->
-        <div class="space-y-4">
-            <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-100">Job Openings</h3>
-            {% if job_posts and job_posts|length > 0 %}
-            <div class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6">
-                <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                <!-- Card Item -->
-                {% for data in job_posts %}
-                <!-- {% if data.job_opening_status == 'Active' and data.status == 'published' %} -->
-            
-                <div>
-                <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
-                <div>
-                <div class="mb-5 flex h-14 max-w-14 items-center justify-center rounded-[10.5px] bg-brand-50 text-brand-500 dark:bg-brand-500/10">
-                <svg class="fill-current" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd" d="M13.6147 4.39464C13.8572 4.2734 14.1426 4.2734 14.385 4.39464L21.8797 8.14188L14.3973 11.883C14.1471 12.0081 13.8526 12.0081 13.6024 11.883L6.11997 8.14188L13.6147 4.39464ZM5.02148 9.57978V18.7772C5.02148 19.1035 5.20581 19.4017 5.49762 19.5476L13.1109 23.3542V13.6016C13.0079 13.5652 12.9066 13.5222 12.8076 13.4727L5.02148 9.57978ZM14.8883 23.3544L22.5021 19.5476C22.7939 19.4017 22.9782 19.1035 22.9782 18.7772V9.57978L15.1921 13.4727C15.0929 13.5223 14.9915 13.5653 14.8883 13.6018L14.8883 23.3544ZM14.7825 3.59978L15.1799 2.80493C14.437 2.43351 13.5627 2.43351 12.8198 2.80493L4.70279 6.86333C3.80884 7.3103 3.24414 8.22398 3.24414 9.22344V18.7772C3.24414 19.7767 3.80883 20.6904 4.70279 21.1373L12.8198 25.1958L13.2172 24.4009L12.8198 25.1958C13.5627 25.5672 14.437 25.5672 15.1799 25.1958L23.2969 21.1373C24.1909 20.6904 24.7556 19.7767 24.7556 18.7772V9.22344C24.7556 8.22398 24.1909 7.3103 23.2969 6.86333L15.1799 2.80493L14.7825 3.59978Z" fill=""></path>
-                </svg>
                 </div>
-                
-                <h4 class="mb-1 text-theme-xl font-medium text-gray-800 dark:text-white/90">
-                    <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-800">
-                        {{ data.job_title }}
+
+                <!-- Company Description -->
+                <div
+                    class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 my-5">
+                    <h3 class="mt-2 text-xl font-semibold text-gray-800 dark:text-gray-100">About company</h3>
+                    <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
+                        <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}
+                        </p>
+                        <button @click="expanded = !expanded"
+                            class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 font-medium">
+                            <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Job Posts -->
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">Job Openings</h3>
+                    {% if job_posts and job_posts|length > 0 %}
+                    <div class="p-4 dark:border-gray-800 sm:p-0">
+                        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                            <!-- Card Item -->
+                            {% for data in job_posts %}
+                            <!-- {% if data.job_opening_status == 'Active' and data.status == 'published' %} -->
+
+                            <div>
+                                <div
+                                    class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] sm:p-6">
+                                    <div>
+                                        <div
+                                            class="mb-5 flex h-14 max-w-14 items-center justify-center rounded-[10.5px] bg-brand-50 text-brand-500 dark:bg-brand-500/10">
+                                            <svg class="fill-current" width="28" height="28" viewBox="0 0 28 28"
+                                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M13.6147 4.39464C13.8572 4.2734 14.1426 4.2734 14.385 4.39464L21.8797 8.14188L14.3973 11.883C14.1471 12.0081 13.8526 12.0081 13.6024 11.883L6.11997 8.14188L13.6147 4.39464ZM5.02148 9.57978V18.7772C5.02148 19.1035 5.20581 19.4017 5.49762 19.5476L13.1109 23.3542V13.6016C13.0079 13.5652 12.9066 13.5222 12.8076 13.4727L5.02148 9.57978ZM14.8883 23.3544L22.5021 19.5476C22.7939 19.4017 22.9782 19.1035 22.9782 18.7772V9.57978L15.1921 13.4727C15.0929 13.5223 14.9915 13.5653 14.8883 13.6018L14.8883 23.3544ZM14.7825 3.59978L15.1799 2.80493C14.437 2.43351 13.5627 2.43351 12.8198 2.80493L4.70279 6.86333C3.80884 7.3103 3.24414 8.22398 3.24414 9.22344V18.7772C3.24414 19.7767 3.80883 20.6904 4.70279 21.1373L12.8198 25.1958L13.2172 24.4009L12.8198 25.1958C13.5627 25.5672 14.437 25.5672 15.1799 25.1958L23.2969 21.1373C24.1909 20.6904 24.7556 19.7767 24.7556 18.7772V9.22344C24.7556 8.22398 24.1909 7.3103 23.2969 6.86333L15.1799 2.80493L14.7825 3.59978Z"
+                                                    fill=""></path>
+                                            </svg>
+                                        </div>
+
+                                        <h4 class="mb-1 text-theme-xl font-medium text-gray-800 dark:text-white/90">
+                                            <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+                                                class="dark:text-indigo-400">
+                                                {{ data.job_title }}
+                                            </a>
+                                        </h4>
+
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto
+                                            aspernatur cum et ipsum
+                                        </p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ data.created_at.split('T')[0] }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- {% endif %} -->
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
+                    {% endif %}
+
+                </div>
+
+                <!-- Social Links -->
+                <div class="flex justify-center space-x-4 mt-6">
+                    {% if company.linkedin_url %}
+                    <a href="{{ company.linkedin_url }}"
+                        class="text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">
+                        <i class="bi bi-linkedin text-2xl"></i>
                     </a>
-                </h4>
-                
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto aspernatur cum et ipsum
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
-                    {{ data.created_at.split('T')[0] }}
-                </p>
-                </div>
-                </div>
-                </div>
-                <!-- {% endif %} -->
-                {% endfor %}
-
+                    {% endif %}
+                    {% if company.google_map_url %}
+                    <a href="{{ company.google_map_url }}"
+                        class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
+                        <i class="bi bi-geo-alt-fill text-2xl"></i>
+                    </a>
+                    {% endif %}
+                    {% if company.twitter_url %}
+                    <a href="{{ company.twitter_url }}"
+                        class="text-black hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
+                        <i class="bi bi-twitter text-2xl"></i>
+                    </a>
+                    {% endif %}
+                    {% if company.instagram_url %}
+                    <a href="{{ company.instagram_url }}"
+                        class="text-pink-500 hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-500">
+                        <i class="bi bi-instagram text-2xl"></i>
+                    </a>
+                    {% endif %}
                 </div>
             </div>
-            {% else %}
-            <p class="text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
-        {% endif %}
-
-        </div>
-
-        <!-- Social Links -->
-        <div class="flex justify-center space-x-4 mt-6">
-            {% if company.linkedin_url %}
-                <a href="{{ company.linkedin_url }}" class="text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">
-                    <i class="bi bi-linkedin text-2xl"></i>
-                </a>
-            {% endif %}
-            {% if company.google_map_url %}
-                <a href="{{ company.google_map_url }}" class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
-                    <i class="bi bi-geo-alt-fill text-2xl"></i>
-                </a>
-            {% endif %}
-            {% if company.twitter_url %}
-                <a href="{{ company.twitter_url }}" class="text-black hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-                    <i class="bi bi-twitter text-2xl"></i>
-                </a>
-            {% endif %}
-            {% if company.instagram_url %}
-                <a href="{{ company.instagram_url }}" class="text-pink-500 hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-500">
-                    <i class="bi bi-instagram text-2xl"></i>
-                </a>
-            {% endif %}
         </div>
     </div>
-</div>
-</div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
