@@ -22,62 +22,99 @@
     };
 </script>
 
-<nav aria-label="primary" class="px-fluid-base 4xl:px-0 my-auto relative z-10 h-[var(--thd-nav-h)]">
-    <div class="flex items-center justify-between max-w-screen-3xl mx-auto h-full">
-        <div class="h-[48px]"><a aria-label="Atlassian Loom Logo" href="/">
+
+<nav class="bg-white shadow">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 justify-between">
+        <div class="flex">
+          <div class="-ml-2 mr-2 flex items-center md:hidden">
+            <!-- Mobile menu button -->
+            <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
+              <span class="absolute -inset-0.5"></span>
+              <span class="sr-only">Open main menu</span>
+              <!--
+                Icon when menu is closed.
+  
+                Menu open: "hidden", Menu closed: "block"
+              -->
+              <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+              <!--
+                Icon when menu is open.
+  
+                Menu open: "block", Menu closed: "hidden"
+              -->
+              <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="flex shrink-0 items-center">
             {% if company.company_logo %}
                     <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo"
-                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                        class="w-32 h-32 rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
                     {% else %}
                     <img src="https://via.placeholder.com/150" alt="Default Logo"
-                        class="w-32 h-32 mx-auto rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
+                        class="w-32 h-32 rounded-full border-2 border-gray-300 dark:border-gray-600 mb-3">
                     {% endif %}
-
-            </a></div>
-        <div class="w-full flex items-center justify-end">
-            <div>
-            </div><a class="thd-button-xs xl:thd-button-sm thd-focus-thick thd-focus-bg"
-                href="#" style="--focus-color-bg: var(--thd-color-violet-10);">About Us</a>
-                <a
-                class="ml-16 block flex-shrink-0 thd-button-nav thd-button-secondary w-content thd-button-md thd-body-sm gap-[1em] flex items-center whitespace-nowrap"
-                href="#"
-                style="--button-color-bg: var(--thd-color-violet-10); --button-color-fg: var(--thd-color-violet-70); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: transparent; --button-color-bg-ac: var(--thd-color-violet-20); --button-color-fg-ac: var(--thd-color-violet-80); --button-color-bx-ac: hsla(245, 45%, 47%, 0.2); --button-color-bx-hv: #7E75E680;">Contact
-                Us</a>
+          </div>
         </div>
-    </div>
-</nav>
-
-<section class="relative pb-fluid-lg bg-thd-color-violet-20 relative pt-fluid-lg">
-    <div
-        class="max-w-screen-3xl mx-auto flex flex-col h-full justify-center items-start md:items-center lg:text-center px-fluid-base relative z-10 mb-fluid-sm">
-        <header
-            class="mb-xl w-full whitespace-pre-line flex flex-col md:text-center md:items-center mx-auto flex flex-col justify-center">
-            <div class="flex items-center gap-x-fixed-md">
-                <h1 class="text-thd-color-violet-90 thd-max-2xl thd-heading-lg mb-md">One video is worth a thousand
-                    words</h1>
-            </div>
-            <div class="SanityPortableText_portableText__mUFJ4 text-thd-color-violet-80 thd-body-lg thd-max-3xl">
-                <p>Easily record and share AI-powered video messages with your teammates and customers to supercharge
-                    productivity</p>
-            </div>
-        </header>
-        <div class="justify-start flex flex-wrap gap-lg items-center md:h-[75px] lg:h-[100px]">
-            <div><a class="thd-button-primary w-content md:mx-auto thd-button-lg thd-body-sm gap-[1em] flex items-center whitespace-nowrap"
-                    href="#"
-                    style="--button-color-bg: var(--thd-color-violet-60); --button-color-fg: var(--thd-color-violet-10); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: var(--thd-color-button-ol); --button-color-bg-ac: var(--thd-color-violet-70); --button-color-fg-ac: var(--thd-color-violet-10); --button-color-bx-ac: #7E75E650; --button-color-bx-hv: #7E75E680;">Get
-                    About Us</a></div>
-            <div><a class="thd-button-primary w-content thd-button-lg thd-body-sm gap-[.5em] flex items-center whitespace-nowrap"
-                    href="#"
-                    rel="noopener" target="_blank"
-                    style="--button-color-bg: var(--thd-color-violet-10); --button-color-fg: var(--thd-color-violet-70); --button-color-fr: var(--thd-color-violet-60); --button-color-ol: transparent; --button-color-bg-ac: var(--thd-color-violet-20); --button-color-fg-ac: var(--thd-color-violet-80); --button-color-bx-ac: hsla(245, 45%, 47%, 0.2); --button-color-bx-hv: #7E75E680;"><span
-                        color="currentColor" class="css-119njta"><svg viewBox="0 0 24 24">
-                            <path
-                                d="M18.22 21H5.78A2.77 2.77 0 013 18.22v-3.55a1 1 0 012 0v3.55a.76.76 0 00.23.55.75.75 0 00.55.23h12.44a.79.79 0 00.78-.78v-3.55a1 1 0 012 0v3.55A2.77 2.77 0 0118.22 21zM12 15.67a1 1 0 01-.35-.08.83.83 0 01-.34-.22l-4.46-4.44a1 1 0 01-.29-.71 1 1 0 01.29-.7 1 1 0 011.41 0L11 12.25V4a1 1 0 012 0v8.25l2.74-2.73a1 1 0 011.41 0 1 1 0 01.29.7 1 1 0 01-.29.71l-4.44 4.44a1 1 0 01-.33.22 1.05 1.05 0 01-.36.08z"
-                                fill="currentColor"></path>
-                        </svg></span>Contact Us</a></div>
+        <div class="flex items-center">
+          <div class="shrink-0">
+            <button type="button" class="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <svg class="-ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+              </svg>
+              New Job
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</section>
+  </nav>
+  
+
+  <section class="relative pt-24 pb-24 bg-violet-100">
+    <div class="max-w-screen-2xl mx-auto px-6 flex flex-col items-start md:items-center lg:text-center z-10 mb-12">
+      
+      <header class="mb-16 w-full whitespace-pre-line flex flex-col text-left md:text-center md:items-center mx-auto justify-center">
+        <div class="flex items-center gap-4">
+          <h1 class="text-4xl md:text-5xl font-bold text-violet-900 mb-6 max-w-2xl">
+            One video is worth a thousand words
+          </h1>
+        </div>
+        <div class="text-lg text-violet-700 max-w-3xl">
+          <p>
+            Easily record and share AI-powered video messages with your teammates and customers to supercharge productivity
+          </p>
+        </div>
+      </header>
+  
+      <div class="flex flex-wrap gap-6 items-center justify-start md:h-[75px] lg:h-[100px]">
+        <!-- Button 1 -->
+        <div>
+          <a href="#"
+             class="inline-flex items-center gap-4 px-6 py-3 text-white bg-violet-600 hover:bg-violet-700 text-sm md:mx-auto rounded-lg shadow transition whitespace-nowrap">
+            Get About Us
+          </a>
+        </div>
+  
+        <!-- Button 2 -->
+        <div>
+          <a href="#" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 px-6 py-3 text-violet-700 bg-violet-100 hover:bg-violet-200 text-sm rounded-lg shadow transition whitespace-nowrap">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.22 21H5.78A2.77 2.77 0 013 18.22v-3.55a1 1 0 012 0v3.55a.76.76 0 00.23.55.75.75 0 00.55.23h12.44a.79.79 0 00.78-.78v-3.55a1 1 0 012 0v3.55A2.77 2.77 0 0118.22 21zM12 15.67a1 1 0 01-.35-.08.83.83 0 01-.34-.22l-4.46-4.44a1 1 0 01-.29-.71 1 1 0 01.29-.7 1 1 0 011.41 0L11 12.25V4a1 1 0 012 0v8.25l2.74-2.73a1 1 0 011.41 0 1 1 0 01.29.7 1 1 0 01-.29.71l-4.44 4.44a1 1 0 01-.33.22 1.05 1.05 0 01-.36.08z" />
+            </svg>
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  
 
 
 <!-- Main Container -->
