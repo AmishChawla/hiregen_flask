@@ -689,8 +689,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 <p class="mt-4 font-display text-lg sm:text-lg text-slate-700">Stay ahead in the ever-evolving world of recruitment with Recruitment Insider.
 Get the latest trends, AI-driven hiring innovations, best practices, and expert insights delivered straight to your inbox.</p>
               </div>
-
-              <form>
+              <form id="newsletter-form">
                 <h3 class="text-lg font-semibold tracking-tight text-gray-700">Sign up to our newsletter <span aria-hidden="true">↓</span></h3>
                 <div class="mt-5 flex flex-col sm:flex-row rounded-3xl bg-white py-2.5 pr-2.5 shadow-xl shadow-blue-600/5 focus-within:ring-2 focus-within:ring-blue-600">
                   <input
@@ -953,6 +952,50 @@ Get the latest trends, AI-driven hiring innovations, best practices, and expert 
   }
 }
 </script>
+
+<script>
+  document.getElementById("newsletter-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    const form = e.target;
+    const emailInput = form.querySelector("input[type='email']");
+    const button = form.querySelector("button");
+  
+    const email = emailInput.value.trim();
+    if (!email) return;
+  
+    // Disable input and button
+    emailInput.disabled = true;
+    button.disabled = true;
+    const originalText = button.innerHTML;
+    button.innerHTML = "Submitting...";
+  
+    try {
+      const response = await fetch("/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        button.innerHTML = "Subscribed";
+      } else {
+        alert(result.detail || "Subscription failed.");
+        emailInput.disabled = false;
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+      emailInput.disabled = false;
+      button.disabled = false;
+      button.innerHTML = originalText;
+    }
+  });
+  </script>
+
 <script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
 <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
 </body>
