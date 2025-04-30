@@ -3275,7 +3275,7 @@ def admin_delete_post(post_id, access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def create_post(title, short_description, featured_image, content, category_id, subcategory_id, status, access_token, tags):
+def create_post(title, short_description, featured_image, content, category_id, subcategory_id, status, access_token, tags, send_newsletter):
     print('Trying to create post')
 
     headers = {'Authorization': f'Bearer {access_token}'}
@@ -3288,6 +3288,7 @@ def create_post(title, short_description, featured_image, content, category_id, 
         "category_id": category_id,
         "subcategory_id": subcategory_id,
         "status": status,  # This is already a list
+        "send_newsletter": send_newsletter
     }
     print(post_data)
 
@@ -3633,6 +3634,28 @@ def get_sitemap_data():
             result = response.json()
             return result
 
+        else:
+            print("API Error:", response.text)
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+
+
+def subscribe_newsletter(email):
+    try:
+        data = {
+            "email": email
+        }
+        response = requests.post(constants.BASE_URL + f'/admin/newsletter/subscribe', json=data)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            return result
         else:
             print("API Error:", response.text)
     except requests.exceptions.HTTPError as errh:

@@ -16,7 +16,7 @@
   <div class="flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
       <div class="inline-block min-w-full align-middle">
-        <table id="draftTable" class="min-w-full border-separate border-spacing-0">
+        <table id="subscriptionTable" class="min-w-full border-separate border-spacing-0">
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">User</th>
@@ -30,9 +30,9 @@
             {% for data in purchase_data | reverse %}
             <tr class="hover:bg-gray-50">
               <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">{{ data.user.username }}</td>
-              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.plan_type_name }}</td>
-              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.fees }}</td>
-              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.status }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.plan_name }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.plan.price }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.status | capitalize }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
             </tr>
             {% endfor %}
@@ -51,15 +51,35 @@
   </div>
   {% endif %}
 </div>
+<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 <script>
   $(document).ready(function() {
     var table = $('#subscriptionTable').DataTable({
-      "columnDefs": [
-        { "type": "date-eu", targets: [4] } // specify the column containing date-time data
-      ],
-      "order": [[4, 'desc']] // sorting by the 5th column (date of purchase) in descending order
+      columnDefs: [
+      {
+        targets: 4, // Creation Time column
+        render: function(data, type, row) {
+          if (!data) return "";
+
+          const date = new Date(data);
+          const day = date.getDate();
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month = monthNames[date.getMonth()];
+          const year = date.getFullYear();
+
+          if (type === 'display' || type === 'filter') {
+            return `${month} ${day},  ${year}`;
+          }
+          return date.getTime(); // use timestamp for sorting
+        }
+      },
+      { width: "200px", targets: [0] },
+      { width: "auto", targets: [1,2,3,4]}
+    ],
+      "order": [[4, 'desc']] 
     });
   });
 </script>

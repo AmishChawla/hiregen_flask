@@ -2032,10 +2032,9 @@ def get_purchase_history():
 def get_all_subscriptions():
     access_token = current_user.id
     purchase_data = api_calls.get_all_subscriptions(access_token)
+    print(purchase_data)
 
     return render_template('all_subscription.html', purchase_data=purchase_data)
-
-    return render_template('all_posts.html', result=result)
 
 ########################################## MEDIA #####################################################
 
@@ -4214,6 +4213,7 @@ def add_cms_post():
     if form.validate_on_submit():
         print("validated form")
         tags = form.tags.data
+        send_newsletter = request.form.get("send_newsletter") == "true"
 
         # Split tags into a list
         tags_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
@@ -4256,7 +4256,8 @@ def add_cms_post():
                             subcategory_id=form.subcategory.data,
                             status='draft' if form.save_draft.data else 'published',
                             access_token=current_user.id,
-                            tags=tags_list
+                            tags=tags_list,
+                            send_newsletter= False if form.save_draft.data else send_newsletter
                         )
             print(post_sent)
             if post_sent:
@@ -4788,6 +4789,22 @@ def privacy_policy():
 @app.route('/terms-of-service')
 def terms_of_service():
     return render_template('terms_of_service.html')
+
+
+@app.route('/newsletter/subscribe', methods=['POST'])
+def subscribe_newsletter():
+    data = request.get_json()
+    email = data.get('email')
+
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    # Check if already subscribed
+    try:
+        api_calls.subscribe_newsletter(email=email)
+        return jsonify("success"),200
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
 
 #####################################################################################################################################

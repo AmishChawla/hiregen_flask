@@ -3,6 +3,14 @@
 {% block title %}Companies{% endblock %}
 
 {% block content %}
+<style>
+  #companiesTable td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
+
 <div class="">
   <div class="min-h-screen py-6">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +21,7 @@
   <div class="flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
       <div class="inline-block min-w-full align-middle">
-        <table id="draftTable" class="min-w-full border-separate border-spacing-0">
+        <table id="companiesTable" class="min-w-full border-separate border-spacing-0 table-fixed">
           <thead class="bg-gray-50">
             <tr>
               <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Company</th>
@@ -75,6 +83,39 @@
     button.addEventListener('click', () => {
       const modalId = button.getAttribute('data-modal-target');
       document.querySelector(modalId).classList.remove('hidden');
+    });
+  });
+</script>
+
+<link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+<script>
+  $(document).ready(function() {
+    var table = $('#companiesTable').DataTable({
+      columnDefs: [
+      {
+        targets: 2, // Creation Time column
+        render: function(data, type, row) {
+          if (!data) return "";
+
+          const date = new Date(data);
+          const day = date.getDate();
+          const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                              "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+          const month = monthNames[date.getMonth()];
+          const year = date.getFullYear();
+
+          if (type === 'display' || type === 'filter') {
+            return `${month} ${day},  ${year}`;
+          }
+          return date.getTime(); // use timestamp for sorting
+        }
+      },
+      { width: "200px", targets: [0] },
+      { width: "auto", targets: [1,2]}
+    ],
+      "order": [[2, 'desc']] 
     });
   });
 </script>
