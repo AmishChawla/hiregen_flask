@@ -23,7 +23,7 @@
 </script>
 
 
-<nav class="mb-5">
+<nav class="">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-2">
       <div class="flex h-16 justify-between">
         <div class="flex">
@@ -74,23 +74,23 @@
   </nav>
   
 
-    <div class="relative py-20 bg-blue-50 max-w-6xl mx-auto">
-      <header class="w-full flex flex-col text-left md:text-center md:items-center mx-auto justify-center">
-          <h1 class="text-4xl md:text-4xl font-bold text-blue-900 mb-3 max-w-3xl">
-            One great hire is worth a thousand resumes
-          </h1>
-        <div class="text-lg text-violet-700 max-w-3xl">
-            <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
-                <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}
-                </p>
-                <button @click="expanded = !expanded"
-                    class="text-blue-600 dark:text-blue-400 hover:text-blue-800 font-medium">
-                    <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
-                </button>
-            </div>
+  <div class="min-h-screen py-6">
+    <div class="container rounded-xl bg-blue-50 py-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <h1 class="text-4xl md:text-4xl font-bold text-blue-900 mb-3 max-w-3xl">
+        One great hire is worth a thousand resumes
+      </h1>
+      <div class="text-lg text-violet-700 max-w-3xl">
+        <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
+            <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}
+            </p>
+            <button @click="expanded = !expanded"
+                class="text-lg text-blue-600 dark:text-blue-400 hover:text-blue-800">
+                <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
+            </button>
         </div>
-      </header>
     </div>
+    </div>
+  </div>
 
 <!-- Main Container -->
 <div>
@@ -191,6 +191,23 @@
         </div>
     </div>
 </div>
+
+<!--Footer-->
+<div class="pt-24 pb-10 bg-black">
+  <nav class="flex flex-wrap justify-center items-center mb-4 gap-6">
+    <a href="/rss/jobs" class="text-slate-100 text-base font-normal leading-normal tracking-normal">RSS</a>
+    <span class="text-slate-100 text-base font-normal leading-normal tracking-normal">•</span>
+    <a href="/jobs" class="text-slate-100 text-base font-normal leading-normal tracking-normal">About Us</a>
+    <span class="text-slate-100 text-base font-normal leading-normal tracking-normal">•</span>
+    <a href="/contact-us" class="text-slate-100 text-base font-normal leading-normal tracking-normal">Contact Us</a>
+  </nav>
+
+  <div class="text-slate-100 text-base font-normal leading-normal tracking-normal pt-0 pb-4 text-center">
+    © 2025 Hiregen.com
+  </div>
+</div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Format Date
