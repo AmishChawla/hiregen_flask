@@ -30,7 +30,7 @@
 
 
 <!--Header-->
-<div class="py-6 rounded-2xl border border-solid border-slate-200 bg-blue-900 mb-8 overflow-hidden max-w-6xl mx-auto"> 
+<div class="py-6 rounded-2xl border border-solid border-slate-200 bg-blue-900 my-5 overflow-hidden max-w-6xl mx-auto"> 
   <div class="pr-8 pl-8">
     <div class="employer-profile-main-info-container">
       <div class="">
@@ -84,7 +84,7 @@
                                       <div>
                                         <h4 class="mb-1 text-xl font-medium text-gray-800 dark:text-white/90">
                                           <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
-                                              class="dark:text-blue-400">
+                                              class="dark:text-blue-400 hover:text-blue-600 hover:underline">
                                               {{ data.job_title }}
                                           </a>
                                       </h4>
@@ -138,7 +138,7 @@
 
                         <!-- Contact Box -->
                         <div
-                            class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 mt-10 mb-5">
+                            class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 mt-5 mb-5">
                             <!-- Company Name -->                    
                             <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100 mb-3">Contact Us</h2>
                             <!-- Location -->
@@ -159,7 +159,7 @@
 
                         <!-- About Box -->
                         <div
-                            class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 mt-10 mb-5">
+                            class="rounded-2xl text-center border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 mt-5 mb-5">
                             <!-- Company Name -->                    
                             <h2 class="text-2xl font-semibold text-gray-900 dark:text-white dark:text-gray-100 mb-3">About Us</h2>
                             <!-- Location -->
@@ -180,7 +180,7 @@
 </div>
 
 <!--Footer-->
-<div class="py-10 bg-black">
+<div class="py-10 bg-black mt-10">
   <nav class="flex flex-wrap justify-center items-center mb-4 gap-6">
     <a href="/rss/jobs" class="text-slate-100 text-base font-normal leading-normal tracking-normal">RSS</a>
     <span class="text-slate-100 text-base font-normal leading-normal tracking-normal">•</span>
