@@ -1,8 +1,44 @@
 {% extends 'admin_base.html' %}
-
 {% block title %}Employer{% endblock %}
-
 {% block content %}
+<style>
+  table.dataTable > tbody > tr > th, table.dataTable > tbody > tr > td {
+    padding: 10px 20px!important;
+}
+table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
+    padding: 12px 20px!important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+.dt-start {
+  padding:0 0 10px 20px!important;
+}
+.dt-end {
+  padding:0 20px 10px 0px!important;
+}
+.dt-search {
+  color: #9f9e9e!important;
+    font-weight: 500!important;
+    font-size: 15px!important;
+}
+.dt-length {
+  color: #9f9e9e!important;
+    font-weight: 500!important;
+    font-size: 15px!important;
+}
+.dt-length select {
+  margin-right: 10px!important;
+}
+.dt-input {
+  border: 1px solid #dddddd!important;
+  margin-left: 10px!important;
+}
+.dt-layout-cell {
+  color: #9f9e9e!important;
+    font-weight: 500!important;
+    font-size: 15px!important;
+}
+</style>
 <div class="">
   <div class="min-h-screen py-6">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,10 +70,9 @@
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for row in result|reverse %}
             <tr class="hover:bg-gray-50">
-              <td class="flex whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-                <!-- <p>{{row.profile_picture}}</p> -->
-                <img src="{{ row.profile_picture or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-11 w-11 object-contain overflow-hidden rounded-full border p-1">
-                <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}" class="m-2 text-blue-700 hover:text-blue-900"><p>{{ row.username }}</p></a>
+              <td class="flex whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-semibold text-gray-900 sm:pl-6 lg:pl-8 items-center">
+                <img src="{{ row.profile_picture or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-12 w-12 object-contain rounded-full border">
+                <a href="{{ url_for('admin_view_user_profile', user_id=row.id) }}" class="ml-3 text-blue-700 hover:text-blue-900"><p>{{ row.username }}</p></a>
               </td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ row.email }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
