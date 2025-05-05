@@ -908,7 +908,6 @@ def company_details_by_company_slug(company_slug):
 def company_details_by_company_subdomain(company_subdomain):
     # Get the company details based on the subdomain
     result = api_calls.get_company_details_by_subdomain(company_subdomain=company_subdomain)
-
     # Retrieve jobs associated with the company
     company_id = result["id"]
     jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
