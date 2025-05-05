@@ -10,6 +10,48 @@
 {% extends 'common_base.html' %}
 {% endif %}
 
+
+{% block metatags %} 
+<meta name="title" content="{{ company.name }}" />
+<meta name="description" content="{{ company.description }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://{{ company.company_subdomain }}.hiregen.com/" />
+<meta property="og:title" content="{{ company.name }}" />
+<meta property="og:description" content="{{ company.description }}" />
+<meta property="og:image" content="{{ company.company_logo }}" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://{{ company.company_subdomain }}.hiregen.com/" />
+<meta property="twitter:title" content="{{ company.name }}" />
+<meta property="twitter:description" content="{{ company.description }}" />
+<meta property="twitter:image" content="{{ company.company_logo }}" />
+
+{% endblock %}
+
+<title>{{ company.name }}</title>
+
+<meta name="title" content="{{ company.name }}" />
+<meta name="description" content="{{ company.description }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://{{ company.company_subdomain }}.hiregen.com/" />
+<meta property="og:title" content="{{ company.name }}" />
+<meta property="og:description" content="{{ company.description }}" />
+<meta property="og:image" content="{{ company.company_logo }}" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="https://{{ company.company_subdomain }}.hiregen.com/" />
+<meta property="twitter:title" content="{{ company.name }}" />
+<meta property="twitter:description" content="{{ company.description }}" />
+<meta property="twitter:image" content="{{ company.company_logo }}" />
+
+
+
 {% block content %}
 
 <!-- Tailwind CSS Integration -->
@@ -58,7 +100,7 @@
           <path
             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z" />
         </svg>
-            <span><strong class="text-black ml-2">12</strong> Jobs</span>
+            <span><strong class="text-black ml-2">{{ job_posts | length }}</strong> Jobs</span>
         </div>
     </div>
     <div class="px-4 py-4">
@@ -76,7 +118,7 @@
                       {% if job_posts and job_posts|length > 0 %}
 
                       {% for data in job_posts %}
-                    <tr class="hover:bg-blue-50 hover:cursor-pointer">
+                    <tr class="hover:bg-white-50 hover:cursor-pointer">
                         <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                           <div class="flex items-center">
                             <div class="">
@@ -84,16 +126,16 @@
                                 class="dark:text-blue-400 hover:text-blue-600 hover:underline">
                                 {{ data.job_title }}
                             </a></div>
-                              <div class="mt-1 text-gray-500">Full-time <span class="mx-1">•</span> Melbourne</div>
+                              <div class="mt-1 text-gray-500">{{ data.job_type }} <span class="mx-1">•</span> {{data.address_country}}</div>
                             </div>
                           </div>
                         </td>
-                        <td class="flex whitespace-nowrap px-3 py-5 text-sm text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock me-2 mt-1" viewBox="0 0 16 16">
+                        <td class="flex whitespace-nowrap px-3 py-9 text-sm text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock me-1 mt-1" viewBox="0 0 16 16">
                           <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
                           <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                        </svg> {{ data.created_at.split('T')[0] }}</td>
+                        </svg> <span data-date="{{ data.created_at }}"></span></td>
                         <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                          <a href="#" class="rounded-full bg-indigo-600 py-2 px-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Apply</a>
+                          <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="rounded-2xl bg-slate-600 py-2 px-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-slate-500">Apply</a>
                         </td>
                     </tr>
                     {% endfor %}
