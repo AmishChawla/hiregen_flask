@@ -28,7 +28,7 @@
             {% for data in result %}
             <tr class="hover:bg-gray-50">
               <td class="whitespace-nowrap py-2 px-4 text-sm font-medium text-gray-900 dark:text-gray-200 sm:pl-6">{{ data.job_title }}</td>
-              <td class="whitespace-nowrap py-2 px-6 text-sm text-gray-500 dark:text-gray-400">{{ data.job_application_status.capitalize() }}</td>
+              <td class="whitespace-nowrap py-2 px-6 text-sm text-gray-500 dark:text-gray-400"><span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-md font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{ data.job_application_status.capitalize() }}</span></td>
               <td class="whitespace-nowrap py-2 px-4 text-sm text-gray-500 dark:textpython-gray-400">{{ data.application_date.split('T')[0] }}</td>
               <td class="whitespace-nowrap py-2 px-6 text-sm text-gray-500 dark:text-gray-400"> <a href="{{ data.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-400">Job</a></td>
             </tr>
