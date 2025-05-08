@@ -3,8 +3,16 @@
 {% block title %}Add Job{% endblock %}
 
 {% block content %}
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
+
+
+<style>
+  #job_description .ql-editor,
+  #job_requirements .ql-editor,
+  #job_benefits .ql-editor {
+    min-height: 200px;
+  }
+</style>
 
       <form method="post" action="{{ url_for('add_post') }}" id="addjobForm">
         {{ form.hidden_tag() }}
