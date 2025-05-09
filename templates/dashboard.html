@@ -89,49 +89,50 @@
     </div>
 
     <!-- Latest Jobs Table -->
+     {% if latest_jobs %}
     <div class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-      
-        <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Latest Jobs</h3>
-      
-      <div class="py-4">
-        <div class="overflow-hidden rounded-lg">
-          <table class="min-w-full border-separate border-spacing-0">
-            <thead class="bg-gray-50 dark:bg-gray-900">
-              <tr>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Salary</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
-                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Applicants</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-              {% for data in latest_jobs %}
-                {% if data.JobOpening.status == 'published' %}
+      <h3 class="text-lg font-semibold text-gray-800 dark:text-white/90">Latest Jobs</h3>
+    
+      <div class="py-4 overflow-x-auto"> <!-- Added overflow-x-auto here -->
+        <div class="min-w-full inline-block align-middle">
+          <div class="overflow-hidden rounded-lg">
+            <table class="min-w-full border-separate border-spacing-0">
+              <thead class="bg-gray-50 dark:bg-gray-900">
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <a href="{{ url_for('admin_edit_post', job_id=data.JobOpening.id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200">{{ data.JobOpening.job_title }}</a>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.salary }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.job_opening_status }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.status }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300 text-center">{{ data.JobOpening.job_opening_views }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.created_at.split('T')[0] }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.JobOpening.updated_at.split('T')[0] }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-center">
-                    <a href="{{ url_for('job_applicants', job_id=data.JobOpening.id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200">{{ data.applicant_count }}</a>
-                  </td>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
+                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Applicants</th>
                 </tr>
-                {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
+              </thead>
+              <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                {% for data in latest_jobs %}
+                  {% if data.status == 'published' %}
+                  <tr>
+                    <td class="px-6 py-2 whitespace-nowrap">
+                      <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200">{{ data.job_title }}</a>
+                    </td>
+                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.job_opening_status }}</td>
+                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.status | capitalize }}</td>
+                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300 text-center">{{ data.job_opening_views }}</td>
+                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.created_at.split('T')[0] }}</td>
+                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.updated_at.split('T')[0] }}</td>
+                    <td class="px-6 py-2 whitespace-nowrap text-center">
+                      <a href="{{ url_for('job_applicants', job_id=data.id) }}" class="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200">{{ data.applicant_count }}</a>
+                    </td>
+                  </tr>
+                  {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 </div>

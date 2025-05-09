@@ -76,14 +76,15 @@ def load_user(user_id):
                     email=user_from_session.get('email'),
                     company=user_from_session.get('company'),
                     group=user_from_session.get('group'),
-                    profile_picture=user_from_session.get('profile_picture'))
+                    profile_picture=user_from_session.get('profile_picture'),
+                    employer_permissions=user_from_session.get('employer_permissions'))
         return user
     else:
         return None
 
 
 class User(UserMixin):
-    def __init__(self, id, user_id, role, username, email, company, group, profile_picture, firstname=None, lastname=None):
+    def __init__(self, id, user_id, role, username, email, company, group, profile_picture, firstname=None, lastname=None, employer_permissions=None):
         self.user_id = id
         self.id = user_id
         self.role = role
@@ -94,12 +95,13 @@ class User(UserMixin):
         self.company = company
         self.group = group
         self.profile_picture = profile_picture
+        self.employer_permissions = employer_permissions or ''
 
     def has_permission(self, allowed_permissions):
         # Iterate over each item in the allowed permissions list
         for permission in allowed_permissions:
             # Check if the current permission exists in the group's permissions
-            if permission in self.group.get('permissions', []):
+            if permission in self.group.get('permissions', []) + (self.employer_permissions or []):
                 # If a match is found, return True immediately
                 return True
         # If no match was found after iterating through all permissions, return False
@@ -217,9 +219,10 @@ def login():
             company = data.get('company', {})
             group = data.get('group', {})
             profile_picture = data['profile_picture']
+            employer_permissions = data['employer_permissions']
 
             user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
-                        group=group, profile_picture=profile_picture)
+                        group=group, profile_picture=profile_picture, employer_permissions=employer_permissions)
             login_user(user)
             session['user'] = {
                 'id': id,
@@ -232,6 +235,7 @@ def login():
                 'company': company,
                 'group':group,
                 'profile_picture': profile_picture,
+                'employer_permissions': employer_permissions
             }
             next_page = next_page or (url_for('user_dashboard') if user.company else url_for('company_register'))
             print(f"Redirecting to: {next_page}")
@@ -290,9 +294,10 @@ def callback():
     print(profile_picture)
     company = data.get('company', {})
     group = data.get('group', {})
+    employer_permissions = data.get('employer_permissions', [])
 
     user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
-                group=group, profile_picture=profile_picture)
+                group=group, profile_picture=profile_picture, employer_permissions=employer_permissions)
     login_user(user)
     session['user'] = {
         'id': id,
@@ -304,7 +309,8 @@ def callback():
         'email': email,
         'company': company,
         'group': group,
-        'profile_picture': profile_picture
+        'profile_picture': profile_picture,
+        'employer_permissions': employer_permissions
     }
     if current_user.company is not None:
         return redirect(url_for('user_dashboard'))
@@ -1121,7 +1127,7 @@ def admin_all_jobs():
 
 
 @app.route('/user/job-openings')
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_manage_jobs")
 @login_required
 def user_all_post():
     result = api_calls.get_user_all_job_openings(access_token=current_user.id)
@@ -1131,7 +1137,7 @@ def user_all_post():
     return render_template('user_all_post.html', result=result)
 #['applied', 'shortlisted', 'assessment', 'interview', 'rejected', 'selected']
 @app.route('/user/job/applicants/<job_id>')
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def job_applicants(job_id):
     result = api_calls.get_job_applicants(access_token=current_user.id, job_id=job_id)
@@ -1149,7 +1155,7 @@ def job_applicants(job_id):
 
 
 @app.route('/applicant-tracking')
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def all_applicants():
     job_types = static_dropdowns.job_types
@@ -1322,7 +1328,7 @@ def admin_delete_job(job_id):
 
 
 @app.route("/user/delete-job/<job_id>", methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_manage_jobs")
 @login_required
 def user_delete_job(job_id):
     result = api_calls.delete_job_opening(job_id=job_id, access_token=current_user.id)
@@ -1336,7 +1342,7 @@ def user_delete_job(job_id):
 
 
 @app.route('/jobs/add-job', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_manage_jobs")
 @login_required
 def add_post():
     form = forms.AddJobOpening()
@@ -1529,7 +1535,7 @@ def generate_ai_content():
 
 
 @app.route('/posts/preview-post', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_manage_job")
 @login_required
 def preview_post():
     date_obj = datetime.utcnow()
@@ -1830,7 +1836,7 @@ def preview_post():
 #
 
 @app.route('/job-openings/<job_id>', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_manage_jobs")
 def admin_edit_post(job_id):
     job_opening = api_calls.get_job(job_id=job_id)
     date_format = '%Y-%m-%dT%H:%M:%S%z'
@@ -3227,7 +3233,7 @@ def jobseeker_applications():
 
 
 @app.route('/update-application-status', methods=['GET','POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def update_application_status():
     item_id = request.json['id']
@@ -3239,7 +3245,7 @@ def update_application_status():
 
 
 @app.route('/setup-applicant-tracking')
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def applicant_tracking():
     result = api_calls.get_board_columns(access_token=current_user.id)
@@ -3250,7 +3256,7 @@ def applicant_tracking():
 
 
 @app.route('/setup-applicant-tracking/create', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def create_applicant_tracker():
     form = forms.AddTrackers()
@@ -3270,7 +3276,7 @@ def create_applicant_tracker():
     return render_template('cms/job_openings/add_applicant_tracker.html', form=form)
 
 @app.route('/setup-applicant-tracking/delete/<id>', methods=['GET', 'POST'])
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_track_applicants")
 @login_required
 def delete_applicant_tracker(id):
     result = api_calls.delete_application_tracker(tracker_id=id, access_token=current_user.id)
@@ -4068,7 +4074,7 @@ def admin_stats():
 
 
 @app.route('/reports')
-@requires_any_permission("manage_posts")
+@requires_any_permission("can_view_analytics")
 @login_required
 def employer_reports():
     stats = api_calls.get_employer_reports(access_token=current_user.id) or {}
@@ -4804,6 +4810,71 @@ def subscribe_newsletter():
         return jsonify("success"),200
     except Exception as e:
         return jsonify({"error": str(e)})
+
+
+############################################## TEAM MANAGEMENT #####################################################################
+
+@app.route('/my-team', methods=['GET', 'POST'])
+@requires_any_permission("can_manage_team")
+@login_required
+def my_team():
+    try: 
+        team_members = api_calls.read_team_members(access_token=current_user.id)
+    except:
+        team_members = []
+
+    if request.method == 'POST':
+        # Extracting multiple members if the form supports it
+        firstname = request.form.get('first-name')
+        lastname = request.form.get('last-name')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        permissions = {
+            'can_manage_jobs': bool(request.form.get('can_manage_jobs')),
+            'can_view_analytics': bool(request.form.get('can_view_analytics')),
+            'can_track_applicants': bool(request.form.get('can_track_applicants')),
+            'can_manage_company': bool(request.form.get('can_manage_company')),
+            'can_manage_team': bool(request.form.get('can_manage_team')),
+        }
+
+        member = {
+            'user': {
+                'firstname': firstname,
+                'lastname': lastname,
+                'email': email,
+                'password': password
+            },
+            'permissions': permissions
+        }
+        result = api_calls.add_team_members(access_token=current_user.id, members=[member])  # wrap in list
+        if result:
+            return redirect(url_for('my_team'))
+    return render_template('cms/employer/my_team.html', team_members=team_members)
+
+
+@app.route('/update-permissions', methods=['POST'])
+def update_permissions():
+    user_id = request.form.get('user_id')
+    permissions = [
+        'can_manage_jobs',
+        'can_view_analytics',
+        'can_track_applicants',
+        'can_manage_company',
+        'can_manage_team'
+    ]
+
+    # Set each permission based on checkbox presence (HTML only sends checked ones)
+    permissions_dict = {
+        perm: perm in request.form
+        for perm in permissions
+}
+
+    print(permissions_dict)
+
+    result = api_calls.update_team_members(access_token=current_user.id, permissions=permissions_dict, user_id=user_id)
+
+    return redirect(url_for('my_team'))
 
 
 #####################################################################################################################################

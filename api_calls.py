@@ -1025,7 +1025,7 @@ def get_user_all_job_openings(access_token, maximum_posts: int = None):
         "maximum_posts": maximum_posts
     }
     try:
-        response = requests.get(constants.BASE_URL + f'/user-all-job_openings', params=params, headers=headers)
+        response = requests.get(constants.BASE_URL + f'/company-all-job_openings', params=params, headers=headers)
         print("Response Status Code:", response.status_code)  # Debug: Print status code
         if response.status_code == 200:
             result = response.json()
@@ -3666,3 +3666,59 @@ def subscribe_newsletter(email):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+
+
+def add_team_members(access_token, members):
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = requests.post(constants.BASE_URL + '/team/create', json=members, headers=headers)
+        print("Response Status Code:", response.status_code)
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)
+            return result
+        else:
+            print("API Error:", response.text)
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+
+def read_team_members(access_token):
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = requests.get(constants.BASE_URL + '/team/members', headers=headers)
+        print("Response Status Code:", response.status_code)
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)
+            return result
+        else:
+            print("API Error:", response.text)
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+
+
+def update_team_members(access_token, user_id, permissions):
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = requests.put(constants.BASE_URL + f'/team/update-permissions/{user_id}', json=permissions, headers=headers)
+        print("Response Status Code:", response.status_code)
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)
+            return result
+        else:
+            print("API Error:", response.text)
+    except requests.exceptions.RequestException as err:
+        print(f"Request error: {err}")
+
+
