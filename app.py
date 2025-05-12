@@ -32,15 +32,15 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SERVER_NAME'] = 'hiregen.com'
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
-# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -539,7 +539,6 @@ def list_of_users():
 
     if response.status_code == 200:
         users = response.json()
-
     else:
         abort(response.status_code)
 
@@ -2351,8 +2350,8 @@ def delete_media(media_id):
 #     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
 
 
-@app.route('/jobs/<job_date>/<job_slug>', subdomain='<company_subdomain>', methods=['GET', 'POST'])
-def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug):
+@app.route('/jobs/<job_slug>', subdomain='<company_subdomain>', methods=['GET', 'POST'])
+def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
     access_token = current_user.id if current_user.is_authenticated else None
 
     job_details = api_calls.get_job_by_company_subdomain_slug(
@@ -2370,9 +2369,9 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_date, job_slug
             flash('Job application submitted successfully!', 'success')
         else:
             flash('Failed to apply for the job. Please try again.', 'error')
-        return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_date=job_date, job_slug=job_slug))
+        return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_slug=job_slug))
 
-    return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
+    return render_template('post.html',job_details=job_details, job_id=id, job_slug=job_slug, form=apply_form)
 
 
 ###################################form builder################

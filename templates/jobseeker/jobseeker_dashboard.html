@@ -57,7 +57,7 @@
     {% if recommendations %}
     {% for job, similarity_score in recommendations %}
 <div>
-  <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_date=job.created_at.split('T')[0], job_slug=job.slug) }}" class="block">
+  <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain,job_slug=job.slug) }}" class="block">
     <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
       <div class="p-4">
 

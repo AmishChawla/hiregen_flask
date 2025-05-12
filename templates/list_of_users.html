@@ -76,8 +76,8 @@ table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
               </td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ row.email }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                {% if row["company"] %}
-                <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=row['company'][0]['company_subdomain']) }}" class="text-indigo-blue hover:text-blue-900">{{ row["company"][0]["name"] }}</a>
+                {% if row["_company"] %}
+                <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=row['_company']['company_subdomain']) }}" class="text-indigo-blue hover:text-blue-900">{{ row["_company"]["name"] }}</a>
                 {% else %}
                 Not Registered
                 {% endif %}

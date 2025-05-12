@@ -95,12 +95,15 @@
             </div>
         </div>
         <div class="flex items-center text-grey-darker">
+          {% if job_posts %}
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
           class="bi bi-briefcase mt-1" viewBox="0 0 16 16">
           <path
             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z" />
         </svg>
+        
             <span><strong class="text-black ml-2">{{ job_posts | length }}</strong> Jobs</span>
+        {%endif%}
         </div>
     </div>
     <div class="px-4 py-4">
@@ -115,14 +118,14 @@
                 <div class="inline-block min-w-full py-0 align-middle sm:px-6 lg:px-8">
                   <table class="min-w-full divide-y divide-gray-300">
                     <tbody class="divide-y divide-gray-200 bg-white">
-                      {% if job_posts and job_posts|length > 0 %}
+                      {% if job_posts %}
 
                       {% for data in job_posts %}
                     <tr class="hover:bg-white-50 hover:cursor-pointer">
                         <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                           <div class="flex items-center">
                             <div class="">
-                              <div class="text-lg font-medium text-gray-900"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+                              <div class="text-lg font-medium text-gray-900"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}"
                                 class="dark:text-blue-400 hover:text-blue-600 hover:underline">
                                 {{ data.job_title }}
                             </a></div>
@@ -135,12 +138,12 @@
                           <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
                         </svg> <span data-date="{{ data.created_at }}"></span></td>
                         <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                          <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}" class="rounded-2xl bg-slate-600 py-2 px-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-slate-500">Apply</a>
+                          <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}" class="rounded-2xl bg-slate-600 py-2 px-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-slate-500">Apply</a>
                         </td>
                     </tr>
                     {% endfor %}
                     {% else %}
-                    <p class="text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
+                    <p class="mt-4 text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
                     {% endif %}
                       <!-- More people... -->
                     </tbody>

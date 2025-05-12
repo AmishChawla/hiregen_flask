@@ -40,7 +40,7 @@
           {% if data.status == 'published' %}
           <tr class="hover:bg-gray-50">
             <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-              <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+              <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}"
                  class="text-blue-700 hover:text-blue-900 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
                 <img src="{{ data.company_logo }}" class="h-4 w-4 rounded-full" alt="logo">
                 <span class="truncate">{{ data.job_title }}</span>
@@ -187,7 +187,7 @@
           {% if data.status == 'draft' %}
           <tr class="hover:bg-gray-50">
             <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
-              <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_date=data.created_at.split('T')[0], job_slug=data.slug) }}"
+              <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}"
                  class="text-blue-700 hover:text-blue-900 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
                 <img src="{{ data.company_logo }}" class="h-4 w-4 rounded-full" alt="logo">
                 <span class="truncate">{{ data.job_title }}</span>
