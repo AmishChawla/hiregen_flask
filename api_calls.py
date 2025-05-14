@@ -3053,14 +3053,16 @@ def get_jobseeker_recommendations(jobs_count, access_token: str):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_filtered_jobs(country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None):
+def get_filtered_jobs(country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None, skip:int = 0, limit:int=10):
     params = {
         'keyword': keyword,
         'address_country': country,
         'address_province': state,
         'job_type': job_type,
         'industry': industry,
-        'date_filter': date_filter
+        'date_filter': date_filter,
+        'skip':skip,
+        'limit':limit
     }
     try:
         response = requests.get(constants.BASE_URL + f'/jobs/filter/', params=params)
@@ -3089,6 +3091,8 @@ def get_filtered_applicants(params):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+
+
 
 def get_filtered_applicants_for_employer(params, access_token):
     headers = {'Authorization': f'Bearer {access_token}'}

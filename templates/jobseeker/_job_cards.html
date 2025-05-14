@@ -1,0 +1,24 @@
+{# jobseeker/_job_cards.html #}
+{% for job in jobs %}
+<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}"
+   class="block rounded-2xl border mb-3 border-gray-200 bg-white p-5 hover:shadow-lg transition">
+    <div class="flex justify-between items-center">
+        <div class="flex items-start space-x-4">
+            <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo"
+                 class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800">{{ job.job_title }}</h2>
+                <div class="mt-2 text-gray-600 text-sm">
+                    <span class="me-6 text-sm text-gray-500">{{ job.salary }}</span>
+                    <span class="me-6 text-sm text-gray-500">{{ job.job_type }}</span>
+                    <span class="text-sm text-gray-500">{{ job.industry }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="text-right text-gray-600 text-sm">
+            <span class="me-6">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
+            <span class="text-gray-500">{{ job.opening_date.split('T')[0] }}</span>
+        </div>
+    </div>
+</a>
+{% endfor %}

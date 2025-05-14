@@ -3634,30 +3634,50 @@ def jobs_search():
     jobs=[]
 
 
-    if request.method == 'GET':
-        # Extract query parameters
-        country = request.args.get('country')
-        state = request.args.get('state')
-        job_type = request.args.get('job_type')
-        industry = request.args.get('industry')
-        date_filter = request.args.get('date_filter')
-        keyword = request.args.get('keyword')
+    country = request.args.get('country')
+    state = request.args.get('state')
+    job_type = request.args.get('job_type')
+    industry = request.args.get('industry')
+    date_filter = request.args.get('date_filter')
+    keyword = request.args.get('keyword')
 
-        prefilled_data = {
-            'keyword': keyword,
-            'country': country,
-            'state': state,
-            'job_type': job_type,
-            'industry': industry,
-            'date_filter': date_filter
-        }
+    # Pagination via skip and limit
+    limit = int(request.args.get('limit', 10))
+    skip = int(request.args.get('skip', 0))
 
+    prefilled_data = {
+        'keyword': keyword,
+        'country': country,
+        'state': state,
+        'job_type': job_type,
+        'industry': industry,
+        'date_filter': date_filter
+    }
 
-        # if country or state or job_type or industry or date_filter or keyword:
-        jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
-        print(jobs)
+    jobs = api_calls.get_filtered_jobs(
+        country=country,
+        state=state,
+        job_type=job_type,
+        industry=industry,
+        date_filter=date_filter,
+        keyword=keyword,
+        skip=skip,
+        limit=limit
+    )
+    # Return JSON if AJAX
+    if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+        html = render_template('jobseeker/_job_cards.html', jobs=jobs)
+        return html
+    
 
-    return render_template('jobseeker/jobs_search_2.html', countries=countries, job_types=job_types, industries=industries, jobs=jobs, prefilled_data=prefilled_data)
+    return render_template(
+        'jobseeker/jobs_search_2.html',
+        countries=countries,
+        job_types=job_types,
+        industries=industries,
+        jobs=jobs,
+        prefilled_data=prefilled_data
+    )
 
 
 

@@ -73,39 +73,68 @@
             </div>
         </form>
     <div>
-    <div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="job-results-container" class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 class="text-base text-gray-600 dark:text-white mb-4">1053 jobs found</h1>
-        {% for job in jobs %}
-<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}"
-   class="block rounded-2xl border mb-3 border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-4 hover:shadow-lg transition">
-
-    <div class="flex justify-between items-center">
-        <!-- Left Side: Logo + Job Title + Salary/Type/Industry -->
-        <div class="flex items-start space-x-4">
-            <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo" class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
-            <div>
-                <h2 class="text-xl font-semibold text-gray-800">{{ job.job_title }}</h2>
-                <div class="mt-2 text-gray-600 text-sm">
-                    <span class="me-6 text-sm text-gray-500 dark:text-gray-400">{{ job.salary }}</span>
-                    <span class="me-6 text-sm text-gray-500 dark:text-gray-400">{{ job.job_type }}</span>
-                    <span class="text-sm text-gray-500 dark:text-gray-400">{{ job.industry }}</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Side: Location & Date -->
-        <div class="text-right text-gray-600 text-sm">
-            <span class="me-6">{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
-            <span class="text-gray-500">{{ job.opening_date.split('T')[0] }}</span>
-        </div>
+        {% include 'jobseeker/_job_cards.html' %}
     </div>
-</a>
-    {% endfor %}
-    </div>
+    <div id="loading-indicator" class="text-center my-4 text-gray-500 hidden">Loading more jobs...</div>
+
     </div>
     <!--Right Sidebar -->
 </div>
 </div>
 </div>
 </div>
+
+
+<script>
+let isLoading = false;
+let skip = 10; // already loaded initial 10 from server
+const limit = 10;
+
+window.addEventListener('scroll', async () => {
+    if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        !isLoading
+    ) {
+        isLoading = true;
+
+        const baseUrl = new URL(window.location.href);
+        const params = new URLSearchParams(baseUrl.search);
+
+        // Append pagination
+        params.set('skip', skip);
+        params.set('limit', limit);
+
+        const url = `${baseUrl.pathname}?${params.toString()}`;
+
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            if (response.ok) {
+    const html = await response.text();
+
+    if (!html.trim()) {
+        console.log('No more jobs to load.');
+        return; // No more jobs
+    }
+
+    const jobContainer = document.getElementById('job-results-container');
+    jobContainer.insertAdjacentHTML('beforeend', html);
+
+    skip += limit;
+    isLoading = false;
+} else {
+    console.error('Failed to fetch jobs');
+}        } catch (error) {
+            console.error('Error fetching jobs:', error);
+        }
+    }
+});
+    </script>
+    
 {% endblock %}
