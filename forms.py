@@ -629,8 +629,19 @@ class AddTrackers(FlaskForm):
 ################################################# JOBSEEKER FORMS ########################################################
 
 class AboutForm(FlaskForm):
-    about = TextAreaField('About', validators=[validators.DataRequired()])
+    about = TextAreaField('About', validators=[DataRequired()])
+
+    # New fields
+    address_city = StringField('City', validators=[Optional()])
+    address_province = StringField('Province', validators=[Optional()])
+    address_county = StringField('County', validators=[Optional()])
+    languages = StringField('Languages (comma-separated)', validators=[Optional()])
+    linkedin = StringField('LinkedIn URL', validators=[Optional(), URL()])
+    github = StringField('GitHub URL', validators=[Optional(), URL()])
+    portfolio_website = StringField('Portfolio Website', validators=[Optional(), URL()])
+    instagram = StringField('Instagram URL', validators=[Optional(), URL()])
     submit = SubmitField('Add About Me')
+
 
 class EducationForm(FlaskForm):
     institution_name = StringField('Institution Name', validators=[DataRequired()])

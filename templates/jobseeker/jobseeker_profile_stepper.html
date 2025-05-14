@@ -224,11 +224,63 @@
 
       <div class="mt-4">
         {{ about_form.hidden_tag() }}
-        <!-- <label for="about" class="block text-sm font-medium text-gray-900">About</label> -->
+      
+        <!-- About -->
         {{ about_form.about(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 h-24 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
-        <p class="mt-1 text-sm text-gray-400">This information will be displayed publicly.</p>
+      
+        <!-- Address City -->
+        <div class="mt-4">
+          {{ about_form.address_city.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.address_city(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- Address Province -->
+        <div class="mt-4">
+          {{ about_form.address_province.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.address_province(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- Address County -->
+        <div class="mt-4">
+          {{ about_form.address_county.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.address_county(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- Languages -->
+        <div class="mt-4">
+          {{ about_form.languages.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.languages(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          <p class="mt-1 text-sm text-gray-400">Enter multiple languages separated by commas.</p>
+        </div>
+      
+        <!-- LinkedIn -->
+        <div class="mt-4">
+          {{ about_form.linkedin.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.linkedin(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- GitHub -->
+        <div class="mt-4">
+          {{ about_form.github.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.github(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- Portfolio Website -->
+        <div class="mt-4">
+          {{ about_form.portfolio_website.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.portfolio_website(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+      
+        <!-- Instagram -->
+        <div class="mt-4">
+          {{ about_form.instagram.label(class_="block text-sm font-medium text-gray-900") }}
+          {{ about_form.instagram(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        </div>
+
+        <p class="mt-3 text-sm text-gray-400">This information will be displayed publicly.</p>
+
       </div>
-    </div>
+        </div>
     <div class="mt-6 flex justify-end">
       <button type="button" class="next rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Next</button>
     </div>
@@ -710,6 +762,14 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
 
   // Step 1: About
   rawData.about = document.querySelector('#step-1 textarea[name="about"]')?.value.trim() || '';
+  rawData.address_city = document.querySelector('#step-1 input[name="address_city"]')?.value.trim() || '';
+  rawData.address_province = document.querySelector('#step-1 input[name="address_province"]')?.value.trim() || '';
+  rawData.address_county = document.querySelector('#step-1 input[name="address_county"]')?.value.trim() || '';
+  rawData.languages = document.querySelector('#step-1 input[name="languages"]')?.value.trim() || '';
+  rawData.linkedin = document.querySelector('#step-1 input[name="linkedin"]')?.value.trim() || '';
+  rawData.github = document.querySelector('#step-1 input[name="github"]')?.value.trim() || '';
+  rawData.portfolio_website = document.querySelector('#step-1 input[name="portfolio_website"]')?.value.trim() || '';
+  rawData.instagram = document.querySelector('#step-1 input[name="instagram"]')?.value.trim() || '';
 
   // Step 2: Education
   rawData.education = collectRepeatedFields('education-container', [
@@ -852,6 +912,40 @@ if (rawData.industry_keywords) {
 if (rawData.leadership_keywords) {
   finalData.leadership_keywords = rawData.leadership_keywords.split(',').map(keyword => keyword.trim());
 }
+
+// (H) Address & Contact Details
+if (rawData.address_city) {
+  finalData.address_city = rawData.address_city;
+}
+if (rawData.address_province) {
+  finalData.address_province = rawData.address_province;
+}
+if (rawData.address_county) {
+  finalData.address_county = rawData.address_county;
+}
+
+// (I) Languages
+if (rawData.languages) {
+  finalData.languages = rawData.languages
+    .split(',')
+    .map(lang => lang.trim())
+    .filter(Boolean);
+}
+
+// (J) Social Links
+if (rawData.linkedin) {
+  finalData.linkedin = rawData.linkedin;
+}
+if (rawData.github) {
+  finalData.github = rawData.github;
+}
+if (rawData.portfolio_website) {
+  finalData.portfolio_website = rawData.portfolio_website;
+}
+if (rawData.instagram) {
+  finalData.instagram = rawData.instagram;
+}
+
 
   // 3. Convert finalData to JSON string
   const jsonPayload = JSON.stringify(finalData);
