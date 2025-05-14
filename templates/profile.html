@@ -243,39 +243,47 @@
 </script>
 
 <script>
-    // Profile Picture Preview (background)
-    const profileInput = document.getElementById("{{ form.profile_picture.id }}");
-    const profileBg = document.querySelector(".bg-cover");
+let profileInput = document.getElementById("{{ form.profile_picture.id }}");
+let profileBg = document.querySelector(".bg-cover");
 
-    if (profileInput) {
-        profileInput.addEventListener("change", function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    profileBg.style.backgroundImage = `url('${event.target.result}')`;
-                };
-                reader.readAsDataURL(file);
+if (profileInput) {
+    profileInput.addEventListener("change", function (e) {
+        let file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Profile picture must be less than 2MB.");
+                profileInput.value = "";
+                return;
             }
-        });
-    }
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                profileBg.style.backgroundImage = `url('${event.target.result}')`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
-    // Company Logo Preview (circular img)
-    const companyLogoInput = document.getElementById("{{ form.company_logo.id }}");
-    const companyLogoImg = document.getElementById("profile_picture_img");
+let companyLogoInput = document.getElementById("{{ form.company_logo.id }}");
+let companyLogoImg = document.getElementById("profile_picture_img");
 
-    if (companyLogoInput) {
-        companyLogoInput.addEventListener("change", function (e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (event) {
-                    companyLogoImg.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
+if (companyLogoInput) {
+    companyLogoInput.addEventListener("change", function (e) {
+        let file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) {
+                alert("Company logo must be less than 2MB.");
+                companyLogoInput.value = "";
+                return;
             }
-        });
-    }
+            let reader = new FileReader();
+            reader.onload = function (event) {
+                companyLogoImg.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
 </script>
 
 {% endblock %}
