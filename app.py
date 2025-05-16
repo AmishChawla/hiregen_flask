@@ -503,6 +503,7 @@ def profile():
             print(profile_picture_path)
             profile_picture.save(profile_picture_path)
             profile_picture = (profile_picture_filename, open(profile_picture_path, 'rb'))
+            
 
 
         company_logo = form.company_logo.data or None
@@ -518,6 +519,12 @@ def profile():
         response = api_calls.update_user_profile(token=current_user.id, firstname=profile_data.get('firstname'),lastname=profile_data.get('lastname'),phone_number=profile_data.get('phone_number'),username=profile_data.get('username'),email=profile_data.get('email'),profile_picture=profile_picture,company_name=profile_data.get('company_name'),company_location=profile_data.get('company_location'),company_website=profile_data.get('company_website'),company_description=profile_data.get('company_description'),company_logo=company_logo)
 
         if response.status_code == 200:
+            response=response.json()
+            session['user']['profile_picture'] = response['user']['profile_picture']
+            if response['company']:
+                session['user']['company']['company_logo'] = response['company']['company_logo']
+            session.modified = True
+
             flash('Profile updated successfully!', 'success')
             return redirect(url_for('profile'))
         else:
@@ -3435,6 +3442,9 @@ def collect_jobseeker_profile_picture():
         payload = {'profile_picture': (filename, open(file_path, 'rb'))}
 
         res = api_calls.update_basic_info(profile_picture=payload, access_token=current_user.id)
+        session['user']['profile_picture'] = res['data']['profile_picture']
+        session.modified = True
+
         if res:
             current_user.profile_picture = constants.BASE_URL+'/'+file_path
             print(current_user.profile_picture)
@@ -3654,7 +3664,7 @@ def jobs_search():
         'date_filter': date_filter
     }
 
-    jobs = api_calls.get_filtered_jobs(
+    search = api_calls.get_filtered_jobs(
         country=country,
         state=state,
         job_type=job_type,
@@ -3664,6 +3674,8 @@ def jobs_search():
         skip=skip,
         limit=limit
     )
+    jobs = search['jobs']
+    total_job_count = search['total_jobs']
     # Return JSON if AJAX
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         html = render_template('jobseeker/_job_cards.html', jobs=jobs)
@@ -3676,6 +3688,7 @@ def jobs_search():
         job_types=job_types,
         industries=industries,
         jobs=jobs,
+        total_job_count=total_job_count,
         prefilled_data=prefilled_data
     )
 
