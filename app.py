@@ -5,6 +5,7 @@ import os
 from io import StringIO, BytesIO
 import csv
 import ast
+import tempfile
 import PyPDF2
 import stripe as stripe
 from flask import Flask, render_template, redirect, url_for, flash, request, session, send_file, jsonify,g ,Response,send_from_directory,abort
@@ -53,6 +54,9 @@ os.makedirs(media_folder, exist_ok=True)
 
 profile_pictures_folder = 'profile_pictures/'
 os.makedirs(profile_pictures_folder, exist_ok=True)
+
+temp_folder = 'tmp/'
+os.makedirs(temp_folder, exist_ok=True)
 
 password_reset_token = ""
 
@@ -4923,6 +4927,169 @@ def update_permissions():
     result = api_calls.update_team_members(access_token=current_user.id, permissions=permissions_dict, user_id=user_id)
 
     return redirect(url_for('my_team'))
+
+
+############################################# AI INTERVIEW MODULE ################################################################
+import whisper
+
+
+model = whisper.load_model("base")
+
+@app.route("/ai/interview")
+def ai_interview_tool():
+    return render_template("/AI_tools/ai_interview_tool.html")
+
+
+@app.route("/ai/interview/get_first_question")
+def get_first_question():
+    chat_history = session.get("chat_history")
+    response = openai.chat.completions.create(
+        model="gpt-4",
+        messages=chat_history,
+        max_tokens=300,
+        temperature=0.7,
+        presence_penalty=0.6,
+        frequency_penalty=0.3,
+    )
+    reply = response.choices[0].message.content.strip()
+    session["chat_history"].append({"role": "assistant", "content": reply})
+    return jsonify({"question": reply})
+
+@app.route("/ai/interview/transcribe", methods=["POST"])
+def transcribe():
+    if "audio_data" not in request.files:
+        return jsonify({"error": "No audio file provided"}), 400
+    
+    audio_file = request.files["audio_data"]
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+        audio_file.save(tmp.name)
+        result = model.transcribe(tmp.name)
+    os.unlink(tmp.name)
+
+    user_text = result["text"].strip()
+    # Add user message to chat history
+    session["chat_history"].append({"role": "user", "content": user_text})
+    return jsonify({"transcript": user_text})
+
+@app.route("/ai/interview/get_ai_question")
+def get_ai_question():
+    chat_history = session.get("chat_history")
+    response = openai.chat.completions.create(
+        model="gpt-4",
+        messages=chat_history,
+        max_tokens=300,
+        temperature=0.7,
+        presence_penalty=0.6,
+        frequency_penalty=0.3,
+    )
+    reply = response.choices[0].message.content.strip()
+    # Truncate multiple questions if needed
+    if "\n" in reply:
+        reply = reply.split("\n")[0].strip()
+    session["chat_history"].append({"role": "assistant", "content": reply})
+
+    session["interaction_count"] = session.get("interaction_count", 0) + 1
+    max_interactions = 6
+    end_interview = session["interaction_count"] >= max_interactions or "thank you" in reply.lower()
+
+    return jsonify({"question": reply, "end_interview": end_interview})
+
+@app.route("/ai/interview/final_evaluation")
+def final_evaluation():
+    session_id = session.get("session_id")
+    if not session_id:
+        return jsonify({"error": "Missing session ID"}), 400
+
+    try:
+        with open(f"/tmp/{session_id}_job.txt", "r") as f:
+            job = f.read()
+    except FileNotFoundError:
+        return jsonify({"error": "Job description not found"}), 400
+
+    chat_history = session.get("chat_history")
+    transcript = "\n".join(
+        f"{'Interviewer' if m['role']=='assistant' else 'Candidate'}: {m['content']}" 
+        for m in chat_history if m["role"] != "system"
+    )
+    evaluation_prompt = (
+        "You are a highly skilled AI interviewer and talent assessor. Using the following information, provide a comprehensive and thoughtful evaluation of the candidate. "
+        "Analyze their strengths, areas for improvement, communication skills, cultural and role fit, and potential for growth within the organization. "
+        "Ground your assessment explicitly in the context of the provided job description, candidate's resume and Interview Transcript. "
+        "Conclude with a clear hiring recommendation from this scale: Strong Hire, Hire, Consider with Reservations, or No Hire.\n\n"
+        f"Job Description:\n{job}\n\n"
+        f"Complete Interview Transcript:\n{transcript}\n\n"
+        "Present your evaluation in a structured format with distinct sections for Strengths, Weaknesses, Communication Skills, Role Fit, and Final Recommendation."
+    )
+    response = openai.chat.completions.create(
+        model="gpt-4",
+        messages=[{"role": "system", "content": "You are a professional HR evaluator."}, {"role": "user", "content": evaluation_prompt}],
+        max_tokens=400,
+        temperature=0.7,
+    )
+    evaluation = response.choices[0].message.content.strip()
+    return jsonify({"evaluation": evaluation})
+
+@app.route("/ai/interview/upload_context", methods=["POST"])
+def upload_context():
+    job_file = request.files.get("job_description")
+    resume_file = request.files.get("resume")
+
+    if not job_file or not resume_file:
+        return jsonify({"success": False, "error": "Missing files"}), 400
+
+    # Create a session ID if not exists
+    if "session_id" not in session:
+        session["session_id"] = str(uuid.uuid4())
+
+    session_id = session["session_id"]
+
+    # Save the files
+    job_path = f"{temp_folder}/{session_id}_job.txt"
+    resume_path = f"{temp_folder}/{session_id}_resume.txt"
+    job_file.save(job_path)
+    resume_file.save(resume_path)
+
+    # Read the content
+    try:
+        with open(job_path, "r") as f:
+            job = f.read()
+        with open(resume_path, "r") as f:
+            resume = f.read()
+    except Exception as e:
+        return jsonify({"success": False, "error": "File read error"}), 500
+
+    # Construct system prompt
+    system_prompt = (
+        "You are an AI Interviewer trained to conduct professional, structured job interviews.\n"
+        "Your role is to evaluate candidates based on their resume and the provided job description.\n"
+        "Follow these guidelines strictly:\n\n"
+        "1. Ask only **one question at a time**. Keep questions focused, specific, and relevant.\n"
+        "2. Begin the interview with a high-level question about the candidate’s background or experience related to the role.\n"
+        "3. After each answer, ask a thoughtful **follow-up question** that builds naturally from the candidate’s response, the job description, and the resume.\n"
+        "4. Use professional, respectful, and concise language.\n"
+        "5. Do not ask multiple questions in a single turn.\n"
+        "6. Avoid generic or vague questions—tailor each one specifically to the role and candidate’s profile.\n"
+        "7. Continue this interview loop until explicitly told to stop.\n"
+        "8. Do not summarize, explain, or justify your questions—just ask them.\n"
+        "9. Do not roleplay as anyone other than the AI Interviewer.\n\n"
+        f"=== JOB DESCRIPTION ===\n{job}\n\n"
+        f"=== CANDIDATE RESUME ===\n{resume}\n\n"
+        "Begin by asking your first interview question."
+    )
+
+    # Save context in session
+    session["chat_history"] = [{"role": "system", "content": system_prompt}]
+    session["interaction_count"] = 0
+
+    return jsonify({"success": True})
+
+
+
+
+
+
+
+
 
 
 #####################################################################################################################################
