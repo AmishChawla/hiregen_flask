@@ -6,25 +6,25 @@
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
 
 <div class="">
-    <div class="min-h-screen py-6">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen py-0">
+      <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
         <div class="flex justify-between items-center mb-6">
             <div>
                 <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Posts</h1>
             </div>
             <div>
-                <a href="{{ url_for('add_cms_post') }}" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <a href="{{ url_for('add_cms_post') }}" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
                     New Post
                 </a>
             </div>
         </div>
 
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
             <div class="flow-root">
             <div class="hidden sm:block">
                 <div class="border-b border-gray-200 mb-6">
                     <nav class="-mb-px flex space-x-8" id="postTabs">
-                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-blue-500 px-1 py-4 text-sm font-medium text-blue-600" id="published-tab">Published</a>
+                        <a href="#published-posts" class="whitespace-nowrap border-b-2 border-purple-300 px-1 py-4 text-sm font-medium text-purple-500" id="published-tab">Published</a>
                         <a href="#draft-posts" class="whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium text-gray-500 hover:text-gray-700" id="drafts-tab">Drafts</a>
                     </nav>
                 </div>
@@ -32,31 +32,36 @@
 
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
                     <div id="published-posts" class="inline-block min-w-full align-middle">
-                    <table id="publishedTable" class="min-w-full border-separate border-spacing-0">
+                    <table id="publishedTable" class="min-w-full borderseparate border-spacing-0">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Title</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Author</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Category</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Tags</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Views</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Created Date</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
+                            <th class="table-header rounded-tl-lg">Title</th>
+                            <th class="table-header">Author</th>
+                            <th class="table-header">Category</th>
+                            <th class="table-header">Tags</th>
+                            <th class="table-header">Views</th>
+                            <th class="table-header">Created Date</th>
+                            <th class="table-header">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
                         {% for data in result %}
                         {%  if data.status == 'published' %}
                         <tr class="hover:bg-gray-50">
-                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><a href="{{ url_for('read_post', slug=data.slug) }}" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                                <div class="flex items-center space-x-2">
+                                <img src="/static/images/man.png" alt="Profile" class="h-10 w-10 rounded-full object-cover border border-purple-100">
+                                <a href="{{ url_for('read_post', slug=data.slug) }}" class="text-purple500 hover:underline">{{ data.title }}</a>
+                                </div>
+                            </td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.username }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.category_name }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.post_views }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-red-600 hover:text-red-800">Delete</button>
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-purple-400 hover:text-purple-500 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-purple-400 hover:text-purple-500">Delete</button>
                             </td>
                         </tr>
                         {% endif %}
@@ -70,26 +75,26 @@
                 <table id="draftTable" class="min-w-full divide-y divide-gray-300">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Title</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Author</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Category</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Tags</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Created Date</th>
-                            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
+                            <th class="table-header rounded-tl-lg">Title</th>
+                            <th class="table-header">Author</th>
+                            <th class="table-header">Category</th>
+                            <th class="table-header">Tags</th>
+                            <th class="table-header">Created Date</th>
+                            <th class="table-header">Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
                         {% for data in result if data.status == 'draft' %}
                         {%  if data.status == 'draft' %}
                         <tr>
-                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><a href="#" class="text-blue-600 hover:underline">{{ data.title }}</a></td>
+                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><a href="#" class="text-purple500 hover:underline">{{ data.title }}</a></td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.username }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.category_name }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
                             <td class="px-4 py-2 text-sm">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-green-600 hover:text-green-800 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-red-600 hover:text-red-800">Delete</button>
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-purple-400 hover:text-purple-500 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-purple-400 hover:text-purple-500">Delete</button>
                             </td>
                         </tr>
                         {% endif %}
@@ -141,15 +146,15 @@
         const draftTable = document.getElementById('draft-posts');
 
         publishedTab.addEventListener('click', () => {
-            publishedTab.classList.add('text-blue-600', 'border-blue-500');
-            draftsTab.classList.remove('text-blue-600', 'border-blue-500');
+            publishedTab.classList.add('text-purple-500', 'border-purple-300');
+            draftsTab.classList.remove('text-purple-500', 'border-purple-300');
             publishedTable.classList.remove('hidden');
             draftTable.classList.add('hidden');
         });
 
         draftsTab.addEventListener('click', () => {
-            draftsTab.classList.add('text-blue-600', 'border-blue-500');
-            publishedTab.classList.remove('text-blue-600', 'border-blue-500');
+            draftsTab.classList.add('text-purple-500', 'border-purple-300');
+            publishedTab.classList.remove('text-purple-500', 'border-purple-300');
             draftTable.classList.remove('hidden');
             publishedTable.classList.add('hidden');
         });

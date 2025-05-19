@@ -6,21 +6,21 @@
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
 
 <div class="py-6 px-4 sm:px-6 lg:px-8">
-    <div class="min-h-screen py-6">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen py-0">
+      <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Setup hiring pipeline</h1>
             <div class="flex space-x-4">
                 <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=current_user.company['company_subdomain']) }}" class="rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs border ring-inset hover:bg-gray-50">Visit Site</a>
-                <a href="{{ url_for('create_applicant_tracker') }}" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Create New Hiring Status</a>
+                <a href="{{ url_for('create_applicant_tracker') }}" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Create New Hiring Status</a>
             </div>
         </div>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
 <div class="flex flex-col">
     <div class="w-full">
         <div>
             <div class="overflow-auto">
-                <table id="trackersTable" class="min-w-full border-separate border-spacing-0">
+                <table id="trackersTable" class="min-w-full borderseparate border-spacing-0">
                     <thead class="bg-gray-50 dark:bg-gray-900">
                         <tr>
                             <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Name</th>

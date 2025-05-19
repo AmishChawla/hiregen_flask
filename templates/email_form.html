@@ -8,10 +8,10 @@
 
 {% block content %}
 <div class="">
-    <div class="min-h-screen py-6">
+    <div class="min-h-screen py-0">
       <div class="container mx-auto max-w-2xl px-4 sm:px-6 lg:px-10">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Email Setup</h1>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
 
     <div class="">
         <form method="post" action="{{ url_for('admin_email_setup') }}">
@@ -54,7 +54,7 @@
             </div>
 
             <div class="mt-8">
-                {{ form.submit(class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600") }}
+                {{ form.submit(class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70") }}
             </div>
         </form>
     </div>

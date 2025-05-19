@@ -4,22 +4,22 @@
 
 {% block content %}
 <div class="py-6 px-4 sm:px-6 lg:px-8">
-  <div class="min-h-screen py-6">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-0">
+    <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
       <div class="sm:flex sm:items-center mb-6">
         <div class="sm:flex-auto">
           <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Search results</h1>
           <!-- <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">Manage and review all your applicants here.</p> -->
         </div>
         <div class="sm:ml-16 sm:mt-0 sm:flex-none">
-          <button type="button" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600" onclick="openFilterDrawer()">Filter</button>
+          <button type="button" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70" onclick="openFilterDrawer()">Filter</button>
         </div>
       </div>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
   <div class="flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
       <div class="inline-block min-w-full align-middle">
-        <table class="min-w-full border-separate border-spacing-0">
+        <table class="min-w-full borderseparate border-spacing-0">
             <thead class="bg-gray-50 dark:bg-gray-900">
             <tr>
               <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Name</th>
@@ -45,7 +45,7 @@
                 </div>
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                <a href="{{ data.job_url }}" class="text-blue-700 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">{{ data.job_title }}</a>
+                <a href="{{ data.job_url }}" class="text-purple-500 hover:text-purple-600 dark:text-blue-400 dark:hover:text-blue-300">{{ data.job_title }}</a>
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                 <select class="rounded-md border-gray-300 shadow-sm focus:ring-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:focus:ring-blue-500" id="status-select-{{ data.id }}" onchange="updateApplicationStatus('{{ data.id }}')">
@@ -61,7 +61,7 @@
               </td>
               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">{{ data.application_date }}</td>
               <td class="whitespace-nowrap px-3 py-4 text-right text-sm font-medium">
-                <button type="button" class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300" onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')">Details</button>
+                <button type="button" class="text-purple-500 hover:text-purple-900 dark:text-blue-400 dark:hover:text-blue-300" onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')">Details</button>
               </td>
             </tr>
             {% endfor %}
@@ -94,7 +94,7 @@
           <label for="application_end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">End Date</label>
           <input type="date" id="application_end_date" name="application_end_date" class="mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
         </div>
-        <button type="submit" class="block w-full rounded-md bg-slate-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-slate-500 dark:bg-slate-500 dark:hover:bg-slate-400">Apply Filters</button>
+        <button type="submit" class="block w-full rounded-md bg-purple-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-purple-400 dark:bg-purple-500 dark:hover:bg-slate-400">Apply Filters</button>
       </form>
     </div>
   </div>
@@ -154,11 +154,11 @@
                           <div class="relative size-40">
                             <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                               <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-                              <circle id="drawerGaugeOverall" cx="18" cy="18" r="16" fill="none" class="stroke-current text-blue-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeOverall" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
                             </svg>
                             <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                              <span id="drawerOverallScore" class="text-4xl font-bold text-blue-600">0</span>
-                              <span class="text-blue-600 block">Overall</span>
+                              <span id="drawerOverallScore" class="text-4xl font-bold text-purple-500">0</span>
+                              <span class="text-purple-500 block">Overall</span>
                             </div>
                           </div>
                         </dd>
@@ -205,11 +205,11 @@
                           <div class="relative size-40">
                             <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                               <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-                              <circle id="drawerGaugeLeadership" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeLeadership" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
                             </svg>
                             <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                              <span id="drawerLeadershipScore" class="text-4xl font-bold text-purple-600">0</span>
-                              <span class="text-purple-600 block">Leadership</span>
+                              <span id="drawerLeadershipScore" class="text-4xl font-bold text-purple-500">0</span>
+                              <span class="text-purple-500 block">Leadership</span>
                             </div>
                           </div>
 

@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="py-6 px-4 sm:px-6 lg:px-8">
-    <div class="min-h-screen py-6">
+    <div class="min-h-screen py-0">
       <div class="container px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto">
         <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Create tracker</h1>
     </div>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
         <form method="post" action="{{ url_for('create_applicant_tracker') }}">
             {{ form.hidden_tag() }}
 
@@ -24,7 +24,7 @@
             </div>
 
             <div class="flex items-center mb-6">
-                <input id="on_apply" name="on_apply" type="checkbox" class="h-4 w-4 text-blue-600 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500">
+                <input id="on_apply" name="on_apply" type="checkbox" class="h-4 w-4 text-purple-500 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500">
                 <label for="on_apply" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">{{ form.on_apply.label.text }}</label>
             </div>
 
@@ -34,7 +34,7 @@
             </div>
 
             <div class="flex justif-center">
-                <button type="submit" class="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Create Tracker</button>
+                <button type="submit" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Create Tracker</button>
             </div>
         </form>
     </div>

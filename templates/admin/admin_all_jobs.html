@@ -3,11 +3,11 @@
 {% block title %}Jobs{% endblock %}
 {% block content %}
 <div class="">
-  <div class="min-h-screen py-6">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-0">
+    <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
       <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Jobs</h1>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-  <div class="mt-8">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
+  <div class="">
     <div class="border-b border-gray-200">
       <nav class="-mb-px flex space-x-8" aria-label="Tabs">
         <button class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" id="published-tab" onclick="showTab('published-posts')">
@@ -22,17 +22,17 @@
       
         <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
           <div class="inline-block min-w-full align-middle p-4">
-            <table id="publishedJobsTable" class="min-w-full border-separate border-spacing-0">
+            <table id="publishedJobsTable" class="min-w-full borderseparate border-spacing-0">
               <thead class="bg-gray-50">
           <tr>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Position</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Salary</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Job Status</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Visibility</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Views</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Updated On</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Applicants</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
+            <th class="table-header rounded-tl-lg">Position</th>
+            <th class="table-header">Salary</th>
+            <th class="table-header">Job Status</th>
+            <th class="table-header">Visibility</th>
+            <th class="table-header">Views</th>
+            <th class="table-header">Updated On</th>
+            <th class="table-header">Applicants</th>
+            <th class="table-header">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
@@ -41,21 +41,21 @@
           <tr class="hover:bg-gray-50">
             <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
               <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}"
-                 class="text-blue-700 hover:text-blue-900 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
-                <img src="{{ data.company_logo }}" class="h-4 w-4 rounded-full" alt="logo">
+                 class="text-purple400 hover:text-purple500 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
+                <img src="{{ data.company_logo }}" class="h-10 w-10 rounded-full" alt="logo">
                 <span class="truncate">{{ data.job_title }}</span>
               </a>
             </td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.salary }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.job_opening_status }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.status }}</td>
-            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">{{ data.job_opening_views }}</td>
+            <td class="table-cell text-gray-600 text-center">{{ data.job_opening_views }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.updated_at.split('T')[0] }} </td>
-            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">
-              <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
+            <td class="table-cell text-gray-600 text-center">
+              <span class="text-purple-400 hover:text-purple-500">{{ data.applicant_count }}</span>
             </td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-              <button onclick="openModal('#deleteModal_{{ data.id }}')" class="ml-2 text-red-600 hover:text-red-900">
+              <button onclick="openModal('#deleteModal_{{ data.id }}')" class="ml-2 text-purple-400 hover:text-purple-500">
                 Delete
               </button>
 
@@ -169,17 +169,17 @@
 <div class="mt-4 hidden" id="draft-posts">
   <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
     <div class="inline-block min-w-full align-middle p-4">
-      <table id="draftTable" class="min-w-full border-separate border-spacing-0">
+      <table id="draftTable" class="min-w-full borderseparate border-spacing-0">
           <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Position</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Salary</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Job Status</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Visibility</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2 text-center">Views</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Updated Date</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2 text-center">Applicants</th>
-            <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Action</th>
+            <th scope="col" class="table-header rounded-tl-lg">Position</th>
+            <th class="table-header">Salary</th>
+            <th class="table-header">Job Status</th>
+            <th class="table-header">Visibility</th>
+            <th class="table-header text-center">Views</th>
+            <th class="table-header">Updated Date</th>
+            <th class="table-header text-center">Applicants</th>
+            <th class="table-header">Action</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
@@ -188,21 +188,21 @@
           <tr class="hover:bg-gray-50">
             <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
               <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}"
-                 class="text-blue-700 hover:text-blue-900 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
-                <img src="{{ data.company_logo }}" class="h-4 w-4 rounded-full" alt="logo">
+                 class="text-purple400 hover:text-purple500 flex items-center space-x-2 truncate max-w-[200px]" title="{{ data.job_title }}">
+                <img src="{{ data.company_logo }}" class="h-10 w-10 rounded-full" alt="logo">
                 <span class="truncate">{{ data.job_title }}</span>
               </a>
             </td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.salary }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.job_opening_status }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.status }}</td>
-            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">{{ data.job_opening_views }}</td>
+            <td class="table-cell text-gray-600 text-center">{{ data.job_opening_views }}</td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.updated_at.split('T')[0] }}</td>
-            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell text-center">
-              <span class="text-blue-700 hover:text-blue-900">{{ data.applicant_count }}</span>
+            <td class="table-cell text-gray-600 text-center">
+              <span class="text-purple-400 hover:text-purple-500">{{ data.applicant_count }}</span>
             </td>
             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-              <button onclick="openModal('#deleteModal_{{ data.id }}')" class="ml-2 text-red-600 hover:text-red-900">
+              <button onclick="openModal('#deleteModal_{{ data.id }}')" class="ml-2 text-purple-400 hover:text-purple-500">
                 Delete
               </button>
 
