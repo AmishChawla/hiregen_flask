@@ -4933,7 +4933,7 @@ def update_permissions():
 import whisper
 
 
-model = whisper.load_model("base")
+model = whisper.load_model("tiny")
 
 @app.route("/ai/interview")
 def ai_interview_tool():
