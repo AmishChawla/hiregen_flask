@@ -2,41 +2,35 @@
 {% block title %}Employer{% endblock %}
 {% block content %}
 <style>
-  table.dataTable > tbody > tr > th, table.dataTable > tbody > tr > td {
-    padding: 10px 20px!important;
+  #employersTable_wrapper .dt-layout-row:nth-child(1), .dt-layout-row:nth-child(3) {
+    width: 98%!important;
+    margin: 0 auto!important;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: #a6a2f5!important;
+    border-radius: 4px !important;
 }
-table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
-    padding: 12px 20px!important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    border-top: 1px solid rgba(0, 0, 0, 0.3);
+.dt-paging-button.current {
+  background-color: #eee !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  opacity: 1 !important;
 }
-.dt-start {
-  padding:0 0 10px 20px!important;
+.dt-start .dt-input {
+  margin-right:8px;
+  border: 1px solid #d1d5db !important;
 }
-.dt-end {
-  padding:0 20px 10px 0px!important;
+.dt-search .dt-input {
+  margin-left:10px!important;
+  border: 1px solid #d1d5db !important;
 }
-.dt-search {
-  color: #9f9e9e!important;
-    font-weight: 500!important;
-    font-size: 15px!important;
-}
-.dt-length {
-  color: #9f9e9e!important;
-    font-weight: 500!important;
-    font-size: 15px!important;
-}
-.dt-length select {
-  margin-right: 10px!important;
-}
-.dt-input {
-  border: 1px solid #dddddd!important;
-  margin-left: 10px!important;
-}
-.dt-layout-cell {
-  color: #9f9e9e!important;
-    font-weight: 500!important;
-    font-size: 15px!important;
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
 }
 </style>
 <div class="">
@@ -59,7 +53,7 @@ table.dataTable > thead > tr > th, table.dataTable > thead > tr > td {
             <table id="employersTable" class="min-w-full borderseparate border-spacing-0">
           <thead class="bg-gray-50">
             <tr>
-              <th class="table-header rounded-tl-lg">Name</th>
+              <th class="table-headerrounded-tl-lg">Name</th>
               <th class="table-header">Email</th>
               <th class="table-header">Company Name</th>
               <th class="table-header">Creation Time</th>

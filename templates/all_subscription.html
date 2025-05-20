@@ -4,13 +4,44 @@
 
 {% block content %}
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
+<style>
+  #subscriptionTable_wrapper .dt-layout-row:nth-child(1), .dt-layout-row:nth-child(3) {
+    width: 98%!important;
+    margin: 0 auto!important;
+    font-size: 14px;
+    color: #6b7280;
+  }
 
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: #a6a2f5!important;
+    border-radius: 4px !important;
+}
+.dt-paging-button.current {
+  background-color: #eee !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  opacity: 1 !important;
+}
+.dt-start .dt-input {
+  margin-right:8px;
+  border: 1px solid #d1d5db !important;
+}
+.dt-search .dt-input {
+  margin-left:10px!important;
+  border: 1px solid #d1d5db !important;
+}
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+</style>
 
 <div class="">
   <div class="min-h-screen py-0">
     <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
     <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Order History</h1>
-        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:px-6 md:pt-6 md:pb-4 shadow-sm animate-fade-in">
 
   {% if purchase_data %}
   <div class="flow-root">
@@ -19,7 +50,7 @@
         <table id="subscriptionTable" class="min-w-full borderseparate border-spacing-0">
           <thead class="bg-gray-50">
             <tr>
-              <th scope="col" class="table-header rounded-tl-lg">User</th>
+              <th scope="col" class="table-headerrounded-tl-lg">User</th>
               <th scope="col" class="table-header">Plan</th>
               <th scope="col" class="table-header">Price</th>
               <th scope="col" class="table-header">Status</th>
