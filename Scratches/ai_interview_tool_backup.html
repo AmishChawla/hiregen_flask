@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Interviewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+.active-speaker {
+  box-shadow: 0 0 40px 12px rgba(0, 255, 0, 0.9);
+  border: 4px solid lime;
+}
+  </style>
+  
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="flex flex-col h-screen">
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center bg-gray-800 px-6 py-3">
+      <h1 class="text-xl font-semibold">AI Interviewer</h1>
+      <button id="endInterview" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">End Interview</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-grow flex flex-col md:flex-row">
+<!-- Video/Audio Panel -->
+<div class="flex-1 flex flex-col md:flex-row items-center justify-center bg-black p-6 gap-10">
+<!-- Candidate Tile -->
+<div id="userTile" class="speaker-tile w-60 bg-gray-800 rounded-2xl shadow-lg flex flex-col items-center p-4 space-y-4 transition-all">
+  <div id="userAvatar" class="w-40 h-40 rounded-full bg-yellow-900 flex items-center justify-center text-3xl font-bold text-white shadow-inner transition-transform duration-200">
+    <span>U</span>
+  </div>
+  <div class="text-white text-sm font-medium">You</div>
+</div>
+
+<!-- AI Interviewer Tile -->
+<div id="aiTile" class="speaker-tile w-60 bg-gray-800 rounded-2xl shadow-lg flex flex-col items-center p-4 space-y-4 transition-all">
+  <div id="aiAvatar" class="w-40 h-40 rounded-full bg-indigo-600 flex items-center justify-center text-3xl font-bold text-white shadow-inner transition-transform duration-200">
+    <span>AI</span>
+  </div>
+  <div class="text-white text-sm font-medium">AI Interviewer</div>
+</div>
+</div>
+
+      <!-- Sidebar - Chat Log -->
+      <div class="w-full md:w-1/3 bg-gray-800 overflow-y-auto p-4">
+        <h2 class="text-lg font-semibold mb-4">Transcript</h2>
+        <div id="conversation" class="space-y-4"></div>
+      </div>
+    </div>
+
+    <!-- Control Panel -->
+    <!-- <div class="bg-gray-800 px-6 py-4 flex justify-center space-x-4">
+      <button id="startRecord" class="bg-green-600 px-4 py-2 rounded hover:bg-green-700">Start Recording</button>
+      <button id="stopRecord" class="bg-yellow-600 px-4 py-2 rounded hover:bg-yellow-700" disabled>Stop Recording</button>
+    </div>
+  </div> -->
+
+  <div class="bg-gray-800 px-6 py-4 text-center text-gray-300">
+    Press <kbd class="bg-gray-700 px-2 rounded">R</kbd> to toggle speaking
+  </div>
+  
+
+  <div id="fileUploadModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
+    <div class="bg-gray-800 p-6 rounded-xl text-white w-96 space-y-4 shadow-xl">
+      <h2 class="text-xl font-semibold mb-2">Upload Required Files</h2>
+      <div>
+        <label class="block mb-1">Job Description (.txt)</label>
+        <input type="file" id="jobFile" accept=".txt" class="w-full bg-gray-700 text-white p-2 rounded" />
+      </div>
+      <div>
+        <label class="block mb-1">Resume (.txt)</label>
+        <input type="file" id="resumeFile" accept=".txt" class="w-full bg-gray-700 text-white p-2 rounded" />
+      </div>
+      <button id="startInterviewBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded mt-4">
+        Start Interview
+      </button>
+    </div>
+  </div>
+  
+<!-- Modal backdrop -->
+<!-- Modal backdrop -->
+<div id="evaluationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6">
+    
+    <!-- Close button -->
+    <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+
+    <h2 class="text-xl font-bold mb-4">Final Interview Evaluation</h2>
+    
+    <!-- Spinner -->
+    <div id="evaluationSpinner" class="flex justify-center py-8">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-opacity-50"></div>
+    </div>
+
+    <!-- Evaluation content -->
+    <div id="evaluationContent" class="text-gray-700 whitespace-pre-line hidden"></div>
+  </div>
+</div>
+
+<!-- Device Check Modal -->
+<div id="deviceCheckModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center hidden">
+  <div class="bg-gray-800 p-6 rounded-xl text-white w-96 space-y-4 shadow-xl text-center">
+    <h2 class="text-xl font-semibold">Device Setup</h2>
+
+    <div class="space-y-2">
+      <p id="micStatus">🎤 Microphone: <span class="text-yellow-400">Pending</span></p>
+      <p id="camStatus">📷 Camera: <span class="text-yellow-400">Pending</span></p>
+      <p id="screenStatus">🖥️ Screen: <span class="text-yellow-400">Pending</span></p>
+    </div>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button id="cameraBtn" class="bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded">Turn On Camera</button>
+      <button id="screenShareBtn" class="bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded">Share Screen</button>
+    </div>
+
+    <button id="finalStartInterview" class="mt-6 bg-green-600 hover:bg-green-700 py-2 px-4 rounded disabled:opacity-50" disabled>Start Interview</button>
+  </div>
+</div>
+
+
+<script>
+  let mediaRecorder;
+  let audioChunks = [];
+  let analyser, dataArray, audioContext, micSource;
+  let isRecording = false;
+  let mediaStream;
+
+  // Block auto-start of interview
+  let interviewReady = false;
+
+  async function fetchFirstQuestion() {
+    if (!interviewReady) return;
+
+    const res = await fetch('/ai/interview/get_first_question');
+    const data = await res.json();
+    addMessage('Interviewer', data.question);
+    speak(data.question);
+  }
+
+  function addMessage(sender, text) {
+    const convo = document.getElementById('conversation');
+    const msg = document.createElement('div');
+    msg.innerHTML = `<p><strong>${sender}:</strong> ${text}</p>`;
+    convo.appendChild(msg);
+    convo.scrollTop = convo.scrollHeight;
+  }
+
+  function highlightSpeaker(role) {
+    const tileId = role === 'user' ? 'userTile' : 'aiTile';
+    document.getElementById(tileId)?.classList.add('active-speaker');
+  }
+
+  function unhighlightSpeaker(role) {
+    const tileId = role === 'user' ? 'userTile' : 'aiTile';
+    document.getElementById(tileId)?.classList.remove('active-speaker');
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+
+      highlightSpeaker('ai');
+      utter.onend = () => {
+        unhighlightSpeaker('ai');
+        clearTimeout(fallbackTimeout);
+      };
+      utter.onerror = () => {
+        unhighlightSpeaker('ai');
+        clearTimeout(fallbackTimeout);
+      };
+      const fallbackTimeout = setTimeout(() => {
+        unhighlightSpeaker('ai');
+      }, 10000);
+      window.speechSynthesis.speak(utter);
+    }
+  }
+
+  async function startMicVisualizer(stream) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    micSource = audioContext.createMediaStreamSource(stream);
+    micSource.connect(analyser);
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    function animate() {
+      analyser.getByteFrequencyData(dataArray);
+      const volume = dataArray.reduce((a, b) => a + b) / bufferLength;
+      const scale = 1 + Math.min(volume / 100, 1);
+      const userAvatar = document.getElementById('userAvatar');
+      userAvatar.style.transform = `scale(${scale})`;
+      if (isRecording) {
+        requestAnimationFrame(animate);
+      } else {
+        userAvatar.style.transform = '';
+      }
+    }
+    animate();
+  }
+
+  async function startRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("Your browser doesn't support audio recording");
+      return;
+    }
+    audioChunks = [];
+    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    highlightSpeaker('user');
+    startMicVisualizer(mediaStream);
+
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.start();
+    isRecording = true;
+
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = async () => {
+      unhighlightSpeaker('user');
+      isRecording = false;
+
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const formData = new FormData();
+      formData.append('audio_data', audioBlob, 'input.wav');
+
+      addMessage('Candidate', 'Processing');
+      const res = await fetch('/ai/interview/transcribe', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.transcript) {
+        let convo = document.getElementById('conversation');
+        convo.lastChild.innerHTML = `<p><strong>Candidate:</strong> ${data.transcript}</p>`;
+
+        const qres = await fetch('/ai/interview/get_ai_question');
+        const qdata = await qres.json();
+        addMessage('Interviewer', qdata.question);
+        speak(qdata.question);
+
+        if (qdata.end_interview) {
+          alert("Interview concluded.");
+        }
+      } else {
+        alert("Error transcribing audio.");
+      }
+
+      mediaStream.getTracks().forEach(track => track.stop());
+    };
+  }
+
+  function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+    }
+  }
+
+  document.addEventListener('keydown', async (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+      if (!isRecording) {
+        await startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+  });
+
+  document.getElementById('endInterview').onclick = async () => {
+  const modal = document.getElementById('evaluationModal');
+  const spinner = document.getElementById('evaluationSpinner');
+  const content = document.getElementById('evaluationContent');
+
+  // Show modal & spinner, hide content
+  modal.classList.remove('hidden');
+  spinner.classList.remove('hidden');
+  content.classList.add('hidden');
+  content.innerText = "";
+
+  try {
+    const res = await fetch('/ai/interview/final_evaluation');
+    const data = await res.json();
+    content.innerText = "Final Evaluation:\n" + data.evaluation;
+
+    // Show content, hide spinner
+    spinner.classList.add('hidden');
+    content.classList.remove('hidden');
+  } catch (err) {
+    content.innerText = "Error fetching evaluation.";
+    spinner.classList.add('hidden');
+    content.classList.remove('hidden');
+  }
+};
+
+// Optional: close modal function
+function closeModal() {
+  document.getElementById('evaluationModal').classList.add('hidden');
+}
+
+  // Modal logic
+  document.getElementById('startInterviewBtn').onclick = async () => {
+    const jobFile = document.getElementById('jobFile').files[0];
+    const resumeFile = document.getElementById('resumeFile').files[0];
+
+    if (!jobFile || !resumeFile) {
+      alert("Please upload both files.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('job_description', jobFile);
+    formData.append('resume', resumeFile);
+
+    try {
+      const res = await fetch('/ai/interview/upload_context', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById('fileUploadModal').classList.add('hidden');
+        interviewReady = true;
+        fetchFirstQuestion(); // Now start
+      } else {
+        alert("Error uploading files. Please try again.");
+      }
+    } catch (err) {
+      alert("Upload failed. Please try again.");
+    }
+  };
+
+  // Block main interview logic until files are uploaded
+  window.onload = () => {
+    document.getElementById('fileUploadModal').classList.remove('hidden');
+  };
+</script>
+<script>
+
+</script>
+
+  </body>
+</html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Interviewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+.active-speaker {
+  box-shadow: 0 0 40px 12px rgba(0, 255, 0, 0.9);
+  border: 4px solid lime;
+}
+  </style>
+  
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="flex flex-col h-screen">
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center bg-gray-800 px-6 py-3">
+      <h1 class="text-xl font-semibold">AI Interviewer</h1>
+      <button id="endInterview" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">End Interview</button>
+    </div>
+
+    <!-- Main Content -->
+<!-- Main Content -->
+
+<div class="bg-gray-800 px-6 py-4 text-center text-gray-300">
+  Press <kbd class="bg-gray-700 px-2 rounded">R</kbd> to toggle speaking
+</div>
+<div class="flex flex-col md:flex-row h-full w-full">
+
+  <!-- Video/Audio Tiles -->
+  <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 bg-black p-4 place-items-center">
+
+    <!-- Candidate Tile -->
+    <div id="userTile" class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm aspect-[4/5] flex items-center justify-center transition-all">
+      <div class="relative w-full h-full">
+        <video id="userVideo" class="absolute inset-0 w-full h-full object-cover rounded-2xl hidden" autoplay muted playsinline></video>
+        <div id="userAvatar" class="absolute inset-0 bg-yellow-700 rounded-2xl flex items-center justify-center text-5xl font-bold text-white shadow-inner">
+          <span>U</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen Share Tile -->
+    <div id="screenTile" class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm aspect-[4/5] flex items-center justify-center hidden transition-all">
+      <div class="w-full h-full rounded-2xl border-2 border-blue-500 overflow-hidden shadow-lg">
+        <video id="screenVideo" class="w-full h-full object-cover rounded-2xl" autoplay muted playsinline></video>
+      </div>
+    </div>
+
+    <!-- AI Interviewer Tile -->
+    <div id="aiTile" class="bg-gray-800 rounded-2xl shadow-2xl w-full max-w-sm aspect-[4/5] flex items-center justify-center transition-all">
+      <div class="w-full h-full bg-indigo-600 rounded-2xl flex items-center justify-center text-5xl font-bold text-white shadow-inner">
+        <span>AI</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sidebar: Transcript / Chat Log -->
+  <aside class="w-full md:w-1/3 bg-gray-900 text-white p-6 overflow-y-auto max-h-screen">
+    <h2 class="text-xl font-semibold mb-6">Transcript</h2>
+    <div id="conversation" class="space-y-4 text-sm"></div>
+  </aside>
+
+</div>
+
+
+    <!-- Control Panel -->
+    <!-- <div class="bg-gray-800 px-6 py-4 flex justify-center space-x-4">
+      <button id="startRecord" class="bg-green-600 px-4 py-2 rounded hover:bg-green-700">Start Recording</button>
+      <button id="stopRecord" class="bg-yellow-600 px-4 py-2 rounded hover:bg-yellow-700" disabled>Stop Recording</button>
+    </div>
+  </div> -->
+
+
+  <div class="bg-gray-800 px-6 py-4 text-center text-gray-300">
+    Press <kbd class="bg-gray-700 px-2 rounded">R</kbd> to toggle speaking
+  </div>
+
+  <div id="fileUploadModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
+    <div class="bg-gray-800 p-6 rounded-xl text-white w-96 space-y-4 shadow-xl">
+      <h2 class="text-xl font-semibold mb-2">Upload Required Files</h2>
+      <div>
+        <label class="block mb-1">Job Description (.txt)</label>
+        <input type="file" id="jobFile" accept=".txt" class="w-full bg-gray-700 text-white p-2 rounded" />
+      </div>
+      <div>
+        <label class="block mb-1">Resume (.txt)</label>
+        <input type="file" id="resumeFile" accept=".txt" class="w-full bg-gray-700 text-white p-2 rounded" />
+      </div>
+      <button id="startInterviewBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded mt-4">
+        Start Interview
+      </button>
+    </div>
+  </div>
+  
+<!-- Modal backdrop -->
+<!-- Modal backdrop -->
+<div id="evaluationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto relative p-6">
+    
+    <!-- Close button -->
+    <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+
+    <h2 class="text-xl font-bold mb-4">Final Interview Evaluation</h2>
+    
+    <!-- Spinner -->
+    <div id="evaluationSpinner" class="flex justify-center py-8">
+      <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-opacity-50"></div>
+    </div>
+
+    <!-- Evaluation content -->
+    <div id="evaluationContent" class="text-gray-700 whitespace-pre-line hidden"></div>
+  </div>
+</div>
+
+<!-- Device Check Modal -->
+<div id="deviceCheckModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center hidden">
+  <div class="bg-gray-800 p-6 rounded-xl text-white w-96 space-y-4 shadow-xl text-center">
+    <h2 class="text-xl font-semibold">Device Setup</h2>
+
+    <div class="space-y-2">
+      <p id="micStatus">🎤 Microphone: <span class="text-yellow-400">Pending</span></p>
+      <p id="camStatus">📷 Camera: <span class="text-yellow-400">Pending</span></p>
+      <p id="screenStatus">🖥️ Screen: <span class="text-yellow-400">Pending</span></p>
+    </div>
+
+    <div class="flex flex-col gap-3 mt-4">
+      <button id="cameraBtn" class="bg-indigo-600 hover:bg-indigo-700 py-2 px-4 rounded">Turn On Camera</button>
+      <button id="screenShareBtn" class="bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded">Share Screen</button>
+    </div>
+
+    <button id="finalStartInterview" class="mt-6 bg-green-600 hover:bg-green-700 py-2 px-4 rounded disabled:opacity-50" disabled>Start Interview</button>
+  </div>
+</div>
+
+<script>
+  let mediaRecorder;
+  let audioChunks = [];
+  let analyser, dataArray, audioContext, micSource;
+  let isRecording = false;
+  let mediaStream;
+  let screenStream;
+  let cameraStream;
+  let combinedStream;
+
+  // Block auto-start of interview
+  let interviewReady = false;
+
+  async function fetchFirstQuestion() {
+    if (!interviewReady) return;
+
+    const res = await fetch('/ai/interview/get_first_question');
+    const data = await res.json();
+    addMessage('Interviewer', data.question);
+    speak(data.question);
+  }
+
+  function addMessage(sender, text) {
+    const convo = document.getElementById('conversation');
+    const msg = document.createElement('div');
+    msg.innerHTML = `<p><strong>${sender}:</strong> ${text}</p>`;
+    convo.appendChild(msg);
+    convo.scrollTop = convo.scrollHeight;
+  }
+
+  function highlightSpeaker(role) {
+    const tileId = role === 'user' ? 'userTile' : 'aiTile';
+    document.getElementById(tileId)?.classList.add('active-speaker');
+  }
+
+  function unhighlightSpeaker(role) {
+    const tileId = role === 'user' ? 'userTile' : 'aiTile';
+    document.getElementById(tileId)?.classList.remove('active-speaker');
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(text);
+
+      highlightSpeaker('ai');
+      utter.onend = () => {
+        unhighlightSpeaker('ai');
+        clearTimeout(fallbackTimeout);
+      };
+      utter.onerror = () => {
+        unhighlightSpeaker('ai');
+        clearTimeout(fallbackTimeout);
+      };
+      const fallbackTimeout = setTimeout(() => {
+        unhighlightSpeaker('ai');
+      }, 10000);
+      window.speechSynthesis.speak(utter);
+    }
+  }
+
+  async function startMicVisualizer(stream) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    micSource = audioContext.createMediaStreamSource(stream);
+    micSource.connect(analyser);
+    analyser.fftSize = 256;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    function animate() {
+      analyser.getByteFrequencyData(dataArray);
+      const volume = dataArray.reduce((a, b) => a + b) / bufferLength;
+      const scale = 1 + Math.min(volume / 100, 1);
+      const userAvatar = document.getElementById('userAvatar');
+      if (userAvatar) {
+        userAvatar.style.transform = `scale(${scale})`;
+      }
+      if (isRecording) {
+        requestAnimationFrame(animate);
+      } else {
+        if (userAvatar) userAvatar.style.transform = '';
+      }
+    }
+    animate();
+  }
+
+  async function startRecording() {
+    audioChunks = [];
+
+    highlightSpeaker('user');
+    startMicVisualizer(mediaStream);
+
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.start();
+    isRecording = true;
+
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = async () => {
+      unhighlightSpeaker('user');
+      isRecording = false;
+
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const formData = new FormData();
+      formData.append('audio_data', audioBlob, 'input.wav');
+
+      addMessage('Candidate', 'Processing');
+      const res = await fetch('/ai/interview/transcribe', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.transcript) {
+        let convo = document.getElementById('conversation');
+        convo.lastChild.innerHTML = `<p><strong>Candidate:</strong> ${data.transcript}</p>`;
+
+        const qres = await fetch('/ai/interview/get_ai_question');
+        const qdata = await qres.json();
+        addMessage('Interviewer', qdata.question);
+        speak(qdata.question);
+
+        if (qdata.end_interview) {
+          alert("Interview concluded.");
+        }
+      } else {
+        alert("Error transcribing audio.");
+      }
+
+      mediaStream.getTracks().forEach(track => track.stop());
+    };
+  }
+
+  function stopRecording() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+    }
+  }
+
+  document.addEventListener('keydown', async (e) => {
+    if (e.key === 'r' || e.key === 'R') {
+      if (!isRecording) {
+        await startRecording();
+      } else {
+        stopRecording();
+      }
+    }
+  });
+
+  document.getElementById('endInterview').onclick = async () => {
+    const modal = document.getElementById('evaluationModal');
+    const spinner = document.getElementById('evaluationSpinner');
+    const content = document.getElementById('evaluationContent');
+
+    modal.classList.remove('hidden');
+    spinner.classList.remove('hidden');
+    content.classList.add('hidden');
+    content.innerText = "";
+
+    try {
+      const res = await fetch('/ai/interview/final_evaluation');
+      const data = await res.json();
+      content.innerText = "Final Evaluation:\n" + data.evaluation;
+    } catch (err) {
+      content.innerText = "Error fetching evaluation.";
+    }
+
+    spinner.classList.add('hidden');
+    content.classList.remove('hidden');
+  };
+
+  function closeModal() {
+    document.getElementById('evaluationModal').classList.add('hidden');
+  }
+
+  document.getElementById('startInterviewBtn').onclick = async () => {
+    const jobFile = document.getElementById('jobFile').files[0];
+    const resumeFile = document.getElementById('resumeFile').files[0];
+
+    if (!jobFile || !resumeFile) {
+      alert("Please upload both files.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('job_description', jobFile);
+    formData.append('resume', resumeFile);
+
+    try {
+      const res = await fetch('/ai/interview/upload_context', { method: 'POST', body: formData });
+      const data = await res.json();
+
+      if (data.success) {
+        document.getElementById('fileUploadModal').classList.add('hidden');
+        interviewReady = true;
+        fetchFirstQuestion(); // Now start
+      } else {
+        alert("Error uploading files. Please try again.");
+      }
+    } catch (err) {
+      alert("Upload failed. Please try again.");
+    }
+  };
+
+  // Initialize streams and show camera/screen feeds
+  window.onload = async () => {
+    document.getElementById('fileUploadModal').classList.remove('hidden');
+
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      cameraStream = await navigator.mediaDevices.getUserMedia({ video: true });
+      screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+
+      // Camera Stream to user tile
+      const userVideo = document.getElementById('userVideo');
+      const userAvatar = document.getElementById('userAvatar');
+      if (userVideo && cameraStream) {
+        userVideo.srcObject = cameraStream;
+        userVideo.style.display = 'block';
+        if (userAvatar) userAvatar.style.display = 'none';
+        userVideo.play();
+      }
+
+      // Screen Stream to screen tile
+      const screenVideo = document.getElementById('screenVideo');
+      const screenTile = document.getElementById('screenTile');
+      if (screenVideo && screenStream) {
+        screenVideo.srcObject = screenStream;
+        screenTile.classList.remove('hidden');
+        screenVideo.play();
+      }
+
+      console.log("Mic, camera, and screen permissions granted.");
+    } catch (err) {
+      console.error("Permission denied or error:", err);
+      alert("Please allow mic, camera, and screen access to proceed.");
+    }
+  };
+</script>
+
+
+  </body>
+</html>
