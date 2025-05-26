@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="min-h-screen bg-gray-50 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+    <div class="max-w-md w-full space-y-8 rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
         <div class="text-center">
             <h2 class="text-2xl font-bold text-gray-900">Add Subcategory</h2>
         </div>
@@ -34,7 +34,7 @@
 
             <!-- Submit Button -->
             <div class="text-center">
-                {{ form.submit(class="inline-flex items-center px-4 py-2 bg-slate-600 text-white text-sm font-medium rounded-md hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2") }}
+                {{ form.submit(class="inline-flex items-center px-4 py-2 bg-purple-500 text-white text-sm font-medium rounded-md hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2") }}
             </div>
         </form>
     </div>

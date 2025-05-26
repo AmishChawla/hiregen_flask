@@ -6,7 +6,15 @@
   {% block metatags %} 
   {% endblock %}
   <title>{% block title %}HireGen{% endblock %}</title>
-
+<style>
+      body {
+      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+      font-feature-settings: normal;
+    font-variation-settings: normal;
+    -webkit-tap-highlight-color: transparent;
+      height: 100vh;
+    }
+</style>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -47,16 +55,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="flex h-screen">
   <!-- Sidebar -->
     {% if current_user %}
-  <aside class="sidebar fixed top-0 left-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-auto border-r border-gray-200 bg-white px-5 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
-<div class="flex h-16 items-center px-6">
+  <aside class="sidebar fixed top-0 left-0 z-9999 flex h-screen w-[255px] flex-col overflow-y-auto border-r border-gray-200 bg-transparent px-5 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
+<div class="flex h-16 items-center">
     <h1 class="text-lg font-semibold text-gray-800">Welcome, Job Seeker</h1>
   </div>
   <nav class="flex flex-1 flex-col">
-    <ul role="list" class="mb-6 flex flex-col gap-4">
+    <ul role="list" class="mb-0 flex flex-col gap-1">
       <!-- Dashboard -->
       <li>
-        <a href="{{ url_for('jobseeker_dashboard') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'jobseeker_dashboard'}}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <a href="{{ url_for('jobseeker_dashboard') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'jobseeker_dashboard' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'}}">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
           </svg>
           Dashboard
@@ -65,8 +73,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- My Applications -->
       <li>
-        <a href="{{ url_for('jobseeker_applications') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'jobseeker_applications' }}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <a href="{{ url_for('jobseeker_applications') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'jobseeker_applications' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full' }}">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
           </svg>
           My Applications
@@ -74,8 +82,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </li>
 
       <li>
-        <a href="{{ url_for('jobs_search') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'jobs_search' }}">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-500 dark:text-gray-300 size-6">
+        <a href="{{ url_for('jobs_search') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'jobs_search' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'}}">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
           Search Jobs
@@ -107,9 +115,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Navigation -->
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-        <div class="hidden sm:ml-4 sm:flex sm:space-x-8">
-          <a href="{{ url_for('jobseeker_dashboard') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_dashboard' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm font-medium">
-            Dashboard
+        <div class="hidden sm:ml-1 sm:flex sm:space-x-8">
+          <a href="{{ url_for('jobseeker_profile') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_dashboard' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm">
+            My Profile
           </a>
         </div>
       </div>
@@ -128,7 +136,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Profile dropdown -->
         <div class="relative ml-3">
-          <button type="button" class="flex rounded-full bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="profileDropdown">
+          <button type="button" class="flex rounded-full bg-white dark:bg-purple-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" id="profileDropdown">
             <span class="sr-only">Open user menu</span>
             <img class="h-11 w-11 overflow-hidden rounded-full" src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
           </button>

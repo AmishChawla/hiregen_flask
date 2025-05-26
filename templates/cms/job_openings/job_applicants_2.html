@@ -73,7 +73,7 @@
             Download CSV
         </button>
 
-        <button id="toggleView" class="rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        <button id="toggleView" class="rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Switch to Table View
         </button>
         </div>
@@ -86,7 +86,7 @@
         <div class="flex justify-between items-center mb-6">
             <h3 class="text-lg font-semibold text-gray-700">{{ status.capitalize() }}</h3>
             <label class="text-xs font-medium text-gray-600 flex items-center space-x-1">
-                <input type="checkbox" class="select-all-checkbox w-4 h-4 text-purple-600 border-gray-300 rounded" data-status="{{ status }}">
+                <input type="checkbox" class="select-all-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status }}">
                 <span id="select-text-{{ status }}">Select All</span>
             </label>
         </div>
@@ -128,12 +128,12 @@
         <input type="number" id="min-skill-{{ status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
         <input type="number" id="max-skill-{{ status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
 
-        <button type="button" class="apply-filter bg-slate-600 text-white px-3 py-2 rounded-md w-full mt-3" data-status="{{ status }}">
+        <button type="button" class="apply-filter bg-purple-500 text-white px-3 py-2 rounded-md w-full mt-3" data-status="{{ status }}">
             Apply Filter
         </button>
     </div>
             {% if not loop.last %}
-            <button id="move-btn-{{ status }}" class="hidden my-1 w-full rounded bg-slate-600 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="moveToNextStage('{{ status }}')">
+            <button id="move-btn-{{ status }}" class="hidden my-1 w-full rounded bg-purple-500 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="moveToNextStage('{{ status }}')">
                 Move to Next Stage
             </button>
             {% endif %}
@@ -155,7 +155,7 @@
                 data-industry-score="{{ data.similarity_scores.industry_embedding }}">
     <!-- Left Section: Profile Picture and Info -->
     <div class="flex items-center space-x-1 overflow-hidden">
-        <input type="checkbox" class="applicant-checkbox w-4 h-4 text-purple-600 border-gray-300 rounded" data-status="{{ status }}">
+        <input type="checkbox" class="applicant-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status }}">
 
         <!-- Profile Picture -->
         <img src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/man.png') }}" alt="{{ data.applicant_name }}'s profile picture" class="w-12 h-12 rounded-full border border-gray-200 flex-shrink-0">
@@ -294,11 +294,11 @@
                           <div class="relative size-40">
                             <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                               <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-                              <circle id="drawerGaugeOverall" cx="18" cy="18" r="16" fill="none" class="stroke-current text-blue-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeOverall" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
                             </svg>
                             <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                              <span id="drawerOverallScore" class="text-4xl font-bold text-blue-600">0</span>
-                              <span class="text-blue-600 block">Overall</span>
+                              <span id="drawerOverallScore" class="text-4xl font-bold text-purple-500">0</span>
+                              <span class="text-purple-500 block">Overall</span>
                             </div>
                           </div>
                         </dd>
@@ -345,11 +345,11 @@
                           <div class="relative size-40">
                             <svg class="rotate-[135deg] size-full" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                               <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-gray-200" stroke-width="2.5" stroke-dasharray="75 100" stroke-linecap="round"></circle>
-                              <circle id="drawerGaugeLeadership" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-600" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
+                              <circle id="drawerGaugeLeadership" cx="18" cy="18" r="16" fill="none" class="stroke-current text-purple-500" stroke-width="2.5" stroke-dasharray="0 100" stroke-linecap="round"></circle>
                             </svg>
                             <div class="absolute top-1/2 start-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-                              <span id="drawerLeadershipScore" class="text-4xl font-bold text-purple-600">0</span>
-                              <span class="text-purple-600 block">Leadership</span>
+                              <span id="drawerLeadershipScore" class="text-4xl font-bold text-purple-500">0</span>
+                              <span class="text-purple-500 block">Leadership</span>
                             </div>
                           </div>
 
@@ -675,7 +675,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             checkboxes.forEach(checkbox => {
                 checkbox.checked = isChecked;
-                checkbox.classList.toggle("bg-purple-600", isChecked);
+                checkbox.classList.toggle("bg-purple-500", isChecked);
             });
 
             // Update text
@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectText.textContent = allChecked ? "Selected" : "Select All";
 
             // Change checkbox color when selected
-            this.classList.toggle("bg-purple-600", this.checked);
+            this.classList.toggle("bg-purple-500", this.checked);
             updateMoveButton(status);
         });
     });

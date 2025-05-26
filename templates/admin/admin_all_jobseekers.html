@@ -3,33 +3,65 @@
 {% block title %}JobSeekers{% endblock %}
 
 {% block content %}
+<style>
+  #jobseekersTable_wrapper .dt-layout-row:nth-child(1), .dt-layout-row:nth-child(3) {
+    width: 98%!important;
+    margin: 0 auto!important;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+div.dt-container .dt-paging .dt-paging-button:hover {
+    background: #a6a2f5!important;
+    border-radius: 4px !important;
+}
+.dt-paging-button.current {
+  background-color: #eee !important;
+  color: #fff !important;
+  border-radius: 4px !important;
+  opacity: 1 !important;
+}
+.dt-start .dt-input {
+  margin-right:8px;
+  border: 1px solid #d1d5db !important;
+}
+.dt-search .dt-input {
+  margin-left:10px!important;
+  border: 1px solid #d1d5db !important;
+}
+table.dataTable thead th, table.dataTable tfoot th {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+</style>
 <div class="">
-  <div class="min-h-screen py-6">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-0">
+    <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
       <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Job Seekers</h1>
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
           <div class="flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
               <div class="inline-block min-w-full align-middle">
-                <table id="jobseekersTable" class="min-w-full border-separate border-spacing-0">
+                <table id="jobseekersTable" class="min-w-full borderseparate border-spacing-0">
           <thead class="bg-gray-50">
             <tr>
-              <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-8">Name</th>
-              <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Email</th>
-              <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Mobile</th>
-              <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter sm:pl-6 lg:pl-2">Registered On</th>
+              <th class="table-headerrounded-tl-lg">Name</th>
+              <th class="table-header">Email</th>
+              <th class="table-header">Mobile</th>
+              <th class="table-header">Registered On</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             {% for data in result %}
             <tr class="hover:bg-gray-50">
-              <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8 break-words max-w-[200px]">
+              <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8 break-words max-w-[200px]">
                 <div class="flex items">
-                <img src="{{ data.profile_picture or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-11 w-11 object-contain overflow-hidden rounded-full border p-1">
-                <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.id) }}" class="m-2 text-blue-700 hover:text-blue-900">{{ data.name }}</a>
+                <img src="{{ data.profile_picture or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-10 w-10 object-contain overflow-hidden rounded-full border p-1">
+                <a href="{{ url_for('employer_view_jobseeker_profile', jobseeker_id=data.id) }}" class="m-2 text-purple500 hover:text-purple600">{{ data.name }}</a>
               </div>
               </td>
-              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell break-words max-w-[200px]">{{ data.email }}</td>
+              <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.email }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.phone_number }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_datetime }}</td>
             </tr>

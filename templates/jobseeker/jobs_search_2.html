@@ -11,14 +11,31 @@
 
 {% block content %}
 <div class="">
-    <div class="min-h-screen py-6">
-      <div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="min-h-screen py-0">
+      <div class="container max-w6xl mx-ato px-4 sm:px-6 lg:px-0">
         
     <!--Left Sidebar -->
-        <div class="rounded-2xl border border-gray-200 bg-gray-100 p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-5 mb-5">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Quick job search</h2>
+<div class="">
+    <h1 class="text-base text-gray-600 dark:text-white mb-4">{{total_job_count}} jobs found</h1>
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+    <!-- Left Column: Filters (4/12) -->
+    <div class="md:col-span-9">
+            <div>
+    <div id="job-results-container" class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-0">
+        
+        {% include 'jobseeker/_job_cards.html' %}
+    </div>
+    <div id="loading-indicator" class="text-center my-4 text-gray-500 hidden">Loading more jobs...</div>
+    </div>
+    <!--Right Sidebar -->
+    </div>
+
+    <!-- Right Column: Job Listings (8/12) -->
+    <div class="md:col-span-3">
+        <div class="rounded-lg border border-gray-200 bg-white shadow-sm p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-5 mb-5">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick job search</h2>
             <form method="GET" action="{{ url_for('jobs_search') }}">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 mb-4">
                 <div>
                     <!-- <label class="block text-gray-700 font-medium" for="keyword">Search</label> -->
                     <input type="text" id="keyword" name="keyword" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
@@ -37,7 +54,7 @@
                     <input type="text" id="state" name="state" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
                 </div>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-1">
                 <div>
                     <!-- <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label> -->
                     <select id="job_type" name="job_type" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
@@ -67,20 +84,15 @@
                 </div>
             
             <div>
-                <button type="submit" class="w-full rounded-md bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-blue-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Search Jobs</button>
+                <button type="submit" class="w-full rounded-md bg-purple-500 px-3.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Search Jobs</button>
             </div>
         </div>
-            </div>
+        </div>
         </form>
-    <div>
-    <div id="job-results-container" class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-base text-gray-600 dark:text-white mb-4">{{total_job_count}} jobs found</h1>
-        {% include 'jobseeker/_job_cards.html' %}
     </div>
-    <div id="loading-indicator" class="text-center my-4 text-gray-500 hidden">Loading more jobs...</div>
+  </div>
+</div>
 
-    </div>
-    <!--Right Sidebar -->
 </div>
 </div>
 </div>

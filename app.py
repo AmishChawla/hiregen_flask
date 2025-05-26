@@ -33,15 +33,15 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SERVER_NAME'] = 'hiregen.com'
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
-# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -385,10 +385,11 @@ def register():
                     company = data.get('company', {})
                     group = data.get('group', {})
                     profile_picture = data['profile_picture']
+                    employer_permissions = data['employer_permissions']
 
                     user = User(id=id,user_id=token, firstname=firstname, lastname=lastname,role=role, username=username, email=email,
                                 company=company,group=group,
-                                profile_picture=profile_picture)
+                                profile_picture=profile_picture, employer_permissions=employer_permissions)
                     login_user(user)
                     session['user'] = {
                         'id': id,
@@ -400,7 +401,8 @@ def register():
                         'email': email,
                         'company': company,
                         'group': group,
-                        'profile_picture': profile_picture
+                        'profile_picture': profile_picture,
+                        'employer_permissions': employer_permissions
                     }
                 flash('Registration Successful', category='info')
                 return redirect((url_for('create_subscription', plan_id=1)))  # Hardcoded value for free plan

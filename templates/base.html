@@ -11,7 +11,10 @@
   <title>{% block title %}HireGen{% endblock %}</title>
   <style>
     body {
-      font-family: "Plus Jakarta Sans", sans-serif;
+      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+      font-feature-settings: normal;
+    font-variation-settings: normal;
+    -webkit-tap-highlight-color: transparent;
       height: 100vh;
     }
   </style>
@@ -59,16 +62,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="flex h-screen">
   <!-- Sidebar -->
   {% if current_user.is_authenticated %}
-  <aside class="sidebar fixed top-0 left-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-auto border-r border-gray-200 bg-white px-5 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
-<div class="flex h-16 items-center px-6">
+  <aside class="sidebar fixed top-0 left-0 z-9999 flex h-screen w-[255px] flex-col overflow-y-auto border-r border-gray-200 bg-transparent px-5 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
+<div class="flex h-16 items-center">
         <h1 class="text-lg font-semibold text-gray-800">Welcome, Employer</h1>
       </div>
   <nav class="flex flex-1 flex-col">
-    <ul role="list" class="mb-6 flex flex-col gap-4">
+    <ul role="list" class="mb-0 flex flex-col gap-1">
       <!-- Dashboard -->
       <li>
-        <a href="{{ url_for('user_dashboard') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'user_dashboard' }}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <a href="{{ url_for('user_dashboard') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'user_dashboard' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'}}">
+          <svg class="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
           </svg>
           Dashboard
@@ -78,7 +81,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- Jobs Section -->
       <li>
         <div>
-          <button type="button" class="flex w-full items-center gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 submenu-toggle">
+          <button type="button" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center submenu-toggle">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-500 dark:text-gray-300 size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
             </svg>
@@ -89,7 +92,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </button>
           <ul class="mt-1 block submenu-content">
             <li>
-              <a href="{{ url_for('user_all_post') }}" class="flex items-center gap-x-3 block rounded-md py-2 pl-11 font-semibold  text-sm text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'user_all_post' }}">
+              <a href="{{ url_for('user_all_post') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 text-gray-700 hover:bg-gray-50 hover:text-purple-500 pl-10 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'user_all_post' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'}}">
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 dark:text-gray-300 size-5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                 </svg> -->
@@ -97,7 +100,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </a>
             </li>
             <li>
-              <a href="{{ url_for('add_post') }}" class="flex items-center gap-x-3 block rounded-md py-2 pl-11 font-semibold  text-sm text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'add_post' }}">
+              <a href="{{ url_for('add_post') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 text-gray-700 hover:bg-gray-50 hover:text-purple-500 pl-10 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'add_post' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full' }}">
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 dark:text-gray-300 size-5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 0 0 2.25-2.25V6a2.25 2.25 0 0 0-2.25-2.25H6A2.25 2.25 0 0 0 3.75 6v2.25A2.25 2.25 0 0 0 6 10.5Zm0 9.75h2.25A2.25 2.25 0 0 0 10.5 18v-2.25a2.25 2.25 0 0 0-2.25-2.25H6a2.25 2.25 0 0 0-2.25 2.25V18A2.25 2.25 0 0 0 6 20.25Zm9.75-9.75H18a2.25 2.25 0 0 0 2.25-2.25V6A2.25 2.25 0 0 0 18 3.75h-2.25A2.25 2.25 0 0 0 13.5 6v2.25a2.25 2.25 0 0 0 2.25 2.25Z" />
                 </svg> -->
@@ -110,17 +113,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Applicant Tracking -->
       <li>
-        <a href="{{ url_for('all_applicants') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'all_applicants' }}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-          </svg>
+        <a href="{{ url_for('all_applicants') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'all_applicants' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full' }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check h-6 w-6 " viewBox="0 0 16 16">
+          <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+          <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+        </svg>
           Applicant Tracking
         </a>
       </li>
 
       <li>
         <div>
-          <button type="button" class="flex w-full items-center gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 submenu-toggle">
+          <button type="button" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center submenu-toggle">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 text-gray-500 dark:text-gray-300 size-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
             </svg>
@@ -131,7 +135,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </button>
           <ul class="mt-1 block submenu-content">
             <li>
-              <a href="{{ url_for('applicant_tracking') }}" class="flex items-center gap-x-3 block rounded-md py-2 pl-11 font-semibold  text-sm text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'applicant_tracking' }}">
+              <a href="{{ url_for('applicant_tracking') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 text-gray-700 hover:bg-gray-50 hover:text-purple-500 pl-10 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'applicant_tracking' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full' }}">
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 dark:text-gray-300 size-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
               </svg> -->
@@ -139,7 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </a>
             </li>
             <li>
-              <a href="{{ url_for('create_applicant_tracker') }}" class="flex items-center gap-x-3 block rounded-md py-2 pl-11 font-semibold  text-sm text-gray-500 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'create_applicant_tracker' }}">
+              <a href="{{ url_for('create_applicant_tracker') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 text-gray-700 hover:bg-gray-50 hover:text-purple-500 pl-10 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'create_applicant_tracker' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full' }}">
                 <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-gray-400 dark:text-gray-300 size-5">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                 </svg> -->
@@ -153,16 +157,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Search Applicants -->
       <li>
-        <a href="{{ url_for('employer_applicants_filter') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'employer_applicants_filter' }}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+        <a href="{{ url_for('employer_applicants_filter') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'employer_applicants_filter' else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'}}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search h-6 w-6" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
           </svg>
           Search Applicants
         </a>
       </li>
       <li>
-        <a href="{{ url_for('my_team') }}" class="group flex gap-x-3 rounded-md p-2 text-md font-semibold text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 {{ 'bg-gray-50 dark:bg-gray-700' if request.endpoint == 'my_team' }}">
-          <svg class="h-6 w-6 text-slate-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <a href="{{ url_for('my_team') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-purple-100 text-purple-800 font-medium rounded-full' if request.endpoint == 'my_team' }} else 'text-gray-700 hover:bg-purple-50 hover:text-purple-800 rounded-full'">
+          <svg class="h-6 w-6 " fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
           </svg>
           My Team
@@ -196,16 +200,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- Navigation -->
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="hidden sm:flex sm:space-x-8">
-          <a href="{{ url_for('user_dashboard') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_dashboard' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm font-medium">
+          <a href="{{ url_for('user_dashboard') }}" class="inline-flex items-center border-b-2 {{ 'border-purple-300 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_dashboard' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm">
             Dashboard
           </a>
-          <a href="{{ url_for('user_all_post') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_all_post' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm font-medium">
+          <a href="{{ url_for('user_all_post') }}" class="inline-flex items-center border-b-2 {{ 'border-purple-300 text-gray-900 dark:text-gray-200' if request.endpoint == 'user_all_post' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm">
             All Jobs
           </a>
-          <a href="{{ url_for('add_post') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'add_post' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm font-medium">
+          <a href="{{ url_for('add_post') }}" class="inline-flex items-center border-b-2 {{ 'border-purple-300 text-gray-900 dark:text-gray-200' if request.endpoint == 'add_post' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm">
             Add Job
           </a>
-          <a href="{{ url_for('all_applicants') }}" class="inline-flex items-center border-b-2 {{ 'border-indigo-500 text-gray-900 dark:text-gray-200' if request.endpoint == 'all_applicants' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm font-medium">
+          <a href="{{ url_for('all_applicants') }}" class="inline-flex items-center border-b-2 {{ 'border-purple-300 text-gray-900 dark:text-gray-200' if request.endpoint == 'all_applicants' else 'border-transparent text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-700 dark:hover:text-gray-300' }} px-1 pt-1 text-sm">
             Applicant Tracking
           </a>
         </div>
@@ -226,7 +230,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Profile dropdown -->
         <div class="relative ml-3">
-          <button type="button" class="flex rounded-full bg-white dark:bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="profileDropdown">
+          <button type="button" class="flex rounded-full bg-white dark:bg-purple-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" id="profileDropdown">
             <span class="sr-only">Open user menu</span>
             <img class="h-11 w-11 overflow-hidden rounded-full" src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
           </button>

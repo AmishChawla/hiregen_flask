@@ -3,12 +3,12 @@
 {% block content %}
 
 <div class="">
-  <div class="min-h-screen py-6">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen py-0">
+    <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
     <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
   <!-- Metric Cards -->
    <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
-    <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+    <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
     <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800">
 
       <div class="flex items-center">
@@ -19,29 +19,29 @@
         {% endif %}
       </div>
       <div class="ml-4">
-        <div class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ profile_completion_percentage }}%</div>
+        <div class="text-3xl font-bold text-purple-500 dark:text-white/90">{{ profile_completion_percentage }}%</div>
         <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mt-2">
           {% if profile_completion_percentage < 40 %}
           <div class="bg-red-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% elif profile_completion_percentage < 80 %}
           <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% else %}
-          <div class="bg-green-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
+          <div class="bg-purple-400 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% endif %}
         </div>
         <p class="mt-2 block text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
       </div>
     </div>
                 </div>
-                <div class="flex rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 mr-6">
+                <div class="flex rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 shadow-sm animate-fade-in">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-purple-50 text-purple-500 dark:bg-gray-800 mr-6">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
   <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
   <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 </svg>
                     </div>
                     <div>
-                        <span class="text-3xl font-bold text-gray-800 dark:text-white/90">{{ total_applications }}</span>
+                        <span class="text-3xl font-bold text-purple-500 dark:text-white/90">{{ total_applications }}</span>
                         <span class="block text-sm text-gray-500 dark:text-gray-400">My Applications</span>
                     </div>
                 </div>
@@ -51,79 +51,54 @@
 
     <!-- Metric Cards -->
 
-    <h2 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white">Recommended for you</h2>
+<h2 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white mb-4">Recommended for you</h2>
 <div>
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2">
     {% if recommendations %}
     {% for job, similarity_score in recommendations %}
 <div>
-  <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain,job_slug=job.slug) }}" class="block">
-    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-      <div class="p-4">
 
-        <!-- Card Header -->
-        <div class="border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-5 sm:px-6">
-          <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between sm:flex-nowrap">
-            <div class="ml-4 mt-2">
-              <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">{{ job.job_title }}</h3>
-            </div>
-            <div class="ml-4 mt-2 shrink-0">
-              <div class="bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-sm font-medium p-1 rounded-full text-center flex border-2 border-gray-300 dark:border-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="mt-1 mr-1 size-5 text-yellow-500">
-                  <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5Z" clip-rule="evenodd" />
-                </svg>
-                <p class="text-lg">{{ similarity_score }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Location -->
-        <div class="mt-2 text-gray-500 dark:text-gray-400 text-sm flex items-center">
-          <svg class="size-5 mr-2 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}"
+   class="block rounded-lg border mb-3 border-gray-200 bg-white p-5 shadow-sm animate-fade-in hover:bg-purple-50 transition">
+    <div class="flex justify-between items-center">
+        <div class="flex items-start space-x-4">
+            <img src="/static/images/google-icon.png" alt="{{ job.company_name }} Logo"
+                 class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800">{{ job.job_title }}</h2>
+                <div class="mt-2 text-gray-500 text-sm flex items-center">
+                  <span class="me-6 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-          </svg>
-          <span>{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
-        </div>
-
-        <!-- Opening Date -->
-        <div class="mt-1 text-gray-500 dark:text-gray-400 text-sm flex items-center">
-          <svg class="size-5 mr-2 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5" />
-          </svg>
-          <span>{{ job.opening_date.split('T')[0] }}</span>
-        </div>
-
-        <!-- Job Details -->
-        <div class="mt-3 flex flex-wrap gap-4">
-          <!-- Salary -->
-          <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-            <svg class="size-5 mr-1 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          </svg> {{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
+                <span class="me-6 text-sm text-gray-500 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            <span>{{ job.salary }}</span>
-          </div>
-
-          <!-- Work Experience -->
-          <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-1">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-</svg>
-            <span>{{ job.work_experience }}</span>
-          </div>
-
-          <!-- Job Type -->
-          <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-            <svg class="size-5 mr-1 text-gray-600 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            </svg>{{ job.salary }}</span>
+                    <span class="me-6 text-sm text-gray-500 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            <span>{{ job.job_type }}</span>
-          </div>
+            </svg>{{ job.job_type }}</span>                                
+                </div>
+                <div class="mt-2 text-gray-500 text-sm flex items-center">                
+            <span class="text-gray-500 flex me-6"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5" />
+          </svg>{{ job.opening_date.split('T')[0] }}</span>
+          <span class="text-sm text-gray-500 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
+            </svg>{{ job.work_experience }}</span>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="text-right text-gray-500 text-sm flex items-center">
+            <div class="flex items-center bg-white dark:bg-gray-700 text-gray-400 dark:text-gray-300 text-sm p-2 h-8 w-12 rounded-full text-center flex border shadow border-gray-300 dark:border-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-sm text-yellow-500">
+                  <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5Z" clip-rule="evenodd" />
+                </svg>
+                <p>{{ similarity_score }}</p>
+              </div>
+        </div>
     </div>
-  </a>
+</a>
+
 </div>
     {% endfor %}
     {% else %}

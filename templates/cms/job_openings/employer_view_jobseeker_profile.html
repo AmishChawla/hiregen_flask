@@ -44,12 +44,12 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
       <div class="overflow-hidden rounded-md bg-white shadow">
         <ul role="list" class="divide-y divide-gray-200">
-          <li class="px-6 py-4"><a href="#profileSummary" class="text-gray-800 hover:text-blue-600">Profile Summary</a></li>
-          <li class="px-6 py-4"><a href="#education" class="text-gray-800 hover:text-blue-600">Education</a></li>
-          <li class="px-6 py-4"><a href="#experience" class="text-gray-800 hover:text-blue-600">Experience</a></li>
-          <li class="px-6 py-4"><a href="#internships" class="text-gray-800 hover:text-blue-600">Internships</a></li>
-          <li class="px-6 py-4"><a href="#projects" class="text-gray-800 hover:text-blue-600">Projects</a></li>
-          <li class="px-6 py-4"><a href="#accomplishments" class="text-gray-800 hover:text-blue-600">Accomplishments</a></li>
+          <li class="px-6 py-4"><a href="#profileSummary" class="text-gray-800 hover:text-purple-500">Profile Summary</a></li>
+          <li class="px-6 py-4"><a href="#education" class="text-gray-800 hover:text-purple-500">Education</a></li>
+          <li class="px-6 py-4"><a href="#experience" class="text-gray-800 hover:text-purple-500">Experience</a></li>
+          <li class="px-6 py-4"><a href="#internships" class="text-gray-800 hover:text-purple-500">Internships</a></li>
+          <li class="px-6 py-4"><a href="#projects" class="text-gray-800 hover:text-purple-500">Projects</a></li>
+          <li class="px-6 py-4"><a href="#accomplishments" class="text-gray-800 hover:text-purple-500">Accomplishments</a></li>
         </ul>
       </div>
 
@@ -110,7 +110,7 @@
             {% for project in profile_info.projects %}
             <p class="font-semibold">{{ project.title }}</p>
             <p class="text-xs">{{ project.description }}</p>
-            <p><a href="{{ project.project_url }}" class="text-blue-600 hover:underline">{{ project.project_url }}</a></p>
+            <p><a href="{{ project.project_url }}" class="text-purple500 hover:underline">{{ project.project_url }}</a></p>
             {% endfor %}
           </div>
         </div>
