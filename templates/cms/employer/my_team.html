@@ -386,5 +386,36 @@ permissionsContainer.innerHTML = html;
         });
       });
       </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("query_applied");
+    const memberList = document.getElementById("team-member-list");
+    const members = memberList.querySelectorAll("li");
+
+    searchInput.addEventListener("input", function () {
+      const query = this.value.trim().toLowerCase();
+
+      members.forEach(member => {
+        const name = member.querySelector("p.font-semibold").textContent.toLowerCase();
+        const email = member.querySelector("p.text-gray-500").textContent.toLowerCase();
+        
+        const isMatch = name.includes(query) || email.includes(query);
+        member.style.display = isMatch ? "flex" : "none";
+      });
+    });
+  });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const firstMember = document.querySelector("#team-member-list li");
+    if (firstMember) {
+      firstMember.click();
+    }
+  });
+</script>
+
                     
 {% endblock %}
