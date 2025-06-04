@@ -33,6 +33,7 @@
                             {% endwith %}
                     <form method="post" action="{{ url_for('register') }}" id="employer-register-form" class="">
                 {{ form.hidden_tag() }}
+                <input type="hidden" name="city" id="city">
                 <div class="flex items-start mb-10">
                     <a title="Home" class="login-logo2" href="/">
                         <image src="{{ url_for('static', filename='images/logo.webp') }}" alt="Logo" width="130" class="object-contain text-zinc-950 dark:text-white forced-colors:text-[CanvasText]" />
@@ -89,19 +90,57 @@ grecaptcha.ready(function () {
     document.getElementById('employer-register-form').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent default form submission
 
-        // Execute reCAPTCHA
-        grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' }).then(function (token) {
-            console.log('Generated reCAPTCHA token:', token); // Debugging
+        function executeRecaptchaAndSubmit() {
+            // Execute reCAPTCHA
+            grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' }).then(function (token) {
+                console.log('Generated reCAPTCHA token:', token); // Debugging
 
-            // Set the reCAPTCHA token in the hidden input field
-            document.getElementById('g-recaptcha-response').value = token;
+                // Set the reCAPTCHA token in the hidden input field
+                document.getElementById('g-recaptcha-response').value = token;
 
-            // Use the native submit method to submit the form
-            const form = document.getElementById('employer-register-form');
-            HTMLFormElement.prototype.submit.call(form);
-        }).catch(function (error) {
-            console.error('reCAPTCHA execution error:', error);
-        });
+                // Use the native submit method to submit the form
+                const form = document.getElementById('employer-register-form');
+                HTMLFormElement.prototype.submit.call(form);
+            }).catch(function (error) {
+                console.error('reCAPTCHA execution error:', error);
+            });
+        }
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                // Fill hidden fields
+                document.getElementById('latitude').value = lat;
+                document.getElementById('longitude').value = lon;
+
+                // Fetch city from OpenStreetMap
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
+                    headers: {
+                        'User-Agent': 'YourAppName/1.0'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    const city = data?.address?.city || data?.address?.town || data?.address?.village || data?.address?.county || '';
+                    document.getElementById('city').value = city;
+                })
+                .catch(error => {
+                    console.warn('Could not get city:', error);
+                })
+                .finally(() => {
+                    executeRecaptchaAndSubmit();
+                });
+
+            }, function (error) {
+                console.warn('Geolocation error or denied:', error);
+                executeRecaptchaAndSubmit(); // Submit without location
+            });
+        } else {
+            console.warn('Geolocation not supported');
+            executeRecaptchaAndSubmit();
+        }
     });
 });
 </script>

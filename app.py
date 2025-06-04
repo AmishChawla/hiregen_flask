@@ -363,13 +363,15 @@ def register():
         phone_number = form.phone_number.data
         email = form.email.data
         password = form.password.data
+        city = request.form.get('city')
+        print(city)
 
         recaptcha_token = request.form.get('g-recaptcha-response')
         recaptcha_success = verify_recaptcha(recaptcha_token)
 
         if recaptcha_success:
 
-            response = api_calls.user_register(firstname, lastname, phone_number, email, password)
+            response = api_calls.user_register(firstname, lastname, phone_number, email, password, city)
             print("inside")
             if response.status_code == 200:
                 response = api_calls.user_login(email, password)
