@@ -38,7 +38,7 @@ def dashboard(file_list, access_token: str):
         print(f"Error: {e}")
 
 
-def user_register(firstname, lastname, phone_number, email, password, city):
+def user_register(firstname, lastname, phone_number, email, password, city, ip):
     print('trying3')
     headers = {'Content-Type': 'application/json'}
     data = {
@@ -48,7 +48,8 @@ def user_register(firstname, lastname, phone_number, email, password, city):
         "email": email,
         "password": password,
         "role": "user",
-        "city": city
+        "city": city,
+        "ip_address": ip
     }
 
     try:
