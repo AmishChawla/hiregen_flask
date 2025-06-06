@@ -12,30 +12,119 @@
 {% block content %}
 <div class="">
     <div class="min-h-screen py-0">
-      <div class="container max-w6xl mx-ato px-4 sm:px-6 lg:px-0">
+      <div class="containermax-w6xl mx-ato px-4 sm:px-6 lg:px-0">
         
     <!--Left Sidebar -->
 <div class="">
-    <h1 class="text-base text-gray-600 dark:text-white mb-4">{{total_job_count}} jobs found</h1>
-  <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
-    <!-- Left Column: Filters (4/12) -->
-    <div class="md:col-span-9">
-            <div>
-    <div id="job-results-container" class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-0">
-        
-        {% include 'jobseeker/_job_cards.html' %}
-    </div>
-    <div id="loading-indicator" class="text-center my-4 text-gray-500 hidden">Loading more jobs...</div>
-    </div>
-    <!--Right Sidebar -->
+    
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+    <!-- Right Column: Job Listings (8/12) -->
+    <div class="md:col-span-12">
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-2 dark:text-white">Find Your Dream Job</h1>
+        <p class="text-gray-600 text-sm">Discover thousands of job opportunities with AI-powered recommendations</p>
     </div>
 
-    <!-- Right Column: Job Listings (8/12) -->
-    <div class="md:col-span-3">
-        <div class="rounded-lg border border-gray-200 bg-white shadow-sm p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-5 mb-5">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick job search</h2>
+<!-- Search Jobs -->
+ <div class="rounded-lg border bg-white text-card-foreground shadow-sm mb-6">
+    <div class="p-6">
+        <div class="flex gap-4 flex-wrap">
+            <div class="flex-1 min-w-[300px]">
+                <div class="relative"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
+                        data-lov-id="src/pages/JobSearch.tsx:182:22" data-lov-name="Search"
+                        data-component-path="src/pages/JobSearch.tsx" data-component-line="182"
+                        data-component-file="JobSearch.tsx" data-component-name="Search"
+                        data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                        placeholder="Job title, keywords, or company" value=""></div>
+            </div>
+            <div class="flex-1 min-w-[200px]">
+                <div class="relative"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-map-pin absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
+                        data-lov-id="src/pages/JobSearch.tsx:193:22" data-lov-name="MapPin"
+                        data-component-path="src/pages/JobSearch.tsx" data-component-line="193"
+                        data-component-file="JobSearch.tsx" data-component-name="MapPin"
+                        data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
+                        <path
+                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                        </path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                        placeholder="City, state, or remote" value=""></div>
+            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-8 text-white">Search
+                Jobs</button>
+        </div>
+    </div>
+</div>
+
+<!-- Total jobs found -->
+ <div class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <h2 class="text-lg font-semibold text-gray-900">{{total_job_count}} jobs found</h2>
+        <div class="flex gap-1">
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-50 text-blue-700 border-blue-200">
+                4 Remote</div>
+            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-green-50 text-green-700 border-green-200">
+                5 Full-time</div>
+        </div>
+    </div>
+    <div class="flex items-center gap-2">
+<!--Filters-->
+        <div class="flex items-center gap-4 flex-wrap">
+            <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-filter w-4 h-4 text-gray-500"
+                    data-lov-id="src/pages/JobSearch.tsx:214:20" data-lov-name="Filter"
+                    data-component-path="src/pages/JobSearch.tsx" data-component-line="214"
+                    data-component-file="JobSearch.tsx" data-component-name="Filter"
+                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-500%22%7D">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg><span class="text-sm font-medium text-gray-700">Filters:</span></div><button type="button" role="combobox"
+                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
+                    style="pointer-events: none;">Job Types</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
+                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
+                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
+                    data-component-file="select.tsx" data-component-name="ChevronDown"
+                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                </svg></button><button type="button" role="combobox" aria-controls="radix-:r1:" aria-expanded="false"
+                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
+                    style="pointer-events: none;">Anytime</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
+                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
+                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
+                    data-component-file="select.tsx" data-component-name="ChevronDown"
+                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                </svg></button><button type="button" role="combobox" aria-controls="radix-:r2:" aria-expanded="false"
+                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
+                    style="pointer-events: none;">Salary</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
+                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
+                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
+                    data-component-file="select.tsx" data-component-name="ChevronDown"
+                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
+                    <path d="m6 9 6 6 6-6"></path>
+                </svg></button>
+        </div>
+    </div>
+</div>
+
+
+        <div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-4 mt-4">
             <form method="GET" action="{{ url_for('jobs_search') }}">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-1 mb-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
                 <div>
                     <!-- <label class="block text-gray-700 font-medium" for="keyword">Search</label> -->
                     <input type="text" id="keyword" name="keyword" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
@@ -53,8 +142,9 @@
                     <!-- <label class="mt-4 block text-gray-700 font-medium" for="state">State</label> -->
                     <input type="text" id="state" name="state" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
                 </div>
+
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-1">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
                 <div>
                     <!-- <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label> -->
                     <select id="job_type" name="job_type" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
@@ -84,11 +174,22 @@
                 </div>
             
             <div>
-                <button type="submit" class="w-full rounded-md bg-purple-500 px-3.5 py-2 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Search Jobs</button>
+                <button type="submit" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full">Search Jobs</button>
             </div>
         </div>
         </div>
         </form>
+    </div>
+    <!-- Left Column: Filters (4/12) -->
+    <div class="md:col-span-12">
+    <div>
+    <div id="job-results-container" class="containerpx-4 sm:px-6 lg:px-0">
+        
+        {% include 'jobseeker/_job_cards.html' %}
+    </div>
+    <div id="loading-indicator" class="text-center my-4 text-gray-500 hidden">Loading more jobs...</div>
+    </div>
+    <!--Right Sidebar -->
     </div>
   </div>
 </div>

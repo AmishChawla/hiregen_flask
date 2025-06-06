@@ -1,0 +1,155 @@
+{% extends "jobseeker/jobseeker_base.html" %}
+
+{%block title%}Saved Jobs{%endblock%}
+
+{% block content %}
+
+
+<div class="max-w-6xl mx-auto space-y-6">
+    <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-gray-900">Saved Jobs</h1>
+        <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="lucide lucide-heart w-5 h-5 text-red-500"
+                data-lov-id="src/pages/SavedJobs.tsx:94:18" data-lov-name="Heart"
+                data-component-path="src/pages/SavedJobs.tsx" data-component-line="94"
+                data-component-file="SavedJobs.tsx" data-component-name="Heart"
+                data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-red-500%22%7D">
+                <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                </path>
+            </svg><span class="text-sm text-gray-600">4 saved jobs</span></div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
+                        data-lov-id="src/pages/SavedJobs.tsx:104:22" data-lov-name="Search"
+                        data-component-path="src/pages/SavedJobs.tsx" data-component-line="104"
+                        data-component-file="SavedJobs.tsx" data-component-name="Search"
+                        data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                        placeholder="Search saved jobs..." value=""></div>
+            </div>
+        </div>
+    </div>
+    <div class="space-y-4">
+        <div class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><span
+                            class="font-semibold text-blue-700">TC</span></div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between mb-2">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-1">Senior Frontend Developer</h3>
+                                <div class="flex items-center gap-4 text-sm text-gray-600 mb-2"><span
+                                        class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-building w-4 h-4"
+                                            data-lov-id="src/pages/SavedJobs.tsx:170:36" data-lov-name="Building"
+                                            data-component-path="src/pages/SavedJobs.tsx" data-component-line="170"
+                                            data-component-file="SavedJobs.tsx" data-component-name="Building"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+                                            <path d="M9 22v-4h6v4"></path>
+                                            <path d="M8 6h.01"></path>
+                                            <path d="M16 6h.01"></path>
+                                            <path d="M12 6h.01"></path>
+                                            <path d="M12 10h.01"></path>
+                                            <path d="M12 14h.01"></path>
+                                            <path d="M16 10h.01"></path>
+                                            <path d="M16 14h.01"></path>
+                                            <path d="M8 10h.01"></path>
+                                            <path d="M8 14h.01"></path>
+                                        </svg>TechCorp Inc.</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-map-pin w-4 h-4"
+                                            data-lov-id="src/pages/SavedJobs.tsx:174:36" data-lov-name="MapPin"
+                                            data-component-path="src/pages/SavedJobs.tsx" data-component-line="174"
+                                            data-component-file="SavedJobs.tsx" data-component-name="MapPin"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <path
+                                                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                                            </path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg>San Francisco, CA</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-dollar-sign w-4 h-4"
+                                            data-lov-id="src/pages/SavedJobs.tsx:178:36" data-lov-name="DollarSign"
+                                            data-component-path="src/pages/SavedJobs.tsx" data-component-line="178"
+                                            data-component-file="SavedJobs.tsx" data-component-name="DollarSign"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <line x1="12" x2="12" y1="2" y2="22"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>$120,000 - $150,000</span></div>
+                            </div>
+                            <div class="flex items-center gap-2"><button data-lov-id="src/pages/SavedJobs.tsx:184:32"
+                                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-trash2 w-4 h-4"
+                                        data-lov-id="src/pages/SavedJobs.tsx:185:34" data-lov-name="Trash2"
+                                        data-component-path="src/pages/SavedJobs.tsx" data-component-line="185"
+                                        data-component-file="SavedJobs.tsx" data-component-name="Trash2"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M3 6h18"></path>
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                        <line x1="10" x2="10" y1="11" y2="17"></line>
+                                        <line x1="14" x2="14" y1="11" y2="17"></line>
+                                    </svg></button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-external-link w-4 h-4"
+                                        data-lov-id="src/pages/SavedJobs.tsx:188:34" data-lov-name="ExternalLink"
+                                        data-component-path="src/pages/SavedJobs.tsx" data-component-line="188"
+                                        data-component-file="SavedJobs.tsx" data-component-name="ExternalLink"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M15 3h6v6"></path>
+                                        <path d="M10 14 21 3"></path>
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    </svg></button><button class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply
+                                    Now</button></div>
+                        </div>
+                        <p class="text-gray-600 mb-3">Join our team to build next-generation web applications using
+                            React and TypeScript.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-50 hover:bg-secondary/80">
+                                    Full-time</div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                    React</div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                    TypeScript</div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                    Remote</div>
+                            </div>
+                            <div class="flex items-center gap-1 text-sm text-gray-500"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-clock w-4 h-4"
+                                    data-lov-id="src/pages/SavedJobs.tsx:206:32" data-lov-name="Clock"
+                                    data-component-path="src/pages/SavedJobs.tsx" data-component-line="206"
+                                    data-component-file="SavedJobs.tsx" data-component-name="Clock"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>Saved 1/15/2024</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

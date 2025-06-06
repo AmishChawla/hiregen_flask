@@ -4,18 +4,18 @@
 
 <div class="min-h-screen py-0">
   <div class="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-  <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Update your profile</h1>
+  <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Update profile</h1>
   <!-- Progress Bar -->
   <nav aria-label="Progress">
     <ol
       role="list"
-      id="progressBar"
-      class="divide-y divide-gray-300 rounded-2xl bg-white border border-gray-300 md:flex md:divide-y-0"
+      id="progressBar" style="z-index: -1;position: relative;"
+      class="divide-y divide-blue-100 rounded-lg bg-blue-50 border border-blue-100 md:flex md:divide-y-0"
     >
       <!-- Step 1: About -->
       <li class="relative md:flex md:flex-1 step" data-step="1">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -50,7 +50,7 @@
       <!-- Step 2: Education -->
       <li class="relative md:flex md:flex-1 step" data-step="2">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -84,7 +84,7 @@
       <!-- Step 3: Experience -->
       <li class="relative md:flex md:flex-1 step" data-step="3">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -118,7 +118,7 @@
       <!-- Step 4: Internships -->
       <li class="relative md:flex md:flex-1 step" data-step="4">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -152,7 +152,7 @@
       <!-- Step 5: Projects -->
       <li class="relative md:flex md:flex-1 step" data-step="5">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -186,7 +186,7 @@
       <!-- Step 6: Accomplishments -->
       <li class="relative md:flex md:flex-1 step" data-step="6">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span
               class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300"
             >
@@ -197,11 +197,30 @@
             </span>
           </span>
         </a>
+                <!-- Arrow separator (desktop) -->
+        <div
+          class="absolute right-0 top-0 hidden h-full w-5 md:block"
+          aria-hidden="true"
+        >
+          <svg
+            class="size-full text-gray-300"
+            viewBox="0 0 22 80"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 -2L20 40L0 82"
+              vector-effect="non-scaling-stroke"
+              stroke="currentcolor"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
       </li>
             <!-- Step 7: Skills -->
       <li class="relative md:flex md:flex-1 step" data-step="7">
         <a href="#" class="group flex w-full items-center">
-          <span class="flex items-center px-6 py-2 text-sm font-medium">
+          <span class="flex items-center px-4 py-2 text-sm font-medium">
             <span class="flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300">
               <span class="text-gray-500">7</span>
             </span>
@@ -214,127 +233,182 @@
     </ol>
   </nav>
 
-  <div class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+  <div class="mt-6">
   <!-- Step Forms -->
 <form id="jobseeker-form" method="POST" action="{{url_for('jobseeker_update_profile')}}" novalidate class="spacey-12">
   <!-- Step 1: About -->
   <div class="step-content" id="step-1">
     <div class="border-b border-gray-900/10 pb-5">
-      <h2 class="text-xl font-semibold text-gray-900">About</h2>
-      <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
 
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
+      <div class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="mt-1">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M6 20v-1a6 6 0 0 1 12 0v1" />
+      </svg>
+      <h2 class="text-xl font-semibold text-gray-900">About</h2>
+      </div>
+      <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
+       
       <div class="mt-4">
         {{ about_form.hidden_tag() }}
       
         <!-- About -->
-        {{ about_form.about(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 h-24 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ about_form.about(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 h-24 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+      </div>
+      </div>
       
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         <!-- Address City -->
-        <div class="mt-4">
+      <div class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="mt-1">
+          <path d="M12 21s-6-5.3-6-10a6 6 0 1 1 12 0c0 4.7-6 10-6 10z" />
+          <circle cx="12" cy="11" r="2.5" />
+        </svg>
+      <h2 class="text-xl font-semibold text-gray-900">Address</h2>
+      </div>
+        <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
+          <div class="">
           {{ about_form.address_city.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.address_city(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
-        </div>
-      
-        <!-- Address Province -->
-        <div class="mt-4">
-          {{ about_form.address_province.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.address_province(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
-        </div>
-      
-        <!-- Address County -->
-        <div class="mt-4">
+          {{ about_form.address_city(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="">
+            {{ about_form.address_province.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
+          {{ about_form.address_province(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div class="">
           {{ about_form.address_county.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.address_county(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          {{ about_form.address_county(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+        </div>
         </div>
       
+        <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         <!-- Languages -->
+        <div class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="mt-1">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20M12 2c2.5 2.5 4 6.3 4 10s-1.5 7.5-4 10c-2.5-2.5-4-6.3-4-10s1.5-7.5 4-10z" />
+        </svg>
+      <h2 class="text-xl font-semibold text-gray-900">Languages</h2>
+      </div>         
+        <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
         <div class="mt-4">
           {{ about_form.languages.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.languages(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          {{ about_form.languages(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           <p class="mt-1 text-sm text-gray-400">Enter multiple languages separated by commas.</p>
         </div>
-      
+      </div>
+
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         <!-- LinkedIn -->
-        <div class="mt-4">
-          {{ about_form.linkedin.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.linkedin(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+      <div class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="mt-1">
+        <circle cx="12" cy="12" r="2" />
+        <circle cx="4" cy="4" r="2" />
+        <circle cx="20" cy="4" r="2" />
+        <circle cx="4" cy="20" r="2" />
+        <circle cx="20" cy="20" r="2" />
+        <path d="M12 12L4 4M12 12L20 4M12 12L4 20M12 12L20 20" />
+      </svg>
+      <h2 class="text-xl font-semibold text-gray-900">Social</h2>
+      </div>          
+      <p class="mt-1 text-sm text-gray-500">This information will be displayed publicly.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-4">
+          <div>
+            {{ about_form.linkedin.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
+            {{ about_form.linkedin(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div>
+            {{ about_form.github.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
+            {{ about_form.github(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
+          <div>
+            {{ about_form.instagram.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
+          {{ about_form.instagram(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          </div>
         </div>
-      
-        <!-- GitHub -->
-        <div class="mt-4">
-          {{ about_form.github.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.github(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
         </div>
-      
+
+        <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         <!-- Portfolio Website -->
+        <div class="flex items-start gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" class="mt-1">
+          <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+          <path d="M2 8h20" />
+          <circle cx="6" cy="6" r="1" />
+          <circle cx="10" cy="6" r="1" />
+          <circle cx="14" cy="6" r="1" />
+        </svg>
+      <h2 class="text-xl font-semibold text-gray-900">Website</h2>
+      </div>          
+      <p class="mt-1 text-sm text-gray-500">Write a brief introduction about yourself.</p>
         <div class="mt-4">
           {{ about_form.portfolio_website.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.portfolio_website(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+          {{ about_form.portfolio_website(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
         </div>
-      
-        <!-- Instagram -->
-        <div class="mt-4">
-          {{ about_form.instagram.label(class_="block text-sm font-medium text-gray-900 mb-3") }}
-          {{ about_form.instagram(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
         </div>
-
-        <p class="mt-3 text-sm text-gray-400">This information will be displayed publicly.</p>
-
       </div>
     </div>
     <div class="mt-6 flex justify-end">
-      <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+      <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
     </div>
   </div>
 
 <!-- Step 2: Education -->
 <div class="step-content hidden" id="step-2">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Education</h2>
-    <p class="mt-1 text-sm text-gray-600">List your educational background.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lov-id="src/pages/Profile.tsx:162:20" data-lov-name="GraduationCap" data-component-path="src/pages/Profile.tsx" data-component-line="162" data-component-file="Profile.tsx" data-component-name="GraduationCap" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Education</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">List your educational background.</p>
 
     <div id="education-container" class="mt-4">
-      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         {{ education_form.hidden_tag() }}
 
         <label for="institution_name" class="block mb-3 text-sm font-medium text-gray-900">Institution Name</label>
-        {{ education_form.institution_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ education_form.institution_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="degree" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Degree</label>
-            {{ education_form.degree(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ education_form.degree(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="field_of_study" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Field of Study</label>
-        {{ education_form.field_of_study(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ education_form.field_of_study(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
 
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
-        {{ education_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ education_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
-        {{ education_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ education_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
 
         <label class="flex items-center gap-2 ml-2 mt-2">
           {{ education_form.ongoing }}
-          <span class="text-sm text-gray-600">Currently studying here</span>
+          <span class="text-sm text-slate-800">Currently studying here</span>
         </label>
       </div>
     </div>
 
     <div class="flex justify-end mt-4">
-    <button type="button" id="add-education" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+    <button type="button" id="add-education" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-blue-600 bg-gray-50 px-3 py-2 text-sm font-medium text-blue-700 shadow-theme-xs hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
       <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
       </svg>      
-      Add
+      
     </button>
   </div>
 
@@ -342,67 +416,70 @@
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   </div>
 </div>
 
 <!-- Step 3: Experience -->
 <div class="step-content hidden" id="step-3">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Experience</h2>
-    <p class="mt-1 text-sm text-gray-600">List your work experience.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lov-id="src/pages/Profile.tsx:142:20" data-lov-name="Briefcase" data-component-path="src/pages/Profile.tsx" data-component-line="142" data-component-file="Profile.tsx" data-component-name="Briefcase" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Experience</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">List your work experience.</p>
 
     <div id="experience-container" class="mt-4">
-      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         {{ experience_form.hidden_tag() }}
 
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="company_name" class="block mb-3 text-sm font-medium text-gray-900">Company Name</label>
-            {{ experience_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ experience_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="position" class="block mb-3 text-sm font-medium text-gray-900">Position</label>
-            {{ experience_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ experience_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
         
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
-            {{ experience_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ experience_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
-            {{ experience_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ experience_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
 
         <label class="flex items-center gap-2 ml-2 mt-2">
           {{ experience_form.ongoing }}
-          <span class="text-sm text-gray-600">Currently working here</span>
+          <span class="text-sm text-slate-800">Currently working here</span>
         </label>
 
         <label for="responsibilities" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Responsibilities</label>
-        {{ experience_form.responsibilities(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ experience_form.responsibilities(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
     <div class="flex justify-end mt-4">
-    <button type="button" id="add-experience" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+    <button type="button" id="add-experience" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-blue-600 bg-gray-50 px-3 py-2 text-sm font-medium text-blue-700 shadow-theme-xs hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
       <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
       </svg>      
-      Add
+      
     </button>
   </div>
 
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   </div>
 </div>
 
@@ -410,99 +487,114 @@
 <!-- Step 4: Internships -->
 <div class="step-content hidden" id="step-4">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Internships</h2>
-    <p class="mt-1 text-sm text-gray-600">Add your internship experience.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+  <path d="M16 3h-8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"></path>
+  <path d="M12 11l2.5 1.5L12 14l-2.5-1.5L12 11z"></path>
+</svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Internships</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">Add your internship experience.</p>
 
     <div id="internship-container" class="mt-4">
-      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         {{ internship_form.hidden_tag() }}
 
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="company_name" class="block mb-3 text-sm font-medium text-gray-900">Company Name</label>
-            {{ internship_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ internship_form.company_name(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="position" class="block mb-3 text-sm font-medium text-gray-900">Position</label>
-            {{ internship_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+            {{ internship_form.position(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
         
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="start_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Start Date</label>
-        {{ internship_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ internship_form.start_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="end_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">End Date</label>
-        {{ internship_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ internship_form.end_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
         <label class="flex items-center gap-2 ml-2 mt-2">
           {{ internship_form.ongoing }}
-          <span class="text-sm text-gray-600">Currently interning here</span>
+          <span class="text-sm text-slate-800">Currently interning here</span>
         </label>
 
         <label for="job_description" class="mt-6 mb-3 block text-sm font-medium text-gray-900">Job Description</label>
-        {{ internship_form.job_description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ internship_form.job_description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
     <div class="flex justify-end mt-4">
-    <button type="button" id="add-internship" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+    <button type="button" id="add-internship" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-blue-600 bg-gray-50 px-3 py-2 text-sm font-medium text-blue-700 shadow-theme-xs hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
       <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
       </svg>      
-      Add
+      
     </button>
   </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   </div>
 </div>
 
 <!-- Step 5: Projects -->
 <div class="step-content hidden" id="step-5">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Projects</h2>
-    <p class="mt-1 text-sm text-gray-600">Add any projects you have worked on.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+  <path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1"></path>
+  <path d="M3 6v12a2 2 0 0 0 2 2h7.5"></path>
+  <circle cx="18" cy="18" r="3"></circle>
+  <path d="M18 15v1.5M18 19.5V21M20.6 16.5l-1.3.75M15.7 19.75l-1.3.75M15.7 16.5l1.3.75M20.6 19.75l1.3.75"></path>
+</svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Projects</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">Add any projects you have worked on.</p>
 
     <div id="project-container" class="mt-4">
-      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         {{ project_form.hidden_tag() }}
 
         <div class="flex space-x-6">
           <div class="w-1/2">
             <label for="title" class="block mb-3 text-sm font-medium text-gray-900">Project Title</label>
-        {{ project_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ project_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
           <div class="w-1/2">
             <label for="project_url" class="block mb-3 text-sm font-medium text-gray-900">Project URL</label>
-        {{ project_form.project_url(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ project_form.project_url(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
           </div>
         </div>
         <label for="description" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Description</label>
-        {{ project_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ project_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
         
       </div>
     </div>
 
     <div class="flex justify-end mt-4">
-    <button type="button" id="add-project" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+    <button type="button" id="add-project" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-blue-600 bg-gray-50 px-3 py-2 text-sm font-medium text-blue-700 shadow-theme-xs hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
       <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
       </svg>      
-      Add
+      
     </button>
   </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   </div>
 </div>
 
@@ -510,46 +602,58 @@
 <!-- Step 6: Accomplishments -->
 <div class="step-content hidden" id="step-6">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Accomplishments</h2>
-    <p class="mt-1 text-sm text-gray-600">List any achievements or awards you have received.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+  <path d="M8 21h8M12 17v4M17 5V3H7v2"></path>
+  <path d="M17 5a5 5 0 0 1-10 0"></path>
+  <path d="M21 5h-4a5 5 0 0 0 4 4v-4zM3 5h4a5 5 0 0 1-4 4V5z"></path>
+</svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Accomplishments</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">List any achievements or awards you have received.</p>
 
     <div id="accomplishment-container" class="mt-4">
-      <div class="entry-form rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+      <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
         {{ accomplishment_form.hidden_tag() }}
 
         <label for="title" class="block mb-3 text-sm font-medium text-gray-900">Title</label>
-        {{ accomplishment_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ accomplishment_form.title(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
         <label for="description" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Description</label>
-        {{ accomplishment_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ accomplishment_form.description(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
 
         <label for="achievement_date" class="block mt-6 mb-3 text-sm font-medium text-gray-900">Achievement Date</label>
-        {{ accomplishment_form.achievement_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-base/6 sm:text-sm/6 data-focus:outline data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
+        {{ accomplishment_form.achievement_date(class_="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-1.5 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black") }}
       </div>
     </div>
 
     <div class="flex justify-end mt-4">
-    <button type="button" id="add-accomplishment" class="flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+    <button type="button" id="add-accomplishment" class="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-blue-600 bg-gray-50 px-3 py-2 text-sm font-medium text-blue-700 shadow-theme-xs hover:bg-blue-50 hover:text-blue-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
       <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M9 1C9.27614 1 9.5 1.22386 9.5 1.5V8.5H16.5C16.7761 8.5 17 8.72386 17 9C17 9.27614 16.7761 9.5 16.5 9.5H9.5V16.5C9.5 16.7761 9.27614 17 9 17C8.72386 17 8.5 16.7761 8.5 16.5V9.5H1.5C1.22386 9.5 1 9.27614 1 9C1 8.72386 1.22386 8.5 1.5 8.5H8.5V1.5C8.5 1.22386 8.72386 1 9 1Z" fill="currentColor"/>
       </svg>      
-      Add
+      
     </button>
   </div>
   </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="button" class="next rounded-md bg-purple-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-purple-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600">Next</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
   </div>
 </div>
 <!-- Step 7: Skills -->
 <div class="step-content hidden" id="step-7">
   <div class="border-b border-gray-900/10 pb-5">
-    <h2 class="text-xl font-semibold text-gray-900">Skills & Keywords</h2>
-    <p class="mt-1 text-sm text-gray-600">Provide relevant skills and keywords for better job matching.</p>
+    <div class="flex gap-2">
+      <svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lov-id="src/pages/Profile.tsx:123:20" data-lov-name="Award" data-component-path="src/pages/Profile.tsx" data-component-line="123" data-component-file="Profile.tsx" data-component-name="Award" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg>
+      <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center">Skills & Keywords</h2>      
+    </div>
+    <p class="mt-1 text-sm text-slate-800">Provide relevant skills and keywords for better job matching.</p>
 
-    <div class="mt-6">
+    <div id="skills-container" class="mt-4">
+    <div class="entry-form rounded-lg border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition-shadow dark:border-gray-800 dark:bg-white/[0.03] lg:p-6 mb-4">
+    <div class="">
       <label for="skills" class="block text-sm font-medium text-gray-900 mb-3">Skills</label>
       <textarea name="skills" class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400"></textarea>
     </div>
@@ -564,10 +668,12 @@
       <textarea name="leadership_keywords" class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base text-gray-900 placeholder:text-gray-400"></textarea>
     </div>
   </div>
+  </div>
+  </div>
 
   <div class="mt-6 flex justify-between">
-    <button type="button" class="prev rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-200 ring-inset hover:bg-gray-50">Previous</button>
-    <button type="submit" class="submit bg-purple-500 text-white px-4 py-2 rounded-md">Submit</button>
+    <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
+    <button type="submit" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
   </div>
 </div>
 
@@ -615,20 +721,20 @@
       // If this step is completed
       if (stepNumber < step) {
         // COMPLETED: Blue background circle with check icon
-        circle.classList.add('bg-purple-500', 'group-hover:bg-purple-800');
+        circle.classList.add('bg-blue-600', 'group-hover:bg-blue-800');
         circleText.innerHTML = `
           <svg class="size-6 text-white" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M19.916 4.626a.75.75 0 0 1 .208 1.04l-9 13.5a.75.75 0 0 1-1.154.114l-6-6a.75.75 0 0 1 1.06-1.06l5.353 5.353 8.493-12.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd" />
           </svg>
         `;
-        titleText.classList.add('text-purple-900');
+        titleText.classList.add('text-blue-700');
       }
       // If this step is the current step
       else if (stepNumber === step) {
         // CURRENT: Blue border circle, number in blue
-        circle.classList.add('border-2', 'border-slate-600');
-        circleText.classList.add('text-slate-900');
-        titleText.classList.add('text-slate-900');
+        circle.classList.add('border-2', 'border-blue-500');
+        circleText.classList.add('text-blue-700');
+        titleText.classList.add('text-blue-700');
         anchor.setAttribute('aria-current', 'step');
       }
       // Otherwise it's an upcoming step

@@ -21,93 +21,230 @@
 
 {% block title %}{{ job_details.job_title }}{% endblock %}
 
-
-
+<!-- Job Detail -->
+ 
 
 {% block content %}
-<!-- Page Header -->
-<div class="px-4 sm:px-6 lg:px-6">
-  <div class="min-h-screen py-0">
-    <div class="container max-w-4xl mx-auto sm:px-6 lg:px-8">
-      <div class="rounded-lg shadow-sm border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-5">
-<div class="lg:flex lg:items-center lg:justify-between">
-  <div class="min-w-0 flex-1 flex">
-      <div>
-      {% if job_details.company_logo %}
-    <img src="{{ job_details.company_logo }}" alt="Company Logo" class="w-20 h-20 rounded-lg object-contain bg-gray-50 border p-1 mr-5">
-    {% endif %}
-</div>
-      <div>
-    <h1 class="text-3xl font-bold leading-tight text-gray-900 dark:text-gray-100">{{ job_details.job_title }}</h1>
-    <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-      {% if job_details.job_type %}
-      <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
-</svg>
-        {{ job_details.job_type }}
-      </div>
-      {% endif %}
-      {% if job_details.salary %}
-      <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-        ${{ job_details.salary }}
-      </div>
-      {% endif %}
-      {% if job_details.address_city or job_details.address_province or job_details.address_country %}
-      <div class="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-</svg>
-        {{ job_details.address_city }}, {{ job_details.address_province }}, {{ job_details.address_country }}
-      </div>
-      {% endif %}
-    </div>
-          </div>
-  </div>
-  <div class="mt-5 flex lg:ml-4 lg:mt-0">
-    {% if current_user.role == 'jobseeker' and job_details.applied == False %}
-<button type="button" id="apply-btn" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-purple-500 active:text-white/70">Apply</button>
+
+<div class="max-w-4xl mx-auto space-y-6"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mb-4"><svg
+            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-left w-4 h-4 mr-2" data-lov-id="src/pages/JobDetails.tsx:73:16"
+            data-lov-name="ArrowLeft" data-component-path="src/pages/JobDetails.tsx" data-component-line="73"
+            data-component-file="JobDetails.tsx" data-component-name="ArrowLeft"
+            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+            <path d="m12 19-7-7 7-7"></path>
+            <path d="M19 12H5"></path>
+        </svg>Back to Jobs</button>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><span
+                        class="text-xl font-bold text-blue-700">
+                      {% if job_details.company_logo %}
+                      <img src="{{ job_details.company_logo }}" alt="Company Logo" >
+                      {% endif %}
+                      </span></div>
+                <div class="flex-1">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ job_details.job_title }}</h1>
+                            <div class="flex items-center gap-4 text-gray-600 mb-3"><span
+                                    class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-building w-4 h-4"
+                                        data-lov-id="src/pages/JobDetails.tsx:91:30" data-lov-name="Building"
+                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="91"
+                                        data-component-file="JobDetails.tsx" data-component-name="Building"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+                                        <path d="M9 22v-4h6v4"></path>
+                                        <path d="M8 6h.01"></path>
+                                        <path d="M16 6h.01"></path>
+                                        <path d="M12 6h.01"></path>
+                                        <path d="M12 10h.01"></path>
+                                        <path d="M12 14h.01"></path>
+                                        <path d="M16 10h.01"></path>
+                                        <path d="M16 14h.01"></path>
+                                        <path d="M8 10h.01"></path>
+                                        <path d="M8 14h.01"></path>
+                                    </svg>TechCorp Inc.</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-map-pin w-4 h-4"
+                                        data-lov-id="src/pages/JobDetails.tsx:95:30" data-lov-name="MapPin"
+                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="95"
+                                        data-component-file="JobDetails.tsx" data-component-name="MapPin"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path
+                                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                                        </path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>{% if job_details.address_city or job_details.address_province or job_details.address_country %}
+      {{ job_details.address_city }}, {{ job_details.address_province }}, {{ job_details.address_country }}
+      {% endif %}</span><span class="flex items-center gap-1">{% if job_details.salary %}
+      ${{ job_details.salary }}
+      {% endif %}</span></div>
+                            <div class="flex items-center gap-4 text-sm text-gray-500"><span
+                                    class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-clock w-4 h-4"
+                                        data-lov-id="src/pages/JobDetails.tsx:105:30" data-lov-name="Clock"
+                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="105"
+                                        data-component-file="JobDetails.tsx" data-component-name="Clock"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>Posted 1/15/2024</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-users w-4 h-4"
+                                        data-lov-id="src/pages/JobDetails.tsx:109:30" data-lov-name="Users"
+                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="109"
+                                        data-component-file="JobDetails.tsx" data-component-name="Users"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>47 applicants</span></div>
+                        </div>
+                        <div class="flex items-center gap-2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-heart w-4 h-4"
+                                    data-lov-id="src/pages/JobDetails.tsx:117:28" data-lov-name="Heart"
+                                    data-component-path="src/pages/JobDetails.tsx" data-component-line="117"
+                                    data-component-file="JobDetails.tsx" data-component-name="Heart"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <path
+                                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                                    </path>
+                                </svg></button>
+                                
+                                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-share2 w-4 h-4"
+                                    data-lov-id="src/pages/JobDetails.tsx:120:28" data-lov-name="Share2"
+                                    data-component-path="src/pages/JobDetails.tsx" data-component-line="120"
+                                    data-component-file="JobDetails.tsx" data-component-name="Share2"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                                </svg></button>
+                                
+{% if current_user.role == 'jobseeker' and job_details.applied == False %}
+    <button type="button" id="apply-btn" class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">Apply</button>
       {% elif current_user.role == 'jobseeker' and job_details.applied == True %}
       <button type="button" id="apply-btn" class="flex rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-not-allowed gap-x-2" disabled>
         <svg class="-ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
         <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd"></path>
       </svg> Applied </button>
-
       {% elif current_user.role == 'user' or current_user.role == 'admin' %}
     {% else %}
-<a type="button" id="login-btn" href="{{url_for('jobseeker_login')}}" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-purple-500 active:text-white/70">Login to Apply</a>
-      {% endif %}
-  </div>
+    <a type="button" id="login-btn" href="{{url_for('jobseeker_login')}}" class="inline-flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to Apply</a>
+    {% endif %}
+</div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-600 text-white hover:bg-primary/80">
+                            {% if job_details.job_type %}
+      {{ job_details.job_type }}
+      {% endif %}</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+                            React</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+                            TypeScript</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+                            JavaScript</div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+                            +3 more</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-3 space-y-6">
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Job Description</h3>
+                </div>
+                <div class="p-6 pt-0 space-y-4">
+                    {{ job_details.job_description | safe or "No Description" }}
+                </div>
+            </div>
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Key Responsibilities</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Develop new user-facing features using React.js and
+                                TypeScript</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Build reusable components and front-end libraries for future
+                                use</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Translate designs and wireframes into high-quality code</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Optimize applications for maximum speed and scalability</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Collaborate with team members and stakeholders</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
+                                class="text-gray-600">Stay up-to-date with emerging technologies</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Requirements</h3>
+                </div>
+                <div class="p-6 pt-0">
+                {% if job_details.job_requirements %} 
+                {{ job_details.job_requirements | safe or "No Requirements" }}
+                {% endif %}
+                </div>
+            </div>
+            <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+                <div class="flex flex-col space-y-1.5 p-6">
+                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Benefits &amp; Perks</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {% if job_details.job_benefits %}
+                        <div class="flex items-start gap-2">
+                            <span class="text-gray-600">{{ job_details.job_benefits | safe or "No Benefits" }}</span>
+                        </div>
+                      {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<hr class="my-6 border-gray-200 dark:border-gray-700" />
-<!-- Job Description -->
-<div class="mt-6">
-  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 border-b-4 pb-1 inline">Job Description</h2>
-  <p class="mt-4 text-gray-700 dark:text-gray-300">{{ job_details.job_description | safe or "No Description" }}</p>
-</div>
 
-<!-- Job Requirements -->
-{% if job_details.job_requirements %} 
-<div class="mt-6">
-  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 border-b-4 pb-1 inline">Job Requirements</h2>
-  <p class="mt-4 text-gray-700 dark:text-gray-300">{{ job_details.job_requirements | safe or "No Requirements" }}</p>
-</div>
-{% endif %}
-
-<!-- Job Benefits -->
-{% if job_details.job_benefits %}
-<div class="mt-6">
-  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 border-b-4 pb-1 inline">Job Benefits</h2>
-  <p class="mt-4 text-gray-700 dark:text-gray-300">{{ job_details.job_benefits | safe or "No Benefits" }}</p>
-</div>
-{% endif %}
-
-
+<!-- Modal -->
 <div class="relative z-10 hidden" id="applyModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
   <!-- Background backdrop -->
   <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
@@ -119,7 +256,7 @@
         <div>
           <div class="flex justify-between items-center">
             <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200" id="modal-title">Apply</h3>
-            <button type="button" id="closeModal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-400">
+            <button type="button" id="closeModal" class="text-gray-400 hover:text-slate-800 dark:hover:text-gray-400">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -129,8 +266,8 @@
           <form method="POST" action="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details.company_subdomain, job_slug=job_slug) }}">
             <input type="hidden" name="job_id" value="{{ job_id }}">
             <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button type="button" id="closeModalBtn" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">Close</button>
-              <button type="submit" id="applyModalBtn" class="inline-flex w-full justify-center rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 sm:col-start-2">Apply</button>
+              <button type="button" id="closeModalBtn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">Close</button>
+              <button type="submit" id="applyModalBtn" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply</button>
             </div>
           </form>
         </div>
@@ -138,11 +275,6 @@
     </div>
   </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-
 
 <div id="notification-container" aria-live="assertive" class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6 z-50">
   <div class="flex w-full flex-col items-center space-y-4 sm:items-end"></div>

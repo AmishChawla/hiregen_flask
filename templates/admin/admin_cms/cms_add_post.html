@@ -13,11 +13,11 @@
         <form method="post" action="{{ url_for('add_cms_post') }}" id="postForm" enctype="multipart/form-data">
             <div class="mb-6 md:flex md:items-center md:justify-between">
                 <div class="min-w-0 flex-1">
-                    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">New Post</h2>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">New Post</h2>
                 </div>
                 <div class="flex shrink-0 md:ml-4 md:mt-0">
-                    {{ form.save_draft(class="rounded-md bg-gray-100 px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-xs border ring-inset hover:bg-gray-50 me-3", type="submit") }}
-                    {{ form.publish(class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70", type="submit") }}
+                    {{ form.save_draft(class="rounded-md bg-white px-3.5 py-2.5 font-semibold text-blue-600 shadow-xs text-base border border-blue-600 ring-inset hover:bg-gray-50 me-3", type="submit") }}
+                    {{ form.publish(class="inline-flex justify-center rounded-lg bg-blue-600 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70", type="submit") }}
                 </div>
             </div>
             <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">

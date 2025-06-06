@@ -4,57 +4,39 @@
 
   <div class="min-h-screen py-0">
     <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
-
-      <div class="flex justify-between items-center mb-6">
-        <div>
-          <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Profile</h1>
-        </div>
-        <div>
-          <a href="{{url_for('jobseeker_update_profile')}}" class="flex w-full items-center justify-center gap-2 rounded-full border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
-            <svg class="fill-current" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M15.0911 2.78206C14.2125 1.90338 12.7878 1.90338 11.9092 2.78206L4.57524 10.116C4.26682 10.4244 4.0547 10.8158 3.96468 11.2426L3.31231 14.3352C3.25997 14.5833 3.33653 14.841 3.51583 15.0203C3.69512 15.1996 3.95286 15.2761 4.20096 15.2238L7.29355 14.5714C7.72031 14.4814 8.11172 14.2693 8.42013 13.9609L15.7541 6.62695C16.6327 5.74827 16.6327 4.32365 15.7541 3.44497L15.0911 2.78206ZM12.9698 3.84272C13.2627 3.54982 13.7376 3.54982 14.0305 3.84272L14.6934 4.50563C14.9863 4.79852 14.9863 5.2734 14.6934 5.56629L14.044 6.21573L12.3204 4.49215L12.9698 3.84272ZM11.2597 5.55281L5.6359 11.1766C5.53309 11.2794 5.46238 11.4099 5.43238 11.5522L5.01758 13.5185L6.98394 13.1037C7.1262 13.0737 7.25666 13.003 7.35947 12.9002L12.9833 7.27639L11.2597 5.55281Z" fill=""></path>
-            </svg>
-            Resume builder
-          </a>
-        </div>
-    </div>
-
-  <div class="max-w-5xl mx-auto my-10 p-6 grid grid-cols-1 md:grid-cols-3 gap-8 rounded-lg border shadow-sm block border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] md:p-4">
-    <!-- Left Side -->
-    <div class="bg-purple-50 p-6 rounded-xl flex flex-col">
-      <div class="text-center">
-        <div class="overflow-hidden">
-          <div class="relative inline-block">
-      {% if profile_info.profile_picture %}
-      <img class="rounded-full w-32 h-32 mx-auto object-cover mb-2 border-4 border-purple-300" src="{{ profile_info.profile_picture }}" alt="User profile picture">
-      {% else %}
-      <img class="rounded-full w-32 h-32 mx-auto object-cover mb-2 border-4 border-purple-300" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
-      {% endif %}
-      <button type="button" onclick="openModal('changePictureModal')" class="absolute top-0 right-0 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-</svg>
-</button>
-</div>
-</div>
-      
-<div class="">
-  <div class="relative inline-block">
-      <p class="text-sm font-medium text-gray-800 dark:text-white/90">
-        <h1 class="text-2xl font-bold leading-tight">{{ profile_info.name }}</h1> <span class="shrink-0">
-          
-        </span>
-      </p>
-      <button type="button" onclick="openModal('updateNameModal')" class="absolute -top-4 -right-4 bg-gray-200 hover:bg-gray-300 p-2 rounded-full shadow">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
-        </svg>
-</button>
-    </div>
-  </div>
-      <!-- <p class="text-md text-gray-600 mb-3">Graphics Designer</p> -->
-    </div>
-    <div class="flex justify-center gap-1 my-3">
+<!--Profile-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center space-x-6">
+            <div class="overflow-hidden">
+                      <div class="relative inline-block">
+                  {% if profile_info.profile_picture %}
+                  <img class="rounded-full w-24 h-24 mx-auto object-cover border-2 shadow-lg border-slate-400" src="{{ profile_info.profile_picture }}" alt="User profile picture">
+                  {% else %}
+                  <img class="rounded-full w-24 h-24 mx-auto object-cover border-2 shadow-lg border-slate-400" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
+                  {% endif %}
+                  <button type="button" onclick="openModal('changePictureModal')" class="absolute top-20 right-0 bg-gray-100 hover:bg-gray-200 p-2 rounded-full shadow">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg>
+            </button>
+            </div>
+            </div>          
+            <div>
+            <div class="relative inline-block">
+                <p class="text-sm font-medium text-gray-800 dark:text-white/90">
+                  <h1 class="text-3xl font-bold text-slate-900">{{ profile_info.name }}</h1> <span class="shrink-0">
+                    
+                  </span>
+                </p>
+                <button type="button" onclick="openModal('updateNameModal')" class="absolute -top-2 -right-4 hover:bg-gray-200 p-2 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                  </svg>
+                </button>
+            </div>
+            <div class="mt-2 font-medium text-slate-600 flex items-center gap-2">Senior Software Developer</div>
+    <div class="flex justify-center gap-1">
       {% if profile_info.github %}
       <a href="{{ profile_info.github }}" target="_blank" rel="noopener"
       class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-md font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
@@ -90,118 +72,149 @@
       </a>
       {% endif %}
     </div>
-    <hr />
 
-      <div class="mt-6 w-full">
-        <h3 class="text-md font-semibold mb-2 uppercase">Contact</h3>
-          <p class="flex text-sm fontmedium text-gray-800 dark:text-white/90 mb-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill text-sm text-gray-500 me-2 mt-1" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
-            </svg>{{ profile_info.phone_number }}<span class="ml-4 shrink-0">
-              <button onclick="openModal('updatePhoneModal')" type="button" class="font-medium text-purple-500 hover:text-purple-600">Edit</button>
-            </span>
-        </p>
-        <p class="flex text-sm fontmedium text-gray-800 dark:text-white/90 mb-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill text-sm text-gray-500 me-2 mt-1" viewBox="0 0 16 16">
-            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
-          </svg>{{ profile_info.email }} <span class="ml-4 shrink-0">
-            <button onclick="openModal('updateEmailModal')" type="button" class="font-medium text-purple-500 hover:text-purple-600">Edit</button>
-          </span>
-        </p>
 
-        {% if profile_info.address_city or profile_info.address_province or profile_info.address_county %}
-        <p class="flex text-sm font-medium text-gray-800 dark:text-white/90">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-               class="bi bi-geo-alt-fill text-sm text-gray-500 me-2 mt-1" viewBox="0 0 16 16">
-            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-          </svg>
+    <div class="text-slate-500 text-sm flex items-center mt-3">
+      <div class="flex items-center gap-1 me-5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4" data-lov-id="src/components/JobCard.tsx:31:16" data-lov-name="MapPin" data-component-path="src/components/JobCard.tsx" data-component-line="31" data-component-file="JobCard.tsx" data-component-name="MapPin" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      {% if profile_info.address_city or profile_info.address_province or profile_info.address_county %}
           {{ profile_info.address_city or '' }}{% if profile_info.address_city and (profile_info.address_province or profile_info.address_county) %}, {% endif %}
           {{ profile_info.address_province or '' }}{% if profile_info.address_province and profile_info.address_county %}, {% endif %}
           {{ profile_info.address_county or '' }}
-        </p>
-      {% endif %}
-      
+        {% endif %}New York, United States
+      </div>          
+            <div class="flex items-center gap-1 me-5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4" data-lov-id="src/pages/Profile.tsx:86:28" data-lov-name="Mail" data-component-path="src/pages/Profile.tsx" data-component-line="86" data-component-file="Profile.tsx" data-component-name="Mail" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>{{ profile_info.email }} <span class="shrink-0 ml-2">
+            <button onclick="openModal('updateEmailModal')" type="button" class="text-sm text-blue-700 hover:text-blue-500">Edit</button>
+          </span></div>                                    
+          <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-4 h-4" data-lov-id="src/pages/Profile.tsx:90:28" data-lov-name="Phone" data-component-path="src/pages/Profile.tsx" data-component-line="90" data-component-file="Profile.tsx" data-component-name="Phone" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>{{ profile_info.phone_number }}<span class="shrink-0 ml-2">
+              <button onclick="openModal('updatePhoneModal')" type="button" class="text-sm text-blue-700 hover:text-blue-500">Edit</button>
+            </span></div>                                    
       </div>
-
-      <div class="mt-6 w-full">
-        <h3 class="text-md font-semibold mb-2 uppercase">Skills</h3>
-        {% for skill in profile_info.skills %}
-        <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-md font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{ skill }}</span>
-        {% else %}
-        <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-md font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">No skills added yet.</span>
-        {% endfor %}
-      </div>
-
-      {% if profile_info.languages %}
-      <div class="mt-6 w-full">
-        <h3 class="text-md font-semibold mb-2 uppercase">Language</h3>
-        {% for language in profile_info.languages %}
-          <p class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-md font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
-            {{ language }}
-          </p>
-        {% endfor %}
-      </div>
-    {% endif %}    </div>
-
-    <!-- Right Side -->
-    <div class="md:col-span-2">
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">About Me</h2>
-        <div class="mb-4">
-          <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
-        </div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Education</h2>
-        <div class="mb-4">
-          {% for education in profile_info.education %}
-          <p class="text-md font-semibold">{{ education.degree }} in {{ education.field_of_study }} from {{ education.institution_name }}</p>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Experience</h2>
-        <div class="mb-4">
-          {% for experience in profile_info.experiences %}
-          <p><span class="font-semibold">{{ experience.position }} </span> <em class="font-light text-sm">at</em> <span class="font-semibold">{{ experience.company_name }}</span></p>
-          <p class="text-md">({{ experience.start_date }} - {{ experience.end_date or 'Present' }})</p>
-          <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ experience.responsibilities }}</p>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Internships</h2>
-        <div class="mb-4">
-          {% for internship in profile_info.internships %}
-          <p><span class="font-semibold">{{ internship.position }} </span> <em class="font-light text-sm"> at </em> <span class="font-semibold"> {{ internship.company_name }} </span> </p>
-          <p class="text-md">({{ internship.start_date }} - {{ internship.end_date or 'Present' }})</p>
-          <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ internship.job_description }}</p>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Projects</h2>
-        <div class="mb-4">
-          {% for project in profile_info.projects %}
-          <p class="font-semibold">{{ project.title }}</p>
-          <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ project.description }}</p>
-          <p><a href="{{ project.project_url }}" class="text-purple500 hover:underline">{{ project.project_url }}</a></p>
-          {% endfor %}
-        </div>
-      </div>
-      <div>
-        <h2 class="text-xl font-semibold mb-4 border-b-2 pb-1">Accomplishments</h2>
-        <div class="mb-4">
-          {% for accomplishment in profile_info.accomplishments %}
-          <p class="font-semibold">{{ accomplishment.title }} - {{ accomplishment.achievement_date }}</p>
-          <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">{{ accomplishment.description }}</p>
-          {% endfor %}
-        </div>
-      </div>
-
-
+            </div>
+        </div> 
+        
+        <a href="{{url_for('jobseeker_update_profile')}}" class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">
+        <svg
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen w-4 h-4"
+        data-lov-id="src/pages/Profile.tsx:98:24" data-lov-name="Edit" data-component-path="src/pages/Profile.tsx"
+        data-component-line="98" data-component-file="Profile.tsx" data-component-name="Edit"
+        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+        <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+        <path
+            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+        </path>
+    </svg>Edit Profile</a>
     </div>
-  </div>
+</div>
+
+<!--About Us-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5" data-lov-id="src/pages/Profile.tsx:110:20" data-lov-name="Briefcase" data-component-path="src/pages/Profile.tsx" data-component-line="110" data-component-file="Profile.tsx" data-component-name="Briefcase" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>About</h2>
+    <p class="relative z-10 mt-2 text-md text-slate-700 dark:text-slate-400">{{ profile_info.profile_summary.content if profile_info.profile_summary else 'No information available.' }}</p>
+</div>
+
+<!--Skills-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-award w-5 h-5" data-lov-id="src/pages/Profile.tsx:123:20" data-lov-name="Award" data-component-path="src/pages/Profile.tsx" data-component-line="123" data-component-file="Profile.tsx" data-component-name="Award" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg>Skills</h2>
+    {% for skill in profile_info.skills %}
+      <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-blue-50 text-blue-700">{{ skill }}</span>
+      {% else %}
+      <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-blue-50 text-blue-700">No skills added yet.</span>
+    {% endfor %}
+</div>
+
+<!--Languages-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+  <path d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20z" />
+  <path d="M2 12h20M12 2c2.5 2.5 4 6.3 4 10s-1.5 7.5-4 10c-2.5-2.5-4-6.3-4-10s1.5-7.5 4-10z" />
+</svg>
+Languages</h2>
+    {% if profile_info.languages %}
+        {% for language in profile_info.languages %}
+      <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-blue-50 text-blue-700">{{ language }}</span>
+      {% endfor %}
+    {% endif %}
+</div>
+
+<!--Experience-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-5 h-5" data-lov-id="src/pages/Profile.tsx:142:20" data-lov-name="Briefcase" data-component-path="src/pages/Profile.tsx" data-component-line="142" data-component-file="Profile.tsx" data-component-name="Briefcase" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>Work Experience</h2>
+  {% for experience in profile_info.experiences %}
+  <div class="border-l-2 border-blue-200 pl-4">
+    <h3 class="font-semibold text-lg text-gray-900">{{ experience.position }}</h3>
+    <p class="text-blue-600 font-medium">{{ experience.company_name }}</p>
+    <p class="text-sm text-gray-500 mb-2">{{ experience.start_date }} - {{ experience.end_date or 'Present' }}</p>
+    <p class="text-gray-700">{{ experience.responsibilities }}</p>
+</div>
+{% endfor %}
+</div>
+
+<!--Education-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap w-5 h-5" data-lov-id="src/pages/Profile.tsx:162:20" data-lov-name="GraduationCap" data-component-path="src/pages/Profile.tsx" data-component-line="162" data-component-file="Profile.tsx" data-component-name="GraduationCap" data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg>Education</h2>
+{% for education in profile_info.education %}
+  <div class="border-l-2 border-green-200 pl-4">
+    <h3 class="font-semibold text-lg text-gray-900">{{ education.degree }} in {{ education.field_of_study }}</h3>
+    <p class="text-green-600 font-medium">{{ education.institution_name }}</p>
+    <p class="text-sm text-gray-500">2015 - 2019 • GPA: 3.8/4.0</p>
+</div>
+{% endfor %}
+</div>
+
+<!--Internships-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+  <path d="M16 3h-8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"></path>
+  <path d="M12 11l2.5 1.5L12 14l-2.5-1.5L12 11z"></path>
+</svg>
+Internships</h2>
+{% for internship in profile_info.internships %}
+  <div class="border-l-2 border-orange-200 pl-4">
+    <h3 class="font-semibold text-lg text-gray-900">{{ internship.position }}</h3>
+    <p class="text-orange-600 font-medium">{{ internship.company_name }}</p>
+    <p class="text-sm text-gray-500">{{ internship.start_date }} - {{ internship.end_date or 'Present' }}</p>
+    <p class="text-gray-700">{{ internship.job_description }}</p>
+</div>
+{% endfor %}
+</div>
+
+<!--Projects-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+  <path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v1" />
+  <path d="M3 6v12a2 2 0 0 0 2 2h7.5" />
+  <circle cx="18" cy="18" r="3" />
+  <path d="M18 15v1.5M18 19.5V21M20.6 16.5l-1.3.75M15.7 19.75l-1.3.75M15.7 16.5l1.3.75M20.6 19.75l1.3.75" />
+</svg>
+Projects</h2>
+{% for project in profile_info.projects %}
+  <div class="border-l-2 border-purple-200 pl-4">
+    <h3 class="font-semibold text-lg text-gray-900">{{ project.title }}</h3>
+    <p class="text-purple-600 font-medium"><a href="{{ project.project_url }}">{{ project.project_url }}</a></p>
+    <p class="text-gray-700">{{ project.description }}</p>
+</div>
+{% endfor %}
+</div>
+
+<!--Accomplishments-->
+<div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-6 max-w-5xl mx-auto mb-5">
+    <h2 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2 mb-5"><svg class="mt-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+  <path d="M8 21h8M12 17v4M17 5V3H7v2" />
+  <path d="M17 5a5 5 0 0 1-10 0" />
+  <path d="M21 5h-4a5 5 0 0 0 4 4v-4zM3 5h4a5 5 0 0 1-4 4V5z" />
+</svg>
+Accomplishments</h2>
+{% for accomplishment in profile_info.accomplishments %}
+  <div class="border-l-2 border-fuchsia-200 pl-4">
+    <h3 class="font-semibold text-lg text-gray-900">{{ accomplishment.title }}</h3>
+    <p class="text-sm text-gray-500">{{ accomplishment.achievement_date }}</p>
+    <p class="text-gray-700">{{ accomplishment.description }}</p>
+</div>
+{% endfor %}
+</div>
+
 
 
 <div id="updateNameModal" class="relative z-10 hidden flex items-center justify-center min-h-screen bg-gray-500/75" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -212,16 +225,16 @@
       <form method="POST" action="{{ url_for('collect_jobseeker_name') }}">
         {{ name_form.hidden_tag() }}
         <div>
-          <label for="firstname" class="block text-sm/6 font-medium text-gray-900">First Name</label>
+          <label for="firstname" class="block text-sm/6 font-medium text-gray-900 mb-2">First Name</label>
           {{name_form.firstname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-4">
-          <label for="lastname" class="block text-sm/6 font-medium text-gray-900">Last Name</label>
+          <label for="lastname" class="block text-sm/6 font-medium text-gray-900 mb-2">Last Name</label>
           {{name_form.lastname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
-        <div class="mt-5 sm:mt-6 text-right">
-          {{ name_form.submit(class="bg-purple-500 text-white px-3 py-2 rounded-md hover:bg-purple-400") }}
-          <button type="button" onclick="closeModal('updateNameModal')" class="bg-gray-100 px-3 py-2 border rounded-md hover:bg-gray-200">Cancel</button>
+        <div class="mt-5 sm:mt-6 text-right">          
+          <button type="button" onclick="closeModal('updateNameModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
+          {{ name_form.submit(class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto") }}
         </div>
       </form>
     </div>
@@ -236,12 +249,12 @@
       <form method="POST" action="{{ url_for('collect_jobseeker_email') }}">
         {{ email_form.hidden_tag() }}
         <div>
-          <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
+          <label for="email" class="block text-sm/6 font-medium text-gray-900 mb-2">Email</label>
         {{email_form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
-          {{ email_form.submit(class="bg-purple-500 text-white px-3 py-2 rounded-md hover:bg-purple-400") }}
-          <button type="button" onclick="closeModal('updateEmailModal')" class="bg-gray-100 px-3 py-2 border rounded-md hover:bg-gray-200">Cancel</button>
+          <button type="button" onclick="closeModal('updateEmailModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
+          {{ email_form.submit(class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto") }}
         </div>
       </form>
     </div>
@@ -256,12 +269,12 @@
       <form method="POST" action="{{ url_for('collect_jobseeker_phone') }}">
         {{ phone_form.hidden_tag() }}
         <div>
-          <label for="phone_number" class="block text-sm/6 font-medium text-gray-900">Mobile</label>
+          <label for="phone_number" class="block text-sm/6 font-medium text-gray-900 mb-2">Mobile</label>
           {{ phone_form.phone_number(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
-          {{ phone_form.submit(class="bg-purple-500 text-white px-3 py-2 rounded-md hover:bg-purple-400") }}
-          <button type="button" onclick="closeModal('updatePhoneModal')" class="bg-gray-100 px-3 py-2 border rounded-md hover:bg-gray-200">Cancel</button>
+          <button type="button" onclick="closeModal('updatePhoneModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
+          {{ phone_form.submit(class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto") }}
         </div>
       </form>
     </div>
@@ -299,9 +312,9 @@
         </div>
 
         <!-- Submit & Cancel Buttons -->
-        <div class="mt-5 sm:mt-6 text-right">
-          {{ profile_picture_form.submit(class="bg-purple-500 text-white px-3 py-2 rounded-md hover:bg-purple-400") }}
-          <button type="button" onclick="closeModal('changePictureModal')" class="bg-gray-100 px-3 py-2 border rounded-md hover:bg-gray-200">Cancel</button>
+        <div class="mt-5 sm:mt-6 text-right">          
+          <button type="button" onclick="closeModal('changePictureModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
+          {{ profile_picture_form.submit(class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto") }}
         </div>
       </form>
 

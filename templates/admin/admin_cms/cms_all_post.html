@@ -40,10 +40,10 @@ table.dataTable thead th, table.dataTable tfoot th {
       <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
         <div class="flex justify-between items-center mb-6">
             <div>
-                <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Posts</h1>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Posts</h1>
             </div>
             <div>
-                <a href="{{ url_for('add_cms_post') }}" class="inline-flex justify-center rounded-lg bg-purple-500 px-4 py-2 text-base font-semibold text-white hover:bg-purple-400 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
+                <a href="{{ url_for('add_cms_post') }}" class="inline-flex justify-center rounded-lg bg-blue-600 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
                     New Post
                 </a>
             </div>
@@ -90,8 +90,8 @@ table.dataTable thead th, table.dataTable tfoot th {
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.post_views }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-purple-400 hover:text-purple-500 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-purple-400 hover:text-purple-500">Delete</button>
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500">Delete</button>
                             </td>
                         </tr>
                         {% endif %}
@@ -123,8 +123,8 @@ table.dataTable thead th, table.dataTable tfoot th {
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
                             <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
                             <td class="px-4 py-2 text-sm">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-purple-400 hover:text-purple-500 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-purple-400 hover:text-purple-500">Delete</button>
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500">Delete</button>
                             </td>
                         </tr>
                         {% endif %}

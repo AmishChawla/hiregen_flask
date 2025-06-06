@@ -44,7 +44,7 @@ table.dataTable thead th, table.dataTable tfoot th {
 <div class="">
   <div class="min-h-screen py-0">
     <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
-    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6">Companies</h1>
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Companies</h1>
         <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
 
   {% if result %}
@@ -67,14 +67,14 @@ table.dataTable thead th, table.dataTable tfoot th {
                 <img src="{{ data.company_logo or url_for('static', filename='images/man.png') }}" alt="" srcset="" class="h-10 w-10 object-contain overflow-hidden rounded-full border p-1">
                 <a href="{{url_for('company_details_by_company_subdomain', company_subdomain=data.company_subdomain)}}" class="m-2 text-purple500 hover:text-purple600">{{ data.name }}</a>
               </td>
-              <td class="table-cell text-gray-600 truncate max-w-[200px]" title="{{data.website_url}}">{{ data.website_url }}</td>
+              <td class="table-cell text-slate-800 truncate max-w-[200px]" title="{{data.website_url}}">{{ data.website_url }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at.split('T')[0] }} {{ data.created_at.split('T')[1][:8] }}</td>
               <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                <button data-modal-target="#deleteModal_{{ data.id }}" class="text-purple-400 hover:text-purple-500 mr-1">
+                <button data-modal-target="#deleteModal_{{ data.id }}" class="text-blue-600 hover:text-blue-500 mr-1">
                   Delete
                 </button>
                 <button onclick="document.getElementById('usersModal_{{ data.id }}').classList.remove('hidden')" 
-                        class="text-purple-500 rounded hover:text-purple-800">
+                        class="text-purple-500 rounded hover:text-slate-900">
                     Team
                 </button>
 
@@ -104,7 +104,7 @@ table.dataTable thead th, table.dataTable tfoot th {
 
         <!-- Header Icon and Title -->
         <div class="text-center">
-          <div class="mx-auto flex size-12 items-center justify-center rounded-full bg-purple-100">
+          <div class="mx-auto flex size-12 items-center justify-center rounded-full bg-slate-100">
             <svg class="size-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 0 0-5.356-1.857M17 20H7m10 0a3.001 3.001 0 0 0-4-2.83M7 20H2v-2a3 3 0 0 1 5.356-1.857M7 20a3.001 3.001 0 0 1 4-2.83M15 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm6 3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM7 9a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" />
             </svg>
@@ -126,7 +126,7 @@ table.dataTable thead th, table.dataTable tfoot th {
               {% for user in data.users %}
               <tr>
                 <td class="px-4 py-2 text-gray-800">{{ user.firstname }} {{ user.lastname }}</td>
-                <td class="px-4 py-2 text-gray-600">{{ user.email }}</td>
+                <td class="px-4 py-2 text-slate-800">{{ user.email }}</td>
               </tr>
               {% else %}
               <tr>

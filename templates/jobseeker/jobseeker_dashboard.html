@@ -5,53 +5,462 @@
 <div class="">
   <div class="min-h-screen py-0">
     <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
-    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, James!</h1>
+    <div class="text-gray-600">Here's what's happening with your job search today.</div>
   <!-- Metric Cards -->
-   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
-    <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
-    <div class="col-span-2 flex flex-wrap items-center bg-white dark:bg-gray-800">
+<section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 my-6">
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+    <div class="p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600">Applications Sent</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">{{ total_applications }}</p>
+                <p class="text-sm mt-1 text-green-600">+3 this week</p>
+            </div>
+            <div class="p-3 rounded-lg bg-blue-50 text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-text w-6 h-6"
+                    data-lov-id="src/components/StatsCard.tsx:36:12" data-lov-name="Icon"
+                    data-component-path="src/components/StatsCard.tsx" data-component-line="36"
+                    data-component-file="StatsCard.tsx" data-component-name="Icon"
+                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%22%7D">
+                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                    <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                    <path d="M10 9H8"></path>
+                    <path d="M16 13H8"></path>
+                    <path d="M16 17H8"></path>
+                </svg></div>
+        </div>
+    </div>
+</div>
 
-      <div class="flex items-center">
-        {% if current_user.profile_picture %}
-        <img src="{{ current_user.profile_picture }}" alt="User Profile Picture" class="rounded-full w-14 h-14">
-        {% else %}
-        <img src="{{ url_for('static', filename='images/man.png') }}" alt="User Profile Picture" class="rounded-full w-14 h-14">
-        {% endif %}
-      </div>
-      <div class="ml-4">
-        <div class="text-3xl font-bold text-purple-500 dark:text-white/90">{{ profile_completion_percentage }}%</div>
-        <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mt-2">
+<div class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+    <div class="p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600">Interview Invites</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">5</p>
+                <p class="text-sm mt-1 text-green-600">+2 this week</p>
+            </div>
+            <div class="p-3 rounded-lg bg-green-50 text-green-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-6 h-6"
+                    data-lov-id="src/components/StatsCard.tsx:36:12" data-lov-name="Icon"
+                    data-component-path="src/components/StatsCard.tsx" data-component-line="36"
+                    data-component-file="StatsCard.tsx" data-component-name="Icon"
+                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%22%7D">
+                    <path d="M8 2v4"></path>
+                    <path d="M16 2v4"></path>
+                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                    <path d="M3 10h18"></path>
+                </svg></div>
+        </div>
+    </div>
+</div>
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+    <div class="p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600">Job Matches</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">47</p>
+                <p class="text-sm mt-1 text-green-600">+12 new today</p>
+            </div>
+            <div class="p-3 rounded-lg bg-purple-50 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-target w-6 h-6"
+                    data-lov-id="src/components/StatsCard.tsx:36:12" data-lov-name="Icon"
+                    data-component-path="src/components/StatsCard.tsx" data-component-line="36"
+                    data-component-file="StatsCard.tsx" data-component-name="Icon"
+                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%22%7D">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="6"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                </svg></div>
+        </div>
+    </div>
+</div>
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+    <div class="p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm font-medium text-gray-600">Profile Views</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">156</p>
+                <p class="text-sm mt-1 text-green-600">+8% this month</p>
+            </div>
+            <div class="p-3 rounded-lg bg-orange-50 text-orange-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye w-6 h-6"
+                    data-lov-id="src/components/StatsCard.tsx:36:12" data-lov-name="Icon"
+                    data-component-path="src/components/StatsCard.tsx" data-component-line="36"
+                    data-component-file="StatsCard.tsx" data-component-name="Icon"
+                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%22%7D">
+                    <path
+                        d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                    </path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg></div>
+        </div>
+    </div>
+</div>
+
+</section>
+
+<!-- Metric Cards -->
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 space-y-6">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-brain w-5 h-5 text-blue-600" data-lov-id="src/pages/Index.tsx:116:22"
+                        data-lov-name="Brain" data-component-path="src/pages/Index.tsx" data-component-line="116"
+                        data-component-file="Index.tsx" data-component-name="Brain"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-blue-600%22%7D">
+                        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                        </path>
+                        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                        </path>
+                        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                        <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                        <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                        <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                        <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                        <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                    </svg>AI Job Recommendations</h3>
+            </div>
+            <div class="p-6 pt-0 space-y-4">
+                <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex flex-col space-y-1.5 p-6 pb-4">
+                        <div class="flex items-start justify-between">
+                            <div class="flex-1">
+                                <h3 class="font-semibold text-lg text-gray-900 mb-1">Senior Frontend Developer</h3>
+                                <div class="flex items-center gap-2 text-gray-600 mb-2"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4"
+                                        data-lov-id="src/components/JobCard.tsx:26:14" data-lov-name="Building2"
+                                        data-component-path="src/components/JobCard.tsx" data-component-line="26"
+                                        data-component-file="JobCard.tsx" data-component-name="Building2"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                                        <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                                        <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                                        <path d="M10 6h4"></path>
+                                        <path d="M10 10h4"></path>
+                                        <path d="M10 14h4"></path>
+                                        <path d="M10 18h4"></path>
+                                    </svg><span class="font-medium">TechCorp Inc.</span></div>
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-map-pin w-4 h-4"
+                                            data-lov-id="src/components/JobCard.tsx:31:16" data-lov-name="MapPin"
+                                            data-component-path="src/components/JobCard.tsx" data-component-line="31"
+                                            data-component-file="JobCard.tsx" data-component-name="MapPin"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <path
+                                                d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                                            </path>
+                                            <circle cx="12" cy="10" r="3"></circle>
+                                        </svg><span>San Francisco, CA</span></div>
+                                    <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-clock w-4 h-4"
+                                            data-lov-id="src/components/JobCard.tsx:35:16" data-lov-name="Clock"
+                                            data-component-path="src/components/JobCard.tsx" data-component-line="35"
+                                            data-component-file="JobCard.tsx" data-component-name="Clock"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg><span>2 days ago</span></div>
+                                </div>
+                            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-blue-50 hover:text-accent-foreground h-10 w-10"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-bookmark w-4 h-4"
+                                    data-lov-id="src/components/JobCard.tsx:41:12" data-lov-name="Bookmark"
+                                    data-component-path="src/components/JobCard.tsx" data-component-line="41"
+                                    data-component-file="JobCard.tsx" data-component-name="Bookmark"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+                                </svg></button>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <div class="flex gap-2 mb-3">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
+                                Full-time</div>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+                                $120k - $150k</div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">We're looking for a senior frontend
+                            developer to join our growing team. You'll work on cutting-edge web applications using
+                            modern technologies.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                React</div>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                TypeScript</div>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                Next.js</div>
+                            <div data-lov-id="src/components/JobCard.tsx:56:12" data-lov-name="Badge"
+                                class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                                GraphQL</div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700 text-white">Apply
+                                Now</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">View
+                                Details</button></div>
+                    </div>
+                </div>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
+                    All Recommendations</button>
+            </div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-briefcase w-5 h-5 text-green-600" data-lov-id="src/pages/Index.tsx:134:22"
+                        data-lov-name="Briefcase" data-component-path="src/pages/Index.tsx" data-component-line="134"
+                        data-component-file="Index.tsx" data-component-name="Briefcase"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-green-600%22%7D">
+                        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+                    </svg>Recent Applications</h3>
+            </div>
+            <div class="p-6 pt-0 space-y-4">
+                <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-semibold text-gray-900 mb-1">Software Engineer</h3>
+                                <div class="flex items-center gap-2 text-gray-600"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4"
+                                        data-lov-id="src/components/ApplicationCard.tsx:39:14" data-lov-name="Building2"
+                                        data-component-path="src/components/ApplicationCard.tsx"
+                                        data-component-line="39" data-component-file="ApplicationCard.tsx"
+                                        data-component-name="Building2"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                                        <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                                        <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                                        <path d="M10 6h4"></path>
+                                        <path d="M10 10h4"></path>
+                                        <path d="M10 14h4"></path>
+                                        <path d="M10 18h4"></path>
+                                    </svg><span data-lov-id="src/components/ApplicationCard.tsx:40:14"
+                                        data-lov-name="span" data-component-path="src/components/ApplicationCard.tsx"
+                                        data-component-line="40" data-component-file="ApplicationCard.tsx"
+                                        data-component-name="span" data-component-content="%7B%7D">Google</span></div>
+                            </div>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-purple-100 text-purple-800">
+                                Interview Scheduled</div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                            <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar w-4 h-4"
+                                    data-lov-id="src/components/ApplicationCard.tsx:52:12" data-lov-name="Calendar"
+                                    data-component-path="src/components/ApplicationCard.tsx" data-component-line="52"
+                                    data-component-file="ApplicationCard.tsx" data-component-name="Calendar"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <path d="M8 2v4"></path>
+                                    <path d="M16 2v4"></path>
+                                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                    <path d="M3 10h18"></path>
+                                </svg><span>Applied: Jan 15,
+                                    2024</span></div>
+                            <div class="flex items-center gap-1 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-calendar w-4 h-4"
+                                    data-lov-id="src/components/ApplicationCard.tsx:57:14" data-lov-name="Calendar"
+                                    data-component-path="src/components/ApplicationCard.tsx" data-component-line="57"
+                                    data-component-file="ApplicationCard.tsx" data-component-name="Calendar"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <path d="M8 2v4"></path>
+                                    <path d="M16 2v4"></path>
+                                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                    <path d="M3 10h18"></path>
+                                </svg><span data-lov-id="src/components/ApplicationCard.tsx:58:14" data-lov-name="span"
+                                    data-component-path="src/components/ApplicationCard.tsx" data-component-line="58"
+                                    data-component-file="ApplicationCard.tsx" data-component-name="span"
+                                    data-component-content="%7B%22text%22%3A%22Interview%3A%22%7D">Interview: Jan 25,
+                                    2024</span></div>
+                        </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-eye w-4 h-4 mr-2"
+                                data-lov-id="src/components/ApplicationCard.tsx:64:10" data-lov-name="Eye"
+                                data-component-path="src/components/ApplicationCard.tsx" data-component-line="64"
+                                data-component-file="ApplicationCard.tsx" data-component-name="Eye"
+                                data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                                <path
+                                    d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                                </path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>View Application</button>
+                    </div>
+                </div>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
+                    All Applications</button>
+            </div>
+        </div>
+    </div>
+    <div class="space-y-6">
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-trending-up w-5 h-5 text-purple-600"
+                        data-lov-id="src/pages/Index.tsx:155:22" data-lov-name="TrendingUp"
+                        data-component-path="src/pages/Index.tsx" data-component-line="155"
+                        data-component-file="Index.tsx" data-component-name="TrendingUp"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-purple-600%22%7D">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                        <polyline points="16 7 22 7 22 13"></polyline>
+                    </svg>Profile Strength</h3>
+            </div>
+            <div class="p-6 pt-0">
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2"><span>Profile
+                                Completion</span><span class="font-medium">{{ profile_completion_percentage }}%</span></div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700 mt-2">
           {% if profile_completion_percentage < 40 %}
           <div class="bg-red-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% elif profile_completion_percentage < 80 %}
           <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% else %}
-          <div class="bg-purple-400 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
+          <div class="bg-blue-600 h-2 rounded-full" style="width: {{ profile_completion_percentage }}%"></div>
           {% endif %}
         </div>
-        <p class="mt-2 block text-sm text-gray-500 dark:text-gray-400">Complete your Profile</p>
-      </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center gap-2 text-green-600">
+                            <div class="w-2 h-2 bg-green-600 rounded-full"></div><span
+                            >Profile photo
+                                added</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-green-600">
+                            <div class="w-2 h-2 bg-green-600 rounded-full"></div><span
+                                >Skills listed</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-orange-600">
+                            <div class="w-2 h-2 bg-orange-600 rounded-full"></div><span
+                            >Add work
+                                samples</span>
+                        </div>
+                    </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">Complete
+                        Profile</button>
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight">Quick Actions</h3>
+            </div>
+            <div class="p-6 pt-0 space-y-3"><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-brain w-4 h-4 mr-2" data-lov-id="src/pages/Index.tsx:196:22"
+                        data-lov-name="Brain" data-component-path="src/pages/Index.tsx" data-component-line="196"
+                        data-component-file="Index.tsx" data-component-name="Brain"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                        </path>
+                        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                        </path>
+                        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                        <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                        <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                        <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                        <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                        <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                    </svg>Take Skill Assessment</button><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-4 h-4 mr-2" data-lov-id="src/pages/Index.tsx:200:22"
+                        data-lov-name="Star" data-component-path="src/pages/Index.tsx" data-component-line="200"
+                        data-component-file="Index.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg>Update Job Preferences</button><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-file-text w-4 h-4 mr-2" data-lov-id="src/pages/Index.tsx:204:22"
+                        data-lov-name="FileText" data-component-path="src/pages/Index.tsx" data-component-line="204"
+                        data-component-file="Index.tsx" data-component-name="FileText"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                        <path d="M10 9H8"></path>
+                        <path d="M16 13H8"></path>
+                        <path d="M16 17H8"></path>
+                    </svg>Upload New Resume</button><button class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full justify-start"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-calendar w-4 h-4 mr-2" data-lov-id="src/pages/Index.tsx:208:22"
+                        data-lov-name="Calendar" data-component-path="src/pages/Index.tsx" data-component-line="208"
+                        data-component-file="Index.tsx" data-component-name="Calendar"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                        <path d="M8 2v4"></path>
+                        <path d="M16 2v4"></path>
+                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                        <path d="M3 10h18"></path>
+                    </svg>Schedule Mock Interview</button></div>
+        </div>
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+            <div class="flex flex-col space-y-1.5 p-6">
+                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-calendar w-5 h-5 text-blue-600" data-lov-id="src/pages/Index.tsx:218:22"
+                        data-lov-name="Calendar" data-component-path="src/pages/Index.tsx" data-component-line="218"
+                        data-component-file="Index.tsx" data-component-name="Calendar"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-blue-600%22%7D">
+                        <path d="M8 2v4"></path>
+                        <path d="M16 2v4"></path>
+                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                        <path d="M3 10h18"></path>
+                    </svg>Upcoming Events</h3>
+            </div>
+            <div class="p-6 pt-0 space-y-3">
+                <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-600">
+                    <p class="font-medium text-sm">Interview at Google</p>
+                    <p class="text-xs text-gray-600">Tomorrow, 2:00 PM</p>
+                </div>
+                <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-600">
+                    <p class="font-medium text-sm">Career Fair</p>
+                    <p class="text-xs text-gray-600">Jan 28, 10:00 AM</p>
+                </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">View
+                    Calendar</button>
+            </div>
+        </div>
     </div>
-                </div>
-                <div class="flex rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6 shadow-sm animate-fade-in">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-purple-50 text-purple-500 dark:bg-gray-800 mr-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6" viewBox="0 0 16 16">
-  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-</svg>
-                    </div>
-                    <div>
-                        <span class="text-3xl font-bold text-purple-500 dark:text-white/90">{{ total_applications }}</span>
-                        <span class="block text-sm text-gray-500 dark:text-gray-400">My Applications</span>
-                    </div>
-                </div>
-
-</section>
+</div>
 
 
-    <!-- Metric Cards -->
 
-<h2 class="mt-8 text-lg font-semibold text-gray-900 dark:text-white mb-4">Recommended for you</h2>
+<h2 class="mt-8 text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">Recommended for you</h2>
 <div>
   <div class="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2">
     {% if recommendations %}
@@ -59,32 +468,23 @@
 <div>
 
 <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}"
-   class="block rounded-lg border mb-3 border-gray-200 bg-white p-5 shadow-sm animate-fade-in hover:bg-purple-50 transition">
+   class="block mb-3 p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
     <div class="flex justify-between items-center">
         <div class="flex items-start space-x-4">
             <img src="/static/images/google-icon.png" alt="{{ job.company_name }} Logo"
                  class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
             <div>
-                <h2 class="text-lg font-semibold text-gray-800">{{ job.job_title }}</h2>
-                <div class="mt-2 text-gray-500 text-sm flex items-center">
-                  <span class="me-6 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-          </svg> {{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</span>
-                <span class="me-6 text-sm text-gray-500 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>{{ job.salary }}</span>
-                    <span class="me-6 text-sm text-gray-500 flex"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>{{ job.job_type }}</span>                                
+                <h2 class="text-lg font-semibold text-slate-900">{{ job.job_title }}</h2>
+                <div class="font-medium text-slate-600 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4" data-lov-id="src/components/JobCard.tsx:26:14" data-lov-name="Building2" data-component-path="src/components/JobCard.tsx" data-component-line="26" data-component-file="JobCard.tsx" data-component-name="Building2" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg> TechCorp Inc.</div>
+                
+                <div class="mt-2 text-slate-500 text-sm flex items-center">
+                    <div class="flex items-center gap-2 me-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4" data-lov-id="src/components/JobCard.tsx:31:16" data-lov-name="MapPin" data-component-path="src/components/JobCard.tsx" data-component-line="31" data-component-file="JobCard.tsx" data-component-name="MapPin" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</div>          
+                    <div class="flex items-center gap-2 me-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4" data-lov-id="src/components/JobCard.tsx:35:16" data-lov-name="Clock" data-component-path="src/components/JobCard.tsx" data-component-line="35" data-component-file="JobCard.tsx" data-component-name="Clock" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>{{ job.opening_date.split('T')[0] }}</div>                                    
                 </div>
-                <div class="mt-2 text-gray-500 text-sm flex items-center">                
-            <span class="text-gray-500 flex me-6"><svg class="size-4 mr-1 text-gray-500 dark:text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5" />
-          </svg>{{ job.opening_date.split('T')[0] }}</span>
-          <span class="text-sm text-gray-500 flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mr-1">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z" />
-            </svg>{{ job.work_experience }}</span>
+                <div class="mt-3 text-slate-700 text-sm font-medium flex items-center">
+                    <div class="bg-slate-100 rounded-xl px-3 py1 me-4">{{ job.job_type }}</div>
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary }}</div>                    
+                    <!--<div class="text-right text-gray-500 text-sm flex items-center gap-2">{{ job.industry }}</div>-->
                 </div>
             </div>
         </div>
