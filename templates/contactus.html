@@ -1,0 +1,105 @@
+{% extends "common_base.html" %}
+
+{% block content %}
+<section class="bg-white pb-10" id="contact">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl mb-3">Contact Us</h2>
+        <p class="mt-1 font-display text-lg sm:text-xl text-slate-700">Follow us on social media or contact us directly for any inquiries or support.</p>
+    </div>
+    
+    <div class="mt-10 max-w-xl mx-auto">
+        <form id="contactForm" class="space-y-6">
+        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+        
+        <div>
+            <input type="text" 
+                    id="name" 
+                    placeholder="Your Name" 
+                    required 
+                    class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+        </div>
+        
+        <div>
+            <input type="email" 
+                    id="email" 
+                    placeholder="Your Email" 
+                    required 
+                    class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+        </div>
+        
+        <div>
+            <textarea id="message" 
+                    placeholder="Your Message" 
+                    rows="5" 
+                    required 
+                    class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"></textarea>
+        </div>
+        
+        <div>
+            <button type="submit" 
+                    class="w-full rounded-full bg-purple-500 px-10 py-3 text-base font-semibold text-white hover:bg-purple-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
+            Send Message
+            </button>
+        </div>
+        </form>
+        
+        <div id="thankYouMessage" class="hidden text-center mt-8">
+        <div class="text-6xl text-green-500 mb-4">✔️</div>
+        <p class="text-lg text-gray-700">Thank you for contacting us! We will get back to you shortly.</p>
+        </div>
+    </div>
+
+    </div>
+</div>
+</section>
+
+
+<script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        try {
+            // Execute reCAPTCHA and get the token
+            grecaptcha.ready(async function () {
+                const recaptchaToken = await grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' });
+
+                // Include the reCAPTCHA token in the form data
+                const formData = {
+                    name: name,
+                    email: email,
+                    message: message,
+                    'g-recaptcha-response': recaptchaToken
+                };
+
+                // Submit the form data to the server
+                const response = await fetch('/contactus', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Show the thank-you message
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                } else {
+                    alert('There was an error submitting your message. Please try again.');
+                }
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error submitting your message. Please try again.');
+        }
+    });
+</script>
+{% endblock %}
+

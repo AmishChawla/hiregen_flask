@@ -363,13 +363,17 @@ def register():
         phone_number = form.phone_number.data
         email = form.email.data
         password = form.password.data
+        city = request.form.get('city')
+        ip = request.form.get('ip')
+        print(city)
+        print(ip)
 
         recaptcha_token = request.form.get('g-recaptcha-response')
         recaptcha_success = verify_recaptcha(recaptcha_token)
 
         if recaptcha_success:
 
-            response = api_calls.user_register(firstname, lastname, phone_number, email, password)
+            response = api_calls.user_register(firstname, lastname, phone_number, email, password, city, ip)
             print("inside")
             if response.status_code == 200:
                 response = api_calls.user_login(email, password)
@@ -4150,20 +4154,21 @@ def employer_reports():
                            jobs_by_views=jobs_by_views, jobs_by_applicants=jobs_by_applicants)
 
 
-@app.route('/homepage_contact_form_submission', methods=['POST'])
+@app.route('/contactus', methods=['GET', 'POST'])
 def homepage_contactus_submission():
     try:
-        data = request.get_json()
-
-        # Extract form fields
-        name = data.get('name')
-        email = data.get('email')
-        message = data.get('message')
-        recaptcha_token = data.get('g-recaptcha-response')  # Extract reCAPTCHA token
-        is_token_valid = verify_recaptcha(recaptcha_token)
-        if is_token_valid:
-            result = api_calls.homepage_contact_form_submission(name=name, email=email, message=message)
-        return jsonify({'message': 'Form submitted successfully'}), 200
+        if request.method == 'POST':
+            data = request.get_json()
+            # Extract form fields
+            name = data.get('name')
+            email = data.get('email')
+            message = data.get('message')
+            recaptcha_token = data.get('g-recaptcha-response')  # Extract reCAPTCHA token
+            is_token_valid = verify_recaptcha(recaptcha_token)
+            if is_token_valid:
+                result = api_calls.homepage_contact_form_submission(name=name, email=email, message=message)
+                return jsonify({'message': 'Form submitted successfully'}), 200
+        return render_template('contactus.html')
     except Exception as e:
         return jsonify({'error': 'An error occurred while processing the form'}), 500
 
@@ -5229,4 +5234,4 @@ def robots_txt():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
