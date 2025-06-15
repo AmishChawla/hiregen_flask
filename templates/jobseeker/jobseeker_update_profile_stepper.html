@@ -352,9 +352,9 @@
         </div>
         </div>
       </div>
-    </div>
-    <div class="mt-6 flex justify-end">
-      <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+      <div class="mt-6 flex justify-end">
+        <button type="button" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Next</button>
+      </div>
     </div>
   </div>
 
@@ -673,7 +673,7 @@
 
   <div class="mt-6 flex justify-between">
     <button type="button" class="prev text-slate-600 bg-white border border-slate-300 hover:bg-slate-500 hover:text-white focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800">Previous</button>
-    <button type="submit" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    <button type="submit" class="submit text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
   </div>
 </div>
 
@@ -928,6 +928,8 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
   rawData.leadership_keywords = document.querySelector('textarea[name="leadership_keywords"]')?.value.trim() || '';
 
 
+  console.log(rawData)
+
   /**
    * 2. Transform rawData -> Final JSON structure:
    *    - "about" -> "profile_summary.content"
@@ -1064,7 +1066,7 @@ document.querySelector('.submit')?.addEventListener('click', function(evt) {
     finalData.instagram = rawData.instagram;
   }
 
-
+  console.log(finalData)
 
   // 3. Convert finalData to JSON string
   const jsonPayload = JSON.stringify(finalData);

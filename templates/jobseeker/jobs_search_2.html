@@ -26,7 +26,9 @@
     </div>
 
 <!-- Search Jobs -->
+
  <div class="rounded-lg border bg-white text-card-foreground shadow-sm mb-6">
+    <form method="GET" action="{{ url_for('jobs_search') }}">
     <div class="p-6">
         <div class="flex gap-4 flex-wrap">
             <div class="flex-1 min-w-[300px]">
@@ -40,8 +42,8 @@
                         data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
-                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
-                        placeholder="Job title, keywords, or company" value=""></div>
+                    </svg><input type="text" id="keyword" name="keyword" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                        placeholder="Job title, keywords, or company" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}"></div>
             </div>
             <div class="flex-1 min-w-[200px]">
                 <div class="relative"><svg
@@ -56,12 +58,14 @@
                             d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
                         </path>
                         <circle cx="12" cy="10" r="3"></circle>
-                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
-                        placeholder="City, state, or remote" value=""></div>
-            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-8 text-white">Search
+                    </svg><input type="text" id="state" name="state" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                        placeholder="State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}"></div>
+            </div><button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-8 text-white">Search
                 Jobs</button>
         </div>
     </div>
+</form>
+
 </div>
 
 <!-- Total jobs found -->
@@ -69,14 +73,15 @@
     <div class="flex items-center gap-4">
         <h2 class="text-lg font-semibold text-gray-900">{{total_job_count}} jobs found</h2>
         <div class="flex gap-1">
-            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-50 text-blue-700 border-blue-200">
+            <!-- <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-blue-50 text-blue-700 border-blue-200">
                 4 Remote</div>
             <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-green-50 text-green-700 border-green-200">
-                5 Full-time</div>
+                5 Full-time</div> -->
         </div>
     </div>
     <div class="flex items-center gap-2">
 <!--Filters-->
+        <form method="GET" action="{{ url_for('jobs_search') }}">
         <div class="flex items-center gap-4 flex-wrap">
             <div class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -86,99 +91,38 @@
                     data-component-file="JobSearch.tsx" data-component-name="Filter"
                     data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-500%22%7D">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-                </svg><span class="text-sm font-medium text-gray-700">Filters:</span></div><button type="button" role="combobox"
-                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
-                    style="pointer-events: none;">Job Types</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
-                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
-                    data-component-file="select.tsx" data-component-name="ChevronDown"
-                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"></path>
-                </svg></button><button type="button" role="combobox" aria-controls="radix-:r1:" aria-expanded="false"
-                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
-                    style="pointer-events: none;">Anytime</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
-                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
-                    data-component-file="select.tsx" data-component-name="ChevronDown"
-                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"></path>
-                </svg></button><button type="button" role="combobox" aria-controls="radix-:r2:" aria-expanded="false"
-                class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&amp;&gt;span]:line-clamp-1 w-[140px]"><span
-                    style="pointer-events: none;">Salary</span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down h-4 w-4 opacity-50"
-                    data-lov-id="src/components/ui/select.tsx:28:6" data-lov-name="ChevronDown"
-                    data-component-path="src/components/ui/select.tsx" data-component-line="28"
-                    data-component-file="select.tsx" data-component-name="ChevronDown"
-                    data-component-content="%7B%22className%22%3A%22h-4%20w-4%20opacity-50%22%7D" aria-hidden="true">
-                    <path d="m6 9 6 6 6-6"></path>
-                </svg></button>
-        </div>
-    </div>
-</div>
-
-
-        <div class="p-5 rounded-lg border bg-white text-card-foreground shadow-sm items-center md:p-4 mt-4">
-            <form method="GET" action="{{ url_for('jobs_search') }}">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 mb-4">
+                </svg><span class="text-sm font-medium text-gray-700">Filters:</span></div>
                 <div>
-                    <!-- <label class="block text-gray-700 font-medium" for="keyword">Search</label> -->
-                    <input type="text" id="keyword" name="keyword" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter keyword (e.g., job title, company)" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}">
-                </div>
-                <div>
-                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="country">Country</label> -->
-                    <select id="country" name="country" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
-                        <option value="">Select Country</option>
-                        {% for country in countries %}
-                            <option value="{{ country }}" {% if country == prefilled_data.country %}selected{% endif %}>{{ country }}</option>
-                        {% endfor %}
+                    <select name="industry"
+                            class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[140px]">
+                      <option value="">Industries</option>
+                      {% for value, label in industries %}
+                        <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
+                      {% endfor %}
                     </select>
-                </div>
-                <div>
-                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="state">State</label> -->
-                    <input type="text" id="state" name="state" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600" placeholder="Enter State" value="{{ prefilled_data.state if prefilled_data.state is not none else '' }}">
-                </div>
-
-            </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
-                <div>
-                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="job_type">Job Type</label> -->
-                    <select id="job_type" name="job_type" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
-                        <option value="">Select Job Type</option>
-                        {% for value, label in job_types %}
-                            <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
+                  </div>
+                                <div>
+                    <select name="job_type"
+                            class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[140px]">
+                      <option value="">Job Types</option>
+                      {% for value, label in job_types %}
+                        <option value="{{ value }}" {% if value == prefilled_data.job_type %}selected{% endif %}>{{ label }}</option>
+                      {% endfor %}
                     </select>
-                </div>
-                <div>
-                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="industry">Industry</label> -->
-                    <select id="industry" name="industry" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
-                        <option value="">Select Industry</option>
-                        {% for value, label in industries %}
-                            <option value="{{ value }}" {% if value == prefilled_data.industry %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
+                  </div>
+                  <div>
+                    <select name="date_filter"
+                            class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[140px]">
+                      <option value="">Anytime</option>
+                      <option value="last_24_hours" {% if prefilled_data.date_filter == 'last_24_hours' %}selected{% endif %}>Last 24 hours</option>
+                      <option value="last_week" {% if prefilled_data.date_filter == 'last_week' %}selected{% endif %}>Last Week</option>
+                      <option value="last_month" {% if prefilled_data.date_filter == 'last_month' %}selected{% endif %}>Last Month</option>
                     </select>
-                </div>
-                <div>
-                    <!-- <label class="mt-4 block text-gray-700 font-medium" for="posted_on">Posted On</label> -->
-                    <select id="posted_on" name="date_filter" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
-                        <option value="">Select Date Range</option>
-                        <option value="last_24_hours" {% if prefilled_data.date_filter =='last_24_hours' %}selected{% endif %}>Last 24 hours</option>
-                        <option value="last_week" {% if prefilled_data.date_filter =='last_week' %}selected{% endif %}>Last Week</option>
-                        <option value="last_month" {% if prefilled_data.date_filter =='last_month' %}selected{% endif %}>Last Month</option>
-                    </select>
-                </div>
-            
-            <div>
-                <button type="submit" class="next text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full">Search Jobs</button>
-            </div>
-        </div>
+                  </div>
         </div>
         </form>
+    </div>
+</div>
     </div>
     <!-- Left Column: Filters (4/12) -->
     <div class="md:col-span-12">

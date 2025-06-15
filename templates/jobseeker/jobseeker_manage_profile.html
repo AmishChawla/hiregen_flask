@@ -35,8 +35,8 @@
                   </svg>
                 </button>
             </div>
-            <div class="mt-2 font-medium text-slate-600 flex items-center gap-2">Senior Software Developer</div>
-    <div class="flex justify-center gap-1">
+            <!-- <div class="mt-2 font-medium text-slate-600 flex items-center gap-2">Senior Software Developer</div> -->
+    <div class="mt-1 flex justify-left gap-1">
       {% if profile_info.github %}
       <a href="{{ profile_info.github }}" target="_blank" rel="noopener"
       class="flex h-8 w-8 items-center justify-center gap-2 rounded-full border border-gray-300 bg-white text-md font-medium text-gray-700 shadow-theme-xs hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200">
@@ -80,7 +80,7 @@
           {{ profile_info.address_city or '' }}{% if profile_info.address_city and (profile_info.address_province or profile_info.address_county) %}, {% endif %}
           {{ profile_info.address_province or '' }}{% if profile_info.address_province and profile_info.address_county %}, {% endif %}
           {{ profile_info.address_county or '' }}
-        {% endif %}New York, United States
+        {% endif %}
       </div>          
             <div class="flex items-center gap-1 me-5"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-4 h-4" data-lov-id="src/pages/Profile.tsx:86:28" data-lov-name="Mail" data-component-path="src/pages/Profile.tsx" data-component-line="86" data-component-file="Profile.tsx" data-component-name="Mail" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>{{ profile_info.email }} <span class="shrink-0 ml-2">
             <button onclick="openModal('updateEmailModal')" type="button" class="text-sm text-blue-700 hover:text-blue-500">Edit</button>

@@ -3728,3 +3728,44 @@ def update_team_members(access_token, user_id, permissions):
         print(f"Request error: {err}")
 
 
+def save_job_for_jobseeker(job_id: int, access_token: str):
+
+    url = constants.BASE_URL + f"/jobseeker/save-job/{job_id}"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    response = requests.post(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to save job: {response.text}")
+
+def unsave_job_for_jobseeker(job_id: int, access_token: str):
+    import requests
+
+    url = constants.BASE_URL+f"/jobseeker/unsave-job/{job_id}"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    response = requests.delete(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to unsave job: {response.text}")
+
+
+def get_saved_jobs_for_jobseeker(access_token: str):
+    import requests
+
+    url = constants.BASE_URL+"/jobseeker/saved-jobs"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to get saved jobs: {response.text}")

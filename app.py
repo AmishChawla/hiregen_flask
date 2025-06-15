@@ -944,6 +944,10 @@ def company_details_by_company_slug(company_slug):
 
 @app.route('/', subdomain="<company_subdomain>", methods=['GET', 'POST'])
 def company_details_by_company_subdomain(company_subdomain):
+
+    if company_subdomain == "www":
+        return redirect(url_for('index'))  # assuming you have a route named 'index'
+
     # Get the company details based on the subdomain
     result = api_calls.get_company_details_by_subdomain(company_subdomain=company_subdomain)
     # Retrieve jobs associated with the company
@@ -3083,14 +3087,29 @@ def delete_security_group(group_id):
 @requires_any_permission("applicants")
 @login_required
 def jobseeker_dashboard():
+    print(current_user.firstname)
     stats = api_calls.get_jobseeker_stats(access_token=current_user.id)
 
     total_resumes = stats["total_resumes"]
     total_applications = stats["applications_count"]
     profile_completion_percentage = stats["profile_completion_percentage"]
-    recommendations = api_calls.get_jobseeker_recommendations(jobs_count=5, access_token=current_user.id)
 
-    return render_template('jobseeker/jobseeker_dashboard.html', total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations)
+    applications = api_calls.get_jobseeker_applications(access_token=current_user.id) or []
+
+    try:
+        recommendations_result = api_calls.get_jobseeker_recommendations(jobs_count=5, access_token=current_user.id) or {}
+        if isinstance(recommendations_result, dict):
+            recommendations = recommendations_result.get("recommendations", [])
+            job_matches = recommendations_result.get("total_recommendations", 0)
+        else:
+            recommendations = []
+            job_matches = 0
+    except Exception as e:
+        recommendations = recommendations_result["recommendations"] or []
+        job_matches = recommendations_result["total_recommendations"] or 0
+
+
+    return render_template('jobseeker/jobseeker_dashboard.html', total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations, job_matches=job_matches, applications=applications)
 
 
 @app.route('/jobseeker/login', methods=['GET', 'POST'])
@@ -4939,7 +4958,32 @@ def update_permissions():
 ############################# JOBSEEKER SAVED JOBS ##########################################################
 @app.route('/jobseeker/saved-jobs', methods=['GET', 'POST'])
 def jobseeker_saved_jobs():
-    return render_template('jobseeker/jobseeker_saved_jobs.html')
+    saved_jobs = api_calls.get_saved_jobs_for_jobseeker(access_token=current_user.id) or []
+    print(saved_jobs)
+    return render_template('jobseeker/jobseeker_saved_jobs.html', saved_jobs=saved_jobs)
+
+@app.route("/jobseeker/save-job/<int:job_id>", methods=["POST"])
+@login_required
+def jobseeker_save_job(job_id):
+    try:
+        result = api_calls.save_job_for_jobseeker(job_id=job_id, access_token=current_user.id)
+        print(result)
+        flash(result["message"], "success")
+    except Exception as e:
+        flash(f"Error saving job: {str(e)}", "danger")
+    return redirect(request.referrer or url_for("jobseeker_dashboard"))
+
+@app.route("/jobseeker/unsave-job/<int:job_id>", methods=["POST"])
+@login_required
+def jobseeker_unsave_job(job_id):
+    try:
+        result = api_calls.unsave_job_for_jobseeker(job_id=job_id, access_token=current_user.id)
+        flash(result["message"], "success")
+    except Exception as e:
+        flash(f"Error unsaving job: {str(e)}", "danger")
+    return redirect(request.referrer or url_for("jobseeker_dashboard"))
+
+
 
 ############################# JOBSEEKER SETTINGS ##########################################################
 @app.route('/jobseeker/jobseeker-settings', methods=['GET', 'POST'])

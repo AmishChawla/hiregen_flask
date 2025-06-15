@@ -22,7 +22,8 @@
 {% block title %}{{ job_details.job_title }}{% endblock %}
 
 <!-- Job Detail -->
- 
+{% set job_url = url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details["company_subdomain"], job_slug=job_details["slug"], _external=True) %}
+
 
 {% block content %}
 
@@ -69,7 +70,7 @@
                                         <path d="M16 14h.01"></path>
                                         <path d="M8 10h.01"></path>
                                         <path d="M8 14h.01"></path>
-                                    </svg>TechCorp Inc.</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    </svg>{{job_details.company_name}}</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         class="lucide lucide-map-pin w-4 h-4"
@@ -97,7 +98,7 @@
                                         data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>Posted 1/15/2024</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    </svg>Posted <span class="created-time" data-created="{{ job_details.created_at }}"></span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         class="lucide lucide-users w-4 h-4"
@@ -109,9 +110,11 @@
                                         <circle cx="9" cy="7" r="4"></circle>
                                         <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>47 applicants</span></div>
+                                    </svg></span></div>
                         </div>
-                        <div class="flex items-center gap-2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                        <div class="flex items-center gap-2">
+                          <form method="POST" action="{{ url_for('jobseeker_save_job', job_id=job_details.id) }}">
+                          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-heart w-4 h-4"
@@ -123,8 +126,8 @@
                                         d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
                                     </path>
                                 </svg></button>
-                                
-                                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                </form>
+                                <button onclick="shareJob('{{ job_url }}')" title="Share Job" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-share2 w-4 h-4"
@@ -157,14 +160,10 @@
                             {% if job_details.job_type %}
       {{ job_details.job_type }}
       {% endif %}</div>
+                            {% for skill in job_details.job_skills %}
                         <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                            React</div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                            TypeScript</div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                            JavaScript</div>
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                            +3 more</div>
+                            {{skill}}</div>
+                            {%endfor%}
                     </div>
                 </div>
             </div>
@@ -180,41 +179,7 @@
                     {{ job_details.job_description | safe or "No Description" }}
                 </div>
             </div>
-            <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
-                <div class="flex flex-col space-y-1.5 p-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Key Responsibilities</h3>
-                </div>
-                <div class="p-6 pt-0">
-                    <ul class="space-y-2">
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Develop new user-facing features using React.js and
-                                TypeScript</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Build reusable components and front-end libraries for future
-                                use</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Translate designs and wireframes into high-quality code</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Optimize applications for maximum speed and scalability</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Collaborate with team members and stakeholders</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <div class="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div><span
-                                class="text-gray-600">Stay up-to-date with emerging technologies</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
             <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
                 <div class="flex flex-col space-y-1.5 p-6">
                     <h3 class="text-2xl font-semibold leading-none tracking-tight">Requirements</h3>
@@ -397,5 +362,58 @@
 }
 </script>
 
+<script>
+  function shareJob(url) {
+      if (navigator.share) {
+          navigator.share({
+              title: "Check out this job on HireGen",
+              text: "A job you might be interested in.",
+              url: url
+          }).catch((error) => {
+              console.error("Sharing failed:", error);
+              alert("Sharing failed: " + error.message);
+          });
+      } else {
+          navigator.clipboard.writeText(url).then(() => {
+              alert("Link copied to clipboard!");
+          }).catch(() => {
+              alert("Unable to copy the link.");
+          });
+      }
+  }
+  </script>
+  
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = document.querySelectorAll(".created-time");
+  
+      elements.forEach(el => {
+        const createdAt = new Date(el.dataset.created);
+        const now = new Date();
+  
+        const diffTime = now - createdAt;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffMonths = Math.floor(diffDays / 30);
+        const diffYears = Math.floor(diffDays / 365);
+  
+        let result;
+  
+        if (diffDays === 0) {
+          result = "Today";
+        } else if (diffDays === 1) {
+          result = "1 day ago";
+        } else if (diffDays < 30) {
+          result = `${diffDays} days ago`;
+        } else if (diffDays < 365) {
+          result = diffMonths === 1 ? "1 month ago" : `${diffMonths} months ago`;
+        } else {
+          result = diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
+        }
+  
+        el.innerText = result;
+      });
+    });
+  </script>
 
 {% endblock %}

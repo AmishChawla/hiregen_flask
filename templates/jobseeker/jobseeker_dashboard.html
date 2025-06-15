@@ -5,7 +5,7 @@
 <div class="">
   <div class="min-h-screen py-0">
     <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
-    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, James!</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, {{ current_user.firstname }}!</h1>
     <div class="text-gray-600">Here's what's happening with your job search today.</div>
   <!-- Metric Cards -->
 <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 my-6">
@@ -63,7 +63,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-gray-600">Job Matches</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">47</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">{{ job_matches }}</p>
                 <p class="text-sm mt-1 text-green-600">+12 new today</p>
             </div>
             <div class="p-3 rounded-lg bg-purple-50 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -111,6 +111,7 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 space-y-6">
+        {% if recommendations %}
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
             <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
@@ -133,13 +134,15 @@
                         <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
                     </svg>AI Job Recommendations</h3>
             </div>
-            <div class="p-6 pt-0 space-y-4">
+            {% for job, similarity_score in recommendations %}
+            <div class="recommendation-tile {% if loop.index > 1 %}hidden{% endif %} p-6 pt-0 space-y-4">
                 <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex flex-col space-y-1.5 p-6 pb-4">
                         <div class="flex items-start justify-between">
                             <div class="flex-1">
-                                <h3 class="font-semibold text-lg text-gray-900 mb-1">Senior Frontend Developer</h3>
-                                <div class="flex items-center gap-2 text-gray-600 mb-2"><svg
+                                <h3 class="font-semibold text-lg text-gray-900 mb-1">{{ job.job_title }}</h3>
+                                <div class="flex items-center gap-2 text-gray-600 mb-2">
+                                    <svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4"
@@ -154,7 +157,7 @@
                                         <path d="M10 10h4"></path>
                                         <path d="M10 14h4"></path>
                                         <path d="M10 18h4"></path>
-                                    </svg><span class="font-medium">TechCorp Inc.</span></div>
+                                    </svg><span class="font-medium">{{ job.company.name }}</span></div>
                                 <div class="flex items-center gap-4 text-sm text-gray-500">
                                     <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -168,7 +171,7 @@
                                                 d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
                                             </path>
                                             <circle cx="12" cy="10" r="3"></circle>
-                                        </svg><span>San Francisco, CA</span></div>
+                                        </svg><span>{{ job.address_province }}, {{ job.address_country }}</span></div>
                                     <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -179,9 +182,12 @@
                                             data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
                                             <circle cx="12" cy="12" r="10"></circle>
                                             <polyline points="12 6 12 12 16 14"></polyline>
-                                        </svg><span>2 days ago</span></div>
+                                        </svg><span class="created-time" data-created="{{ job.created_at }}"></span>
+                                    </div>
                                 </div>
-                            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-blue-50 hover:text-accent-foreground h-10 w-10"><svg
+                            </div>
+                            <form method="POST" action="{{ url_for('jobseeker_save_job', job_id=job.id) }}">
+                            <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-blue-50 hover:text-accent-foreground h-10 w-10"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-bookmark w-4 h-4"
@@ -191,39 +197,43 @@
                                     data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
                                     <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
                                 </svg></button>
+                            </form>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
                         <div class="flex gap-2 mb-3">
                             <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">
-                                Full-time</div>
+                                {{job.job_type}}</div>
                             <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                                $120k - $150k</div>
+                                {{job.salary}}</div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">We're looking for a senior frontend
-                            developer to join our growing team. You'll work on cutting-edge web applications using
-                            modern technologies.</p>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ job.job_description | striptags }}
+                        </p>
                         <div class="flex flex-wrap gap-2 mb-4">
+                            {% for skill in job.job_skills %}
                             <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                                React</div>
-                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                                TypeScript</div>
-                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                                Next.js</div>
-                            <div data-lov-id="src/components/JobCard.tsx:56:12" data-lov-name="Badge"
-                                class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                                GraphQL</div>
+                                {{skill}}</div>
+                            {% endfor %}
                         </div>
                         <div class="flex gap-2">
-                            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700 text-white">Apply
-                                Now</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">View
-                                Details</button></div>
+                            <a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company.company_subdomain, job_slug=job.slug)}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700 text-white">Apply
+                                Now</a>
+                                <a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company.company_subdomain, job_slug=job.slug)}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">View
+                                Details</a></div>
                     </div>
                 </div>
-                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
-                    All Recommendations</button>
             </div>
+            {% endfor %}
+
+            <button id="show-all-recommendations" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
+                All Recommendations</button>
+
+
         </div>
+        {%else%}
+        <div></div>
+        {% endif %}
+        
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
             <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
@@ -237,12 +247,13 @@
                         <rect width="20" height="14" x="2" y="6" rx="2"></rect>
                     </svg>Recent Applications</h3>
             </div>
-            <div class="p-6 pt-0 space-y-4">
-                <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6 pt-0 space-y-4" id="applications-list">
+                {% for application in applications %}
+                <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow app-card {% if loop.index > 1 %}hidden{% endif %}">
                     <div class="flex flex-col space-y-1.5 p-6 pb-3">
                         <div class="flex items-start justify-between">
                             <div>
-                                <h3 class="font-semibold text-gray-900 mb-1">Software Engineer</h3>
+                                <h3 class="font-semibold text-gray-900 mb-1">{{application.job_title}}</h3>
                                 <div class="flex items-center gap-2 text-gray-600"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -262,10 +273,10 @@
                                     </svg><span data-lov-id="src/components/ApplicationCard.tsx:40:14"
                                         data-lov-name="span" data-component-path="src/components/ApplicationCard.tsx"
                                         data-component-line="40" data-component-file="ApplicationCard.tsx"
-                                        data-component-name="span" data-component-content="%7B%7D">Google</span></div>
+                                        data-component-name="span" data-component-content="%7B%7D">{{application.company.name}}</span></div>
                             </div>
                             <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-purple-100 text-purple-800">
-                                Interview Scheduled</div>
+                                {{ application.job_application_status.capitalize() }}</div>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
@@ -282,8 +293,7 @@
                                     <path d="M16 2v4"></path>
                                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                                     <path d="M3 10h18"></path>
-                                </svg><span>Applied: Jan 15,
-                                    2024</span></div>
+                                </svg><span>Applied: {{application.application_date}}</span></div>
                             <div class="flex items-center gap-1 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -316,10 +326,12 @@
                             </svg>View Application</button>
                     </div>
                 </div>
-                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
-                    All Applications</button>
+                {% endfor %}
+                <a href="{{url_for('jobseeker_applications')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 w-full">View
+                    All Applications</a>
             </div>
         </div>
+        
     </div>
     <div class="space-y-6">
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
@@ -366,8 +378,9 @@
                             >Add work
                                 samples</span>
                         </div>
-                    </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">Complete
-                        Profile</button>
+                    </div>
+                    <a href="{{ url_for('jobseeker_profile') }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">Complete
+                        Profile</a>
                 </div>
             </div>
         </div>
@@ -457,55 +470,51 @@
         </div>
     </div>
 </div>
-
-
-
-<h2 class="mt-8 text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">Recommended for you</h2>
-<div>
-  <div class="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2">
-    {% if recommendations %}
-    {% for job, similarity_score in recommendations %}
-<div>
-
-<a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}"
-   class="block mb-3 p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
-    <div class="flex justify-between items-center">
-        <div class="flex items-start space-x-4">
-            <img src="/static/images/google-icon.png" alt="{{ job.company_name }} Logo"
-                 class="w-14 h-14 rounded-full object-contain bg-gray-50 border">
-            <div>
-                <h2 class="text-lg font-semibold text-slate-900">{{ job.job_title }}</h2>
-                <div class="font-medium text-slate-600 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4" data-lov-id="src/components/JobCard.tsx:26:14" data-lov-name="Building2" data-component-path="src/components/JobCard.tsx" data-component-line="26" data-component-file="JobCard.tsx" data-component-name="Building2" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path d="M10 14h4"></path><path d="M10 18h4"></path></svg> TechCorp Inc.</div>
-                
-                <div class="mt-2 text-slate-500 text-sm flex items-center">
-                    <div class="flex items-center gap-2 me-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4" data-lov-id="src/components/JobCard.tsx:31:16" data-lov-name="MapPin" data-component-path="src/components/JobCard.tsx" data-component-line="31" data-component-file="JobCard.tsx" data-component-name="MapPin" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>{{ job.address_city }}, {{ job.address_province }}, {{ job.address_country }}</div>          
-                    <div class="flex items-center gap-2 me-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4" data-lov-id="src/components/JobCard.tsx:35:16" data-lov-name="Clock" data-component-path="src/components/JobCard.tsx" data-component-line="35" data-component-file="JobCard.tsx" data-component-name="Clock" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>{{ job.opening_date.split('T')[0] }}</div>                                    
-                </div>
-                <div class="mt-3 text-slate-700 text-sm font-medium flex items-center">
-                    <div class="bg-slate-100 rounded-xl px-3 py1 me-4">{{ job.job_type }}</div>
-                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary }}</div>                    
-                    <!--<div class="text-right text-gray-500 text-sm flex items-center gap-2">{{ job.industry }}</div>-->
-                </div>
-            </div>
-        </div>
-        <div class="text-right text-gray-500 text-sm flex items-center">
-            <div class="flex items-center bg-white dark:bg-gray-700 text-gray-400 dark:text-gray-300 text-sm p-2 h-8 w-12 rounded-full text-center flex border shadow border-gray-300 dark:border-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-sm text-yellow-500">
-                  <path fill-rule="evenodd" d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.576 2.576l2.846.813a.75.75 0 0 1 0 1.442l-2.846.813a3.75 3.75 0 0 0-2.576 2.576l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.576-2.576l-2.846-.813a.75.75 0 0 1 0-1.442l2.846-.813A3.75 3.75 0 0 0 7.466 7.89l.813-2.846A.75.75 0 0 1 9 4.5Z" clip-rule="evenodd" />
-                </svg>
-                <p>{{ similarity_score }}</p>
-              </div>
-        </div>
-    </div>
-</a>
-
-</div>
-    {% endfor %}
-    {% else %}
-    <p class="text-sm text-gray-500 dark:text-gray-400">Complete profile to get recommendations</p>
-    {% endif %}
-  </div>
-</div>
 </div>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const elements = document.querySelectorAll(".created-time");
+  
+      elements.forEach(el => {
+        const createdAt = new Date(el.dataset.created);
+        const now = new Date();
+  
+        const diffTime = now - createdAt;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffMonths = Math.floor(diffDays / 30);
+        const diffYears = Math.floor(diffDays / 365);
+  
+        let result;
+  
+        if (diffDays === 0) {
+          result = "Today";
+        } else if (diffDays === 1) {
+          result = "1 day ago";
+        } else if (diffDays < 30) {
+          result = `${diffDays} days ago`;
+        } else if (diffDays < 365) {
+          result = diffMonths === 1 ? "1 month ago" : `${diffMonths} months ago`;
+        } else {
+          result = diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
+        }
+  
+        el.innerText = result;
+      });
+    });
+  </script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("show-all-recommendations");
+        btn.addEventListener("click", function () {
+            document.querySelectorAll(".recommendation-tile.hidden").forEach(el => {
+                el.classList.remove("hidden");
+            });
+            btn.classList.add("hidden"); // hide the button after expanding
+        });
+    });
+    </script>
+    
 {% endblock %}
