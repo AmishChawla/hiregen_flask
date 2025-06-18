@@ -8,8 +8,8 @@
     .card {
         box-shadow: none !important;
     }
-      #userpostTable_wrapper .dt-layout-row:nth-child(1), .dt-layout-row:nth-child(3) {
-    width: 98%!important;
+    
+    #userpostTable_wrapper .dt-layout-row:nth-child(1), .dt-layout-row:nth-child(3) {
     margin: 0 auto!important;
     font-size: 14px;
     color: #6b7280;
@@ -55,66 +55,251 @@ table.dataTable thead th, table.dataTable tfoot th {
         <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
             <div class="flex justify-between items-center mb-6">
                 <div class="sm:flex-auto">
-                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">All jobs</h1>
-                </div>
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Jobs Management</h1>
+                <div class="text-gray-600">Manage your job postings and track applications</div>
+                </div>                
                 <div class="flex space-x-4">
-                    <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=current_user.company['company_subdomain']) }}" type="button" class="rounded-md bg-white px-3.5 py-2.5 text-base font-semibold text-blue-600 shadow-xs border border-blue-600 ring-inset hover:bg-blue-50">Visit Site</a>
-                    <a href="{{ url_for('add_post')}}"  type="button" class="inline-flex justify-center rounded-lg bg-blue-600 px-4 py-2 text-base font-semibold text-white hover:bg-blue-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">Add Job</a>
+                    <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=current_user.company['company_subdomain']) }}" type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Visit Site</a>
+                    <a href="{{ url_for('add_post')}}"  type="button" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-4 h-4 mr-2" data-lov-id="src/pages/Jobs.tsx:145:14" data-lov-name="Plus" data-component-path="src/pages/Jobs.tsx" data-component-line="145" data-component-file="Jobs.tsx" data-component-name="Plus" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg> Post Job</a>
                 </div>
             </div>
-        <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:py-6 md:px-0  shadow-sm animate-fade-in">
 
-        <div class="">
-            <div class="border-b border-gray-200 dark:border-gray-700">
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Total Jobs</p>
+                    <p class="text-2xl font-bold">28</p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-users w-6 h-6 text-blue-600" data-lov-id="src/pages/Jobs.tsx:160:20"
+                        data-lov-name="Users" data-component-path="src/pages/Jobs.tsx" data-component-line="160"
+                        data-component-file="Jobs.tsx" data-component-name="Users"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Active Jobs</p>
+                    <p class="text-2xl font-bold">12</p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-calendar w-6 h-6 text-green-600" data-lov-id="src/pages/Jobs.tsx:174:20"
+                        data-lov-name="Calendar" data-component-path="src/pages/Jobs.tsx" data-component-line="174"
+                        data-component-file="Jobs.tsx" data-component-name="Calendar"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                        <path d="M8 2v4"></path>
+                        <path d="M16 2v4"></path>
+                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                        <path d="M3 10h18"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Total Applications</p>
+                    <p class="text-2xl font-bold">214</p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-users w-6 h-6 text-purple-600" data-lov-id="src/pages/Jobs.tsx:188:20"
+                        data-lov-name="Users" data-component-path="src/pages/Jobs.tsx" data-component-line="188"
+                        data-component-file="Jobs.tsx" data-component-name="Users"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-600">Avg. Salary</p>
+                    <p class="text-2xl font-bold">$128k</p>
+                </div>
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-dollar-sign w-6 h-6 text-orange-600"
+                        data-lov-id="src/pages/Jobs.tsx:202:20" data-lov-name="DollarSign"
+                        data-component-path="src/pages/Jobs.tsx" data-component-line="202"
+                        data-component-file="Jobs.tsx" data-component-name="DollarSign"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                        <line x1="12" x2="12" y1="2" y2="22"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+    <div class="flex flex-col space-y-1.5 p-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight">All Jobs</h3>
+            <div class="flex gap-2 w-full sm:w-auto">
+
+            </div>
+        </div>
+    </div>
+    <div class="p-6 pt-0">
+        <div class="relative w-full overflow-auto">
+            <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
                 <nav class="-mb-px flex space-x-4" aria-label="Tabs">
                     <a class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 px-3 py-2 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-500" id="published-tab" data-toggle="tab" href="#published-posts" onclick="showTab('published-posts', 'published-tab')">Published</a>
                     <a class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 px-3 py-2 border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-500" id="drafts-tab" data-toggle="tab" href="#draft-posts" onclick="showTab('draft-posts', 'drafts-tab')">Drafts</a>
                 </nav>
             </div>
 
-            <div class="tab-content mt-4">
-                <div id="published-posts" class="tab-pane fade show active overflow-auto">
-                    <table id="userpostTable" class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50 dark:bg-gray-900">
-                            <tr>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Posted By</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Applications</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                            {% for data in result %}
-                            {% if data.status == 'published' %}
-                            <tr class="hover:bg-gray-50">
-                                <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6 lg:pl-8"><a class="text-purple700 dark:text-purple-400 hover:textpurple-900 dark:hover:textblue-200" href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}">{{ data.job_title }}</a></td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
-                                    <div class="flex items-center gap-2 min-w-[120px]">
-                                      <img class="size-6 rounded-full border border-purple-100" src="{{ data.profile_picture or url_for('static', filename='images/man.png') }}">
-                                      <span class="truncate">{{ data.author_name }}</span>
-                                    </div>
-                                </td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.job_opening_status }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.status | capitalize }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.job_opening_views }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500" data-created="{{ data.created_at }}">{{ data.created_at.split('T')[0] }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500" data-updated="{{ data.updated_at }}">{{ data.updated_at.split('T')[0] }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 space-x-2 text-center">
-                                    <a href="{{ url_for('job_applicants', job_id=data.id) }}" class="text-center text-purple700 dark:text-purple-400 hover:textpurple-900 dark:hover:textblue-200">{{ data.applicant_count }}</a>
-                                </td>
-                                <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 flex items-center space-x-2">
-                                    <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">
-                                    Edit
-                                    </a>
-                                    <a href="#" class="text-blue-600 hover:text-blue-500" onclick="openModal('{{ data.id }}')">
-                                    Delete
-                                    </a>
-                                        <!-- Tailwind Modal for delete button -->
+            <div class="tab-content">
+            <div id="published-posts" class="tab-pane fade show active overflow-auto">
+            <table id="userpostTable" class="w-full caption-bottom text-sm">
+                <thead class="[&amp;_tr]:border-b">
+                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Job Title</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Department</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Location</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Salary</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Applications</th>
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Views</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Status</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Visibility</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Created</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="[&amp;_tr:last-child]:border-0">
+                    {% for data in result %}
+                    {% if data.status == 'published' %}
+                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div>
+                                <div class="font-medium"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}">{{ data.job_title }}</a></div>
+                                <div class="text-sm text-gray-500">Full-time</div>
+                            </div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            Engineering</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-map-pin w-3 h-3 text-gray-400"
+                                    data-lov-id="src/pages/Jobs.tsx:312:26" data-lov-name="MapPin"
+                                    data-component-path="src/pages/Jobs.tsx" data-component-line="312"
+                                    data-component-file="Jobs.tsx" data-component-name="MapPin"
+                                    data-component-content="%7B%22className%22%3A%22w-3%20h-3%20text-gray-400%22%7D">
+                                    <path
+                                        d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                                    </path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg><span class="text-sm">Remote</span></div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">$120k - $160k</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                            <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-users w-3 h-3 text-gray-400"
+                                    data-lov-id="src/pages/Jobs.tsx:319:26" data-lov-name="Users"
+                                    data-component-path="src/pages/Jobs.tsx" data-component-line="319"
+                                    data-component-file="Jobs.tsx" data-component-name="Users"
+                                    data-component-content="%7B%22className%22%3A%22w-3%20h-3%20text-gray-400%22%7D">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg><a class="text-blue-600" href="{{ url_for('job_applicants', job_id=data.id) }}"><span>{{ data.applicant_count }}</span></a></adiv>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-start">{{ data.job_opening_views }}</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-green-100 text-green-800">
+                                {{ data.job_opening_status }}</div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-red-100 text-red-800">
+                                {{ data.status | capitalize }}</div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="text-sm">{{ data.created_at.split('T')[0] }}
+                            </div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="flex items-center gap-2">
+                                <a href="#" onclick="openModal('{{ data.id }}')" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-eye w-4 h-4"
+                                        data-lov-id="src/pages/Jobs.tsx:341:28" data-lov-name="Eye"
+                                        data-component-path="src/pages/Jobs.tsx" data-component-line="341"
+                                        data-component-file="Jobs.tsx" data-component-name="Eye"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path
+                                            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                                        </path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg></a>
+                                    <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-square-pen w-4 h-4"
+                                        data-lov-id="src/pages/Jobs.tsx:344:28" data-lov-name="Edit"
+                                        data-component-path="src/pages/Jobs.tsx" data-component-line="344"
+                                        data-component-file="Jobs.tsx" data-component-name="Edit"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path
+                                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                                        </path>
+                                    </svg></a>
+                                    
+                                    <a href="#" onclick="openModal('{{ data.id }}')" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-trash-2 w-4 h-4">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                                    <path d="M10 11v6"></path>
+                                    <path d="M14 11v6"></path>
+                                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                                    </svg>
+                                </a>
+                                     <!-- Tailwind Modal for delete button -->
                                         <div id="deleteModal_{{ data.id }}" class="fixed inset-0 z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                             <div class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/75 transition-opacity" aria-hidden="true"></div>
                                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -149,59 +334,137 @@ table.dataTable thead th, table.dataTable tfoot th {
                                                 </div>
                                             </div>
                                         </div>
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                                </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-                <div id="draft-posts" class="tab-pane fade hidden overflow-auto">
-                    <table id="draftpostTable" class="min-w-full borderseparate border-spacing-0">
-                        <thead class="bg-gray-50 dark:bg-gray-900">
-                            <tr>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Posted By</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
-                                <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-6 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Applications</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                            {% for data in result %}
-                            {% if data.status == 'draft' %}
-                            <tr>
-                                <td class="py-4 pr-3 pl-4 text-sm font-medium whitespace-nowrap text-gray-900 sm:pl-6 lg:pl-8"><a class="text-purple700 dark:text-purple-400 hover:textpurple-900 dark:hover:textblue-200" href="{{ url_for('admin_edit_post', job_id=data.id) }}">{{ data.job_title }}</a></td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">
-                                    <div class="flex items-center gap-2 min-w-[120px]">
-                                      <img class="size-6 rounded-full border border-purple-100" src="{{ data.profile_picture or url_for('static', filename='images/man.png') }}">
-                                      <span class="truncate">{{ data.author_name }}</span>
-                                    </div>
-                                  </td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.job_opening_status }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.status | capitalize }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{{ data.job_opening_views }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500" data-created="{{ data.created_at }}">{{ data.created_at.split('T')[0] }}</td>
-                                <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500" data-updated="{{ data.updated_at }}">{{ data.updated_at.split('T')[0] }}</td>
-                                <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 space-x-2 text-center">
-                                    <a href="{{ url_for('job_applicants', job_id=data.id) }}" class="text-purple700 dark:text-purple-400 hover:textpurple-900 dark:hover:textblue-200">{{ data.applicant_count }}</a>
-                                </td>
-
-                                <td class="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 flex items-center space-x-2">
-
-                                    <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">
-                                    Edit
-                                    </a>
-                                    <a href="#" class="text-blue-600 hover:text-blue-500" onclick="openModal('{{ data.id }}')">
-                                    Delete
-                                    </a>
-
-                                        <!-- Tailwind Modal for delete button -->
+        <div id="draft-posts" class="tab-pane fade hidden overflow-auto">
+            <table id="draftpostTable" class="w-full caption-bottom text-sm">
+                <thead class="[&amp;_tr]:border-b">
+                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Job Title</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Department</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Location</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Salary</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Applications</th>
+                            <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Views</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Status</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Visibility</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Created</th>
+                        <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
+                            Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="[&amp;_tr:last-child]:border-0">
+                    {% for data in result %}
+                    {% if data.status == 'draft' %}
+                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div>
+                                <div class="font-medium"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}">{{ data.job_title }}</a></div>
+                                <div class="text-sm text-gray-500">Full-time</div>
+                            </div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            Engineering</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-map-pin w-3 h-3 text-gray-400"
+                                    data-lov-id="src/pages/Jobs.tsx:312:26" data-lov-name="MapPin"
+                                    data-component-path="src/pages/Jobs.tsx" data-component-line="312"
+                                    data-component-file="Jobs.tsx" data-component-name="MapPin"
+                                    data-component-content="%7B%22className%22%3A%22w-3%20h-3%20text-gray-400%22%7D">
+                                    <path
+                                        d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                                    </path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg><span class="text-sm">Remote</span></div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">$120k - $160k</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                            <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-users w-3 h-3 text-gray-400"
+                                    data-lov-id="src/pages/Jobs.tsx:319:26" data-lov-name="Users"
+                                    data-component-path="src/pages/Jobs.tsx" data-component-line="319"
+                                    data-component-file="Jobs.tsx" data-component-name="Users"
+                                    data-component-content="%7B%22className%22%3A%22w-3%20h-3%20text-gray-400%22%7D">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg><a class="text-blue-600" href="{{ url_for('job_applicants', job_id=data.id) }}"><span>{{ data.applicant_count }}</span></a></adiv>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-start">{{ data.job_opening_views }}</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-green-100 text-green-800">
+                                {{ data.job_opening_status }}</div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-red-100 text-red-800">
+                                {{ data.status | capitalize }}</div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="text-sm">{{ data.created_at.split('T')[0] }}
+                            </div>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                            <div class="flex items-center gap-2">
+                                <a href="#" onclick="openModal('{{ data.id }}')" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-eye w-4 h-4"
+                                        data-lov-id="src/pages/Jobs.tsx:341:28" data-lov-name="Eye"
+                                        data-component-path="src/pages/Jobs.tsx" data-component-line="341"
+                                        data-component-file="Jobs.tsx" data-component-name="Eye"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path
+                                            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                                        </path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg></a>
+                                    <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-square-pen w-4 h-4"
+                                        data-lov-id="src/pages/Jobs.tsx:344:28" data-lov-name="Edit"
+                                        data-component-path="src/pages/Jobs.tsx" data-component-line="344"
+                                        data-component-file="Jobs.tsx" data-component-name="Edit"
+                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                        <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path
+                                            d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z">
+                                        </path>
+                                    </svg></a>
+                                    <a href="#" onclick="openModal('{{ data.id }}')" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-trash-2 w-4 h-4">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                                    <path d="M10 11v6"></path>
+                                    <path d="M14 11v6"></path>
+                                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                                    </svg>
+                                </a>
+                                <!-- Tailwind Modal for delete button -->
                                         <div id="deleteModal_{{ data.id }}" class="fixed inset-0 z-10 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
                                             <div class="fixed inset-0 bg-gray-500/75 dark:bg-gray-900/75 transition-opacity" aria-hidden="true"></div>
                                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -236,16 +499,19 @@ table.dataTable thead th, table.dataTable tfoot th {
                                                 </div>
                                             </div>
                                         </div>
-                                </td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
         </div>
     </div>
+</div>
+
 </div>
 </div>
 </div>

@@ -5,22 +5,22 @@
 {% block content %}
 <div class="py-6 px-4 sm:px-6 lg:px-8">
     <div class="min-h-screen py-0">
-        <div class="containerr mxauto px-4 sm:px-6 lg:px-0 max-w-3xl">
+        <div class="containerr mx-auto px-4 sm:px-6 lg:px-0 max-w-xl">
 
     
         <div class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Register company</h1>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Complete Your Profile</h1>
         </div>
         <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
         <form method="post" action="{{ url_for('company_register') }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
 
-    <div class="sm:grid sm:grid-cols-1 sm:items-start sm:gap-4 sm:py-6">
-    <label for="company_logo" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">
+    <div class="sm:grid sm:grid-cols-1 sm:items-start sm:gap-4 sm:pb-6">
+    <label for="company_logo" class="block text-md font-semibold text-gray-900 dark:text-gray-300">
         Company Logo:
     </label>
     <div class="mt-1 sm:col-span-2 sm:mt-0">
-        <div id="upload-container" class="flex max-w-2xl justify-center rounded-lg border border-dashed border-gray-900/25 dark:border-gray-700 px-6 py-2">
+        <div id="upload-container" class="flex max-w-2xl justify-center rounded-lg border bg-gray-50 border-dashed border-gray-900/25 dark:border-gray-700 px-6 py-2">
             <div class="text-center">
                 <svg id="upload-icon" class="mx-auto size-12 text-gray-300 dark:text-gray-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A.75.75 0 0 1 3 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
@@ -49,18 +49,18 @@
 </div>
 
             <div class="mb-6">
-                <label for="name" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">Company Name:</label>
+                <label for="name" class="block text-md font-semibold text-gray-900 dark:text-gray-300">Company Name:</label>
                 <div class="mt-2">
-                    {{ form.name(class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder="Google", required=True) }}
+                    {{ form.name(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600 font-medium", placeholder="i.e. Google", required=True) }}
                 </div>
                 <small class="text-red-500">{{ form.name.errors[0] }}</small>
             </div>
 
             <div class="mb-6">
-                <label for="company_subdomain" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">Company Subdomain:</label>
+                <label for="company_subdomain" class="block text-md font-semibold text-gray-900 dark:text-gray-300">Company Subdomain:</label>
                 <div class="mt-2">
-                    <div class="flex items-center rounded-md bg-white dark:bg-gray-700 px-3 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                        <input type="text" name="company_subdomain" id="company_subdomain" class="block min-w-0 grow py-1.5 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 text-gray-100 placeholder-gray-400 focus:outline-none sm:text-sm" placeholder="example" required>
+                    <div class="flex items-center rounded-md bg-white dark:bg-gray-700 px-3 py-1 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                        <input type="text" name="company_subdomain" id="company_subdomain" class="lowercase font-medium block min-w-0 grow py-2 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 placeholder-gray-400 focus:outline-none sm:text-sm" placeholder="your-company-name" required>
                         <span class="shrink-0 select-none text-base text-gray-500 dark:text-gray-400 sm:text-sm">.hiregen.com</span>
                     </div>
                 </div>
@@ -68,32 +68,39 @@
             </div>
 
             <div class="mb-6">
-                <label for="website_url" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">Website URL:</label>
+                <label for="website_url" class="block text-md font-semibold text-gray-900 dark:text-gray-300">Website URL:</label>
                 <div class="mt-2 flex">
-                    <div class="flex shrink-0 items-center rounded-l-md bg-white dark:bg-gray-700 px-3 text-base text-gray-500 dark:text-gray-400 sm:text-sm">https://</div>
-                    {{ form.website_url(class="-ml-px block w-full grow rounded-r-md bg-white dark:bg-gray-700 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm", placeholder="google.com", required=True) }}
+
+                    <div class="w-full flex items-center rounded-md bg-white dark:bg-gray-700 px-3 py-1 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+                        <span class="shrink-0 select-none text-base text-gray-500 dark:text-gray-400 sm:text-sm">https://</span>
+                        {{ form.website_url(class="lowercase font-medium block min-w-0 grow py-2 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 placeholder-gray-400 focus:outline-none sm:text-sm", placeholder="hiregen.com", required=True) }}
+                        
+                    </div>
+
+
+                    
                 </div>
                 <small class="text-red-500">{{ form.website_url.errors[0] }}</small>
             </div>
 
             <div class="mb-6">
-                <label for="location" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">Location:</label>
+                <label for="location" class="block text-md font-semibold text-gray-900 dark:text-gray-300">Location:</label>
                 <div class="mt-2">
-                    {{ form.location(class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder="New Delhi, India", required=True) }}
+                    {{ form.location(class="font-medium mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 placeholder:text-sm focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", placeholder="California, USA", required=True) }}
                 </div>
                 <small class="text-red-500">{{ form.location.errors[0] }}</small>
             </div>
 
             <div class="mb-6">
-                <label for="description" class="block text-sm font-semibold text-gray-900 dark:text-gray-300">Description:</label>
+                <label for="description" class="block text-md font-semibold text-gray-900 dark:text-gray-300">About Company:</label>
                 <div class="mt-2">
-                    {{ form.description(class="block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 h-32 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder="Write in brief", required=True) }}
+                    {{ form.description(class="font-medium block w-full rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-gray-900 h-32 dark:text-gray-100 border border-gray-300 dark:border-gray-600 placeholder-gray-400 dark:placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm", placeholder="Write in brief", required=True) }}
                 </div>
                 <small class="text-red-500">{{ form.description.errors[0] }}</small>
             </div>
 
             <div class="flex justify-center mt-6">
-                {{ form.submit(class="rounded-md bg-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500") }}
+                {{ form.submit(class="w-full inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white") }}
             </div>
         </form>
     </div>

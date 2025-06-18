@@ -6,152 +6,445 @@
 
 <!-- Alerts -->
 <div class="bg-yellow-50 dark:bg-yellow-900 border-l-4 border-yellow-400 dark:border-yellow-700 p-4 my-4">
-  <div class="flex">
-    <div class="flex-shrink-0">
-      <svg class="h-5 w-5 text-yellow-400 dark:text-yellow-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.59 12.59a1.5 1.5 0 102.12-2.12M12 11.25V7.5m6.5 4.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 10m0-5h4v4m-1.5-1.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 3.5" />
-      </svg>
+    <div class="flex">
+        <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-yellow-400 dark:text-yellow-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M10.59 12.59a1.5 1.5 0 102.12-2.12M12 11.25V7.5m6.5 4.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 10m0-5h4v4m-1.5-1.5l-.21-.21a1.5 1.5 0 10-2.12-2.12L16 3.5" />
+            </svg>
+        </div>
+        <div class="ml-3">
+            <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                Register your company to start posting jobs
+                <a href="{{ url_for('company_register') }}"
+                    class="font-medium text-yellow-700 dark:text-yellow-300 hover:underline">here</a>.
+            </p>
+        </div>
     </div>
-    <div class="ml-3">
-      <p class="text-sm text-yellow-700 dark:text-yellow-300">
-        Register your company to start posting jobs
-        <a href="{{ url_for('company_register') }}" class="font-medium text-yellow-700 dark:text-yellow-300 hover:underline">here</a>.
-      </p>
-    </div>
-  </div>
 </div>
 {% endif %}
 
 <div class="py-6 px-4 sm:px-6 lg:px-8">
-  <div class="min-h-screen py-0">
-    <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
-    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-  <!-- Metric Cards -->
-   <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-6">
-                <div class="flex p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow items-center">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-purple-50 dark:bg-purple-800 mr-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase h-6 w-6 text-orange-600" viewBox="0 0 16 16">
-  <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5"/>
-</svg>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-bold text-slate-900 dark:text-white/90">{{ total_jobs }}</span>
-                        <span class="block tracking-tight text-sm font-medium text-slate-600">Jobs</span>
-                    </div>
-                </div>
-                <div class="flex p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow items-center">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-100 dark:bg-slae-800 mr-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-text h-6 w-6 text-indigo-600" viewBox="0 0 16 16">
-  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
-  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-</svg>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-bold text-slate-900 dark:text-white/90">{{ in_progress_jobs }}</span>
-                        <span class="block tracking-tight text-sm font-medium text-slate-600">Active Jobs</span>
-                    </div>
-                </div>
-                <div class="flex p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow items-center">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-100 dark:bg-slae-800 mr-6">
-                       <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 text-green-600">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              </svg>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-bold text-slate-900 dark:text-white/90">{{ applicants_count }}</span>
-                        <span class="block tracking-tight text-sm font-medium text-slate-600">Applicants</span>
-                    </div>
-                </div>
-                <div class="flex p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow items-center">
-                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-100 dark:bg-slae-800 mr-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye h-6 w-6 text-green-600" viewBox="0 0 16 16">
-  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-</svg>
-                    </div>
-                    <div>
-                        <span class="text-2xl font-bold text-slate-900 dark:text-white/90">{{ total_views or 0 }}</span>
-                        <span class="block tracking-tight text-sm font-medium text-slate-600">Total Views</span>
+    <div class="min-h-screen py-0">
+        <div class="containerr mxauto px-4 sm:px-6 lg:px-0">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+            <!-- Metric Cards -->
+            <section class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 my-6">
+                <div
+                    class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-200">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-blue-50 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-users w-6 h-6 text-blue-600"
+                                        data-lov-id="src/pages/Index.tsx:27:20" data-lov-name="Users"
+                                        data-component-path="src/pages/Index.tsx" data-component-line="27"
+                                        data-component-file="Index.tsx" data-component-name="Users"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg></div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Candidates</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ applicants_count }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 text-green-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-trending-up w-4 h-4"
+                                    data-lov-id="src/components/MetricsCard.tsx:31:14" data-lov-name="TrendingUp"
+                                    data-component-path="src/components/MetricsCard.tsx" data-component-line="31"
+                                    data-component-file="MetricsCard.tsx" data-component-name="TrendingUp"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg><span class="text-sm font-medium">+12%</span></div>
+                        </div>
                     </div>
                 </div>
-</section>
 
-    <!-- Charts Section -->
-    <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <div class="p-5 dark:border-gray-800 dark:bg-white/[0.03] rounded-lg border text-card-foreground shadow-sm bg-white/60 backdrop-blur-sm border-slate-200/60 animate-fade-in h-64">
-        <h3 class="tracking-tight text-lg font-medium">Job Status</h3>
-        <canvas id="jobsChart" class="mt-6"></canvas>
-      </div>
-      <div class="p-5 dark:border-gray-800 dark:bg-white/[0.03] rounded-lg border text-card-foreground shadow-sm bg-white/60 backdrop-blur-sm border-slate-200/60 animate-fade-in h-64">
-        <h3 class="tracking-tight text-lg font-medium">Hiring Pipeline</h3>
-        <canvas id="applicantsChart" class="mt-6"></canvas>
-      </div>
-    </div>
 
-    <!-- Latest Jobs Table -->
-     {% if latest_jobs %}
-    <div class="mt-6 rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
-      <h3 class="tracking-tight text-lg font-medium">Latest Jobs</h3>
-    
-      <div class="py-4 overflow-x-auto"> <!-- Added overflow-x-auto here -->
-        <div class="min-w-full inline-block align-middle">
-          <div class="overflow-hidden rounded-lg">
-            <table class="min-w-full borderseparate border-spacing-0">
-              <thead class="bg-gray-50 dark:bg-gray-900">
-                <tr>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Position</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Job Status</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Visibility</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Views</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Created Date</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Updated Date</th>
-                  <th class="sticky top-0 z-10 border-b border-gray-300 bg-white/75 py-3.5 px-2 text-left text-sm font-semibold text-gray-900 backdrop-blur-sm backdrop-filter">Applicants</th>
-                </tr>
-              </thead>
-              <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                {% for data in latest_jobs %}
-                  {% if data.status == 'published' %}
-                  <tr>
-                    <td class="px-6 py-2 whitespace-nowrap">
-                      <a href="{{ url_for('admin_edit_post', job_id=data.id) }}" class="text-purple-500 dark:text-blue-400 hover:text-purple-900 dark:hover:text-blue-200">{{ data.job_title }}</a>
-                    </td>
-                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.job_opening_status }}</td>
-                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.status | capitalize }}</td>
-                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300 text-center">{{ data.job_opening_views }}</td>
-                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.created_at.split('T')[0] }}</td>
-                    <td class="px-6 py-2 whitespace-nowrap text-gray-700 dark:text-gray-300">{{ data.updated_at.split('T')[0] }}</td>
-                    <td class="px-6 py-2 whitespace-nowrap text-center">
-                      <a href="{{ url_for('job_applicants', job_id=data.id) }}" class="text-purple-500 dark:text-blue-400 hover:text-purple-900 dark:hover:text-blue-200">{{ data.applicant_count }}</a>
-                    </td>
-                  </tr>
-                  {% endif %}
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+                <div
+                    class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-200">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-blue-50 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-briefcase w-6 h-6 text-green-600"
+                                        data-lov-id="src/pages/Index.tsx:34:20" data-lov-name="Briefcase"
+                                        data-component-path="src/pages/Index.tsx" data-component-line="34"
+                                        data-component-file="Index.tsx" data-component-name="Briefcase"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                        <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+                                    </svg></div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Total Jobs</p>
+                                    <p class="text-2xl font-bold text-gray-900">{{ total_jobs }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 text-green-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-trending-up w-4 h-4"
+                                    data-lov-id="src/components/MetricsCard.tsx:31:14" data-lov-name="TrendingUp"
+                                    data-component-path="src/components/MetricsCard.tsx" data-component-line="31"
+                                    data-component-file="MetricsCard.tsx" data-component-name="TrendingUp"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg><span class="text-sm font-medium">+3</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-200">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-blue-50 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-clock w-6 h-6 text-purple-600"
+                                        data-lov-id="src/pages/Index.tsx:41:20" data-lov-name="Clock"
+                                        data-component-path="src/pages/Index.tsx" data-component-line="41"
+                                        data-component-file="Index.tsx" data-component-name="Clock"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg></div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Interviews Scheduled</p>
+                                    <p class="text-2xl font-bold text-gray-900">34</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 text-green-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-trending-up w-4 h-4"
+                                    data-lov-id="src/components/MetricsCard.tsx:31:14" data-lov-name="TrendingUp"
+                                    data-component-path="src/components/MetricsCard.tsx" data-component-line="31"
+                                    data-component-file="MetricsCard.tsx" data-component-name="TrendingUp"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg><span class="text-sm font-medium">+8%</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-200">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="p-3 bg-blue-50 rounded-lg"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-trending-up w-6 h-6 text-orange-600"
+                                        data-lov-id="src/pages/Index.tsx:48:20" data-lov-name="TrendingUp"
+                                        data-component-path="src/pages/Index.tsx" data-component-line="48"
+                                        data-component-file="Index.tsx" data-component-name="TrendingUp"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                        <polyline points="16 7 22 7 22 13"></polyline>
+                                    </svg></div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Hire Rate</p>
+                                    <p class="text-2xl font-bold text-gray-900">24%</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 text-green-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-trending-up w-4 h-4"
+                                    data-lov-id="src/components/MetricsCard.tsx:31:14" data-lov-name="TrendingUp"
+                                    data-component-path="src/components/MetricsCard.tsx" data-component-line="31"
+                                    data-component-file="MetricsCard.tsx" data-component-name="TrendingUp"
+                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg><span class="text-sm font-medium">+2%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- Charts Section -->
+            <div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 mb-6">
+                <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+                    <div class="space-y-1.5 p-6 flex flex-row items-center justify-between">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Job Status</h3>
+                    </div>
+                    <div class="h-80">
+                    <canvas id="jobsChart"></canvas>
+                    </div>
+                    
+                </div>
+
+                <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+                    <div class="flex flex-col space-y-1.5 p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Candidate Pipeline</h3>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <div class="space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Applied</span><span
+                                        class="text-sm font-semibold text-gray-900">847</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-blue-500 transition-all duration-300"
+                                            style="width: 67.76%;">
+                                        </div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">67.8%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Screening</span><span
+                                        class="text-sm font-semibold text-gray-900">234</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-yellow-500 transition-all duration-300"
+                                            style="width: 18.72%;"></div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">18.7%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Interview</span><span
+                                        class="text-sm font-semibold text-gray-900">89</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-orange-500 transition-all duration-300"
+                                            style="width: 7.12%;"></div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">7.1%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Assessment</span><span
+                                        class="text-sm font-semibold text-gray-900">45</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-purple-500 transition-all duration-300"
+                                            style="width: 3.6%;">
+                                        </div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">3.6%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Final</span><span
+                                        class="text-sm font-semibold text-gray-900">23</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-green-500 transition-all duration-300"
+                                            style="width: 1.84%;">
+                                        </div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">1.8%</span>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center"><span
+                                        class="font-medium text-gray-700">Hired</span><span
+                                        class="text-sm font-semibold text-gray-900">12</span></div>
+                                <div class="relative">
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="h-2 rounded-full bg-emerald-600 transition-all duration-300"
+                                            style="width: 0.96%;"></div>
+                                    </div><span class="absolute right-0 top-3 text-xs text-gray-500">1.0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div
+                    class="p-5 dark:border-gray-800 dark:bg-white/[0.03] rounded-lg border text-card-foreground shadow-sm bg-white/60 backdrop-blur-sm border-slate-200/60 animate-fade-in h-64">
+                    <h3 class="tracking-tight text-lg font-medium">Hiring Pipeline</h3>
+                    <canvas id="applicantsChart" class="mt-6"></canvas>
+                </div> -->
+            </div>
+
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Recent Job Postings</h3><a href="user/job-openings"
+                            class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</a>
+                    </div>
+                    {% if latest_jobs %}
+                    <div class="space-y-4">
+                        {% for data in latest_jobs %}
+                        {% if data.status == 'published' %}
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-gray-900">{{ data.job_title }}</h4>
+                                    <p class="text-sm text-gray-600 mt-1">Engineering • {{
+                                            data.created_at.split('T')[0] }}</p>
+                                    <div class="flex items-center mt-3 space-x-4"><span class="text-sm text-gray-600"><a
+                                                class="text-blue-600"
+                                                href="{{ url_for('job_applicants', job_id=data.id) }}">{{
+                                                data.applicant_count }} applications</a></span>
+                                        <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="lucide lucide-brain h-4 w-4 text-purple-500 mr-1">
+                                                <path
+                                                    d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                                                </path>
+                                                <path
+                                                    d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                                                </path>
+                                                <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                                                <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                                                <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                                                <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                                                <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                                                <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                                                <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                                            </svg><span class="text-sm font-medium text-purple-600">92% AI Match</span>
+                                        </div>
+                                    </div>
+                                </div><span
+                                    class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">{{ data.job_opening_status }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Top AI-Matched Candidates</h3><button
+                            class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">SJ</span></div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">Sarah Johnson</h4>
+                                        <p class="text-sm text-gray-600">Frontend Developer • 5 years</p>
+                                        <div class="flex flex-wrap gap-1 mt-2"><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">React</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">TypeScript</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Node.js</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-star h-4 w-4 text-yellow-500 mr-1">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg><span class="font-bold text-gray-900">95</span></div><span
+                                        class="px-2 py-1 rounded-full text-xs font-medium mt-2 inline-block bg-blue-100 text-blue-800">New</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">MC</span></div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">Michael Chen</h4>
+                                        <p class="text-sm text-gray-600">Product Manager • 7 years</p>
+                                        <div class="flex flex-wrap gap-1 mt-2"><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Strategy</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Analytics</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Agile</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-star h-4 w-4 text-yellow-500 mr-1">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg><span class="font-bold text-gray-900">92</span></div><span
+                                        class="px-2 py-1 rounded-full text-xs font-medium mt-2 inline-block bg-gray-100 text-gray-800">Reviewed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-3">
+                                    <div
+                                        class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-medium text-sm">ER</span></div>
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">Emily Rodriguez</h4>
+                                        <p class="text-sm text-gray-600">UX Designer • 4 years</p>
+                                        <div class="flex flex-wrap gap-1 mt-2"><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Figma</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Research</span><span
+                                                class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Prototyping</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-star h-4 w-4 text-yellow-500 mr-1">
+                                            <polygon
+                                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                            </polygon>
+                                        </svg><span class="font-bold text-gray-900">89</span></div><span
+                                        class="px-2 py-1 rounded-full text-xs font-medium mt-2 inline-block bg-purple-100 text-purple-800">Interview</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    {% endif %}
-  </div>
-</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const jobsCtx = document.getElementById('jobsChart').getContext('2d');
-new Chart(jobsCtx, {
-    type: 'bar',
-    data: {
-        labels: ['Total Jobs', 'Active Jobs', 'Applicants'],
-        datasets: [{
-            data: [{{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }}],
-            backgroundColor: ['#60A5FA', '#34D399', '#FCD34D'], // Softer colors: Blue, Green, Yellow
-            borderRadius: 6, // Slightly rounded bar edges
-            barPercentage: 0.5, // Reduce bar width (50% of the category width)
-            categoryPercentage: 0.8, // Increase spacing between bars
+    const jobsCtx = document.getElementById('jobsChart').getContext('2d');
+    new Chart(jobsCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Total Jobs', 'Active Jobs', 'Applicants'],
+            datasets: [{
+                data: [{{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }}],
+        backgroundColor: ['#60A5FA', '#34D399', '#FCD34D'], // Softer colors: Blue, Green, Yellow
+        borderRadius: 6, // Slightly rounded bar edges
+        barPercentage: 0.5, // Reduce bar width (50% of the category width)
+        categoryPercentage: 0.8, // Increase spacing between bars
         }]
     },
-    options: {
+        options: {
         plugins: {
             legend: {
                 display: false, // No legend needed
@@ -183,28 +476,28 @@ new Chart(jobsCtx, {
                 },
             },
         },
-        layout: {
-            padding: 16, // Space around the chart
+    layout: {
+        padding: 16, // Space around the chart
         },
-        responsive: true,
+    responsive: true,
         maintainAspectRatio: false, // Ensures charts fit within cards
     },
 });
 
-const applicantsCtx = document.getElementById('applicantsChart').getContext('2d');
-new Chart(applicantsCtx, {
-    type: 'bar',
-    data: {
-        labels: [{% for status in statuses %}'{{ status.name }}',{% endfor %}],
+    const applicantsCtx = document.getElementById('applicantsChart').getContext('2d');
+    new Chart(applicantsCtx, {
+        type: 'bar',
+        data: {
+            labels: [{% for status in statuses %}'{{ status.name }}',{% endfor %}],
         datasets: [{
-            data: [{% for status in statuses %}{{ status.applicant_count }},{% endfor %}],
-            backgroundColor: ['#60A5FA', '#34D399', '#FCD34D', '#FB923C', '#F87171', '#A78BFA'], // Updated colors
-            borderRadius: 6, // Slightly rounded bar edges
-            barPercentage: 0.5, // Reduce bar width
-            categoryPercentage: 0.8, // Increase spacing between bars
+            data: [{% for status in statuses %}{{ status.applicant_count }}, {% endfor %}],
+        backgroundColor: ['#60A5FA', '#34D399', '#FCD34D', '#FB923C', '#F87171', '#A78BFA'], // Updated colors
+        borderRadius: 6, // Slightly rounded bar edges
+        barPercentage: 0.5, // Reduce bar width
+        categoryPercentage: 0.8, // Increase spacing between bars
         }]
     },
-    options: {
+        options: {
         plugins: {
             legend: {
                 display: false, // No legend needed
@@ -232,14 +525,14 @@ new Chart(applicantsCtx, {
                     color: '#6B7280', // Tailwind gray-500 for text
                     stepSize: 1, // Increment by 1
                     beginAtZero: true,
-                    max: Math.ceil(Math.max({% for status in statuses %}{{ status.applicant_count }},{% endfor %})) + 1, // Dynamically set max value
+                    max: Math.ceil(Math.max({% for status in statuses %}{{ status.applicant_count }}, {% endfor %})) + 1, // Dynamically set max value
                 },
             },
         },
-        layout: {
-            padding: 16, // Space around the chart
+    layout: {
+        padding: 16, // Space around the chart
         },
-        responsive: true,
+    responsive: true,
         maintainAspectRatio: false, // Ensures charts fit within cards
     },
 });

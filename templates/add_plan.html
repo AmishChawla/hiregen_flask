@@ -71,12 +71,12 @@
         <div class="grid grid-cols-1 gap-4">
             <div>
                 <label for="plan_name" class="block text-sm font-medium text-gray-900">Plan Name</label>
-                <input type="text" name="plan_name" id="plan_name" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter plan name">
+                <input type="text" name="plan_name" id="plan_name" class="w-full rounded-md bg-white py-2 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter plan name">
             </div>
 
             <div>
                 <label for="duration" class="block text-sm font-medium text-gray-900">Duration</label>
-                <select name="duration" id="duration" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600">
+                <select name="duration" id="duration" class="w-full rounded-md bg-white py-2 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600">
                     {% for option in ['monthly'] %}
                     <option value="{{ option }}">{{ option.capitalize() }}</option>
                     {% endfor %}
@@ -87,8 +87,8 @@
                 <label for="price" class="block text-sm font-medium text-gray-900">Price</label>
                 <div class="flex items-center rounded-md bg-white pl-3 outline outline-1 outline-gray-300">
                     <div class="shrink-0 select-none text-gray-500">$</div>
-                    <input type="text" name="price" id="price" class="grow py-1.5 pl-1 pr-3 text-gray-900 placeholder:text-gray-400 focus:outline-none" placeholder="0.00">
-                    <select id="currency" name="currency" class="ml-2 py-1.5 pl-3 pr-7 text-gray-500 bg-white border rounded-md">
+                    <input type="text" name="price" id="price" class="grow py-2 pl-1 pr-3 text-gray-900 placeholder:text-gray-400 focus:outline-none" placeholder="0.00">
+                    <select id="currency" name="currency" class="ml-2 py-2 pl-3 pr-7 text-gray-500 bg-white border rounded-md">
                         {% for currency in ['USD'] %}
                         <option>{{ currency }}</option>
                         {% endfor %}
@@ -98,7 +98,7 @@
 
             <div>
                 <label for="job_postings" class="block text-sm font-medium text-gray-900">Job Postings</label>
-                <input type="number" name="job_postings" id="job_postings" class="w-full rounded-md bg-white py-1.5 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter number of job postings">
+                <input type="number" name="job_postings" id="job_postings" class="w-full rounded-md bg-white py-2 px-3 outline outline-1 outline-gray-300 focus:outline-indigo-600" placeholder="Enter number of job postings">
             </div>
         </div>
 

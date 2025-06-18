@@ -33,15 +33,15 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+#app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
 app.config['SERVER_NAME'] = 'hiregen.com'
-#TODO CHANGE TO '.hiregen.com' before deploying
-# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+TODO CHANGE TO '.hiregen.com' before deploying
+#app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+#app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -4989,6 +4989,17 @@ def jobseeker_unsave_job(job_id):
 @app.route('/jobseeker/jobseeker-settings', methods=['GET', 'POST'])
 def jobseeker_settings():
     return render_template('jobseeker/jobseeker_settings.html')
+
+
+############################ EMPLOYER SETTINGS ##########################################################
+@app.route('/user/settings', methods=['GET', 'POST'])
+def employer_settings():
+   return render_template('employer_settings.html')
+
+############################ EMPLOYER ANALYTICS ##########################################################
+@app.route('/user/analytics', methods=['GET', 'POST'])
+def employer_analytics():
+   return render_template('employer_analytics.html')
 
 
 ############################################# AI INTERVIEW MODULE ################################################################

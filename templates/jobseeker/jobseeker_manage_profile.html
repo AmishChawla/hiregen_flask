@@ -226,11 +226,11 @@ Accomplishments</h2>
         {{ name_form.hidden_tag() }}
         <div>
           <label for="firstname" class="block text-sm/6 font-medium text-gray-900 mb-2">First Name</label>
-          {{name_form.firstname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+          {{name_form.firstname(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-4">
           <label for="lastname" class="block text-sm/6 font-medium text-gray-900 mb-2">Last Name</label>
-          {{name_form.lastname(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+          {{name_form.lastname(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-5 sm:mt-6 text-right">          
           <button type="button" onclick="closeModal('updateNameModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
@@ -250,7 +250,7 @@ Accomplishments</h2>
         {{ email_form.hidden_tag() }}
         <div>
           <label for="email" class="block text-sm/6 font-medium text-gray-900 mb-2">Email</label>
-        {{email_form.email(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
+        {{email_form.email(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600")}}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
           <button type="button" onclick="closeModal('updateEmailModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
@@ -270,7 +270,7 @@ Accomplishments</h2>
         {{ phone_form.hidden_tag() }}
         <div>
           <label for="phone_number" class="block text-sm/6 font-medium text-gray-900 mb-2">Mobile</label>
-          {{ phone_form.phone_number(class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
+          {{ phone_form.phone_number(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-indigo-600") }}
         </div>
         <div class="mt-5 sm:mt-6 text-right">
           <button type="button" onclick="closeModal('updatePhoneModal')" class="flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-theme-xs hover:bg-slate-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto me-2">Cancel</button>
@@ -302,7 +302,7 @@ Accomplishments</h2>
                  alt="Profile Picture">
             {{ profile_picture_form.profile_picture(class="hidden", id="fileInput", onchange="previewFile()") }}
             <button type="button" onclick="document.getElementById('fileInput').click();"
-                    class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    class="rounded-md bg-white px-2.5 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
               Change
             </button>
           </div>

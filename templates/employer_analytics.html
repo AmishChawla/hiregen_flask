@@ -1,0 +1,1119 @@
+{% extends "base.html" %}
+{%block title%}Analytics{%endblock%}
+{% block content %}
+
+<!-- Settings -->
+ <style>
+    /* Toggle A */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #fff;
+}
+
+/* Toggle B */
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #fff;
+}
+input:checked ~ .block {
+  background-color: #2563eb;
+}
+</style>
+<main class="flex-grow dark:bg-gray-900 p-6">
+ <div class="mb-6">
+    <h1 class="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+    <div class="text-gray-600">Comprehensive hiring metrics and insights</div>
+</div>    
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Total Hires</p>
+                    <p class="text-3xl font-bold text-gray-900">131</p>
+                    <div class="flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-up w-4 h-4 text-green-500 mr-1"
+                            data-lov-id="src/pages/Analytics.tsx:108:20" data-lov-name="TrendingUp"
+                            data-component-path="src/pages/Analytics.tsx" data-component-line="108"
+                            data-component-file="Analytics.tsx" data-component-name="TrendingUp"
+                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-green-500%20mr-1%22%7D">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                            <polyline points="16 7 22 7 22 13"></polyline>
+                        </svg><span class="text-sm text-green-600">+18% from last period</span></div>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-users w-6 h-6 text-blue-600" data-lov-id="src/pages/Analytics.tsx:113:18"
+                        data-lov-name="Users" data-component-path="src/pages/Analytics.tsx" data-component-line="113"
+                        data-component-file="Analytics.tsx" data-component-name="Users"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Open Positions</p>
+                    <p class="text-3xl font-bold text-gray-900">48</p>
+                    <div class="flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-up w-4 h-4 text-green-500 mr-1"
+                            data-lov-id="src/pages/Analytics.tsx:126:20" data-lov-name="TrendingUp"
+                            data-component-path="src/pages/Analytics.tsx" data-component-line="126"
+                            data-component-file="Analytics.tsx" data-component-name="TrendingUp"
+                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-green-500%20mr-1%22%7D">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                            <polyline points="16 7 22 7 22 13"></polyline>
+                        </svg><span class="text-sm text-green-600">+5 new this week</span></div>
+                </div>
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-briefcase w-6 h-6 text-green-600"
+                        data-lov-id="src/pages/Analytics.tsx:131:18" data-lov-name="Briefcase"
+                        data-component-path="src/pages/Analytics.tsx" data-component-line="131"
+                        data-component-file="Analytics.tsx" data-component-name="Briefcase"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                        <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Avg. Time to Hire</p>
+                    <p class="text-3xl font-bold text-gray-900">27d</p>
+                    <div class="flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-down w-4 h-4 text-green-500 mr-1"
+                            data-lov-id="src/pages/Analytics.tsx:144:20" data-lov-name="TrendingDown"
+                            data-component-path="src/pages/Analytics.tsx" data-component-line="144"
+                            data-component-file="Analytics.tsx" data-component-name="TrendingDown"
+                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-green-500%20mr-1%22%7D">
+                            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
+                            <polyline points="16 17 22 17 22 11"></polyline>
+                        </svg><span class="text-sm text-green-600">-3 days improved</span></div>
+                </div>
+                <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-clock w-6 h-6 text-yellow-600" data-lov-id="src/pages/Analytics.tsx:149:18"
+                        data-lov-name="Clock" data-component-path="src/pages/Analytics.tsx" data-component-line="149"
+                        data-component-file="Analytics.tsx" data-component-name="Clock"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-600%22%7D">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Cost per Hire</p>
+                    <p class="text-3xl font-bold text-gray-900">$3,200</p>
+                    <div class="flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-trending-down w-4 h-4 text-green-500 mr-1"
+                            data-lov-id="src/pages/Analytics.tsx:162:20" data-lov-name="TrendingDown"
+                            data-component-path="src/pages/Analytics.tsx" data-component-line="162"
+                            data-component-file="Analytics.tsx" data-component-name="TrendingDown"
+                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-green-500%20mr-1%22%7D">
+                            <polyline points="22 17 13.5 8.5 8.5 13.5 2 7"></polyline>
+                            <polyline points="16 17 22 17 22 11"></polyline>
+                        </svg><span data-lov-id="src/pages/Analytics.tsx:163:20" data-lov-name="span"
+                            data-component-path="src/pages/Analytics.tsx" data-component-line="163"
+                            data-component-file="Analytics.tsx" data-component-name="span"
+                            data-component-content="%7B%22text%22%3A%22-%24400%20reduced%22%2C%22className%22%3A%22text-sm%20text-green-600%22%7D"
+                            class="text-sm text-green-600">-$400 reduced</span></div>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-dollar-sign w-6 h-6 text-purple-600"
+                        data-lov-id="src/pages/Analytics.tsx:167:18" data-lov-name="DollarSign"
+                        data-component-path="src/pages/Analytics.tsx" data-component-line="167"
+                        data-component-file="Analytics.tsx" data-component-name="DollarSign"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                        <line x1="12" x2="12" y1="2" y2="22"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-activity w-5 h-5" data-lov-id="src/pages/Analytics.tsx:180:16"
+                    data-lov-name="Activity" data-component-path="src/pages/Analytics.tsx" data-component-line="180"
+                    data-component-file="Analytics.tsx" data-component-name="Activity"
+                    data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D">
+                    <path
+                        d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2">
+                    </path>
+                </svg>Hiring Funnel Analysis</h3>
+        </div>
+        <div class="p-6 pt-0">
+            <div class="h-70">
+                <div class="flex aspect-video justify-center text-xs [&amp;_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&amp;_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&amp;_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&amp;_.recharts-dot[stroke='#fff']]:stroke-transparent [&amp;_.recharts-layer]:outline-none [&amp;_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&amp;_.recharts-radial-bar-background-sector]:fill-muted [&amp;_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&amp;_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&amp;_.recharts-sector[stroke='#fff']]:stroke-transparent [&amp;_.recharts-sector]:outline-none [&amp;_.recharts-surface]:outline-none">
+                    <style>
+                        [data-chart=chart-r1] {
+                            --color-applications: #3b82f6;
+                            --color-interviews: #10b981;
+                            --color-offers: #f59e0b;
+                            --color-hires: #ef4444;
+                        }
+
+
+                        .dark [data-chart=chart-r1] {
+                            --color-applications: #3b82f6;
+                            --color-interviews: #10b981;
+                            --color-offers: #f59e0b;
+                            --color-hires: #ef4444;
+                        }
+                    </style>
+                    <div class="recharts-responsive-container" style="width: 100%; height: 100%; min-width: 0px;">
+                        <div class="recharts-responsive-container" style="width: 729px; height: 410px; min-width: 0px;">
+                            <div class="recharts-wrapper"
+                                style="position: relative; cursor: default; width: 729px; height: 410px;"><svg
+                                    class="recharts-surface" width="729" height="410" viewBox="0 0 729 410"
+                                    style="width: 100%; height: 100%;">
+                                    <title></title>
+                                    <desc></desc>
+                                    <defs>
+                                        <clipPath id="recharts1-clip">
+                                            <rect x="65" y="5" height="370" width="659"></rect>
+                                        </clipPath>
+                                    </defs>
+                                    <g class="recharts-cartesian-grid">
+                                        <g class="recharts-cartesian-grid-horizontal">
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="375" x2="724" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="282.5" x2="724" y2="282.5"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="190" x2="724" y2="190"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="97.5" x2="724" y2="97.5"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="5" x2="724" y2="5"></line>
+                                        </g>
+                                        <g class="recharts-cartesian-grid-vertical">
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="119.91666666666666" y1="5"
+                                                x2="119.91666666666666" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="229.74999999999997" y1="5"
+                                                x2="229.74999999999997" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="339.5833333333333" y1="5"
+                                                x2="339.5833333333333" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="449.4166666666667" y1="5"
+                                                x2="449.4166666666667" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="559.25" y1="5" x2="559.25" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="669.0833333333333" y1="5"
+                                                x2="669.0833333333333" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="5" x2="65" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="724" y1="5" x2="724" y2="375"></line>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis">
+                                        <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                            class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65"
+                                            y1="375" x2="724" y2="375"></line>
+                                        <g class="recharts-cartesian-axis-ticks">
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="119.91666666666666" y1="381" x2="119.91666666666666" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="119.91666666666666" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="119.91666666666666" dy="0.71em">Jan</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="229.74999999999997" y1="381" x2="229.74999999999997" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="229.74999999999997" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="229.74999999999997" dy="0.71em">Feb</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="339.5833333333333" y1="381" x2="339.5833333333333" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="339.5833333333333" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="339.5833333333333" dy="0.71em">Mar</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="449.4166666666667" y1="381" x2="449.4166666666667" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="449.4166666666667" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="449.4166666666667" dy="0.71em">Apr</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="559.25" y1="381" x2="559.25" y2="375"></line><text
+                                                    orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="559.25" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="559.25" dy="0.71em">May</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="669.0833333333333" y1="381" x2="669.0833333333333" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="669.0833333333333" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="669.0833333333333" dy="0.71em">Jun</tspan>
+                                                </text>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis">
+                                        <line orientation="left" width="60" height="370" x="5" y="5"
+                                            class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65"
+                                            y1="5" x2="65" y2="375"></line>
+                                        <g class="recharts-cartesian-axis-ticks">
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="375" x2="65" y2="375"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="375"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">0</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="282.5" x2="65" y2="282.5"></line><text
+                                                    orientation="left" width="60" height="370" stroke="none" x="57"
+                                                    y="282.5" class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">150</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="190" x2="65" y2="190"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="190"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">300</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="97.5" x2="65" y2="97.5"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="97.5"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">450</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="5" x2="65" y2="5"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="9"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">600</tspan>
+                                                </text>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-bar">
+                                        <g class="recharts-layer recharts-bar-rectangles">
+                                            <g class="recharts-layer">
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="75.98333333333333" y="116" width="18" height="259"
+                                                        radius="0" fill="var(--color-applications)"
+                                                        class="recharts-rectangle"
+                                                        d="M 75.98333333333333,116 h 18 v 259 h -18 Z"></path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="185.81666666666663" y="140.66666666666666" width="18"
+                                                        height="234.33333333333334" radius="0"
+                                                        fill="var(--color-applications)" class="recharts-rectangle"
+                                                        d="M 185.81666666666663,140.66666666666666 h 18 v 234.33333333333334 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="295.65" y="54.333333333333314" width="18"
+                                                        height="320.6666666666667" radius="0"
+                                                        fill="var(--color-applications)" class="recharts-rectangle"
+                                                        d="M 295.65,54.333333333333314 h 18 v 320.6666666666667 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="405.48333333333335" y="79" width="18" height="296"
+                                                        radius="0" fill="var(--color-applications)"
+                                                        class="recharts-rectangle"
+                                                        d="M 405.48333333333335,79 h 18 v 296 h -18 Z"></path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="515.3166666666666" y="35.83333333333337" width="18"
+                                                        height="339.16666666666663" radius="0"
+                                                        fill="var(--color-applications)" class="recharts-rectangle"
+                                                        d="M 515.3166666666666,35.83333333333337 h 18 v 339.16666666666663 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="625.15" y="5" width="18" height="370" radius="0"
+                                                        fill="var(--color-applications)" class="recharts-rectangle"
+                                                        d="M 625.15,5 h 18 v 370 h -18 Z"></path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="recharts-layer"></g>
+                                    </g>
+                                    <g class="recharts-layer recharts-bar">
+                                        <g class="recharts-layer recharts-bar-rectangles">
+                                            <g class="recharts-layer">
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="97.98333333333333" y="322.5833333333333" width="18"
+                                                        height="52.416666666666686" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 97.98333333333333,322.5833333333333 h 18 v 52.416666666666686 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="207.81666666666666" y="318.26666666666665" width="18"
+                                                        height="56.73333333333335" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 207.81666666666666,318.26666666666665 h 18 v 56.73333333333335 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="317.65" y="307.1666666666667" width="18"
+                                                        height="67.83333333333331" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 317.65,307.1666666666667 h 18 v 67.83333333333331 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="427.48333333333335" y="314.56666666666666" width="18"
+                                                        height="60.43333333333334" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 427.48333333333335,314.56666666666666 h 18 v 60.43333333333334 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="537.3166666666666" y="297.9166666666667" width="18"
+                                                        height="77.08333333333331" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 537.3166666666666,297.9166666666667 h 18 v 77.08333333333331 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="647.15" y="288.6666666666667" width="18"
+                                                        height="86.33333333333331" radius="0"
+                                                        fill="var(--color-interviews)" class="recharts-rectangle"
+                                                        d="M 647.15,288.6666666666667 h 18 v 86.33333333333331 h -18 Z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="recharts-layer"></g>
+                                    </g>
+                                    <g class="recharts-layer recharts-bar">
+                                        <g class="recharts-layer recharts-bar-rectangles">
+                                            <g class="recharts-layer">
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="119.98333333333333" y="365.75" width="18" height="9.25"
+                                                        radius="0" fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 119.98333333333333,365.75 h 18 v 9.25 h -18 Z"></path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="229.81666666666666" y="362.6666666666667" width="18"
+                                                        height="12.333333333333314" radius="0"
+                                                        fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 229.81666666666666,362.6666666666667 h 18 v 12.333333333333314 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="339.65" y="359.5833333333333" width="18"
+                                                        height="15.416666666666686" radius="0"
+                                                        fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 339.65,359.5833333333333 h 18 v 15.416666666666686 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="449.48333333333335" y="361.43333333333334" width="18"
+                                                        height="13.566666666666663" radius="0"
+                                                        fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 449.48333333333335,361.43333333333334 h 18 v 13.566666666666663 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="559.3166666666666" y="356.5" width="18" height="18.5"
+                                                        radius="0" fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 559.3166666666666,356.5 h 18 v 18.5 h -18 Z"></path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="669.15" y="353.4166666666667" width="18"
+                                                        height="21.583333333333314" radius="0"
+                                                        fill="var(--color-offers)" class="recharts-rectangle"
+                                                        d="M 669.15,353.4166666666667 h 18 v 21.583333333333314 h -18 Z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="recharts-layer"></g>
+                                    </g>
+                                    <g class="recharts-layer recharts-bar">
+                                        <g class="recharts-layer recharts-bar-rectangles">
+                                            <g class="recharts-layer">
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="141.98333333333335" y="367.6" width="18"
+                                                        height="7.399999999999977" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 141.98333333333335,367.6 h 18 v 7.399999999999977 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="251.81666666666666" y="363.9" width="18"
+                                                        height="11.100000000000023" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 251.81666666666666,363.9 h 18 v 11.100000000000023 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="361.65" y="361.43333333333334" width="18"
+                                                        height="13.566666666666663" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 361.65,361.43333333333334 h 18 v 13.566666666666663 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="471.48333333333335" y="363.28333333333336" width="18"
+                                                        height="11.71666666666664" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 471.48333333333335,363.28333333333336 h 18 v 11.71666666666664 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="581.3166666666666" y="357.73333333333335" width="18"
+                                                        height="17.26666666666665" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 581.3166666666666,357.73333333333335 h 18 v 17.26666666666665 h -18 Z">
+                                                    </path>
+                                                </g>
+                                                <g class="recharts-layer recharts-bar-rectangle">
+                                                    <path x="691.15" y="355.26666666666665" width="18"
+                                                        height="19.73333333333335" radius="0" fill="var(--color-hires)"
+                                                        class="recharts-rectangle"
+                                                        d="M 691.15,355.26666666666665 h 18 v 19.73333333333335 h -18 Z">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                        <g class="recharts-layer"></g>
+                                    </g>
+                                </svg>
+                                <div tabindex="-1"
+                                    class="recharts-tooltip-wrapper recharts-tooltip-wrapper-right recharts-tooltip-wrapper-top"
+                                    style="visibility: hidden; pointer-events: none; position: absolute; top: 0px; left: 0px; transform: translate(349.583px, 205px);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-target w-5 h-5" data-lov-id="src/pages/Analytics.tsx:213:16"
+                    data-lov-name="Target" data-component-path="src/pages/Analytics.tsx" data-component-line="213"
+                    data-component-file="Analytics.tsx" data-component-name="Target"
+                    data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="6"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                </svg>Candidate Sources</h3>
+        </div>
+        <div class="p-6 pt-0">
+            <div class="h-80">
+                <div class="flex aspect-video justify-center text-xs [&amp;_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&amp;_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&amp;_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&amp;_.recharts-dot[stroke='#fff']]:stroke-transparent [&amp;_.recharts-layer]:outline-none [&amp;_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&amp;_.recharts-radial-bar-background-sector]:fill-muted [&amp;_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&amp;_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&amp;_.recharts-sector[stroke='#fff']]:stroke-transparent [&amp;_.recharts-sector]:outline-none [&amp;_.recharts-surface]:outline-none">
+                    <style>
+                        [data-chart=chart-r2] {
+                            --color-value: #3b82f6;
+                        }
+
+
+                        .dark [data-chart=chart-r2] {
+                            --color-value: #3b82f6;
+                        }
+                    </style>
+                    <div class="recharts-responsive-container" style="width: 100%; height: 100%; min-width: 0px;">
+                        <div class="recharts-responsive-container" style="width: 729px; height: 410px; min-width: 0px;">
+                            <div class="recharts-wrapper"
+                                style="position: relative; cursor: default; width: 729px; height: 410px;"><svg cx="50%"
+                                    cy="50%" class="recharts-surface" width="729" height="410" viewBox="0 0 729 410"
+                                    style="width: 100%; height: 100%;">
+                                    <title></title>
+                                    <desc></desc>
+                                    <defs>
+                                        <clipPath id="recharts10-clip">
+                                            <rect x="5" y="5" height="400" width="719"></rect>
+                                        </clipPath>
+                                    </defs>
+                                    <g class="recharts-layer recharts-pie" tabindex="0">
+                                        <g class="recharts-layer">
+                                            <g class="recharts-layer recharts-pie-sector" tabindex="-1">
+                                                <path cx="364.5" cy="205" name="LinkedIn" stroke="#fff" fill="#0077b5"
+                                                    color="#0077b5" tabindex="-1" class="recharts-sector" d="M 464.5,205
+    A 100,100,0,
+    0,0,
+    305.7214747707527,124.09830056250526
+  L 364.5,205 Z" role="img"></path>
+                                            </g>
+                                            <g class="recharts-layer recharts-pie-sector" tabindex="-1">
+                                                <path cx="364.5" cy="205" name="Indeed" stroke="#fff" fill="#2e5ab8"
+                                                    color="#2e5ab8" tabindex="-1" class="recharts-sector" d="M 305.7214747707527,124.09830056250526
+    A 100,100,0,
+    0,0,
+    283.59830056250524,263.7785252292473
+  L 364.5,205 Z" role="img"></path>
+                                            </g>
+                                            <g class="recharts-layer recharts-pie-sector" tabindex="-1">
+                                                <path cx="364.5" cy="205" name="Company Website" stroke="#fff"
+                                                    fill="#10b981" color="#10b981" tabindex="-1" class="recharts-sector"
+                                                    d="M 283.59830056250524,263.7785252292473
+    A 100,100,0,
+    0,0,
+    395.4016994374947,300.10565162951536
+  L 364.5,205 Z" role="img"></path>
+                                            </g>
+                                            <g class="recharts-layer recharts-pie-sector" tabindex="-1">
+                                                <path cx="364.5" cy="205" name="Referrals" stroke="#fff" fill="#f59e0b"
+                                                    color="#f59e0b" tabindex="-1" class="recharts-sector" d="M 395.4016994374947,300.10565162951536
+    A 100,100,0,
+    0,0,
+    452.1306680043864,253.17536741017153
+  L 364.5,205 Z" role="img"></path>
+                                            </g>
+                                            <g class="recharts-layer recharts-pie-sector" tabindex="-1">
+                                                <path cx="364.5" cy="205" name="Other Job Boards" stroke="#fff"
+                                                    fill="#ef4444" color="#ef4444" tabindex="-1" class="recharts-sector"
+                                                    d="M 452.1306680043864,253.17536741017153
+    A 100,100,0,
+    0,0,
+    464.5,205.00000000000003
+  L 364.5,205 Z" role="img"></path>
+                                            </g>
+                                        </g>
+                                        <g class="recharts-layer recharts-pie-labels">
+                                            <g class="recharts-layer">
+                                                <path cx="364.5" cy="205" stroke="#0077b5" fill="none" name="LinkedIn"
+                                                    color="#0077b5" class="recharts-curve recharts-pie-label-line"
+                                                    d="M409.899,115.899L418.979,98.079"></path><text cx="364.5" cy="205"
+                                                    stroke="none" name="LinkedIn" color="#0077b5"
+                                                    alignment-baseline="middle" x="418.9788599687456"
+                                                    y="98.07921709739587" class="recharts-text recharts-pie-label-text"
+                                                    text-anchor="start" fill="#0077b5">
+                                                    <tspan x="418.9788599687456" dy="0em">LinkedIn: 35%</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer">
+                                                <path cx="364.5" cy="205" stroke="#2e5ab8" fill="none" name="Indeed"
+                                                    color="#2e5ab8" class="recharts-curve recharts-pie-label-line"
+                                                    d="M265.731,189.357L245.977,186.228"></path><text cx="364.5"
+                                                    cy="205" stroke="none" name="Indeed" color="#2e5ab8"
+                                                    alignment-baseline="middle" x="245.9773991285835"
+                                                    y="186.2278641951723" class="recharts-text recharts-pie-label-text"
+                                                    text-anchor="end" fill="#2e5ab8">
+                                                    <tspan x="245.9773991285835" dy="0em">Indeed: 25%</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer">
+                                                <path cx="364.5" cy="205" stroke="#10b981" fill="none"
+                                                    name="Company Website" color="#10b981"
+                                                    class="recharts-curve recharts-pie-label-line"
+                                                    d="M333.598,300.106L327.418,319.127"></path><text cx="364.5"
+                                                    cy="205" stroke="none" name="Company Website" color="#10b981"
+                                                    alignment-baseline="middle" x="327.41796067500627"
+                                                    y="319.12678195541844" class="recharts-text recharts-pie-label-text"
+                                                    text-anchor="end" fill="#10b981">
+                                                    <tspan x="327.41796067500627" dy="0em">Company Website: 20%</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer">
+                                                <path cx="364.5" cy="205" stroke="#f59e0b" fill="none" name="Referrals"
+                                                    color="#f59e0b" class="recharts-curve recharts-pie-label-line"
+                                                    d="M428.242,282.051L440.991,297.462"></path><text cx="364.5"
+                                                    cy="205" stroke="none" name="Referrals" color="#f59e0b"
+                                                    alignment-baseline="middle" x="440.99087876984277"
+                                                    y="297.46158913309466" class="recharts-text recharts-pie-label-text"
+                                                    text-anchor="start" fill="#f59e0b">
+                                                    <tspan x="440.99087876984277" dy="0em">Referrals: 12%</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer">
+                                                <path cx="364.5" cy="205" stroke="#ef4444" fill="none"
+                                                    name="Other Job Boards" color="#ef4444"
+                                                    class="recharts-curve recharts-pie-label-line"
+                                                    d="M461.358,229.869L480.73,234.843"></path><text cx="364.5" cy="205"
+                                                    stroke="none" name="Other Job Boards" color="#ef4444"
+                                                    alignment-baseline="middle" x="480.72997933543576"
+                                                    y="234.84278645978253" class="recharts-text recharts-pie-label-text"
+                                                    text-anchor="start" fill="#ef4444">
+                                                    <tspan x="480.72997933543576" dy="0em">Other Job Boards: 8%</tspan>
+                                                </text>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <div tabindex="-1"
+                                    class="recharts-tooltip-wrapper recharts-tooltip-wrapper-right recharts-tooltip-wrapper-bottom"
+                                    style="visibility: hidden; pointer-events: none; position: absolute; top: 0px; left: 0px; transform: translate(325.116px, 207.178px);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-calendar w-5 h-5" data-lov-id="src/pages/Analytics.tsx:251:16"
+                    data-lov-name="Calendar" data-component-path="src/pages/Analytics.tsx" data-component-line="251"
+                    data-component-file="Analytics.tsx" data-component-name="Calendar"
+                    data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D">
+                    <path d="M8 2v4"></path>
+                    <path d="M16 2v4"></path>
+                    <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                    <path d="M3 10h18"></path>
+                </svg>Time to Hire Trend</h3>
+        </div>
+        <div class="p-6 pt-0">
+            <div class="h-70">
+                <div class="flex aspect-video justify-center text-xs [&amp;_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&amp;_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&amp;_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&amp;_.recharts-dot[stroke='#fff']]:stroke-transparent [&amp;_.recharts-layer]:outline-none [&amp;_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&amp;_.recharts-radial-bar-background-sector]:fill-muted [&amp;_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&amp;_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&amp;_.recharts-sector[stroke='#fff']]:stroke-transparent [&amp;_.recharts-sector]:outline-none [&amp;_.recharts-surface]:outline-none">
+                    <style data-lov-id="src/components/ui/chart.tsx:78:4" data-lov-name="style"
+                        data-component-path="src/components/ui/chart.tsx" data-component-line="78"
+                        data-component-file="chart.tsx" data-component-name="style" data-component-content="%7B%7D">
+                        [data-chart=chart-r3] {
+                            --color-timeToHire: #8b5cf6;
+                        }
+
+
+                        .dark [data-chart=chart-r3] {
+                            --color-timeToHire: #8b5cf6;
+                        }
+                    </style>
+                    <div class="recharts-responsive-container" style="width: 100%; height: 100%; min-width: 0px;">
+                        <div class="recharts-responsive-container" style="width: 729px; height: 410px; min-width: 0px;">
+                            <div class="recharts-wrapper"
+                                style="position: relative; cursor: default; width: 729px; height: 410px;"><svg
+                                    class="recharts-surface" width="729" height="410" viewBox="0 0 729 410"
+                                    style="width: 100%; height: 100%;">
+                                    <title></title>
+                                    <desc></desc>
+                                    <defs>
+                                        <clipPath id="recharts12-clip">
+                                            <rect x="65" y="5" height="370" width="659"></rect>
+                                        </clipPath>
+                                    </defs>
+                                    <g class="recharts-cartesian-grid">
+                                        <g class="recharts-cartesian-grid-horizontal">
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="375" x2="724" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="282.5" x2="724" y2="282.5"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="190" x2="724" y2="190"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="97.5" x2="724" y2="97.5"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="5" x2="724" y2="5"></line>
+                                        </g>
+                                        <g class="recharts-cartesian-grid-vertical">
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="65" y1="5" x2="65" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="196.8" y1="5" x2="196.8" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="328.6" y1="5" x2="328.6" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="460.40000000000003" y1="5"
+                                                x2="460.40000000000003" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="592.2" y1="5" x2="592.2" y2="375"></line>
+                                            <line stroke-dasharray="3 3" stroke="#ccc" fill="none" x="65" y="5"
+                                                width="659" height="370" x1="724" y1="5" x2="724" y2="375"></line>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-cartesian-axis recharts-xAxis xAxis">
+                                        <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                            class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65"
+                                            y1="375" x2="724" y2="375"></line>
+                                        <g class="recharts-cartesian-axis-ticks">
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="65" y1="381" x2="65" y2="375"></line><text orientation="bottom"
+                                                    width="659" height="30" stroke="none" x="65" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="65" dy="0.71em">Jan</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="196.8" y1="381" x2="196.8" y2="375"></line><text
+                                                    orientation="bottom" width="659" height="30" stroke="none" x="196.8"
+                                                    y="383" class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="196.8" dy="0.71em">Feb</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="328.6" y1="381" x2="328.6" y2="375"></line><text
+                                                    orientation="bottom" width="659" height="30" stroke="none" x="328.6"
+                                                    y="383" class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="328.6" dy="0.71em">Mar</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="460.40000000000003" y1="381" x2="460.40000000000003" y2="375">
+                                                </line><text orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="460.40000000000003" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="460.40000000000003" dy="0.71em">Apr</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="592.2" y1="381" x2="592.2" y2="375"></line><text
+                                                    orientation="bottom" width="659" height="30" stroke="none" x="592.2"
+                                                    y="383" class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="592.2" dy="0.71em">May</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="bottom" width="659" height="30" x="65" y="375"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="724" y1="381" x2="724" y2="375"></line><text
+                                                    orientation="bottom" width="659" height="30" stroke="none"
+                                                    x="720.0625" y="383"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="middle" fill="#666">
+                                                    <tspan x="720.0625" dy="0.71em">Jun</tspan>
+                                                </text>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-cartesian-axis recharts-yAxis yAxis">
+                                        <line orientation="left" width="60" height="370" x="5" y="5"
+                                            class="recharts-cartesian-axis-line" stroke="#666" fill="none" x1="65"
+                                            y1="5" x2="65" y2="375"></line>
+                                        <g class="recharts-cartesian-axis-ticks">
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="375" x2="65" y2="375"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="375"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">0</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="282.5" x2="65" y2="282.5"></line><text
+                                                    orientation="left" width="60" height="370" stroke="none" x="57"
+                                                    y="282.5" class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">8</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="190" x2="65" y2="190"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="190"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">16</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="97.5" x2="65" y2="97.5"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="97.5"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">24</tspan>
+                                                </text>
+                                            </g>
+                                            <g class="recharts-layer recharts-cartesian-axis-tick">
+                                                <line orientation="left" width="60" height="370" x="5" y="5"
+                                                    class="recharts-cartesian-axis-tick-line" stroke="#666" fill="none"
+                                                    x1="59" y1="5" x2="65" y2="5"></line><text orientation="left"
+                                                    width="60" height="370" stroke="none" x="57" y="9"
+                                                    class="recharts-text recharts-cartesian-axis-tick-value"
+                                                    text-anchor="end" fill="#666">
+                                                    <tspan x="57" dy="0.355em">32</tspan>
+                                                </text>
+                                            </g>
+                                        </g>
+                                    </g>
+                                    <g class="recharts-layer recharts-area">
+                                        <g class="recharts-layer">
+                                            <defs>
+                                                <clipPath id="animationClipPath-recharts-area-14">
+                                                    <rect x="65" y="0" width="659" height="376"></rect>
+                                                </clipPath>
+                                            </defs>
+                                            <g class="recharts-layer"
+                                                clip-path="url(#animationClipPath-recharts-area-14)">
+                                                <g class="recharts-layer">
+                                                    <path fill="var(--color-timeToHire)" fill-opacity="0.3" width="659"
+                                                        height="370" stroke="none"
+                                                        class="recharts-curve recharts-area-area"
+                                                        d="M65,51.25C108.933,28.125,152.867,5,196.8,5C240.733,5,284.667,85.938,328.6,85.938C372.533,85.938,416.467,28.125,460.4,28.125C504.333,28.125,548.267,120.625,592.2,120.625C636.133,120.625,680.067,97.5,724,74.375L724,375C680.067,375,636.133,375,592.2,375C548.267,375,504.333,375,460.4,375C416.467,375,372.533,375,328.6,375C284.667,375,240.733,375,196.8,375C152.867,375,108.933,375,65,375Z">
+                                                    </path>
+                                                    <path stroke="var(--color-timeToHire)" fill="none"
+                                                        fill-opacity="0.3" width="659" height="370"
+                                                        class="recharts-curve recharts-area-curve"
+                                                        d="M65,51.25C108.933,28.125,152.867,5,196.8,5C240.733,5,284.667,85.938,328.6,85.938C372.533,85.938,416.467,28.125,460.4,28.125C504.333,28.125,548.267,120.625,592.2,120.625C636.133,120.625,680.067,97.5,724,74.375">
+                                                    </path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                                <div tabindex="-1"
+                                    class="recharts-tooltip-wrapper recharts-tooltip-wrapper-right recharts-tooltip-wrapper-bottom"
+                                    style="visibility: hidden; pointer-events: none; position: absolute; top: 0px; left: 0px; transform: translate(75px, 17px);">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+            <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-award w-5 h-5" data-lov-id="src/pages/Analytics.tsx:284:16"
+                    data-lov-name="Award" data-component-path="src/pages/Analytics.tsx" data-component-line="284"
+                    data-component-file="Analytics.tsx" data-component-name="Award"
+                    data-component-content="%7B%22className%22%3A%22w-5%20h-5%22%7D">
+                    <path
+                        d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526">
+                    </path>
+                    <circle cx="12" cy="8" r="6"></circle>
+                </svg>Department Hiring Progress</h3>
+        </div>
+        <div class="p-6 pt-0">
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center"><span data-lov-id="src/pages/Analytics.tsx:293:22"
+                            class="font-medium text-gray-700">Engineering</span>
+                        <div class="flex items-center gap-2"><span data-lov-id="src/pages/Analytics.tsx:295:24"
+                                class="text-sm text-gray-600">45/50</span>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-900 text-white hover:bg-gray-900/80">
+                                90%</div>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-hidden rounded-full bg-gray-200 h-2">
+                        <div class="h-full w-full flex-1 bg-blue-600 transition-all" style="transform: translateX(-10%);">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center"><span data-lov-id="src/pages/Analytics.tsx:293:22"
+                            class="font-medium text-gray-700">Sales</span>
+                        <div class="flex items-center gap-2"><span class="text-sm text-gray-600">32/35</span>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-900 text-white hover:bg-gray-900/80">
+                                91%</div>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-hidden rounded-full bg-gray-200 h-2">
+                        <div class="h-full w-full flex-1 bg-green-600 transition-all" style="transform: translateX(-9%);">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-medium text-gray-700">Marketing</span>
+                        <div class="flex items-center gap-2"><span class="text-sm text-gray-600">18/20</span>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-900 text-white hover:bg-gray-900/80">
+                                90%</div>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-hidden rounded-full bg-gray-200 h-2">
+                        <div class="h-full w-full flex-1 bg-orange-600 transition-all" style="transform: translateX(-10%);">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-medium text-gray-700">HR</span>
+                        <div class="flex items-center gap-2"><span class="text-sm text-gray-600">8/10</span>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-900 text-white hover:bg-gray-900/80">
+                                80%</div>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-hidden rounded-full bg-gray-200 h-2">
+                        <div class="h-full w-full flex-1 bg-red-600 transition-all" style="transform: translateX(-20%);">
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center"><span class="font-medium text-gray-700">Operations</span>
+                        <div class="flex items-center gap-2"><span class="text-sm text-gray-600">12/15</span>
+                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-gray-900 text-white hover:bg-gray-900/80">
+                                80%</div>
+                        </div>
+                    </div>
+                    <div class="relative w-full overflow-hidden rounded-full bg-gray-200 h-2">
+                        <div class="h-full w-full flex-1 bg-purple-600 transition-all" style="transform: translateX(-20%);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div class="flex flex-col space-y-1.5 p-6">
+        <h3 class="text-2xl font-semibold leading-none tracking-tight">Key Insights &amp; Recommendations</h3>
+    </div>
+    <div class="p-6 pt-0">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-trending-up w-4 h-4 text-blue-600"
+                        data-lov-id="src/pages/Analytics.tsx:320:18" data-lov-name="TrendingUp"
+                        data-component-path="src/pages/Analytics.tsx" data-component-line="320"
+                        data-component-file="Analytics.tsx" data-component-name="TrendingUp"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-blue-600%22%7D">
+                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                        <polyline points="16 7 22 7 22 13"></polyline>
+                    </svg><span class="font-medium text-blue-900">Hiring Velocity</span></div>
+                <p class="text-sm text-blue-800">Engineering hiring is 18% ahead of target. Consider expanding the team
+                    further.</p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-lg border border-green-200">
+                <div class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-target w-4 h-4 text-green-600"
+                        data-lov-id="src/pages/Analytics.tsx:330:18" data-lov-name="Target"
+                        data-component-path="src/pages/Analytics.tsx" data-component-line="330"
+                        data-component-file="Analytics.tsx" data-component-name="Target"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-green-600%22%7D">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="6"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                    </svg><span class="font-medium text-green-900">Source Optimization</span></div>
+                <p class="text-sm text-green-800">LinkedIn continues to be the top performing source with 35% of hires.
+                </p>
+            </div>
+            <div class="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                <div class="flex items-center gap-2 mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-clock w-4 h-4 text-yellow-600"
+                        data-lov-id="src/pages/Analytics.tsx:340:18" data-lov-name="Clock"
+                        data-component-path="src/pages/Analytics.tsx" data-component-line="340"
+                        data-component-file="Analytics.tsx" data-component-name="Clock"
+                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-yellow-600%22%7D">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg><span class="font-medium text-yellow-900">Process Efficiency</span></div>
+                <p class="text-sm text-yellow-800">Average time to hire improved by 3 days. Focus on maintaining this
+                    trend.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</main>
+
+{%endblock%}
