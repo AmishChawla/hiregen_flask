@@ -35,9 +35,9 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 #TODO CHANGE TO 'hiregen.com' before deploying
 #app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
 app.config['SERVER_NAME'] = 'hiregen.com'
-TODO CHANGE TO '.hiregen.com' before deploying
+#TODO CHANGE TO '.hiregen.com' before deploying
 #app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-#app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
