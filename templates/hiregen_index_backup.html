@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireGen | AI Recruitment Software</title>
+    <meta name="description" content="Streamline your hiring process with AI—save time, attract top talent, and simplify recruitment effortlessly.">
+    
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
+<!-- End Google Tag Manager -->
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LHWC5ZME1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2LHWC5ZME1');
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-50 via-indigo-100 to-indigo-300">
+        <header class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex justify-between items-center p-4">
+          <div class="flex items-center">
+            <div class="logo">
+              <Link href="{{url_for('index')}}">
+                <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
+              </Link>
+            </div>
+            <button class="ml-auto md:hidden" onClick={toggleMenu} aria-label="Toggle Menu">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+  </svg>
+</button>
+
+</div>
+<nav class="flex flex-col md:flex-row md:flex items-center space-y-4 md:space-y-0 md:space-x-5">
+  <ul class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-5">
+    <li class="relative group">
+      <a href="#" class="flex items-center py-3 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
+        Features
+        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+      </a>
+      <!-- Submenu starts -->
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+        <li><a href="{{url_for('recruitment_software')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Software</a></li>
+        <li><a href="{{url_for('applicant_tracking_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Applicant Tracking</a></li>
+        <li><a href="{{url_for('resume_parsing_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Parsing</a></li>
+        <li><a href="{{url_for('recruitment_crm')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment CRM</a></li>
+        <li><a href="{{url_for('candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+        <li><a href="{{url_for('ai_recruitment')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">AI Recruitment</a></li>
+      </ul>
+      <!-- Submenu ends -->
+    </li>
+
+    <li class="relative group">
+      <a href="#" class="flex items-center py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
+        AI
+        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+      </a>
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+        <li><a href="{{url_for('ai_resume_screening')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Screening</a></li>
+        <li><a href="{{url_for('ai_candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+        <li><a href="{{url_for('ai_chatbots')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Chatbots</a></li>
+        <li><a href="{{url_for('ai_recruitment_analytics')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Analytics</a></li>
+      </ul>
+    </li>
+
+    <li><a href="{{url_for('user_view_plan')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-500 min-h-[48px]">Pricing</a></li>
+    <li><a href="{{url_for('homepage_contactus_submission')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-500 min-h-[48px]">Contact</a></li>
+
+    <li class="relative group">
+      <a href="#" class="flex items-center py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
+        Resources
+        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+      </a>
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+        <li><a href="{{url_for('all_cms_post')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Blog</a></li>
+        <li><a href="{{url_for('faqs')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">FAQ's</a></li>
+        <li><a href="{{url_for('about_us')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">About Us</a></li>
+        <li><a href="{{url_for('privacy_policy')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Privacy Policy</a></li>
+        <li><a href="{{url_for('terms_of_service')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Terms of Service</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <a href="{{url_for('login')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">Sign in</a>
+  <a href="{{url_for('register')}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+    Free Trial
+  </a>
+</nav>
+</header>
+  </div>
+    <!-- Header -->
+    <section class="py-8 sm:py-16 md:pt-20 md:pb-20 overflow-hidden bg-gradient-to-r from-blue-50 via-indigo-100 to-indigo-300 -bottom-14 -top-36">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="space-y-8">
+        <h1 class="text-4xl md:text-4xl lg:text-6xl font-bold text-recruit-blue" style="line-height: 70px;">Simply <span
+                class="text-blue-600">Hiring Process</span><br />With AI Technology</h1>
+        <p class="text-lg md:text-xl text-gray-600 max-w-lg">Streamline candidate sourcing, screening, and hiring with
+            our advanced AI recruitment platform that saves time and finds the perfect match.</p>
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4"><button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 h-10 bg-blue-600 hover:bg-recruit-light-purple text-white text-lg py-6 px-8">Get
+                Started For Free</button>
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border bg-background h-10 border-blue-600 text-blue-600 hover:bg-recruit-purple hover:text-blue text-lg py-6 px-8">Book
+                a Demo</button>
+              </div>
+        <div class="pt-6 text-sm text-gray-500">
+            <p>
+                No credit card required • Free 14-day trial</p>
+        </div>
+    </div>
+    <div class="relative">
+    <div class="relative bg-blue-50 border rounded-2xl p-8 shadow-md">
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold">Recruitment Dashboard</h3>
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                    <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                    <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-blue-300/20 backdrop-blur-sm rounded-lg p-4 border border-blue-400/30">
+                    <div class="flex justify-between items-center mb-2"><span data-lov-id="src/components/Hero.tsx:70:22"
+                            class="text-sm text-blue-900">Active Applications</span><span
+                            class="text-2xl font-bold text-blue-900">1,247</span></div>
+                    <div class="w-full bg-blue-900/50 rounded-full h-2">
+                        <div class="bg-blue-900/80 h-2 rounded-full w-3/4"></div>
+                    </div>
+                </div>
+                <div class="bg-purple-300/20 backdrop-blur-sm rounded-lg p-4 border border-purple-400/30">
+                    <div class="flex justify-between items-center mb-2"><span data-lov-id="src/components/Hero.tsx:80:22"
+                            class="text-sm text-purple-900">Interviews Scheduled</span><span
+                            class="text-2xl font-bold text-purple-900">89</span></div>
+                    <div class="w-full bg-purple-900/50 rounded-full h-2">
+                        <div class="bg-purple-900/80 h-2 rounded-full w-1/2"></div>
+                    </div>
+                </div>
+                <div class="bg-green-300/20 backdrop-blur-sm rounded-lg p-4 border border-green-400/30">
+                    <div class="flex justify-between items-center mb-2"><span class="text-sm text-green-900">Offers Extended</span><span
+                            class="text-2xl font-bold text-green-900">23</span></div>
+                    <div class="w-full bg-green-900/50 rounded-full h-2">
+                        <div class="bg-green-900/80 h-2 rounded-full w-1/3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+      </section>
+
+      <section class="p-10 bg-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+          <h2 class="font-mono text-xs/5 font-semibold uppercase tracking-widest text-slate-800 data-[dark]:text-gray-400">Trusted by Companies</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 mt-5">
+            <Image
+              alt="Company 1"
+              src="/static/images/logo1.svg"
+              class="mx-2 opacity-30"
+              width="133"
+              height="40"
+            />
+            <Image
+              alt="Company 2"
+              src="/static/images/logo2.svg"
+              class="mx-2 opacity-30"
+              width="133"
+              height="40"
+            />
+            <Image
+              alt="Company 3"
+              src="/static/images/logo3.svg"
+              class="mx-2 opacity-30"
+              width="133"
+              height="40"
+            />
+            <Image
+              alt="Company 4"
+              src="/static/images/logo4.svg"
+              class="mx-2 opacity-30"
+              width="133"
+              height="40"
+            />
+            <Image
+              alt="Company 5"
+              src="/static/images/logo5.svg"
+              class="mx-2 opacity-30"
+              width="133"
+              height="40"
+            />
+          </div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+
+
+      <div class="mt-20 text-center">
+        <div class="mb-10">
+        <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl mt-4">Find your perfect candidate</h2>
+        <p class="mt-3 text-lg font-normal text-slate-800">Effortlessly find top candidates and let AI handle the details</p>
+      </div>
+        <img src="/static/images/screenshot.png" alt="Automated Resume Screening" class="p-6 gap-y-4 rounded-md ring-1 ring-inset ring-gray-200 shadow-md" style="width:1100px;height:497px;margin:0 auto;">
+      </div>
+
+<section class="py-20" id="features">
+<!-- This is an example component -->
+<div class="max-w-6xl mx-auto">
+  <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl mt-4 text-center mb-8">Features that define Hiregen's excellence.</h2>
+  <div class="mb-4">
+      <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+          <li class="mr-2" role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 active border rounded-full" id="ai-tab" data-tabs-target="#ai" type="button" role="tab" aria-controls="ai" aria-selected="false">ATS</button>
+          </li>
+          <li class="mr-2" role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="ats-tab" data-tabs-target="#ats" type="button" role="tab" aria-controls="ats" aria-selected="true">Automated resume screening</button>
+          </li>
+          <li class="mr-2" role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="cv-tab" data-tabs-target="#cv" type="button" role="tab" aria-controls="cv" aria-selected="false">Candidate matching</button>
+          </li>
+          <li role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="pages-tab" data-tabs-target="#pages" type="button" role="tab" aria-controls="pages" aria-selected="false">Job description optimization</button>
+          </li>
+          <li role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="crm-tab" data-tabs-target="#crm" type="button" role="tab" aria-controls="crm" aria-selected="false">Personalized outreach</button>
+          </li>
+          <li role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="interview-tab" data-tabs-target="#interview" type="button" role="tab" aria-controls="interview" aria-selected="false">Analytics</button>
+          </li>
+          <li role="presentation">
+              <button class="inline-block text-slate-800 hover:text-slate-800 hover:border-gray-300 py-2 px-4 text-sm font-medium text-left dark:text-gray-400 dark:hover:text-gray-300 border rounded-full" id="analytics-tab" data-tabs-target="#analytics" type="button" role="tab" aria-controls="analytics" aria-selected="false">Interview scheduling</button>
+          </li>
+      </ul>
+  </div>
+  <div id="myTabContent">
+      <div class="hidden" id="ai" role="tabpanel" aria-labelledby="ai-tab">
+        <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+          <img src="/static/images/applicant-tracking-system.png" alt="ATS" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px;">
+          <div class="w-full lg:w-1/2">
+            <h3 class="text-2xl sm:text-2xl font-semibold">ATS</h3>
+            <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">Designed to streamline and manage the recruitment process, speed up hiring by automating repetitive tasks and provides a visual dashboard to track progress in real-time.</p>
+            <ul class="mt-4 space-y-2">
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                  <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  Collects job applications and stores candidate data in a centralized database
+                </li>
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Tracks candidate progress e.g., applied, interviewing, offered
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Analyzes resumes to rank candidates based on skills and job fit
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Eliminates manual resume sifting, replacing email chaos or paper stacks.
+               </li>
+            </ul>
+            <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg dark:bg-gray-800" id="ats" role="tabpanel" aria-labelledby="ats-tab">
+        <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+          <img src="/static/images/Automated-Resume-Screening.png" alt="Automated Resume Screening" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px;">
+          <div class="w-full lg:w-1/2">
+            <h3 class="text-2xl sm:text-2xl font-semibold">Automated Resume Screening</h3>
+            <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">AI scans and evaluates resumes by extracting key information like skills, experience, and qualifications, then ranks candidates based on how well they match the job requirements</p>
+            <ul class="mt-4 space-y-2">
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                  <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  AI scans resumes to extract key details like skills, experience, and qualifications
+                </li>
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Evaluates and ranks candidates based on job requirement matches
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Processes large application volumes quickly and efficiently
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Saves time, allowing recruiters to focus on top candidates without manual sorting
+               </li>
+            </ul>
+            <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg dark:bg-gray-800 hidden" id="cv" role="tabpanel" aria-labelledby="cv-tab">
+        <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+          <img src="/static/images/Candidate-Matching.png" alt="Candidate Matching" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px; background: #b3dfdd;">
+          <div class="w-full lg:w-1/2">
+            <h3 class="text-2xl sm:text-2xl font-semibold">Candidate Matching</h3>
+            <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">Uses algorithms to pair candidates with job openings by analyzing skills, experience, and even cultural fit, often going beyond basic keyword matching to assess potential.</p>
+            <ul class="mt-4 space-y-2">
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                  <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  Analyzes skills, experience, and cultural fit using advanced algorithms
+                </li>
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Goes beyond keywords to assess candidate potential
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Pairs candidates with suitable job openings automatically.
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Improves hire quality by reducing mismatches and finding the best fits
+               </li>
+
+            </ul>
+            <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg dark:bg-gray-800 hidden" id="pages" role="tabpanel" aria-labelledby="pages-tab">
+        <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+          <img src="/static/images/Job-Description-Optimization.png" alt="Job Description Optimization" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px; background: #f0f0f0;">
+          <div class="w-full lg:w-1/2">
+            <h3 class="text-2xl sm:text-2xl font-semibold">Job Description Optimization</h3>
+            <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">AI generates or refines job postings by suggesting language that's clear, inclusive, and appealing, sometimes analyzing past successful postings for inspiration.
+
+            </p>
+            <ul class="mt-4 space-y-2">
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                  <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  Generates or refines job postings with clear, inclusive language.
+                </li>
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Suggests phrasing based on successful past postings.
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Reduces biased or unclear wording proactively
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Attracts diverse talent and makes postings more effective.
+               </li>
+            </ul>
+            <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg dark:bg-gray-800 hidden" id="crm" role="tabpanel" aria-labelledby="crm-tab">
+        <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+          <img src="/static/images/Personalized-Outreach.png" alt="Personalized Outreach" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px;">
+          <div class="w-full lg:w-1/2">
+            <h3 class="text-2xl sm:text-2xl font-semibold">Personalized Outreach</h3>
+            <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">Crafts tailored emails or messages to candidates based on their profiles, skills, or interests</p>
+            <ul class="mt-4 space-y-2">
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                  <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                  Crafts tailored emails or messages using candidate profile data.
+                </li>
+                <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Incorporates skills, interests, or experience for relevance.
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Uses natural language to feel human and engaging
+               </li>
+               <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                    <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                    Increases response rates and candidate interest
+               </li>
+            </ul>
+            <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+          </div>
+        </div>
+      </div>
+    <div class="rounded-lg dark:bg-gray-800 hidden" id="interview" role="tabpanel" aria-labelledby="interview-tab">
+      <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+        <img src="/static/images/Analytics.png" alt="Analytics" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px;">
+        <div class="w-full lg:w-1/2">
+          <h3 class="text-2xl sm:text-2xl font-semibold">Analytics</h3>
+          <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">Provides real-time insights into recruitment metrics like time-to-hire, source effectiveness, or candidate pipeline health through intuitive visualizations.</p>
+          <ul class="mt-4 space-y-2">
+              <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                Tracks metrics like time-to-hire or source effectiveness.
+              </li>
+              <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                Presents data in real-time via intuitive visualizations.
+              </li>
+              <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                Highlights pipeline health and recruitment trends.
+              </li>
+              <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+                <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+                Provides actionable insights to refine strategies and report progress.
+              </li>
+          </ul>
+          <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+        </div>
+      </div>
+    </div>
+  <div class="rounded-lg dark:bg-gray-800 hidden" id="analytics" role="tabpanel" aria-labelledby="analytics-tab">
+    <div class="flex flex-col lg:flex-row justify-center text-start space-y-8 lg:space-y-0 lg:space-x-8 mt-8 lg:mt-12">
+      <img src="/static/images/Interview-Scheduling.png" alt="Interview Scheduling" class="w-full lg:w-1/2 rounded-xl object-contain" style="height: 468px; max-width: 700px;">
+      <div class="w-full lg:w-1/2">
+        <h3 class="text-2xl sm:text-2xl font-semibold">Interview Scheduling</h3>
+        <p class="mt-2 sm:mt-3 space-y-4 sm:space-y-6 font-display text-lg sm:text-lg text-slate-700">Online Interview has revolutionized the hiring process, enabling businesses to streamline candidate assessments, improve decision-making, and reduce hiring time.
+
+        </p>
+        <ul class="mt-4 space-y-2">
+            <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+              <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+              Syncs with recruiter and candidate calendars to find available slots
+            </li>
+            <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+              <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+              Sends automated invites and reminders via email
+            </li>
+            <li class="flex items-center font-display text-lg sm:text-lg text-slate-700">
+              <svg aria-hidden="true" class="mr-4 h-6 w-6 flex-none fill-current stroke-current text-slate-400"><path d="M9.307 12.248a.75.75 0 1 0-1.114 1.004l1.114-1.004ZM11 15.25l-.557.502a.75.75 0 0 0 1.15-.043L11 15.25Zm4.844-5.041a.75.75 0 0 0-1.188-.918l1.188.918Zm-7.651 3.043 2.25 2.5 1.114-1.004-2.25-2.5-1.114 1.004Zm3.4 2.457 4.25-5.5-1.187-.918-4.25 5.5 1.188.918Z" strokeWidth="0"></path><circle cx="12" cy="12" r="8.25" fill="none" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></circle></svg>
+              Adjusts schedules if conflicts arise, notifying all parties.
+            </li>
+        </ul>
+        <button class="group inline-flex ring-1 items-center justify-center rounded-full bg-slate-100 py-2 px-4 text-sm focus:outline-hidden ring-slate-200 text-slate-700 hover:text-slate-900 hover:ring-slate-300 active:bg-slate-100 active:text-slate-700 focus-visible:outline-blue-600 focus-visible:ring-slate-300 mt-6">Learn More</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- https://www.creative-tim.com/twcomponents/component/tailwind-css-tabs -->
+</div>
+</section>
+
+
+
+
+<!--      <section class="border-y border-gray-100 bg-gray-50 py-20 sm:py-32">-->
+<!--        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">-->
+<!--          <div class="mx-auto max-w-4xl text-center">-->
+<!--            <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Now is the time to build your portfolio.</h2>-->
+<!--            <p class="mt-2 mx-auto max-w-2xl font-display text-lg sm:text-xl text-slate-700">Explore Hiregen's innovative features crafted to simplify recruitment, enhance efficiency, and deliver exceptional results.</p>-->
+<!--          </div>-->
+<!--          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">-->
+<!--            <div class="flex flex-col overflow-hidden rounded-3xl p-8 shadow-lg shadow-gray-900/5 bg-white">-->
+<!--            <div class="w-9 rounded-lg bg-slate-400"><svg aria-hidden="true" class="h-9 w-9" fill="none"><defs><linearGradient id=":R1bdqfja:" x1="11.5" y1="18" x2="36" y2="15.5" gradientUnits="userSpaceOnUse"><stop offset=".194" stop-color="#fff"></stop><stop offset="1" stop-color="#6692F1"></stop></linearGradient></defs><path d="m30 15-4 5-4-11-4 18-4-11-4 7-4-5" stroke="url(#:R1bdqfja:)" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>-->
+<!--              <h3 class="mt-8 font-display text-xl font-semibold tracking-tight text-slate-900 font-lexend">Invest any amount</h3>-->
+<!--              <p class="mt-1 text-base leading-7 text-slate-500">Whether it's $1 or $1,000,000, we can put your money to work for you.</p>-->
+<!--            </div>-->
+<!--            <div class="flex flex-col overflow-hidden rounded-3xl p-8 shadow-lg shadow-gray-900/5 bg-white">-->
+<!--            <div class="w-9 rounded-lg bg-slate-400"><svg aria-hidden="true" class="h-9 w-9" fill="none"><path opacity=".5" d="M8 17a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2Z" fill="#fff"></path><path opacity=".3" d="M8 24a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2Z" fill="#fff"></path><path d="M8 10a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2Z" fill="#fff"></path></svg></div>-->
+<!--              <h3 class="mt-8 font-display text-xl font-semibold tracking-tight text-slate-900 font-lexend">Build a balanced portfolio</h3>-->
+<!--              <p class="mt-1 text-base leading-7 text-slate-500">Invest in different industries to find the most opportunities to win huge.</p>-->
+<!--            </div>-->
+<!--            <div class="flex flex-col overflow-hidden rounded-3xl p-8 shadow-lg shadow-gray-900/5 bg-white">-->
+<!--            <div class="w-9 rounded-lg bg-slate-400"><svg aria-hidden="true" class="h-9 w-9" fill="none"><path opacity=".5" d="M25.778 25.778c.39.39 1.027.393 1.384-.028A11.952 11.952 0 0 0 30 18c0-6.627-5.373-12-12-12S6 11.373 6 18c0 2.954 1.067 5.659 2.838 7.75.357.421.993.419 1.384.028.39-.39.386-1.02.036-1.448A9.959 9.959 0 0 1 8 18c0-5.523 4.477-10 10-10s10 4.477 10 10a9.959 9.959 0 0 1-2.258 6.33c-.35.427-.354 1.058.036 1.448Z" fill="#fff"></path><path d="M12 28.395V28a6 6 0 0 1 12 0v.395A11.945 11.945 0 0 1 18 30c-2.186 0-4.235-.584-6-1.605ZM21 16.5c0-1.933-.5-3.5-3-3.5s-3 1.567-3 3.5 1.343 3.5 3 3.5 3-1.567 3-3.5Z" fill="#fff"></path></svg></div>-->
+<!--              <h3 class="mt-8 font-display text-xl font-semibold tracking-tight text-slate-900 font-lexend">Trade in real-time</h3>-->
+<!--              <p class="mt-1 text-base leading-7 text-slate-500">Get insider tips on big stock moves and act on them within seconds.</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </section>-->
+      <section class="p-4 sm:p-16 bg-white">
+        <div class="mx-auto max-w-7xl px-0 sm:px-6 lg:px-8">
+          <div class="mx-auto max-w-4xl text-center">
+            <h2 class="font-mono text-sm/5 font-semibold uppercase tracking-widest data-[dark]:text-gray-400 text-purple-900">Testimonials</h2>
+            <p class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl mt-4">Thousands of satisfied clients served</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <div class="flex mb-4"><svg
+        class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path data-lov-id="src/components/Testimonials.tsx:47:22" data-lov-name="path"
+            data-component-path="src/components/Testimonials.tsx" data-component-line="47"
+            data-component-file="Testimonials.tsx" data-component-name="path" data-component-content="%7B%7D"
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+        </path>
+    </svg><svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path data-lov-id="src/components/Testimonials.tsx:47:22" data-lov-name="path"
+            data-component-path="src/components/Testimonials.tsx" data-component-line="47"
+            data-component-file="Testimonials.tsx" data-component-name="path" data-component-content="%7B%7D"
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+        </path>
+    </svg><svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path data-lov-id="src/components/Testimonials.tsx:47:22" data-lov-name="path"
+            data-component-path="src/components/Testimonials.tsx" data-component-line="47"
+            data-component-file="Testimonials.tsx" data-component-name="path" data-component-content="%7B%7D"
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+        </path>
+    </svg><svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path data-lov-id="src/components/Testimonials.tsx:47:22" data-lov-name="path"
+            data-component-path="src/components/Testimonials.tsx" data-component-line="47"
+            data-component-file="Testimonials.tsx" data-component-name="path" data-component-content="%7B%7D"
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+        </path>
+    </svg><svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+        <path data-lov-id="src/components/Testimonials.tsx:47:22" data-lov-name="path"
+            data-component-path="src/components/Testimonials.tsx" data-component-line="47"
+            data-component-file="Testimonials.tsx" data-component-name="path" data-component-content="%7B%7D"
+            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+        </path>
+    </svg></div>
+              <p class="text-gray-600 italic leading-7">"AIRecruit has completely transformed our hiring process. We're now able to find qualified candidates in half the time with much better results."</p>
+              <div class="mt-6 flex items-center gap-x-4">
+                <Image
+                        alt="Person 1"
+                        src="/static/images/testi1.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-semibold text-recruit-blue">James T.</p>
+                  <p class="text-sm text-gray-500">Talent Acquisition Lead</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <p class="mt-3 text-gray-600 italic leading-7">"The AI matching technology is incredibly accurate. We've seen a 40% increase in successful hires since implementing this platform."</p>
+              <div class="mt-6 flex items-center gap-x-4">
+              <Image
+                        alt="Person 2"
+                        src="/static/images/testi2.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-semibold text-recruit-blue">Mark R.</p>
+                  <p class="text-sm text-gray-500">Operations Manager</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <p class="mt-3 text-gray-600 italic leading-7">"As a small business, our recruiting resources are limited. AIRecruit gives us enterprise-level recruitment capabilities at a fraction of the cost."</p>
+              <div class="mt-6 flex items-center gap-x-4">
+              <Image
+                        alt="Person 3"
+                        src="/static/images/testi3.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-semibold text-recruit-blue">Sarah M.</p>
+                  <p class="text-sm text-gray-500">HR Manager at TechVision</p>
+                </div>
+              </div>
+            </div>
+<!-- 
+            
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <p class="mt-3 text-lg leading-7">"This recruitment software has completely transformed our hiring process. The AI-powered matching ensures we get the best candidates quickly, reducing our time-to-hire by 50%. "</p>
+              <div class="mt-6 flex items-center gap-x-4">
+              <Image
+                        alt="Person 4"
+                        src="/static/images/testi4.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-bold">Sarah M</p>
+                  <p class="text-slate-800">HR Manager at TechVision</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <p class="mt-3 text-lg leading-7">"The AI-driven resume screening and job matching have helped us find the right candidates effortlessly. We no longer waste time sorting through hundreds of resumes—this software does it for us!"</p>
+              <div class="mt-6 flex items-center gap-x-4">
+              <Image
+                        alt="Person 5"
+                        src="/static/images/testi5.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-bold">Priya S.</p>
+                  <p class="text-slate-800">Recruitment Consultant at TalentPro</p>
+                </div>
+              </div>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-recruit-light-gray hover:shadow-lg transition-all duration-300 flex flex-col">
+              <p class="mt-3 text-lg leading-7">"As a growing company, we needed a recruitment solution that could scale with us. This software offers everything from ATS to CRM functionalities at an affordable price."</p>
+              <div class="mt-6 flex items-center gap-x-4">
+              <Image
+                        alt="Person 6"
+                        src="/static/images/testi6.webp"
+                        class="w-10 h-10 rounded-full"
+                        width="225"
+                        height="225"
+
+                    />
+                <div class="ml-2">
+                  <p class="font-bold">Linda K.</p>
+                  <p class="text-slate-800">CEO at GrowthEdge Consulting</p>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </section>
+      <section class="py-20 sm:py-32" id="faq">
+        <div class="mx-auto max-w-7xl px-0 sm:px-6 lg:px-8">
+          <div>
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+              <div class="mx-auto max-w-4xl ">
+                <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-4xl mb-12">Frequently asked questions</h2>
+
+                    <!-- Shipping Section -->
+                    <div class="my-8">
+                      <div class="flex justify-between items-center cursor-pointer">
+                          <h3 class="text-lg dark:text-white leading-5 text-gray-800">What services do you offer?</h3>
+                          <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(1)">
+                              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                  <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                              </svg>
+                          </button>
+                      </div>
+                      <p id="para1" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">We offer advanced AI recruitment tools including an ATS, resume parsing, customizable career pages, and more to streamline your hiring process.</p>
+                  </div>
+
+                  <div class="my-8">
+                    <div class="flex justify-between items-center cursor-pointer">
+                        <h3 class="text-lg dark:text-white leading-5 text-gray-800">How can I get started with Hiregen?</h3>
+                        <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(2)">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="para2" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Simply click the "Get Started" button on our homepage to sign up for a free 30-day trial. No credit card is required.</p>
+                </div>
+
+                <div class="my-8">
+                  <div class="flex justify-between items-center cursor-pointer">
+                      <h3 class="text-lg dark:text-white leading-5 text-gray-800">What sets Hiregen apart from competitors?</h3>
+                      <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(3)">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                      </button>
+                  </div>
+                  <p id="para3" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Our advanced AI technology and user-friendly interface make recruitment efficient and effective, helping you attract, evaluate, and hire top talent seamlessly.</p>
+              </div>
+
+              <div class="my-8">
+                <div class="flex justify-between items-center cursor-pointer">
+                    <h3 class="text-lg dark:text-white leading-5 text-gray-800">Can I customize my career pages?</h3>
+                    <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(4)">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+                <p id="para4" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Yes, Hiregen provides customizable career page options to showcase your brand and company culture, attracting the best talent.</p>
+            </div>
+
+            <div class="my-8">
+              <div class="flex justify-between items-center cursor-pointer">
+                  <h3 class="text-lg dark:text-white leading-5 text-gray-800">Is Hiregen suitable for small businesses?</h3>
+                  <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(5)">
+                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                  </button>
+              </div>
+              <p id="para5" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Absolutely! Hiregen is designed to be scalable and user-friendly, making it ideal for businesses of all sizes.</p>
+          </div>
+
+          <div class="my-8">
+            <div class="flex justify-between items-center cursor-pointer">
+                <h3 class="text-lg dark:text-white leading-5 text-gray-800">Does Hiregen integrate with other platforms?</h3>
+                <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(6)">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <p id="para6" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Yes, Hiregen integrates seamlessly with popular HR tools, job boards, and productivity platforms to streamline your workflow.</p>
+        </div>
+
+        <div class="my-8">
+          <div class="flex justify-between items-center cursor-pointer">
+              <h3 class="text-lg dark:text-white leading-5 text-gray-800">What kind of support does Hiregen offer?</h3>
+              <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(7)">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+              </button>
+          </div>
+          <p id="para7" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">We provide 24/7 customer support via chat, email, and phone, along with detailed documentation and tutorials.</p>
+      </div>
+
+      <div class="my-8">
+        <div class="flex justify-between items-center cursor-pointer">
+            <h3 class="text-lg dark:text-white leading-5 text-gray-800">Can I track recruitment analytics with Hiregen?</h3>
+            <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(8)">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+        <p id="para8" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Yes, Hiregen offers comprehensive analytics to help you monitor hiring performance, track metrics, and make data-driven decisions.</p>
+    </div>
+
+    <div class="my-8">
+      <div class="flex justify-between items-center cursor-pointer">
+          <h3 class="text-lg dark:text-white leading-5 text-gray-800">Is my data secure with Hiregen?</h3>
+          <button aria-label="too" class="text-gray-800 dark:text-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800" onclick="openAnsSection(9)">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path id="path1" class="" d="M10 4.1665V15.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M4.16602 10H15.8327" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+          </button>
+      </div>
+      <p id="para9" class="hidden font-normal dark:text-gray-400 text-base leading-6 text-slate-800 mt-4 w-11/12">Absolutely! Hiregen uses advanced encryption and follows strict data protection protocols to ensure your information remains safe and confidential.</p>
+  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- <section class="bg-white p-4 sm:p-10 pb-5">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="rounded-3xl relative -mx-4 overflow-hidden bg-gray-50 px-4 py-5 sm:-mx-6 sm:px-6 md:mx-0 md:rounded-5xl md:px-10 xl:px-16 xl:py-20">
+
+            <div class="relative mx-auto grid max-w-2xl grid-cols-1 gap-x-32 gap-y-14 xl:max-w-none xl:grid-cols-2">
+              <div>
+                <p class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-3xl">Recruitment Insider:<br />Trends, Tech & Insights</p>
+                <p class="mt-4 font-display text-lg sm:text-lg text-slate-700">Stay ahead in the ever-evolving world of recruitment with Recruitment Insider.
+Get the latest trends, AI-driven hiring innovations, best practices, and expert insights delivered straight to your inbox.</p>
+              </div>
+              <form id="newsletter-form">
+                <h3 class="text-lg font-semibold tracking-tight text-gray-700">Sign up to our newsletter <span aria-hidden="true">↓</span></h3>
+                <div class="mt-5 flex flex-col sm:flex-row rounded-3xl bg-white py-2.5 pr-2.5 shadow-xl shadow-blue-600/5 focus-within:ring-2 focus-within:ring-blue-600">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email address"
+                    aria-label="Email address"
+                    class="sm:-my-2.5 flex-auto bg-transparent pl-6 pr-2.5 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  />
+                  <button
+                    class="mt-4 sm:mt-0 sm:ml-4 inline-flex justify-center rounded-2xl bg-slate-700 p-4 text-base font-semibold text-white hover:bg-purple-900 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70"
+                    type="submit"
+                  >
+                    <span class="sm:not-sr-only">Sign up today</span>
+                    <span class="sm:hidden"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section> -->
+      <!--<section class="bg-white pb-10" id="contact">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center">
+              <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl mb-3">Contact Us</h2>
+              <p class="mt-1 font-display text-lg sm:text-xl text-slate-700">Follow us on social media or contact us directly for any inquiries or support.</p>
+            </div>
+            
+            <div class="mt-10 max-w-xl mx-auto">
+              <form id="contactForm" class="space-y-6">
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                
+                <div>
+                  <input type="text" 
+                         id="name" 
+                         placeholder="Your Name" 
+                         required 
+                         class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+                </div>
+                
+                <div>
+                  <input type="email" 
+                         id="email" 
+                         placeholder="Your Email" 
+                         required 
+                         class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm">
+                </div>
+                
+                <div>
+                  <textarea id="message" 
+                           placeholder="Your Message" 
+                           rows="5" 
+                           required 
+                           class="block w-full rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"></textarea>
+                </div>
+                
+                <div>
+                  <button type="submit" 
+                          class="w-full rounded-full bg-slate-700 px-10 py-3 text-base font-semibold text-white hover:bg-purple-900 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
+                    Send Message
+                  </button>
+                </div>
+              </form>
+              
+              <div id="thankYouMessage" class="hidden text-center mt-8">
+                <div class="text-6xl text-green-500 mb-4">✔️</div>
+                <p class="text-lg text-gray-700">Thank you for contacting us! We will get back to you shortly.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>-->
+
+      <section class="mt-0">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-20 ">
+          <div class="rounded-3xl relative -mx-4 overflow-hidden bg-blue-700 px-4 pt-5 sm:-mx-6 sm:px-6 md:mx-0 md:rounded-5xl md:px-10 xl:px-16 xl:py-10">
+            <div class="flex items-center justify-between w-full">
+              <div>
+                <h2 class="text-3xl font-bold text-white dark:text-white">Get Started with HireGen Today</h2>
+                <p class="mt-2 text-lg text-white dark:text-gray-300">Sign up for a free demo and experience AI-driven hiring excellence</p>
+              </div>
+              <a 
+                href="/register"
+                class="inline-flex items-center px-6 py-3 text-black bg-white text-lg font-medium rounded-lg shadow-md hover:opacity-90 transition"
+              >
+                Try Hiregen Free
+              </a>
+            </div>
+      </div>
+      </div>
+      </div> 
+</section>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        try {
+            // Execute reCAPTCHA and get the token
+            grecaptcha.ready(async function () {
+                const recaptchaToken = await grecaptcha.execute('6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT', { action: 'submit' });
+
+                // Include the reCAPTCHA token in the form data
+                const formData = {
+                    name: name,
+                    email: email,
+                    message: message,
+                    'g-recaptcha-response': recaptchaToken
+                };
+
+                // Submit the form data to the server
+                const response = await fetch('/homepage_contact_form_submission', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    // Show the thank-you message
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';
+                } else {
+                    alert('There was an error submitting your message. Please try again.');
+                }
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error submitting your message. Please try again.');
+        }
+    });
+</script>
+      <footer class="bg-white py-10 sm:py-20 border-y border-gray-200">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <h3 class="mb-4 font-semibold">Services</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_recruitment_service')}}">AI Recruitment</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('candidate_screening_service')}}">Candidate Screening</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('resume_parsing_service')}}">Resume Parsing</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('career_site_service')}}">Career Site</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('interview_scheduling_service')}}">Interview Scheduling</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="mb-4 font-semibold">Products</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_software_product')}}">Recruitment Software</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('applicant_tracking_product')}}">Applicant Tracking Software</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_crm_product')}}">Recruitment CRM</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('staffing_software_product')}}">Staffing Software</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('job_board_product')}}">Job Board Software</a></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="mb-4 font-semibold">AI Recruitment Tools</h3>
+              <ul class="flex flex-col gap-y-3 text-base">
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_agents')}}">AI Agents</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('recruitment_chatbots')}}">Recruitment Chatbots</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_candidate_matching')}}">AI Candidate Matching</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_job_matching')}}">AI Job Matching</a></li>
+                <li><a class="text-slate-600 hover:text-slate-900 dark:hover:text-slate-300" href="{{url_for('ai_interview')}}">AI Interview</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="logo"><a href="{{url_for('index')}}">
+              <Image
+          alt="Logo"
+          src="/static/images/logo.webp"
+          class="w-auto h-6"
+          width="6659"
+          height="1086"
+      />
+              </a></div>
+              <p class="mt-5 text-base text-slate-500 mb-5">Hiregen.com leverages AI-driven recruitment software to streamline hiring, saving time and ensuring you attract, evaluate, and hire top talent effortlessly for your organization.</p>
+              <form id="newsletter-form">
+                <h3 class="text-lg font-semibold tracking-tight text-gray-700">Sign up to our newsletter <span aria-hidden="true">↓</span></h3>
+                <div class="mt-3 flex flex-col sm:flex-row rounded-3xl bg-white pr-2.5 shadow-xl shadow-blue-600/5 focus-within:ring-2 focus-within:ring-blue-600 border">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email address"
+                    aria-label="Email address"
+                    class="sm:-my-2.5 flex-auto bg-transparent pl-6 pr-2.5 text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  />
+                  <button
+                    class="mt-4 sm:mt-0 sm:ml-4 inline-flex justify-center rounded-full bg-slate-700 p-2 text-sm font-semibold text-white hover:bg-purple-900 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70"
+                    type="submit"
+                  >
+                    <span class="sm:not-sr-only">Subscribe</span>
+                    <span class="sm:hidden"></span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <section class="bg-white py-6 sm:py-6">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <nav class="flex flex-wrap justify-center sm:justify-start space-x-4 gap-y-3 text-sm text-slate-700">
+              <a class="hover:text-indigo-600" href="{{url_for('privacy_policy')}}">Privacy Policy</a>
+              <a class="hover:text-indigo-600" href="{{url_for('terms_of_service')}}">Terms of Service</a>
+              <a class="hover:text-indigo-600" href="{{url_for('homepage_contactus_submission')}}">Contact</a>
+              <a class="hover:text-indigo-600" href="{{url_for('faqs')}}">FAQ</a>
+              <a class="hover:text-indigo-600" href="{{url_for('about_us')}}">About</a>
+              <a class="hover:text-indigo-600" href="https://hiregen.hiregen.com">Careers</a>
+              <a class="hover:text-indigo-600" href="{{url_for('sitemap_table')}}">SiteMap</a>
+
+            </nav>
+            <div class="flex justify-center sm:justify-end space-x-4">
+<a href="https://facebook.com/" class="text-gray-400 hover:text-indigo-600" aria-label="Facebook">
+  <i class="bi bi-facebook"></i>
+</a>
+<a href="https://twitter.com/" class="text-gray-400 hover:text-indigo-600" aria-label="Twitter">
+  <i class="bi bi-twitter-x"></i>
+</a>
+<a href="https://linkedin.com/" class="text-gray-400 hover:text-indigo-600" aria-label="LinkedIn">
+  <i class="bi bi-linkedin"></i>
+</a>
+<a href="https://youtube.com/" class="text-gray-400 hover:text-indigo-600" aria-label="YouTube">
+  <i class="bi bi-youtube"></i>
+</a>
+<a href="https://hiregen.com/sitemap/table" class="text-gray-400 hover:text-indigo-600" aria-label="RSS Feed">
+  <i class="bi bi-rss-fill"></i>
+</a>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    <script>
+      function openAnsSection(val) {
+  var p = document.getElementById("para" + val);
+  var svg = document.getElementById("path" + val);
+
+  if (p.classList.contains("hidden")) {
+    p.classList.remove("hidden");
+    p.classList.add("block");
+  } else {
+    p.classList.remove("block");
+    p.classList.add("hidden");
+  }
+
+  if (svg.classList.contains("hidden")) {
+    svg.classList.remove("hidden");
+    svg.classList.add("block");
+  } else {
+    svg.classList.remove("block");
+    svg.classList.add("hidden");
+  }
+}
+</script>
+
+<script>
+  document.getElementById("newsletter-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+  
+    const form = e.target;
+    const emailInput = form.querySelector("input[type='email']");
+    const button = form.querySelector("button");
+  
+    const email = emailInput.value.trim();
+    if (!email) return;
+  
+    // Disable input and button
+    emailInput.disabled = true;
+    button.disabled = true;
+    const originalText = button.innerHTML;
+    button.innerHTML = "Submitting...";
+  
+    try {
+      const response = await fetch("/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        button.innerHTML = "Subscribed";
+      } else {
+        alert(result.detail || "Subscription failed.");
+        emailInput.disabled = false;
+        button.disabled = false;
+        button.innerHTML = originalText;
+      }
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+      emailInput.disabled = false;
+      button.disabled = false;
+      button.innerHTML = originalText;
+    }
+  });
+  </script>
+
+<script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
+<script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+</body>
+</html>

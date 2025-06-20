@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
     <style>
    a.login-logo {
             height: 36px;
@@ -72,7 +72,7 @@
                         {{ form.confirm_password(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-2 text-md sm:text-md/6 data-focus:outline focus:outline-blue-600 font-medium data-focus:outline-1 data-focus:-outline-offset-1 data-focus:outline-black", placeholder="", required=True) }}
                     </div>
                     <div class="mt-8">
-                        {{ form.submit(class="text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full") }}
+                        {{ form.submit(class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 w-full") }}
                    </div>
             </form>
                 <div class="mt-8 text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">Already have an account? <a

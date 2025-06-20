@@ -41,7 +41,7 @@ app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share ses
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -4196,6 +4196,9 @@ def homepage_contactus_submission():
 def about_us():
     return render_template('aboutus.html')
 
+@app.route('/all_companies')
+def all_companies():
+    return render_template('all_companies.html')
 
 ################## ADMIN CmS ####################################################
 
