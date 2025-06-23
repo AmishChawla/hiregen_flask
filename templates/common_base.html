@@ -7,7 +7,7 @@
     {% block metatags %} 
     {% endblock %}
 
-    <title>{% block title %}HireGen|AI Recruitment Software{% endblock %}</title>
+    <title>{% block title %}HireGen | AI Recruitment Software{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -57,79 +57,85 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
 
     <div class="bg-white">
-    <header class="container mx-auto px-6 sm:px-6 lg:px-8 flex justify-between items-center p-4">
-          <div class="flex items-center">
-            <div class="logo">
-              <a href="{{url_for('index')}}">
-                <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
-              </a>
-            </div>
-            <button class="ml-auto md:hidden" onClick={toggleMenu} aria-label="Toggle Menu">
-  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-  </svg>
-</button>
-
-</div>
-<nav class="flex flex-col md:flex-row md:flex items-center space-y-4 md:space-y-0 md:space-x-5">
-  <ul class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-5">
-    <li class="relative group">
-      <a href="#" class="flex items-center py-3 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
-        Features
-        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+<header x-data="{ open: false }" class="container mx-auto px-6 sm:px-6 lg:px-8 flex justify-between items-center p-4">
+  <div class="flex items-center w-full justify-between">
+    <div class="logo">
+      <a href="{{url_for('index')}}">
+        <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
       </a>
-      <!-- Submenu starts -->
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
-        <li><a href="{{url_for('recruitment_software')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Software</a></li>
-        <li><a href="{{url_for('applicant_tracking_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Applicant Tracking</a></li>
-        <li><a href="{{url_for('resume_parsing_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Parsing</a></li>
-        <li><a href="{{url_for('recruitment_crm')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment CRM</a></li>
-        <li><a href="{{url_for('candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
-        <li><a href="{{url_for('ai_recruitment')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">AI Recruitment</a></li>
-      </ul>
-      <!-- Submenu ends -->
-    </li>
+    </div>
 
-    <li class="relative group">
-      <a href="#" class="flex items-center py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
-        AI
-        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
-      </a>
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
-        <li><a href="{{url_for('ai_resume_screening')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Screening</a></li>
-        <li><a href="{{url_for('ai_candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
-        <li><a href="{{url_for('ai_chatbots')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Chatbots</a></li>
-        <li><a href="{{url_for('ai_recruitment_analytics')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Analytics</a></li>
-      </ul>
-    </li>
+    <!-- Toggle Button -->
+    <button @click="open = !open" class="ml-auto md:hidden" aria-label="Toggle Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7" />
+      </svg>
+    </button>
+  </div>
 
-    <li><a href="{{url_for('user_view_plan')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-500 min-h-[48px]">Pricing</a></li>
-    <li><a href="{{url_for('all_companies')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-500 min-h-[48px]">Companies</a></li>
+  <!-- Navigation -->
+  <nav :class="{'block': open, 'hidden': !open}" class="mt-4 md:mt-0 md:flex md:flex-row md:items-center md:space-x- w-full md:w-auto hidden">
+    <ul class="flex flex-col md:flex-row items-start md:items-center space-y-2 md:space-y-0 md:space-x-10">
+      <!-- Features -->
+      <li class="relative group w-full md:w-auto">
+        <a href="#" class="flex items-center py-2 text-base font-medium text-gray-700 hover:text-blue-600">
+          Features <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+        </a>
+        <ul class="absolute bg-white p-0 border w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
+          <li><a href="{{url_for('recruitment_software')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Software</a></li>
+          <li><a href="{{url_for('applicant_tracking_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Applicant Tracking</a></li>
+          <li><a href="{{url_for('resume_parsing_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Parsing</a></li>
+          <li><a href="{{url_for('recruitment_crm')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment CRM</a></li>
+          <li><a href="{{url_for('candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+          <li><a href="{{url_for('ai_recruitment')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">AI Recruitment</a></li>
+        </ul>
+      </li>
 
-    <li class="relative group">
-      <a href="#" class="flex items-center py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">
-        Resources
-        <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
-      </a>
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
-        <li><a href="{{url_for('all_cms_post')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Blog</a></li>
-        <li><a href="{{url_for('faqs')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">FAQ's</a></li>
-        <li><a href="{{url_for('about_us')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">About Us</a></li>
-        <li><a href="{{url_for('privacy_policy')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Privacy Policy</a></li>
-        <li><a href="{{url_for('terms_of_service')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Terms of Service</a></li>
-      </ul>
-    </li>
-  </ul>
+      <!-- AI -->
+      <li class="relative group w-full md:w-auto">
+        <a href="#" class="flex items-center py-2 text-base font-medium text-gray-700 hover:text-blue-600">
+          AI <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+        </a>
+        <ul class="absolute bg-white p-0 border w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
+          <li><a href="{{url_for('ai_resume_screening')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Screening</a></li>
+          <li><a href="{{url_for('ai_candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+          <li><a href="{{url_for('ai_chatbots')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Chatbots</a></li>
+          <li><a href="{{url_for('ai_recruitment_analytics')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Analytics</a></li>
+        </ul>
+      </li>
 
-  <a href="{{url_for('login')}}" class="block py-3 px-4 text-base font-medium text-gray-700 hover:text-purple-900 min-h-[48px]">Sign in</a>
-  <a href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2">
-    Free Trial
-  </a>
-</nav>
+      <li><a href="{{url_for('user_view_plan')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Pricing</a></li>
+      <li><a href="{{url_for('all_companies')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Companies</a></li>
+
+      <!-- Resources -->
+      <li class="relative group w-full md:w-auto">
+        <a href="#" class="flex items-center py-2 text-base font-medium text-gray-700 hover:text-blue-600">
+          Resources <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
+        </a>
+        <ul class="absolute bg-white p-0 border w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
+          <li><a href="{{url_for('all_cms_post')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Blog</a></li>
+          <li><a href="{{url_for('faqs')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">FAQ's</a></li>
+          <li><a href="{{url_for('about_us')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">About Us</a></li>
+          <li><a href="{{url_for('privacy_policy')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Privacy Policy</a></li>
+          <li><a href="{{url_for('terms_of_service')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Terms of Service</a></li>
+        </ul>
+      </li>
+
+      <li class="w-14"><a href="{{url_for('login')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Sign in</a></li>
+      <li>
+        <a href="{{url_for('register')}}"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">
+          Free Trial
+        </a>
+      </li>
+    </ul>
+  </nav>
 </header>
   </div>
 
