@@ -5,32 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HireGen | AI Recruitment Software</title>
     <meta name="description" content="Streamline your hiring process with AI—save time, attract top talent, and simplify recruitment effortlessly.">
-    
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
-<!-- End Google Tag Manager -->
-  <style>
-    body {
-      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
-      font-feature-settings: normal;
-    font-variation-settings: normal;
-    -webkit-tap-highlight-color: transparent;
-      height: 100vh;
-    }
-    .submenu-content {
-  transition: all 0.3s ease;
-}
-.submenu-toggle.open .submenu-icon {
-  transform: rotate(90deg);
-}
-  </style>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -38,8 +16,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       darkMode: 'class',
     };
   </script>
-  
-</head>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
+<!-- End Google Tag Manager -->
+
+<style>
+  body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.submenu-content {
+  transition: all 0.3s ease;
+}
+.submenu-toggle.open .submenu-icon {
+  transform: rotate(90deg);
+}
+</style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LHWC5ZME1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -48,6 +45,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   gtag('config', 'G-2LHWC5ZME1');
 </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
 
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -59,9 +59,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <header class="container mx-auto px-6 sm:px-6 lg:px-8 flex justify-between items-center p-4">
           <div class="flex items-center">
             <div class="logo">
-              <Link href="{{url_for('index')}}">
+              <a href="{{url_for('index')}}">
                 <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
-              </Link>
+              </a>
             </div>
             <button class="ml-auto md:hidden" onClick={toggleMenu} aria-label="Toggle Menu">
   <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
       </a>
       <!-- Submenu starts -->
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
         <li><a href="{{url_for('recruitment_software')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Software</a></li>
         <li><a href="{{url_for('applicant_tracking_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Applicant Tracking</a></li>
         <li><a href="{{url_for('resume_parsing_feature')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Parsing</a></li>
@@ -94,7 +94,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         AI
         <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
       </a>
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg  z-50">
         <li><a href="{{url_for('ai_resume_screening')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Screening</a></li>
         <li><a href="{{url_for('ai_candidate_matching')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
         <li><a href="{{url_for('ai_chatbots')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Chatbots</a></li>
@@ -110,7 +110,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         Resources
         <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
       </a>
-      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg">
+      <ul class="absolute bg-white p-3 w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
         <li><a href="{{url_for('all_cms_post')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Blog</a></li>
         <li><a href="{{url_for('faqs')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">FAQ's</a></li>
         <li><a href="{{url_for('about_us')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">About Us</a></li>
@@ -174,7 +174,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     </div>
                 </div> -->
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <button
+                    <a href="{{url_for('register')}}"
                         class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-16 py-6 text-lg">Start
                         Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -186,7 +186,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%20group-hover%3Atranslate-x-1%20transition-transform%22%7D">
                             <path d="M5 12h14"></path>
                             <path d="m12 5 7 7-7 7"></path>
-                        </svg></button>
+                        </svg></a>
                         </div>
             </div>
             <div class="relative animate-fade-in delay-300">
@@ -284,7 +284,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
       <section class="p-10 bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-          <h2 class="font-mono text-md font-semibold uppercase tracking-widest text-slate-400 data-[dark]:text-gray-400">Trusted by Companies</h2>
+          <h2 class="font-mono text-md font-semibold uppercase tracking-widest text-slate-400 data-[dark]:text-gray-400"><a href="{{url_for('all_companies')}}">Trusted by Companies</a></h2>
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 mt-8">
             <div>
                 <Image
@@ -1077,11 +1077,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <p class="text-xl mb-8 max-w-2xl mx-auto">Join industry leaders who trust our platform to build
         exceptional teams. Start your free trial today.</p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-16 py-6 text-lg">Start
+        <a href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-16 py-6 text-lg">Start
                         Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" data-lov-id="src/components/HeroSection.tsx:55:16" data-lov-name="ArrowRight" data-component-path="src/components/HeroSection.tsx" data-component-line="55" data-component-file="HeroSection.tsx" data-component-name="ArrowRight" data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%20group-hover%3Atranslate-x-1%20transition-transform%22%7D">
                             <path d="M5 12h14"></path>
                             <path d="m12 5 7 7-7 7"></path>
-                        </svg></button>
+                        </svg></a>
     </div>
 </div>
 

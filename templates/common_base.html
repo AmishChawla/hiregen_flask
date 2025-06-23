@@ -8,9 +8,9 @@
     {% endblock %}
 
     <title>{% block title %}HireGen|AI Recruitment Software{% endblock %}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -36,16 +36,30 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
 <!-- End Google Tag Manager -->
-
-    {% block styles %}
-    {% endblock %}
-</head>
-<body>
+    <style>
+  body {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+      height: 100vh;
+    }
+.submenu-content {
+  transition: all 0.3s ease;
+}
+.submenu-toggle.open .submenu-icon {
+  transform: rotate(90deg);
+}
+</style>
+{% block styles %}
+{% endblock %}
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-    <!-- Header -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
     <div class="bg-white">
     <header class="container mx-auto px-6 sm:px-6 lg:px-8 flex justify-between items-center p-4">
           <div class="flex items-center">
