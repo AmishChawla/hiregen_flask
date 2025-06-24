@@ -33,10 +33,10 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-#app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
 app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
-#app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
@@ -1566,6 +1566,53 @@ def generate_ai_content():
     except json.JSONDecodeError as e:
         print("JSON Decode Error:", str(e))  # Debugging
         return jsonify(success=False, error="Failed to parse AI response as JSON", raw_response=bot_response)
+
+    return jsonify(success=False, error="Invalid request")
+
+
+@app.route('/generate-ai-blog-post', methods=['POST'])
+def generate_ai_blog_post():
+    functions = [
+        {
+            "name": "generate_blog_post",
+            "description": "Generate a structured blog post with tags, short description, and full content",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "tags": {"type": "string", "description": "Comma-separated tags for the blog post"},
+                    "short_description": {"type": "string", "description": "A short description of the blog post"},
+                    "content": {"type": "string", "description": "The full content of the blog post"}
+                },
+                "required": ["tags", "short_description", "content"]
+            }
+        }
+    ]
+
+    data = request.json
+    post_title = data.get('prompt', '')
+
+    completion = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a helpful AI that generates blog content."},
+            {"role": "user", "content": f"Generate a blog post titled: '{post_title}' with appropriate tags, a short description, and full content."}
+        ],
+        functions=functions,
+        function_call={"name": "generate_blog_post"},  # Force function calling
+        temperature=0.7,
+        max_tokens=1024,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+
+    try:
+        response_data = completion.choices[0].message.function_call.arguments
+        structured_response = json.loads(response_data)
+        return jsonify(success=True, content=structured_response)
+    except json.JSONDecodeError as e:
+        print("JSON Decode Error:", str(e))
+        return jsonify(success=False, error="Failed to parse AI response as JSON")
 
     return jsonify(success=False, error="Invalid request")
 
