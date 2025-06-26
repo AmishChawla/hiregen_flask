@@ -1,137 +1,841 @@
 {% extends 'common_base.html' %}
-
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-blue-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI Recruitment Chatbots</h1>
-                <p class="text-xl text-white opacity-90">Automate candidate engagement with intelligent chatbots</p>
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <div class="flex items-center justify-center mb-6">
+                <div class="flex items-center bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full px-4 py-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-message-square w-5 h-5 text-blue-600 mr-2"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:20:16" data-lov-name="MessageSquare"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="20"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="MessageSquare"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-blue-600%20mr-2%22%7D">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg><span class="text-sm font-medium text-blue-700">AI-Powered Conversational Hiring</span></div>
             </div>
-        </div>
-    </div>
-
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">24/7 Candidate Support</h3>
-                    <p class="text-slate-800">Provide instant responses to candidate queries around the clock.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Initial Screening</h3>
-                    <p class="text-slate-800">Conduct preliminary candidate screenings through natural conversations.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Interview Scheduling</h3>
-                    <p class="text-slate-800">Automate interview scheduling and coordination.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">How Our Chatbots Work</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-500">1</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Initial Contact</h3>
-                    <p class="text-slate-800">Engage with candidates</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-500">2</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Information Collection</h3>
-                    <p class="text-slate-800">Gather key details</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-500">3</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Assessment</h3>
-                    <p class="text-slate-800">Evaluate responses</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-purple-500">4</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Next Steps</h3>
-                    <p class="text-slate-800">Schedule or qualify</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of AI Chatbots</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">AI Recruitment
+                Chatbots<span class="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Transforming
+                    Candidate Engagement</span></h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Revolutionize your recruitment
+                process with intelligent chatbots that engage candidates 24/7, screen applicants automatically, and
+                provide instant responses to hiring queries.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><a href="{{url_for('register')}}"
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 h-11 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 text-lg">Start
+                    Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:43:16" data-lov-name="ArrowRight"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="43"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="ArrowRight"
+                        data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%22%7D">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg></a></div>
+            <div class="relative">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 shadow-2xl max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-bot w-8 h-8 text-blue-600 mr-3"
+                                    data-lov-id="src/pages/AIRecruitmentChatbots.tsx:59:22" data-lov-name="Bot"
+                                    data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="59"
+                                    data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Bot"
+                                    data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%20mr-3%22%7D">
+                                    <path d="M12 8V4H8"></path>
+                                    <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                                    <path d="M2 14h2"></path>
+                                    <path d="M20 14h2"></path>
+                                    <path d="M15 13v2"></path>
+                                    <path d="M9 13v2"></path>
+                                </svg><span class="text-lg font-semibold text-gray-900">HireGen Chatbot</span></div>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-start">
+                                <div class="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg max-w-xs">Hi! I'm here to help
+                                    you with our Software Engineer position. Can you tell me about your experience with
+                                    React?</div>
+                            </div>
+                            <div class="flex justify-end">
+                                <div class="bg-gray-100 text-gray-900 px-4 py-2 rounded-lg max-w-xs">I have 3 years of
+                                    experience with React, including hooks, context API, and TypeScript.</div>
+                            </div>
+                            <div class="flex justify-start">
+                                <div class="bg-blue-100 text-blue-900 px-4 py-2 rounded-lg max-w-xs">Great! I'd like to
+                                    schedule a technical interview. What's your availability this week?</div>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Save Time</h3>
-                        <p class="text-slate-800">Automate repetitive tasks and communications</p>
-                    </div>
                 </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Advanced Chatbot Features</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our AI chatbots use natural language processing and
+                machine learning to provide intelligent, context-aware conversations with candidates.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-message-square w-8 h-8 text-blue-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:111:22" data-lov-name="MessageSquare"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="111"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="MessageSquare"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Intelligent Conversations</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Natural language processing enables
+                        human-like interactions that understand context and intent.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-zap w-8 h-8 text-indigo-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:116:22" data-lov-name="Zap"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="116"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Zap"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-indigo-600%22%7D">
+                                <path
+                                    d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                </path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Instant Response</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">24/7 availability ensures candidates
+                        get immediate answers to their questions anytime.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-purple-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:121:22" data-lov-name="Users"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="121"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Pre-Screening Automation</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Automatically qualify candidates based
+                        on customizable screening criteria.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-brain w-8 h-8 text-green-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:126:22" data-lov-name="Brain"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="126"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Brain"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <path
+                                    d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                                </path>
+                                <path
+                                    d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                                </path>
+                                <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                                <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                                <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                                <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                                <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                                <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                                <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Learning &amp; Adaptation</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Continuously improves responses based
+                        on successful interactions and feedback.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-globe w-8 h-8 text-orange-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:131:22" data-lov-name="Globe"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="131"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Globe"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-orange-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                                <path d="M2 12h20"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Multi-Language Support</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Communicate with candidates in their
+                        preferred language for better engagement.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-target w-8 h-8 text-red-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:136:22" data-lov-name="Target"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="136"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Target"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-red-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Interview Scheduling</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Seamlessly schedules interviews and
+                        sends calendar invitations to candidates.</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 lg:p-12">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">How Our Chatbots Work</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            1</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Initial Engagement</h4>
+                            <p class="text-gray-600">Chatbot greets candidates and explains the application process,
+                                creating a welcoming first impression.</p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Better Experience</h3>
-                        <p class="text-slate-800">Provide instant responses and 24/7 availability</p>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            2</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Information Collection</h4>
+                            <p class="text-gray-600">Gathers essential candidate information through conversational
+                                forms and questions.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            3</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Qualification Assessment</h4>
+                            <p class="text-gray-600">Evaluates candidates against job requirements using intelligent
+                                screening questions.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            4</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Status Updates</h4>
+                            <p class="text-gray-600">Provides real-time updates on application status and next steps in
+                                the process.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            5</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Seamless Handoff</h4>
+                            <p class="text-gray-600">Transitions qualified candidates to human recruiters with complete
+                                conversation history.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- CTA Section -->
-    <div class="bg-purple-500 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Automate Your Recruitment?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI chatbots to transform your hiring process today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-purple-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition duration-300">Get Started</a>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Transform Your Recruitment Process</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">AI recruitment chatbots deliver measurable improvements
+                in efficiency, candidate experience, and hiring outcomes.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+                <div class="flex items-center mb-8">
+                    <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 mr-3">
+                        For Recruiters</div>
+                    <h3 class="text-2xl font-bold text-gray-900">Streamline Your Workflow</h3>
+                </div>
+                <div data-component-content="%7B%22className%22%3A%22space-y-6%22%7D" class="space-y-6">
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-clock w-6 h-6 text-green-600"
+                                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:239:26"
+                                            data-lov-name="Clock"
+                                            data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                            data-component-line="239" data-component-file="AIRecruitmentChatbots.tsx"
+                                            data-component-name="Clock"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">80% Time Savings</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    80% faster</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Automate initial screening and reduce manual work by handling
+                                routine inquiries automatically.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-trending-up w-6 h-6 text-blue-600"
+                                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:245:26"
+                                            data-lov-name="TrendingUp"
+                                            data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                            data-component-line="245" data-component-file="AIRecruitmentChatbots.tsx"
+                                            data-component-name="TrendingUp"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                            <polyline points="16 7 22 7 22 13"></polyline>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Improved Response
+                                        Time</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    24/7 availability</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Instant responses improve candidate experience and reduce drop-off
+                                rates.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-users w-6 h-6 text-purple-600"
+                                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:251:26"
+                                            data-lov-name="Users"
+                                            data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                            data-component-line="251" data-component-file="AIRecruitmentChatbots.tsx"
+                                            data-component-name="Users"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Higher Engagement
+                                    </h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    40% higher engagement</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Interactive conversations keep candidates engaged throughout the
+                                process.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-dollar-sign w-6 h-6 text-orange-600"
+                                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:257:26"
+                                            data-lov-name="DollarSign"
+                                            data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                            data-component-line="257" data-component-file="AIRecruitmentChatbots.tsx"
+                                            data-component-name="DollarSign"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                            <line x1="12" x2="12" y1="2" y2="22"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Cost Reduction</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    50% cost reduction</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Reduce recruitment costs by automating repetitive tasks and
+                                improving efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="flex items-center mb-8">
+                    <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-green-100 text-green-800 text-sm font-medium px-3 py-1 mr-3">
+                        For Candidates</div>
+                    <h3 class="text-2xl font-bold text-gray-900">Enhanced Experience</h3>
+                </div>
+                <div class="space-y-6">
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-clock w-6 h-6 text-green-600"
+                                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:301:26" data-lov-name="Clock"
+                                        data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                        data-component-line="301" data-component-file="AIRecruitmentChatbots.tsx"
+                                        data-component-name="Clock"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Instant Responses</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Get immediate answers to questions without waiting for recruiter
+                                availability.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-circle-check-big w-6 h-6 text-blue-600"
+                                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:306:26"
+                                        data-lov-name="CheckCircle"
+                                        data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                        data-component-line="306" data-component-file="AIRecruitmentChatbots.tsx"
+                                        data-component-name="CheckCircle"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                        <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                        <path d="m9 11 3 3L22 4"></path>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Clear Communication</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Receive transparent updates about application status and next
+                                steps.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-users w-6 h-6 text-purple-600"
+                                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:311:26" data-lov-name="Users"
+                                        data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                        data-component-line="311" data-component-file="AIRecruitmentChatbots.tsx"
+                                        data-component-name="Users"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Personalized Interaction
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Experience tailored conversations based on your profile and
+                                preferences.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-trending-up w-6 h-6 text-orange-600"
+                                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:316:26"
+                                        data-lov-name="TrendingUp"
+                                        data-component-path="src/pages/AIRecruitmentChatbots.tsx"
+                                        data-component-line="316" data-component-file="AIRecruitmentChatbots.tsx"
+                                        data-component-name="TrendingUp"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                        <polyline points="16 7 22 7 22 13"></polyline>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Convenient Scheduling
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Easily schedule interviews and receive automated reminders.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %} 
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Success Stories</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">See how companies have transformed their recruitment
+                process with AI chatbots.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-green-50 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-8 h-8 text-green-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:366:22" data-lov-name="TrendingUp"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="366"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Technology</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Fast-Growing Tech Startup</h3>
+                    <p class="text-gray-600 text-sm">Handling high volume of applications</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Reduction in initial screening time</span><span
+                                class="text-lg font-bold text-gray-900">90%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Candidate engagement availability</span><span
+                                class="text-lg font-bold text-gray-900">24/7</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Improvement in candidate satisfaction</span><span
+                                class="text-lg font-bold text-gray-900">60%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-blue-50 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-blue-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:378:22" data-lov-name="Users"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="378"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Healthcare</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Regional Hospital Network</h3>
+                    <p class="text-gray-600 text-sm">Improving nurse recruitment efficiency</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Candidates screened weekly</span><span
+                                class="text-lg font-bold text-gray-900">500+</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Faster interview scheduling</span><span
+                                class="text-lg font-bold text-gray-900">45%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Increase in qualified applicants</span><span
+                                class="text-lg font-bold text-gray-900">35%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-purple-50 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-clock w-8 h-8 text-purple-600"
+                                data-lov-id="src/pages/AIRecruitmentChatbots.tsx:390:22" data-lov-name="Clock"
+                                data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="390"
+                                data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Clock"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Retail</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">National Retail Chain</h3>
+                    <p class="text-gray-600 text-sm">Seasonal hiring at scale</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Candidates processed daily</span><span
+                                class="text-lg font-bold text-gray-900">1000+</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Reduction in recruiter workload</span><span
+                                class="text-lg font-bold text-gray-900">70%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Faster time-to-hire</span><span
+                                class="text-lg font-bold text-gray-900">50%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <div class="flex justify-center mb-6">
+                <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:429:18" data-lov-name="Star"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="429"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:429:18" data-lov-name="Star"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="429"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:429:18" data-lov-name="Star"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="429"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:429:18" data-lov-name="Star"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="429"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/pages/AIRecruitmentChatbots.tsx:429:18" data-lov-name="Star"
+                        data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="429"
+                        data-component-file="AIRecruitmentChatbots.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg></div>
+            </div>
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Join the Chatbot Revolution</h3>
+            <p class="text-xl opacity-90 max-w-3xl mx-auto">Companies worldwide are using HireGen's AI chatbots to
+                automate recruitment and deliver exceptional candidate experiences.</p>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Ready to Deploy AI Chatbots?</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Transform your recruitment process with intelligent
+                chatbots that work 24/7 to engage candidates and streamline your hiring workflow.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">Quick Implementation</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            1</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Sign up for HireGen.com and access the chatbot
+                                builder</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            2</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Customize conversation flows for your specific
+                                roles</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            3</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Train the chatbot with your company information
+                                and FAQs</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            4</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Deploy on your career site and job postings</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            5</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Monitor performance and optimize based on
+                                analytics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">Perfect For Organizations That Need:</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:497:20" data-lov-name="CheckCircle"
+                            data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="497"
+                            data-component-file="AIRecruitmentChatbots.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">High-volume candidate screening</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:497:20" data-lov-name="CheckCircle"
+                            data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="497"
+                            data-component-file="AIRecruitmentChatbots.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">24/7 candidate engagement</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:497:20" data-lov-name="CheckCircle"
+                            data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="497"
+                            data-component-file="AIRecruitmentChatbots.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Consistent candidate experience</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:497:20" data-lov-name="CheckCircle"
+                            data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="497"
+                            data-component-file="AIRecruitmentChatbots.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Reduced recruiter workload</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/pages/AIRecruitmentChatbots.tsx:497:20" data-lov-name="CheckCircle"
+                            data-component-path="src/pages/AIRecruitmentChatbots.tsx" data-component-line="497"
+                            data-component-file="AIRecruitmentChatbots.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Faster response times</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Start Your Chatbot Journey Today</h3>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of companies using HireGen's AI
+                chatbots to revolutionize their recruitment process and candidate experience.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a  href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-background h-11 rounded-md border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg">Start Free Trial
+                    </a></div>
+            <p class="text-sm opacity-75 mt-6">No setup fees • 30-day free trial • Easy integration</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

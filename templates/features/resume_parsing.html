@@ -6,84 +6,263 @@
     h2 {color:#000;}
 </style>
 
-<div class="flex justify-center p-16">
-  <div class="max-w-4xl w-full bg-white borderrounded-lg py-0 px-0">
-    <!-- Blog Title -->
-    <h1 class="mb-10 text-4xl font-medium tracking-tighter text-pretty text-gray-950 data-dark:text-white sm:text-5xl">
-     List of Features in Resume Parsing
-    </h1>
 
-    <!-- Blog Content -->
-    <div class="text-left text-gray-700 space-y-4">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Why Choose HireGen’s Resume Parsing Technology?</h2>
-        <p class="mt-4 text-lg">Recruiters and hiring managers deal with thousands of resumes, making manual screening time-consuming and inefficient. HireGen’s AI-powered Resume Parsing software automates this process, extracting critical candidate information and structuring it into an easy-to-analyze format.</p>
-
-        <h2 class="mt-6 text-2xl font-semibold">Key Features of HireGen’s Resume Parsing Software</h2>
-
-        <div class="mt-4 space-y-6">
-            <div>
-                <h3 class="text-xl font-semibold">1. AI-Powered Resume Extraction</h3>
-                <ul class="list-disc list-inside">
-                    <li>Advanced Natural Language Processing (NLP) extracts key candidate details.</li>
-                    <li>Identifies and categorizes skills, experience, education, and contact details.</li>
-                    <li>Multi-language support for global recruitment needs.</li>
-                </ul>
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <div class="flex items-center justify-center mb-6">
+                <div class="flex items-center bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full px-4 py-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-file-search w-5 h-5 text-blue-600 mr-2"
+                        data-lov-id="src/pages/AIResumeScreening.tsx:112:16" data-lov-name="FileSearch"
+                        data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="112"
+                        data-component-file="AIResumeScreening.tsx" data-component-name="FileSearch"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-blue-600%20mr-2%22%7D">
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                        <path d="M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"></path>
+                        <path d="m9 18-1.5-1.5"></path>
+                        <circle cx="5" cy="14" r="3"></circle>
+                    </svg><span class="text-sm font-medium text-blue-700">Resume Parsing</span></div>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">Smart Resume Parsing<span class="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Powered by AI</span></h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Quickly extract and structure candidate information from any resume format using AI-driven technology — saving time and reducing manual effort.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><a href="{{url_for('register')}}"
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 h-11 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 text-lg">Start
+                    Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"
+                        data-lov-id="src/pages/AIResumeScreening.tsx:135:16" data-lov-name="ArrowRight"
+                        data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="135"
+                        data-component-file="AIResumeScreening.tsx" data-component-name="ArrowRight"
+                        data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%22%7D">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg></a></div>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Key Features of HireGen’s Resume Parsing Software</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">HireGen’s resume parsing software uses AI and NLP to extract, structure, and analyze candidate data with speed and accuracy. It supports multiple formats, enables fast matching, and integrates seamlessly with your existing HR systems.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-file-search w-8 h-8 text-blue-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:12:12" data-lov-name="FileSearch"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="12"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="FileSearch"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                                <path d="M4.268 21a2 2 0 0 0 1.727 1H18a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v3"></path>
+                                <path d="m9 18-1.5-1.5"></path>
+                                <circle cx="5" cy="14" r="3"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">AI-Powered Resume Extraction</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Advanced Natural Language Processing (NLP) extracts essential candidate details, identifying skills, experience, education, and contact information — with multi-language support for global recruitment.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-target w-8 h-8 text-indigo-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:17:12" data-lov-name="Target"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="17"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Target"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-indigo-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Accurate Candidate Data Structuring</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">HireGen converts unstructured resume data into a standardized format, accurately pulling job titles, locations, and industries while minimizing errors from manual entry.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-eye w-8 h-8 text-purple-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:22:12" data-lov-name="Eye"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="22"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Eye"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <path
+                                    d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                                </path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Multi-Format Resume Processing</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Supports multiple file formats including PDF, DOC, DOCX, RTF, TXT, and scanned images using OCR. Batch processing makes bulk resume uploads fast and efficient.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-filter w-8 h-8 text-green-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:27:12" data-lov-name="Filter"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="27"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Filter"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Automated Candidate Matching</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">AI compares resumes with job descriptions to match the right candidates quickly. Keyword search and automated relevance ranking make talent discovery faster and smarter.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-zap w-8 h-8 text-orange-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:32:12" data-lov-name="Zap"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="32"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Zap"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-orange-600%22%7D">
+                                <path
+                                    d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                </path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Seamless ATS & CRM Integration</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">HireGen’s resume parser integrates directly with its ATS and connects via API to HRMS, payroll, and CRM platforms. Custom data mapping ensures compatibility with your workflows.</p>
+                </div>
             </div>
 
-            <div>
-                <h3 class="text-xl font-semibold">2. Accurate Candidate Data Structuring</h3>
-                <ul class="list-disc list-inside">
-                    <li>Converts unstructured resume data into a standardized format.</li>
-                    <li>Extracts job titles, locations, and industries for precise filtering.</li>
-                    <li>Minimizes errors by eliminating manual data entry.</li>
-                </ul>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Why Choose HireGen’s Resume Parsing Technology?</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">HireGen’s AI-powered resume parsing automates the extraction and structuring of candidate data, saving time and improving accuracy — so you can focus on hiring, not manual screening.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="rounded-lg bg-white text-card-foreground text-center border-0 shadow-md">
+                <div class="p-6 pt-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-sm"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-clock w-6 h-6 text-blue-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:45:12" data-lov-name="Clock"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="45"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Clock"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg></div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Intelligent Data Extraction</h3>
+                    <p class="text-gray-600 text-sm">HireGen uses advanced AI and NLP to extract key details like skills, experience, education, and contact info — with support for multiple languages to meet global hiring needs.</p>
+                </div>
             </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">3. Multi-Format Resume Processing</h3>
-                <ul class="list-disc list-inside">
-                    <li>Supports PDF, DOC, DOCX, RTF, TXT, and image-based resumes.</li>
-                    <li>OCR (Optical Character Recognition) technology for scanned resumes.</li>
-                    <li>Batch processing for bulk resume uploads.</li>
-                </ul>
+            <div class="rounded-lg bg-white text-card-foreground text-center border-0 shadow-md">
+                <div class="p-6 pt-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-sm"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-target w-6 h-6 text-green-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:50:12" data-lov-name="Target"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="50"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Target"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Fast & Accurate Structuring</h3>
+                    <p class="text-gray-600 text-sm">It converts unstructured resumes into clean, standardized data formats, pulling job titles, industries, and locations while reducing errors from manual entry.</p>
+                </div>
             </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">4. Automated Candidate Matching</h3>
-                <ul class="list-disc list-inside">
-                    <li>AI-driven resume-to-job matching based on job descriptions.</li>
-                    <li>Keyword-based search for fast talent identification.</li>
-                    <li>Automated ranking of resumes by relevance and suitability.</li>
-                </ul>
+            <div class="rounded-lg bg-white text-card-foreground text-center border-0 shadow-md">
+                <div  class="p-6 pt-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-sm"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-6 h-6 text-purple-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:55:12" data-lov-name="Users"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="55"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Versatile File Support</h3>
+                    <p class="text-gray-600 text-sm">Supports resumes in PDF, DOC, DOCX, TXT, RTF, and scanned images using OCR. Batch upload lets you process multiple resumes in one go, saving time.</p>
+                </div>
             </div>
-
-            <div>
-                <h3 class="text-xl font-semibold">5. Seamless ATS & CRM Integration</h3>
-                <ul class="list-disc list-inside">
-                    <li>Directly integrates with HireGen’s Applicant Tracking System (ATS).</li>
-                    <li>API-based connectivity with HRMS, payroll, and CRM platforms.</li>
-                    <li>Custom data mapping for existing HR workflows.</li>
-                </ul>
+            <div class="rounded-lg bg-white text-card-foreground text-center border-0 shadow-md">
+                <div class="p-6 pt-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-sm"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-6 h-6 text-orange-600"
+                                data-lov-id="src/pages/AIResumeScreening.tsx:60:12" data-lov-name="TrendingUp"
+                                data-component-path="src/pages/AIResumeScreening.tsx" data-component-line="60"
+                                data-component-file="AIResumeScreening.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Seamless Integration & Matching</h3>
+                    <p class="text-gray-600 text-sm">Integrates directly with HireGen ATS and connects via API to HRMS and CRM systems. AI-driven resume-to-job matching speeds up shortlisting with keyword-based relevance scoring.</p>
+                </div>
             </div>
         </div>
-
-        <h2 class="mt-8 text-2xl font-semibold">Future Trends in Resume Parsing Technology</h2>
-        <p class="mt-2">AI and automation are transforming resume parsing with features like predictive hiring analytics, AI-powered sentiment analysis, and deeper candidate insights.</p>
-
-        <h2 class="mt-6 text-2xl font-semibold">Why HireGen’s Resume Parsing?</h2>
-        <p class="mt-2">With HireGen, recruiters can process resumes 10x faster, improve hiring accuracy, and reduce time-to-fill. Whether you’re hiring for tech, finance, healthcare, or any other industry, our resume parsing software adapts to your needs.</p>
-
-        <!-- Call to Action -->
-        <div class="text-center mt-10">
-            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                Get Started with HireGen Today!
-            </h2>
-            <p class="text-lg text-gray-700 mb-6">Experience the power of AI-driven resume parsing with HireGen.</p>
-
-           <a href="/register" class="inline-flex items-center justify-center px-4 py-2 rounded-full border border-transparent bg-slate-700 shadow-md text-base font-medium whitespace-nowrap text-white data-disabled:bg-gray-950 data-disabled:opacity-40 data-hover:bg-gray-800">Sign Up for a Free Demo</a>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Get Started with HireGen Today!</h3>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Experience the power of AI-driven resume parsing with HireGen.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a  href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-background h-11 rounded-md border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg">Start Free Trial
+                    </a></div>
+            <p class="text-sm opacity-75 mt-6">No credit card required • Screen 50 resumes free • Setup in 5 minutes
+            </p>
         </div>
-</div>
-  </div>
-</div>
+    </div>
+</section>
 
 {% endblock %}

@@ -1,138 +1,870 @@
 {% extends 'common_base.html' %}
-
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-emerald-600 to-teal-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">AI Candidate Matching</h1>
-                <p class="text-xl text-white opacity-90">Find the perfect candidates with intelligent matching algorithms</p>
+
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <div class="flex items-center justify-center mb-6">
+                <div class="flex items-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-full px-4 py-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-sparkles w-5 h-5 text-blue-600 mr-2">
+                        <path
+                            d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z">
+                        </path>
+                        <path d="M20 3v4"></path>
+                        <path d="M22 5h-4"></path>
+                        <path d="M4 17v2"></path>
+                        <path d="M5 18H3"></path>
+                    </svg><span class="text-sm font-medium text-blue-700">AI-Powered Recruitment Revolution</span></div>
             </div>
-        </div>
-    </div>
-
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Smart Matching</h3>
-                    <p class="text-slate-800">Advanced algorithms match candidates to jobs based on multiple criteria.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Skill Analysis</h3>
-                    <p class="text-slate-800">Deep analysis of skills, experience, and qualifications.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-emerald-600 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Match Scoring</h3>
-                    <p class="text-slate-800">Precise scoring system to rank candidate matches.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- How It Works -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">The Matching Process</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">1</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Job Analysis</h3>
-                    <p class="text-slate-800">Extract key job requirements</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">2</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Candidate Analysis</h3>
-                    <p class="text-slate-800">Process candidate profiles</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">3</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">AI Matching</h3>
-                    <p class="text-slate-800">Advanced matching algorithms</p>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span class="text-2xl font-bold text-emerald-600">4</span>
-                    </div>
-                    <h3 class="font-semibold mb-2">Results</h3>
-                    <p class="text-slate-800">Ranked match results</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of AI Matching</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-emerald-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                            </svg>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">AI Candidate
+                Matching<span class="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Redefining
+                    Recruitment</span></h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">A game-changing feature by
+                HireGen.com that transforms how employers hire and how candidates are discovered. Move beyond gut
+                feelings and endless resume reviews to intelligent, fast, and accurate hiring.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><a
+                    href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 h-11 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 text-lg">Start
+                    Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"
+                        data-lov-id="src/components/Hero.tsx:35:14" data-lov-name="ArrowRight"
+                        data-component-path="src/components/Hero.tsx" data-component-line="35"
+                        data-component-file="Hero.tsx" data-component-name="ArrowRight"
+                        data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%22%7D">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg></a></div>
+            <div class="relative">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 shadow-2xl max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-bot w-8 h-8 text-blue-600 mr-3"
+                                    data-lov-id="src/components/Hero.tsx:51:20" data-lov-name="Bot"
+                                    data-component-path="src/components/Hero.tsx" data-component-line="51"
+                                    data-component-file="Hero.tsx" data-component-name="Bot"
+                                    data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%20mr-3%22%7D">
+                                    <path d="M12 8V4H8"></path>
+                                    <rect width="16" height="12" x="4" y="8" rx="2"></rect>
+                                    <path d="M2 14h2"></path>
+                                    <path d="M20 14h2"></path>
+                                    <path d="M15 13v2"></path>
+                                    <path d="M9 13v2"></path>
+                                </svg><span class="text-lg font-semibold text-gray-900">AI Matching Dashboard</span></div>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-blue-600 font-semibold">JS</span></div>
+                                    <div>
+                                        <p class="font-medium text-gray-900 text-start">John Smith</p>
+                                        <p class="text-sm text-gray-600">Senior Frontend Developer</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                        98% Match</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-purple-600 font-semibold">AM</span></div>
+                                    <div>
+                                        <p class="font-medium text-gray-900 text-start">Alice Miller</p>
+                                        <p class="text-sm text-gray-600">Full Stack Engineer</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">94%
+                                        Match</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Better Matches</h3>
-                        <p class="text-slate-800">Find candidates that truly fit your requirements</p>
-                    </div>
                 </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-emerald-600 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">How HireGen's AI Matching Engine Works</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our AI doesn't just scan for keywords—it comprehends
+                context using advanced natural language processing and machine learning algorithms.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-target w-8 h-8 text-blue-600"
+                                data-lov-id="src/components/Features.tsx:8:12" data-lov-name="Target"
+                                data-component-path="src/components/Features.tsx" data-component-line="8"
+                                data-component-file="Features.tsx" data-component-name="Target"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Job Description Analysis</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">The system extracts skills, responsibilities, seniority level, and domain-specific keywords using natural language processing (NLP).</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-zap w-8 h-8 text-indigo-600"
+                                data-lov-id="src/components/Features.tsx:13:12" data-lov-name="Zap"
+                                data-component-path="src/components/Features.tsx" data-component-line="13"
+                                data-component-file="Features.tsx" data-component-name="Zap"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-indigo-600%22%7D">
+                                <path
+                                    d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                </path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Candidate Profile Parsing</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">It analyzes resumes for experience, skills, certifications, job roles, education, and accomplishments.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-purple-600"
+                                data-lov-id="src/components/Features.tsx:18:12" data-lov-name="Users"
+                                data-component-path="src/components/Features.tsx" data-component-line="18"
+                                data-component-file="Features.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Semantic Matching</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">The engine uses machine learning to understand job-candidate compatibility beyond exact keyword matches.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-brain w-8 h-8 text-green-600"
+                                data-lov-id="src/components/Features.tsx:23:12" data-lov-name="Brain"
+                                data-component-path="src/components/Features.tsx" data-component-line="23"
+                                data-component-file="Features.tsx" data-component-name="Brain"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <path
+                                    d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                                </path>
+                                <path
+                                    d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                                </path>
+                                <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                                <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                                <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                                <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                                <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                                <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                                <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Scoring and Ranking</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Each candidate is scored based on match quality and ranked accordingly.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-globe w-8 h-8 text-orange-600"
+                                data-lov-id="src/components/Features.tsx:28:12" data-lov-name="Globe"
+                                data-component-path="src/components/Features.tsx" data-component-line="28"
+                                data-component-file="Features.tsx" data-component-name="Globe"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-orange-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                                <path d="M2 12h20"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Bias-Free Evaluation</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Demographic details like gender, age, and ethnicity are masked to ensure fair screening.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-clock w-8 h-8 text-red-600"
+                                data-lov-id="src/components/Features.tsx:33:12" data-lov-name="Clock"
+                                data-component-path="src/components/Features.tsx" data-component-line="33"
+                                data-component-file="Features.tsx" data-component-name="Clock"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-red-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Real-Time Talent Recommendations</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Suggests top-matching candidates as
+                        soon as a job is posted, from internal and external sources.</p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 lg:p-12">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6 text-center">Key Features of AI Candidate Matching at HireGen.com</h2>
+                <h3 class="text-xl text-gray-900 mb-8 text-center">Here are the top features that make HireGen’s AI Candidate Matching stand out:</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            1</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Skill-to-Job Relevance Engine</h4>
+                            <p class="text-gray-600">Matches core and complementary skills, even when phrased differently</p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Time Savings</h3>
-                        <p class="text-slate-800">Reduce time spent manually matching candidates</p>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            2</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Smart Resume Parsing</h4>
+                            <p class="text-gray-600">Extracts over 50 data points in milliseconds using AI-powered parsing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            3</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Experience-Level Matching</h4>
+                            <p class="text-gray-600">Distinguishes between junior, mid-level, and senior candidates based on contextual clues</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            4</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Culture and Soft Skill Insights</h4>
+                            <p class="text-gray-600">Infers soft skills and cultural alignment using behavioral cues in resumes and assessments</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            5</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Multi-Language Support</h4>
+                            <p class="text-gray-600">Supports multilingual candidate data, enabling global hiring.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            6</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Real-Time Talent Recommendations</h4>
+                            <p class="text-gray-600">Suggests top-matching candidates as soon as a job is posted, from internal and external sources.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                            7</div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Continuous Learning</h4>
+                            <p class="text-gray-600">The engine improves over time, learning from user behavior and feedback.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- CTA Section -->
-    <div class="bg-emerald-600 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Find Your Perfect Candidates?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using AI-powered candidate matching today.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-emerald-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition duration-300">Get Started</a>
+<section id="benefits" class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Benefits for Everyone</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our AI-powered matching system creates value for both
+                employers and job seekers, transforming the entire recruitment experience.</p>
+        </div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <div>
+        <div class="flex items-center mb-8">
+            <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 mr-3">
+                For Employers</div>
+            <h3 class="text-2xl font-bold text-gray-900">Hire Smarter, Faster</h3>
+        </div>
+        <div class="space-y-6">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-clock w-6 h-6 text-green-600"
+                                    data-lov-id="src/components/Benefits.tsx:9:12" data-lov-name="Clock"
+                                    data-component-path="src/components/Benefits.tsx" data-component-line="9"
+                                    data-component-file="Benefits.tsx" data-component-name="Clock"
+                                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg></div>
+                            <h3 class="tracking-tight text-lg font-semibold text-gray-900">Faster Time-to-Hire</h3>
+                        </div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                            80% faster</div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">
+                        Reduce screening time by over 80% and fill positions weeks faster</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-trending-up w-6 h-6 text-blue-600"
+                                    data-lov-id="src/components/Benefits.tsx:15:12" data-lov-name="TrendingUp"
+                                    data-component-path="src/components/Benefits.tsx" data-component-line="15"
+                                    data-component-file="Benefits.tsx" data-component-name="TrendingUp"
+                                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                    <polyline points="16 7 22 7 22 13"></polyline>
+                                </svg></div>
+                            <h3 class="tracking-tight text-lg font-semibold text-gray-900">Improved Quality of Hire</h3>
+                        </div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                            32% better retention</div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">Get
+                        better-matched candidates who stay longer and perform better</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-users w-6 h-6 text-purple-600"
+                                    data-lov-id="src/components/Benefits.tsx:21:12" data-lov-name="Users"
+                                    data-component-path="src/components/Benefits.tsx" data-component-line="21"
+                                    data-component-file="Benefits.tsx" data-component-name="Users"
+                                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg></div>
+                            <h3 class="tracking-tight text-lg font-semibold text-gray-900">Automation at Scale</h3>
+                        </div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                            1000s of resumes</div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">
+                        Screen thousands of resumes instantly without hiring more recruiters</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-dollar-sign w-6 h-6 text-orange-600"
+                                    data-lov-id="src/components/Benefits.tsx:27:12" data-lov-name="DollarSign"
+                                    data-component-path="src/components/Benefits.tsx" data-component-line="27"
+                                    data-component-file="Benefits.tsx" data-component-name="DollarSign"
+                                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                    <line x1="12" x2="12" y1="2" y2="22"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg></div>
+                            <h3 class="tracking-tight text-lg font-semibold text-gray-900">Lower Hiring Costs</h3>
+                        </div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                            70% cost reduction</div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">
+                        Minimize external agency dependency and reduce recruitment overheads</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-circle-check-big w-6 h-6 text-indigo-600"
+                                    data-lov-id="src/components/Benefits.tsx:33:12" data-lov-name="CheckCircle"
+                                    data-component-path="src/components/Benefits.tsx" data-component-line="33"
+                                    data-component-file="Benefits.tsx" data-component-name="CheckCircle"
+                                    data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-indigo-600%22%7D">
+                                    <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                    <path d="m9 11 3 3L22 4"></path>
+                                </svg></div>
+                            <h3 class="tracking-tight text-lg font-semibold text-gray-900">Fair and Bias-Free Hiring
+                            </h3>
+                        </div>
+                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                            100% bias-free</div>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">
+                        Promote diversity and inclusion with unbiased AI-driven matching</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center mb-8">
+            <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-green-100 text-green-800 text-sm font-medium px-3 py-1 mr-3">
+                For Job Seekers</div>
+            <h3 class="text-2xl font-bold text-gray-900">Get Discovered, Get Hired</h3>
+        </div>
+        <div class="space-y-6">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-6 h-6 text-green-600"
+                                data-lov-id="src/components/Benefits.tsx:42:12" data-lov-name="TrendingUp"
+                                data-component-path="src/components/Benefits.tsx" data-component-line="42"
+                                data-component-file="Benefits.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                        <h3 class="tracking-tight text-lg font-semibold text-gray-900">Better Job Visibility</h3>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">Be
+                        discovered for roles that align with your skills—even if job titles differ.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-heart w-6 h-6 text-red-600"
+                                data-lov-id="src/components/Benefits.tsx:47:12" data-lov-name="Heart"
+                                data-component-path="src/components/Benefits.tsx" data-component-line="47"
+                                data-component-file="Benefits.tsx" data-component-name="Heart"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-red-600%22%7D">
+                                <path
+                                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                                </path>
+                            </svg></div>
+                        <h3 class="tracking-tight text-lg font-semibold text-gray-900">Personalized Job Alerts</h3>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p data-component-content="%7B%22className%22%3A%22text-gray-600%22%7D" class="text-gray-600">
+                        Receive curated job suggestions based on career history and preferences.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-circle-check-big w-6 h-6 text-blue-600"
+                                data-lov-id="src/components/Benefits.tsx:52:12" data-lov-name="CheckCircle"
+                                data-component-path="src/components/Benefits.tsx" data-component-line="52"
+                                data-component-file="Benefits.tsx" data-component-name="CheckCircle"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                            </svg></div>
+                        <h3 class="tracking-tight text-lg font-semibold text-gray-900">Fair Opportunity</h3>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">Get
+                        evaluated based on actual skills and experience, not resume formatting.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                    <div class="flex items-center">
+                        <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-6 h-6 text-purple-600"
+                                data-lov-id="src/components/Benefits.tsx:57:12" data-lov-name="TrendingUp"
+                                data-component-path="src/components/Benefits.tsx" data-component-line="57"
+                                data-component-file="Benefits.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                        <h3 class="tracking-tight text-lg font-semibold text-gray-900">Career Progression</h3>
+                    </div>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-gray-600">Match
+                        with roles that support your long-term goals, not just your past roles.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-{% endblock %} 
+
+    </div>
+</section>
+<section id="case-studies" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Real-World Success Stories</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">See how companies across different industries have
+                transformed their hiring process with HireGen's AI Candidate Matching.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-green-50 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-8 h-8 text-green-600"
+                                data-lov-id="src/components/CaseStudies.tsx:17:12" data-lov-name="TrendingUp"
+                                data-component-path="src/components/CaseStudies.tsx" data-component-line="17"
+                                data-component-file="CaseStudies.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        FinTech</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Leading Financial Technology
+                        Company</h3>
+                    <p class="text-gray-600 text-sm">Reducing time-to-hire while maintaining quality</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Average time-to-hire</span><span
+                                class="text-lg font-bold text-gray-900">45 → 18 days</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Retention improvement</span><span
+                                class="text-lg font-bold text-gray-900">32%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Measurement period</span><span
+                                class="text-lg font-bold text-gray-900">6 months</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-blue-50 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-blue-600"
+                                data-lov-id="src/components/CaseStudies.tsx:29:12" data-lov-name="Users"
+                                data-component-path="src/components/CaseStudies.tsx" data-component-line="29"
+                                data-component-file="CaseStudies.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        EdTech</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Series A Startup</h3>
+                    <p class="text-gray-600 text-sm">Scaling hiring during rapid growth phase</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">In 60 days</span><span
+                                class="text-lg font-bold text-gray-900">27 hires</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Match satisfaction rate</span><span
+                                class="text-lg font-bold text-gray-900">94%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Third-party recruiters needed</span><span
+                                class="text-lg font-bold text-gray-900">0</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-purple-50 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-clock w-8 h-8 text-purple-600"
+                                data-lov-id="src/components/CaseStudies.tsx:41:12" data-lov-name="Clock"
+                                data-component-path="src/components/CaseStudies.tsx" data-component-line="41"
+                                data-component-file="CaseStudies.tsx" data-component-name="Clock"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Staffing</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Global Staffing Agency</h3>
+                    <p class="text-gray-600 text-sm">Improving efficiency and client satisfaction</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Screening time reduction</span><span
+                                class="text-lg font-bold text-gray-900">70%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Client satisfaction improvement</span><span
+                                class="text-lg font-bold text-gray-900">40%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Candidates processed daily</span><span
+                                class="text-lg font-bold text-gray-900">1000s</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <div class="flex justify-center mb-6">
+                <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/components/CaseStudies.tsx:96:16" data-lov-name="Star"
+                        data-component-path="src/components/CaseStudies.tsx" data-component-line="96"
+                        data-component-file="CaseStudies.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/components/CaseStudies.tsx:96:16" data-lov-name="Star"
+                        data-component-path="src/components/CaseStudies.tsx" data-component-line="96"
+                        data-component-file="CaseStudies.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/components/CaseStudies.tsx:96:16" data-lov-name="Star"
+                        data-component-path="src/components/CaseStudies.tsx" data-component-line="96"
+                        data-component-file="CaseStudies.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/components/CaseStudies.tsx:96:16" data-lov-name="Star"
+                        data-component-path="src/components/CaseStudies.tsx" data-component-line="96"
+                        data-component-file="CaseStudies.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-star w-6 h-6 text-yellow-400 fill-current"
+                        data-lov-id="src/components/CaseStudies.tsx:96:16" data-lov-name="Star"
+                        data-component-path="src/components/CaseStudies.tsx" data-component-line="96"
+                        data-component-file="CaseStudies.tsx" data-component-name="Star"
+                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-yellow-400%20fill-current%22%7D">
+                        <path
+                            d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z">
+                        </path>
+                    </svg></div>
+            </div>
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Join Thousands of Satisfied Customers</h3>
+            <p class="text-xl opacity-90 max-w-3xl mx-auto">Companies worldwide trust HireGen.com to revolutionize
+                their recruitment process. Experience the power of AI-driven candidate matching today.</p>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Ready to Experience Intelligent Hiring?</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">AI Candidate Matching is not a luxury—it's the new
+                standard for hiring in a fast-paced, skill-driven world. Get started with HireGen.com today.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">How to Get Started</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            1</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Sign Up - Visit HireGen.com and create a recruiter
+                                or agency account</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            2</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Post a Job - Use the AI job post assistant to
+                                describe your open position</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            3</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Get Matched - Receive a ranked list of
+                                top-matching candidates instantly</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            4</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Screen and Hire - Use built-in ATS features, or
+                                integrate with your preferred HR tools</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">
+                            5</div>
+                        <div class="flex-1">
+                            <p class="text-gray-700 leading-relaxed">Monitor and Optimize - Access actionable analytics
+                                to improve your recruitment process</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">Perfect if Your Goals Include:</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/components/CallToAction.tsx:62:18" data-lov-name="CheckCircle"
+                            data-component-path="src/components/CallToAction.tsx" data-component-line="62"
+                            data-component-file="CallToAction.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Hiring the right talent quickly</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/components/CallToAction.tsx:62:18" data-lov-name="CheckCircle"
+                            data-component-path="src/components/CallToAction.tsx" data-component-line="62"
+                            data-component-file="CallToAction.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Enhancing diversity and inclusion</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/components/CallToAction.tsx:62:18" data-lov-name="CheckCircle"
+                            data-component-path="src/components/CallToAction.tsx" data-component-line="62"
+                            data-component-file="CallToAction.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Reducing recruiting costs</p>
+                    </div>
+                    <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-circle-check-big w-6 h-6 text-green-600 mr-4 flex-shrink-0"
+                            data-lov-id="src/components/CallToAction.tsx:62:18" data-lov-name="CheckCircle"
+                            data-component-path="src/components/CallToAction.tsx" data-component-line="62"
+                            data-component-file="CallToAction.tsx" data-component-name="CheckCircle"
+                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%20mr-4%20flex-shrink-0%22%7D">
+                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                            <path d="m9 11 3 3L22 4"></path>
+                        </svg>
+                        <p class="text-gray-700 text-lg">Improving candidate experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Transform Your Hiring Process Today</h3>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Join thousands of companies already using
+                HireGen.com's AI Candidate Matching to hire smarter, faster, and fairer.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-background h-11 rounded-md border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg">Post
+                    Your First Job</a></div>
+            <p class="text-sm opacity-75 mt-6">No credit card required • Free trial available • Setup in minutes</p>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

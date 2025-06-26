@@ -1,154 +1,645 @@
 {% extends 'common_base.html' %}
-
 {% block content %}
-<div class="bg-white">
-    <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-purple-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Recruitment Analytics</h1>
-                <p class="text-xl text-white opacity-90">Data-driven insights to optimize your hiring process</p>
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <div class="flex items-center justify-center mb-6">
+                <div class="flex items-center bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full px-4 py-2"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-chart-column w-5 h-5 text-blue-600 mr-2"
+                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:148:16" data-lov-name="BarChart3"
+                        data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="148"
+                        data-component-file="RecruitmentAnalytics.tsx" data-component-name="BarChart3"
+                        data-component-content="%7B%22className%22%3A%22w-5%20h-5%20text-blue-600%20mr-2%22%7D">
+                        <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                        <path d="M18 17V9"></path>
+                        <path d="M13 17V5"></path>
+                        <path d="M8 17v-3"></path>
+                    </svg><span class="text-sm font-medium text-blue-700">Data-Driven Recruitment Intelligence</span></div>
             </div>
-        </div>
-    </div>
-
-    <!-- Main Features -->
-    <div class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Performance Metrics</h3>
-                    <p class="text-slate-800">Track key recruitment metrics and KPIs in real-time.</p>
-                </div>
-
-                <!-- Feature 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Predictive Analytics</h3>
-                    <p class="text-slate-800">Forecast hiring needs and predict candidate success.</p>
-                </div>
-
-                <!-- Feature 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-lg">
-                    <div class="text-purple-500 mb-4">
-                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">Custom Reports</h3>
-                    <p class="text-slate-800">Generate detailed reports and visualizations.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Key Metrics Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Recruitment Metrics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-purple-500 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">Recruitment
+                Analytics<span class="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Turn Data
+                    Into Hiring Success</span></h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Transform your recruitment process
+                with powerful analytics that provide deep insights into hiring performance, candidate quality, and team
+                productivity. Make data-driven decisions that accelerate your hiring success.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12"><a  href="{{url_for('register')}}"
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary hover:bg-primary/90 h-11 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 text-lg">Start
+                    Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"
+                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:171:16" data-lov-name="ArrowRight"
+                        data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="171"
+                        data-component-file="RecruitmentAnalytics.tsx" data-component-name="ArrowRight"
+                        data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%22%7D">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg></a></div>
+            <div class="relative">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 shadow-2xl max-w-4xl mx-auto">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="lucide lucide-chart-column w-8 h-8 text-blue-600 mr-3"
+                                    data-lov-id="src/pages/RecruitmentAnalytics.tsx:187:22" data-lov-name="BarChart3"
+                                    data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="187"
+                                    data-component-file="RecruitmentAnalytics.tsx" data-component-name="BarChart3"
+                                    data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%20mr-3%22%7D">
+                                    <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                                    <path d="M18 17V9"></path>
+                                    <path d="M13 17V5"></path>
+                                    <path d="M8 17v-3"></path>
+                                </svg><span class="text-lg font-semibold text-gray-900">Recruitment Analytics Dashboard</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                                <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                            </div>
                         </div>
-                        <h3 class="font-semibold mb-2">Time-to-Hire</h3>
-                        <p class="text-slate-800">Track hiring speed</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-purple-500 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-green-50 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-green-600">18 days</div>
+                                <div class="text-sm text-gray-600">Avg. Time-to-Hire</div>
+                            </div>
+                            <div class="p-4 bg-blue-50 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-blue-600">94%</div>
+                                <div class="text-sm text-gray-600">Quality Score</div>
+                            </div>
+                            <div class="p-4 bg-purple-50 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-purple-600">$12K</div>
+                                <div class="text-sm text-gray-600">Cost Per Hire</div>
+                            </div>
                         </div>
-                        <h3 class="font-semibold mb-2">Candidate Quality</h3>
-                        <p class="text-slate-800">Measure quality of hire</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-purple-500 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Cost Analysis</h3>
-                        <p class="text-slate-800">Monitor recruitment costs</p>
-                    </div>
-                </div>
-                <div class="text-center">
-                    <div class="bg-white rounded-lg p-6 shadow-lg mb-4">
-                        <div class="text-purple-500 mb-4">
-                            <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
-                        </div>
-                        <h3 class="font-semibold mb-2">Source Efficiency</h3>
-                        <p class="text-slate-800">Track source performance</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Benefits Section -->
-    <div class="bg-white py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Benefits of Recruitment Analytics</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Advanced Analytics Features</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Comprehensive recruitment analytics that provide
+                actionable insights into every aspect of your hiring process, from sourcing to onboarding.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-chart-column w-8 h-8 text-blue-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:12:12" data-lov-name="BarChart3"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="12"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="BarChart3"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                                <path d="M18 17V9"></path>
+                                <path d="M13 17V5"></path>
+                                <path d="M8 17v-3"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Real-Time Hiring Dashboards</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Monitor recruitment KPIs, pipeline
+                        health, and hiring velocity with interactive dashboards and customizable widgets.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-trending-up w-8 h-8 text-indigo-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:17:12" data-lov-name="TrendingUp"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="17"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="TrendingUp"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-indigo-600%22%7D">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Predictive Hiring Analytics</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Forecast hiring needs, predict
+                        candidate success rates, and identify bottlenecks before they impact your timeline.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-target w-8 h-8 text-purple-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:22:12" data-lov-name="Target"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="22"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="Target"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Source Performance Tracking</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Analyze which job boards, referrals,
+                        and channels deliver the highest quality candidates for each role type.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-green-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:27:12" data-lov-name="Users"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="27"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Diversity &amp; Inclusion Metrics
+                    </h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Track diversity progress, identify
+                        bias patterns, and ensure equitable hiring practices across all levels.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-clock w-8 h-8 text-orange-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:32:12" data-lov-name="Clock"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="32"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="Clock"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-orange-600%22%7D">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Time-to-Hire Optimization</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Identify process delays, benchmark
+                        against industry standards, and streamline your recruitment workflow.</p>
+                </div>
+            </div>
+            <div class="rounded-lg bg-white text-card-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-gray-50 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-brain w-8 h-8 text-red-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:37:12" data-lov-name="Brain"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="37"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="Brain"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-red-600%22%7D">
+                                <path
+                                    d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z">
+                                </path>
+                                <path
+                                    d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z">
+                                </path>
+                                <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"></path>
+                                <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"></path>
+                                <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"></path>
+                                <path d="M3.477 10.896a4 4 0 0 1 .585-.396"></path>
+                                <path d="M19.938 10.5a4 4 0 0 1 .585.396"></path>
+                                <path d="M6 18a4 4 0 0 1-1.967-.516"></path>
+                                <path d="M19.967 17.484A4 4 0 0 1 18 18"></path>
+                            </svg></div>
+                    </div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900">Candidate Journey Analytics</h3>
+                </div>
+                <div class="p-6 pt-0">
+                    <p class="text-sm text-gray-600 text-center leading-relaxed">Map the complete candidate experience
+                        from application to onboarding and identify improvement opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div class="max-w-7xl mx-auto">
+        <div  class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Analytics That Drive Results</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our recruitment analytics platform empowers both hiring
+                teams and HR leadership with insights that transform recruiting performance.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div>
+                <div class="flex items-center mb-8">
+                    <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 mr-3">
+                        For Hiring Teams</div>
+                    <h3 class="text-2xl font-bold text-gray-900">Optimize Performance</h3>
+                </div>
+                <div class="space-y-6">
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-eye w-6 h-6 text-green-600"
+                                            data-lov-id="src/pages/RecruitmentAnalytics.tsx:45:12" data-lov-name="Eye"
+                                            data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                            data-component-line="45" data-component-file="RecruitmentAnalytics.tsx"
+                                            data-component-name="Eye"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                            <path
+                                                d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
+                                            </path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Data-Driven Decision
+                                        Making</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    85% more accurate</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Make informed hiring decisions backed by comprehensive analytics
+                                and trend analysis</p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Data-Driven Decisions</h3>
-                        <p class="text-slate-800">Make informed decisions based on real data and insights.</p>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-trending-up w-6 h-6 text-blue-600"
+                                            data-lov-id="src/pages/RecruitmentAnalytics.tsx:51:12"
+                                            data-lov-name="TrendingUp"
+                                            data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                            data-component-line="51" data-component-file="RecruitmentAnalytics.tsx"
+                                            data-component-name="TrendingUp"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                            <polyline points="16 7 22 7 22 13"></polyline>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">ROI Optimization</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    40% cost reduction</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Measure recruitment ROI, optimize budget allocation, and reduce
+                                cost-per-hire</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-target w-6 h-6 text-purple-600"
+                                            data-lov-id="src/pages/RecruitmentAnalytics.tsx:57:12"
+                                            data-lov-name="Target"
+                                            data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                            data-component-line="57" data-component-file="RecruitmentAnalytics.tsx"
+                                            data-component-name="Target"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <circle cx="12" cy="12" r="6"></circle>
+                                            <circle cx="12" cy="12" r="2"></circle>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Performance
+                                        Benchmarking</h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    Industry insights</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Compare your metrics against industry standards and identify areas
+                                for improvement</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-zap w-6 h-6 text-orange-600"
+                                            data-lov-id="src/pages/RecruitmentAnalytics.tsx:63:12" data-lov-name="Zap"
+                                            data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                            data-component-line="63" data-component-file="RecruitmentAnalytics.tsx"
+                                            data-component-name="Zap"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-orange-600%22%7D">
+                                            <path
+                                                d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z">
+                                            </path>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Process Automation
+                                    </h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    60% time saved</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Automate reporting, alerts, and insights to save time and reduce
+                                manual work</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-circle-check-big w-6 h-6 text-indigo-600"
+                                            data-lov-id="src/pages/RecruitmentAnalytics.tsx:69:12"
+                                            data-lov-name="CheckCircle"
+                                            data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                            data-component-line="69" data-component-file="RecruitmentAnalytics.tsx"
+                                            data-component-name="CheckCircle"
+                                            data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-indigo-600%22%7D">
+                                            <path d="M21.801 10A10 10 0 1 1 17 3.335"></path>
+                                            <path d="m9 11 3 3L22 4"></path>
+                                        </svg></div>
+                                    <h3 class="tracking-tight text-lg font-semibold text-gray-900">Quality Assurance
+                                    </h3>
+                                </div>
+                                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-100 text-green-800">
+                                    25% better retention</div>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Monitor hiring quality, track employee performance, and improve
+                                long-term outcomes</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-md bg-purple-500 text-white">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
-                            </svg>
+            </div>
+            <div>
+                <div class="flex items-center mb-8">
+                    <div class="inline-flex items-center rounded-full border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-green-100 text-green-800 text-sm font-medium px-3 py-1 mr-3">
+                        For HR Leadership</div>
+                    <h3 class="text-2xl font-bold text-gray-900">Strategic Intelligence</h3>
+                </div>
+                <div class="space-y-6">
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-chart-column w-6 h-6 text-green-600"
+                                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:78:12" data-lov-name="BarChart3"
+                                        data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                        data-component-line="78" data-component-file="RecruitmentAnalytics.tsx"
+                                        data-component-name="BarChart3"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-green-600%22%7D">
+                                        <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                                        <path d="M18 17V9"></path>
+                                        <path d="M13 17V5"></path>
+                                        <path d="M8 17v-3"></path>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Strategic Insights</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Transform recruitment data into strategic workforce planning
+                                insights.</p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-2">Process Optimization</h3>
-                        <p class="text-slate-800">Continuously improve your recruitment process.</p>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-users w-6 h-6 text-red-600"
+                                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:83:12" data-lov-name="Users"
+                                        data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                        data-component-line="83" data-component-file="RecruitmentAnalytics.tsx"
+                                        data-component-name="Users"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-red-600%22%7D">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Team Performance</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Track recruiter productivity, identify top performers, and
+                                optimize team allocation.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-target w-6 h-6 text-blue-600"
+                                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:88:12" data-lov-name="Target"
+                                        data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                        data-component-line="88" data-component-file="RecruitmentAnalytics.tsx"
+                                        data-component-name="Target"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-blue-600%22%7D">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <circle cx="12" cy="12" r="6"></circle>
+                                        <circle cx="12" cy="12" r="2"></circle>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Goal Tracking</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Set and monitor recruitment goals, quotas, and KPIs with automated
+                                progress tracking.</p>
+                        </div>
+                    </div>
+                    <div class="rounded-lg bg-white text-card-foreground border-0 shadow-md hover:shadow-lg transition-shadow duration-300">
+                        <div class="flex flex-col space-y-1.5 p-6 pb-3">
+                            <div class="flex items-center">
+                                <div class="p-2 bg-gray-50 rounded-lg mr-3"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide lucide-trending-up w-6 h-6 text-purple-600"
+                                        data-lov-id="src/pages/RecruitmentAnalytics.tsx:93:12"
+                                        data-lov-name="TrendingUp"
+                                        data-component-path="src/pages/RecruitmentAnalytics.tsx"
+                                        data-component-line="93" data-component-file="RecruitmentAnalytics.tsx"
+                                        data-component-name="TrendingUp"
+                                        data-component-content="%7B%22className%22%3A%22w-6%20h-6%20text-purple-600%22%7D">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                        <polyline points="16 7 22 7 22 13"></polyline>
+                                    </svg></div>
+                                <h3 class="tracking-tight text-lg font-semibold text-gray-900">Trend Analysis</h3>
+                            </div>
+                        </div>
+                        <div class="p-6 pt-0">
+                            <p class="text-gray-600">Identify hiring trends, seasonal patterns, and market changes
+                                affecting recruitment.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- CTA Section -->
-    <div class="bg-purple-500 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-white mb-4">Ready to Make Data-Driven Hiring Decisions?</h2>
-            <p class="text-xl text-white opacity-90 mb-8">Start using recruitment analytics to optimize your hiring process.</p>
-            <a href="{{ url_for('register') }}" class="inline-block bg-white text-purple-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition duration-300">Get Started</a>
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Analytics Success Stories</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">See how organizations across industries use HireGen's
+                recruitment analytics to make smarter hiring decisions and achieve better outcomes.</p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-green-50 border-green-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-chart-column w-8 h-8 text-green-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:109:12" data-lov-name="BarChart3"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="109"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="BarChart3"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-green-600%22%7D">
+                                <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                                <path d="M18 17V9"></path>
+                                <path d="M13 17V5"></path>
+                                <path d="M8 17v-3"></path>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Technology</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Fast-Growth Tech Company</h3>
+                    <p class="text-gray-600 text-sm">Scaling data-driven recruitment processes</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Faster hiring decisions</span><span
+                                class="text-lg font-bold text-gray-900">50%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Improved hire quality</span><span
+                                class="text-lg font-bold text-gray-900">35%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Recruiter satisfaction</span><span
+                                class="text-lg font-bold text-gray-900">90%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-blue-50 border-blue-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-users w-8 h-8 text-blue-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:121:12" data-lov-name="Users"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="121"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="Users"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-blue-600%22%7D">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Healthcare</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Regional Hospital Network</h3>
+                    <p class="text-gray-600 text-sm">Tracking diversity and compliance metrics</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Compliance reporting</span><span
+                                class="text-lg font-bold text-gray-900">100%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Diversity improvement</span><span
+                                class="text-lg font-bold text-gray-900">28%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Reduced admin time</span><span
+                                class="text-lg font-bold text-gray-900">40%</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-lg text-card-foreground shadow-sm border-2 bg-purple-50 border-purple-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 bg-white rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-dollar-sign w-8 h-8 text-purple-600"
+                                data-lov-id="src/pages/RecruitmentAnalytics.tsx:133:12" data-lov-name="DollarSign"
+                                data-component-path="src/pages/RecruitmentAnalytics.tsx" data-component-line="133"
+                                data-component-file="RecruitmentAnalytics.tsx" data-component-name="DollarSign"
+                                data-component-content="%7B%22className%22%3A%22w-8%20h-8%20text-purple-600%22%7D">
+                                <line x1="12" x2="12" y1="2" y2="22"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg></div>
+                    </div>
+                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 mb-3 bg-gray-100 text-gray-800">
+                        Finance</div>
+                    <h3 class="tracking-tight text-xl font-semibold text-gray-900 mb-2">Investment Firm</h3>
+                    <p class="text-gray-600 text-sm">Optimizing recruitment ROI and budget allocation</p>
+                </div>
+                <div class="p-6 pt-0">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Annual savings identified</span><span
+                                class="text-lg font-bold text-gray-900">$2.5M</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">Better budget allocation</span><span
+                                class="text-lg font-bold text-gray-900">60%</span></div>
+                        <div class="flex items-center justify-between p-3 bg-white rounded-lg"><span
+                                class="text-sm text-gray-600">ROI improvement</span><span
+                                class="text-lg font-bold text-gray-900">3x</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-{% endblock %} 
+</section>
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Start Making Data-Driven Hiring Decisions</h3>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Transform your recruitment process with powerful
+                analytics that provide insights, optimize performance, and drive better hiring outcomes.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a  href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-background h-11 rounded-md border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg">Start Free Trial</a></div>
+            <p class="text-sm opacity-75 mt-6">Free trial available • Setup in minutes • Enterprise-ready</p>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
