@@ -71,7 +71,7 @@
                           </div>
 
                           <input type="hidden" name="send_newsletter" id="send_newsletter" value="false">
-
+                          <button id="generate-from-ai" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Generate from AI</button>
 
                         <div class="mb-6">
                             {{ form.short_description.label(class="block text-sm font-medium text-gray-900") }}
@@ -98,7 +98,7 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var quill = new Quill('#quill-editor', {
+        window.quill = new Quill('#quill-editor', {
             theme: 'snow',
             placeholder: 'Write details about the post.',
             modules: {
@@ -191,6 +191,74 @@
     });
   </script>
   
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageInput = document.querySelector('input[name="featured_image"]');
+    
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    
+            if (file && file.size > maxSize) {
+                alert("The selected image is larger than 2MB. Please choose a smaller file.");
+                this.value = ""; // Clear the file input
+            }
+        });
+    });
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const generateButton = document.getElementById('generate-from-ai');
+        const titleInput = document.querySelector('input[name="title"]');
+        const tagsInput = document.querySelector('input[name="tags"]');
+        const shortDescInput = document.querySelector('textarea[name="short_description"]');
+        const contentInput = document.getElementById('content');
+        const quillEditor = document.getElementById('quill-editor');
+    
+        generateButton.addEventListener('click', async function (e) {
+            e.preventDefault();
+            const title = titleInput?.value.trim();
+    
+            if (!title) {
+                alert("Please enter a blog title first.");
+                return;
+            }
+    
+            generateButton.disabled = true;
+            generateButton.textContent = "Generating...";
+    
+            try {
+                const response = await fetch('/generate-ai-blog-post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: title })
+                });
+    
+                const result = await response.json();
+    
+                if (result.success) {
+                    const content = result.content;
+                    console.log(content)
+                    tagsInput.value = content.tags || "";
+                    shortDescInput.value = content.short_description || "";
+                    if (window.quill) {
+                            window.quill.root.innerHTML = content.content || "";
+                        }
+                } else {
+                    alert("Failed to generate content: " + (result.error || "Unknown error"));
+                }
+            } catch (err) {
+                console.error("Fetch error:", err);
+                alert("Something went wrong while generating content.");
+            } finally {
+                generateButton.disabled = false;
+                generateButton.textContent = "Generate from AI";
+            }
+        });
+    });
+    </script>
+    
+
 
 {% endblock %}
 {% endblock %}
