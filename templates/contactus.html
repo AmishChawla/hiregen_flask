@@ -1,14 +1,15 @@
 {% extends "common_base.html" %}
 
 {% block content %}
-<section class="bg-white pb-10" id="contact">
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">Contact Us</h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Have questions or need support? Reach out to the HireGen team — we're here to help with product inquiries, technical assistance, and more.</p>
+        </div>
+        <section class="pb-10" id="contact">
 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl text-center">
-        <h2 class="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl mb-3">Contact Us</h2>
-        <p class="mt-1 font-display text-lg sm:text-xl text-slate-700">Follow us on social media or contact us directly for any inquiries or support.</p>
-    </div>
-    
     <div class="mt-10 max-w-xl mx-auto">
         <form id="contactForm" class="space-y-6">
         <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
@@ -39,7 +40,7 @@
         
         <div>
             <button type="submit" 
-                    class="w-full rounded-full bg-purple-500 px-10 py-3 text-base font-semibold text-white hover:bg-purple-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70">
+                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-16 py-6 text-lg w-full">
             Send Message
             </button>
         </div>
@@ -54,6 +55,11 @@
     </div>
 </div>
 </section>
+    </div>
+</section>
+
+
+
 
 
 <script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>

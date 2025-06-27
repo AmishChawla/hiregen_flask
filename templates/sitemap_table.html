@@ -1,26 +1,29 @@
 {% extends 'common_base.html' %}
 
 {% block content %}
-
-<div class="container mx-auto px-6 sm:px-6 lg:px-8 my-20">
-<section class="text-gray-700">
-<div class="mb-6">
-        <h2 class="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl mb-3">XML Sitemaps</h2>
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">XML Sitemaps</h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">XML sitemaps help search engines crawl and index your website efficiently by providing a structured map of all important pages for better SEO visibility.</p>
+        </div>
     </div>
-
-  <p class="my-2 font-display text-lg sm:text-xl text-slate-700"><a href="{{url_for('sitemap_by_key', sitemap_key='pages')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
+</section>
+<div class="container mx-auto px-6 sm:px-6 lg:px-8 my-20 max-w-4xl">
+<section class="text-gray-700">
+  <p class="my-2 font-display text-lg sm:text-xl text-slate-700 hover:bg-blue-50 hover:rounded-md px-5 py-4"><a href="{{url_for('sitemap_by_key', sitemap_key='pages')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
 </svg> Pages</a></p>
-    <p class="my-2 font-display text-lg sm:text-xl text-slate-700"><a href="{{url_for('sitemap_by_key', sitemap_key='companies')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
+    <p class="my-2 font-display text-lg sm:text-xl text-slate-700 hover:bg-blue-50 hover:rounded-md px-5 py-4"><a href="{{url_for('sitemap_by_key', sitemap_key='companies')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
 </svg> Companies</a></p>
-    <p class="my-2 font-display text-lg sm:text-xl text-slate-700"><a href="{{url_for('sitemap_by_key', sitemap_key='jobs')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
+    <p class="my-2 font-display text-lg sm:text-xl text-slate-700 hover:bg-blue-50 hover:rounded-md px-5 py-4"><a href="{{url_for('sitemap_by_key', sitemap_key='jobs')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
 </svg> Jobs</a></p>
-    <p class="my-2 font-display text-lg sm:text-xl text-slate-700"><a href="{{url_for('sitemap_by_key', sitemap_key='posts')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
+    <p class="my-2 font-display text-lg sm:text-xl text-slate-700 hover:bg-blue-50 hover:rounded-md px-5 py-4"><a href="{{url_for('sitemap_by_key', sitemap_key='posts')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
 </svg> Posts</a></p>
-    <p class="my-2 font-display text-lg sm:text-xl text-slate-700"><a href="{{url_for('sitemap')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
+    <p class="my-2 font-display text-lg sm:text-xl text-slate-700 hover:bg-blue-50 hover:rounded-md px-5 py-4"><a href="{{url_for('sitemap')}}" class="flex text-blue-600 hover:text-blue-900"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill mt-1 mr-2" viewBox="0 0 16 16">
   <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
 </svg> Complete sitemap</a></p>
 </section>

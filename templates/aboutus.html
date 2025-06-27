@@ -10,10 +10,13 @@
       <h1 class="title-font sm:text-5xl text-3xl mb-4 font-medium text-gray-900">Enhance Your Hiring Process with AI
       </h1>
       <p class="mb-8 leading-relaxed">Optimize your recruitment process with AI-powered automation. Effortlessly find, screen, and hire top talent faster while reducing costs and manual effort. Transform hiring with intelligent technology for better, data-driven decisions.</p>
-      <div class="flex justify-center">
-        <button class="inline-flex justify-center rounded-full bg-slate-700 px-6 py-3 text-base font-semibold text-white hover:bg-purple-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70 min-h-[48px]">Get started</button>
-        <button class="ml-4 inline-flex justify-center rounded-full bg-gray-200 px-6 py-3 text-base font-semibold text-slate-800 hover:bg-gray-300 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70 min-h-[48px]">Contact us</button>
-      </div>
+<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="/register" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-blue-600 hover:bg-primary/90 h-11 rounded-full group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-16 py-6 text-lg">Start
+                        Free Trial<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" data-lov-id="src/components/HeroSection.tsx:55:16" data-lov-name="ArrowRight" data-component-path="src/components/HeroSection.tsx" data-component-line="55" data-component-file="HeroSection.tsx" data-component-name="ArrowRight" data-component-content="%7B%22className%22%3A%22ml-2%20w-5%20h-5%20group-hover%3Atranslate-x-1%20transition-transform%22%7D">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                        </svg></a>
+                        </div>
     </div>
     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
       <img class="object-cover object-center rounded" alt="About" src="/static/images/about_us.jpg">
@@ -250,7 +253,7 @@
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Our Vision</h1>
       <p class="lg:w-1/2 w-full leading-relaxed text-base">We envision a future where technology empowers recruiters to make better, faster hiring decisions while enhancing candidate experiences. As the demand for skilled talent grows globally, we’re committed to developing features that keep modern recruitment at the forefront.</p>
     </div>
-    <button onclick="window.location.href='{{ url_for('register') }}'" class="flex mx-auto justify-center rounded-full bg-slate-700 px-6 py-3 text-base font-semibold text-white hover:bg-purple-500 focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:text-white/70 min-h-[48px]">Get Started</button>
+    <button onclick="window.location.href='{{ url_for('register') }}'" class="flex mx-auto justify-center items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Get Started</button>
   </div>
 </section>
 

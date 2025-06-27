@@ -3,14 +3,14 @@
 {% block content %}
 <div class="bg-white">
     <!-- Hero Section -->
-    <div class="relative bg-gradient-to-r from-purple-600 to-indigo-800 py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center">
-                <h1 class="text-4xl font-bold text-white mb-4">Terms of Service</h1>
-                <p class="text-xl text-white opacity-90">Please read these terms carefully before using our services</p>
-            </div>
+<section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">Terms of Service</h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">Review the rules and guidelines that govern your use of HireGen’s platform, including user responsibilities, limitations, and legal agreements.</p>
         </div>
     </div>
+</section>
 
     <!-- Content Section -->
     <div class="py-16">
@@ -66,12 +66,17 @@
     </div>
 
     <!-- Contact Section -->
-    <div class="bg-gray-50 py-16">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold text-gray-900 mb-4">Questions About Our Terms?</h2>
-            <p class="text-xl text-slate-800 mb-8">Contact our legal team for more information</p>
-            <a href="{{url_for('index')}}#contact" class="inline-block bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition duration-300">Contact Us</a>
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-8 lg:p-12 text-white text-center">
+            <h3 class="text-2xl lg:text-3xl font-bold mb-4">Get Started with HireGen Today!</h3>
+            <p class="text-xl opacity-90 mb-8 max-w-2xl mx-auto">Transform your hiring strategy with HireGen’s AI Recruitment Software. Sign up for a free demo and experience the future of AI-driven hiring!</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"><a  href="{{url_for('register')}}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-background h-11 rounded-md border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg">Sign Up For Free Trial
+                    </a></div>
+            <p class="text-sm opacity-75 mt-6">No credit card required • Screen 50 resumes free • Setup in 5 minutes
+            </p>
         </div>
     </div>
+</section>
 </div>
 {% endblock %} 
