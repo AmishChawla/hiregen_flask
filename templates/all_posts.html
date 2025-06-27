@@ -1,71 +1,244 @@
 {% extends 'common_base.html' %}
 {% block title %}From the Blog{% endblock %}
 {% block content %}
+<div class="w-full bg-gray-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mx-auto max-w-2xl lg:mx-0 mb-6">
+      <h2 class="text-3xl font-bold text-gray-900">Blog</h2>
+      <p class="text-gray-600 mt-1">Latest insights and updates</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="lg:col-span-3">
+            <div class="space-y-8">
+                <div class="grid gap-8">
+                    {% for post in result %}
+                    <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100">
+                        <div class="md:flex">
+                            <div class="md:w-1/3">
+                                <img src="{{ post.featured_image or url_for('static', filename='images/blog-bg.jpg') }}"
+                                    alt="{{ post.title }}"
+                                    class="w-full h-48 md:h-full object-cover"></div>
+                            <div class="md:w-2/3 p-6">
+                                <div class="inline-block"><a href="{{url_for('cms_posts_by_category', category=post.category_name)}}"><span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">{{ post.category_name }}</span></a></div>
 
-    <div class="bg-white py-12 sm:py-16">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl text-center">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the Blog</h1>
-                <p class="mt-4 text-lg leading-8 text-slate-800">Learn how to grow your business with our expert advice.</p>
+                                <h2 class="text-xl font-bold text-gray-900 mt-3 mb-3 hover:text-blue-600 cursor-pointer transition-colors duration-200">
+                                    <a href="{{url_for('read_post', slug=post.slug)}}">{{ post.title }}</a></h2>
+                                <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ post.short_description or (post.content[:200] + '...') | safe }}</p>
+                                <div class="flex items-center justify-between text-sm text-gray-500">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="lucide lucide-user w-4 h-4"
+                                                data-lov-id="src/components/blog/BlogCard.tsx:56:16"
+                                                data-lov-name="User"
+                                                data-component-path="src/components/blog/BlogCard.tsx"
+                                                data-component-line="56" data-component-file="BlogCard.tsx"
+                                                data-component-name="User"
+                                                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg><span>{{ post.username }}</span></div>
+                                        <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4"
+                                                data-lov-id="src/components/blog/BlogCard.tsx:60:16"
+                                                data-lov-name="Calendar"
+                                                data-component-path="src/components/blog/BlogCard.tsx"
+                                                data-component-line="60" data-component-file="BlogCard.tsx"
+                                                data-component-name="Calendar"
+                                                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                                <path d="M8 2v4"></path>
+                                                <path d="M16 2v4"></path>
+                                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                                <path d="M3 10h18"></path>
+                                            </svg><span><time datetime="{{ post.created_at }}">{{ post.created_at }}</time></span></div>
+                                    </div>
+                                    <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                            class="lucide lucide-clock w-4 h-4"
+                                            data-lov-id="src/components/blog/BlogCard.tsx:65:14" data-lov-name="Clock"
+                                            data-component-path="src/components/blog/BlogCard.tsx"
+                                            data-component-line="65" data-component-file="BlogCard.tsx"
+                                            data-component-name="Clock"
+                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg><span>5 min read</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                <div class="text-center pt-8">
+                    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Load
+                        More Posts</button></div>
             </div>
-            
-            <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                {% for post in result %}
-                <article class="flex flex-col items-start group">
-                    <div class="relative w-full">
-                        <img src="{{ post.featured_image or url_for('static', filename='images/blog-bg.jpg') }}"
-                             alt="{{ post.title }}"
-                             class="aspect-[16/9] w-full rounded-2xl bg-gray-50 object-cover sm:aspect-[2/1] lg:aspect-[3/2]">
-                        <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"></div>
+        </div>
+        <div class="lg:col-span-1">
+            <div class="space-y-8">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Search</h3>
+                    <div class="relative"><input
+                            class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
+                            value=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
+                            data-lov-id="src/components/blog/SearchBar.tsx:19:8" data-lov-name="Search"
+                            data-component-path="src/components/blog/SearchBar.tsx" data-component-line="19"
+                            data-component-file="SearchBar.tsx" data-component-name="Search"
+                            data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </svg></div>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Remote
+                                Work</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">12</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Technology</span><span
+                                class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">8</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Diversity
+                                &amp; Inclusion</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">15</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Hiring
+                                Trends</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">10</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Employee
+                                Engagement</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">7</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Interviews</span><span
+                                class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">9</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Career
+                                Development</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">11</span>
+                        </div>
+                        <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors duration-200 group">
+                            <span class="text-gray-700 group-hover:text-blue-600 transition-colors duration-200">Company
+                                Culture</span><span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors duration-200">6</span>
+                        </div>
                     </div>
-                    
-                    <div class="max-w-xl mt-6">
-                        <div class="flex items-center gap-x-4 text-xs">
-                            <time datetime="{{ post.created_at }}" class="text-gray-500">
-                                {{ post.created_at }}
-                            </time>
-                            <a href="{{url_for('cms_posts_by_category', category=post.category_name)}}" 
-                               class="relative z-10 rounded-full bg-gray-50 px-3 py-2 font-medium text-slate-800 hover:bg-gray-50">
-                                {{ post.category_name }}
-                            </a>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Posts</h3>
+                    <div class="space-y-4">
+                        <div class="flex space-x-3 group cursor-pointer"><img
+                                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&amp;h=200&amp;fit=crop"
+                                alt="10 Essential Skills Every Modern Recruiter Needs"
+                                class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2 leading-5">
+                                    10 Essential Skills Every Modern Recruiter Needs</h4>
+                                <div class="flex items-center space-x-1 mt-2 text-xs text-gray-500"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3"
+                                        data-lov-id="src/components/blog/RecentPosts.tsx:52:16" data-lov-name="Calendar"
+                                        data-component-path="src/components/blog/RecentPosts.tsx"
+                                        data-component-line="52" data-component-file="RecentPosts.tsx"
+                                        data-component-name="Calendar"
+                                        data-component-content="%7B%22className%22%3A%22w-3%20h-3%22%7D">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                    </svg><span>March 18, 2024</span>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="group relative">
-                            <h3 class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-slate-800">
-                                <a href="{{url_for('read_post', slug=post.slug)}}">
-                                    <span class="absolute inset-0"></span>
-                                    {{ post.title }}
-                                </a>
-                            </h3>
-                            <p class="mt-5 line-clamp-3 text-sm leading-6 text-slate-800">
-                                {{ post.short_description or (post.content[:200] + '...') | safe }}
-                            </p>
+                        <div class="flex space-x-3 group cursor-pointer"><img
+                                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&amp;h=200&amp;fit=crop"
+                                alt="How to Create an Effective Employee Onboarding Process"
+                                class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2 leading-5">
+                                    How to Create an Effective Employee Onboarding Process</h4>
+                                <div class="flex items-center space-x-1 mt-2 text-xs text-gray-500"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3"
+                                        data-lov-id="src/components/blog/RecentPosts.tsx:52:16" data-lov-name="Calendar"
+                                        data-component-path="src/components/blog/RecentPosts.tsx"
+                                        data-component-line="52" data-component-file="RecentPosts.tsx"
+                                        data-component-name="Calendar"
+                                        data-component-content="%7B%22className%22%3A%22w-3%20h-3%22%7D">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                    </svg><span>March 16, 2024</span>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="mt-4 flex flex-wrap gap-2">
-                            {% for tag in post.tags %}
-                            <a href="{{url_for('cms_posts_by_tag', tag=tag)}}" 
-                               class="text-xs text-purple-500 hover:text-blue-800">
-                                #{{ tag }}
-                            </a>
-                            {% endfor %}
+                        <div class="flex space-x-3 group cursor-pointer"><img
+                                src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&amp;h=200&amp;fit=crop"
+                                alt="The Impact of Workplace Flexibility on Employee Satisfaction"
+                                class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2 leading-5">
+                                    The Impact of Workplace Flexibility on Employee Satisfaction</h4>
+                                <div class="flex items-center space-x-1 mt-2 text-xs text-gray-500"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3"
+                                        data-lov-id="src/components/blog/RecentPosts.tsx:52:16" data-lov-name="Calendar"
+                                        data-component-path="src/components/blog/RecentPosts.tsx"
+                                        data-component-line="52" data-component-file="RecentPosts.tsx"
+                                        data-component-name="Calendar"
+                                        data-component-content="%7B%22className%22%3A%22w-3%20h-3%22%7D">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                    </svg><span>March 14, 2024</span>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="relative mt-8 flex items-center gap-x-4">
-                            <img src="{{ post.profile_picture or url_for('static', filename='images/empty_avatar.png') }}" 
-                                 alt="{{ post.username }}" 
-                                 class="h-10 w-10 rounded-full bg-gray-50">
-                            <div class="text-sm leading-6">
-                                <p class="font-semibold text-gray-900">
-                                    <span class="absolute inset-0"></span>
-                                    {{ post.username }}
-                                </p>
+                        <div class="flex space-x-3 group cursor-pointer"><img
+                                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=400&amp;h=200&amp;fit=crop"
+                                alt="Understanding Generation Z in the Workplace"
+                                class="w-16 h-16 rounded-lg object-cover flex-shrink-0">
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-200 line-clamp-2 leading-5">
+                                    Understanding Generation Z in the Workplace</h4>
+                                <div class="flex items-center space-x-1 mt-2 text-xs text-gray-500"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-calendar w-3 h-3"
+                                        data-lov-id="src/components/blog/RecentPosts.tsx:52:16" data-lov-name="Calendar"
+                                        data-component-path="src/components/blog/RecentPosts.tsx"
+                                        data-component-line="52" data-component-file="RecentPosts.tsx"
+                                        data-component-name="Calendar"
+                                        data-component-content="%7B%22className%22%3A%22w-3%20h-3%22%7D">
+                                        <path d="M8 2v4"></path>
+                                        <path d="M16 2v4"></path>
+                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                                        <path d="M3 10h18"></path>
+                                    </svg><span>March 11, 2024</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </article>
-                {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
+</div>
+</div>
+
+  {% endblock %}
