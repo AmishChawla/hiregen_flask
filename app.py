@@ -4250,7 +4250,7 @@ def all_companies():
 ################## ADMIN CmS ####################################################
 
 
-@app.route('/posts')
+@app.route('/blog')
 def all_cms_post():
     result = api_calls.get_all_posts()
     if result is None:
@@ -4259,7 +4259,7 @@ def all_cms_post():
 
     return render_template('all_posts.html', result=result)
 
-@app.route('/posts/category/<category>')
+@app.route('/blog/category/<category>')
 def cms_posts_by_category(category):
     result = api_calls.get_post_by_category(category)
     if result is None:
@@ -4268,7 +4268,7 @@ def cms_posts_by_category(category):
 
     return render_template('admin/admin_cms/posts_by_category.html', category=category,result=result)
 
-@app.route('/posts/subcategory/<subcategory>')
+@app.route('/blog/subcategory/<subcategory>')
 def cms_posts_by_subcategory(subcategory):
     result = api_calls.get_post_by_subcategory(subcategory)
     if result is None:
@@ -4277,7 +4277,7 @@ def cms_posts_by_subcategory(subcategory):
 
     return render_template('admin/admin_cms/posts_by_subcategory.html', subcategory=subcategory,result=result)
 
-@app.route('/posts/tag/<tag>')
+@app.route('/blog/tag/<tag>')
 def cms_posts_by_tag(tag):
     result = api_calls.get_post_by_tag(tag)
     if result is None:
@@ -4289,7 +4289,7 @@ def cms_posts_by_tag(tag):
 
 
 
-@app.route('/admin/cms/posts')
+@app.route('/admin/cms/blog')
 @requires_any_permission("manage_user")
 @login_required
 def admin_all_cms_post():
@@ -4300,7 +4300,7 @@ def admin_all_cms_post():
     return render_template('admin/admin_cms/cms_all_post.html', result=result)
 
 
-@app.route("/admin/delete-posts/<post_id>", methods=['GET', 'POST'])
+@app.route("/admin/delete-blog/<post_id>", methods=['GET', 'POST'])
 @login_required
 def admin_delete_cms_post(post_id):
     result = api_calls.admin_delete_post(post_id=post_id, access_token=current_user.id)
@@ -4314,7 +4314,7 @@ def admin_delete_cms_post(post_id):
     else:
         abort(response.status_code)
 
-@app.route('/admin/cms/create-post/', methods=['GET', 'POST'])
+@app.route('/admin/cms/create-blog/', methods=['GET', 'POST'])
 @requires_any_permission("manage_user")
 @login_required
 def add_cms_post():
@@ -4550,7 +4550,7 @@ def admin_cms_delete_subcategory(subcategory_id):
         return redirect(url_for('admin_cms_all_categories'))
 
 
-@app.route('/admin/cms/update-post/<post_id>', methods=['GET', 'POST'])
+@app.route('/admin/cms/update-blog/<post_id>', methods=['GET', 'POST'])
 @requires_any_permission("manage_user")
 def admin_update_cms_post(post_id):
     form = forms.AddPost()
@@ -4679,7 +4679,7 @@ def admin_update_cms_post(post_id):
     return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id,post=post)
 
 
-@app.route("/posts/<slug>", methods=['GET', 'POST'])
+@app.route("/blog/<slug>", methods=['GET', 'POST'])
 def read_post(slug):
     import html
     response = api_calls.get_post_by_slug(slug)

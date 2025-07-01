@@ -1,6 +1,27 @@
 {% extends 'common_base.html' %}
 
-{% block title %}Post{% endblock %}
+{% block title %}{{post.title}}{% endblock %}
+
+{% block metatags %}
+
+<!-- Primary Meta Tags -->
+<meta name="title" content="{{ post.title }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ url_for('read_post', slug=post.slug, _external=True) }}" />
+<meta property="og:title" content="{{ post.title }}" />
+<meta property="og:image" content="{{post.featured_image}}" />
+
+<!-- X (Twitter) -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content="{{ url_for('read_post', slug=post.slug, _external=True) }}" />
+<meta property="twitter:title" content="{{ post.title }}" />
+<meta property="twitter:image" content="{{post.featured_image}}"" />
+
+<!-- Meta Tags Generated with https://metatags.io -->
+
+{% endblock %}
 
 {% block content %}
 
