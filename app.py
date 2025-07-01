@@ -4253,11 +4253,12 @@ def all_companies():
 @app.route('/blog')
 def all_cms_post():
     result = api_calls.get_all_posts()
+    categories = api_calls.get_cms_all_categories(access_token=None)
     if result is None:
         result = []  # Set result to an empty list
     print(result)
 
-    return render_template('all_posts.html', result=result)
+    return render_template('all_posts.html', result=result, categories=categories)
 
 @app.route('/blog/category/<category>')
 def cms_posts_by_category(category):

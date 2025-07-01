@@ -3464,9 +3464,8 @@ def update_category(category_id, category, access_token):
 
 
 def get_cms_all_categories(access_token):
-    headers = {'Authorization': f'Bearer {access_token}'}
     try:
-        response = requests.get(constants.BASE_URL + '/cms-all-categories', headers=headers)
+        response = requests.get(constants.BASE_URL + '/cms-all-categories')
         print("Response Status Code:", response.status_code)  # Debug: Print status code
         if response.status_code == 200:
             result = response.json()
