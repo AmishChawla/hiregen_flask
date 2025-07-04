@@ -3758,7 +3758,7 @@ def jobs_search():
     }
 
     search = api_calls.get_filtered_jobs(
-        access_token=current_user.id or None,
+        access_token = current_user.id if current_user.is_authenticated else None,
         country=country,
         state=state,
         job_type=job_type,
