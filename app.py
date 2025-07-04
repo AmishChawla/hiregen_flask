@@ -33,15 +33,15 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SERVER_NAME'] = 'hiregen.com'
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
-# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -2445,8 +2445,7 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
     )
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
-    print(job_details.get('applied'))
-    print(job_details.get('company_logo'))
+    print(job_details.get('saved'))
     if request.method == 'POST':
         applied = api_calls.apply_to_job_via_resume_list(access_token=current_user.id, job_id=apply_form.job_id.data)
         if applied:  # Assuming API call returns success status
@@ -3137,9 +3136,12 @@ def jobseeker_dashboard():
     print(current_user.firstname)
     stats = api_calls.get_jobseeker_stats(access_token=current_user.id)
 
+    instructions = stats["profile_instructions"]
     total_resumes = stats["total_resumes"]
     total_applications = stats["applications_count"]
     profile_completion_percentage = stats["profile_completion_percentage"]
+    profile_views = stats["profile_views"]
+    applications_this_week = stats["applications_this_week"]
 
     applications = api_calls.get_jobseeker_applications(access_token=current_user.id) or []
 
@@ -3156,7 +3158,7 @@ def jobseeker_dashboard():
         job_matches = recommendations_result["total_recommendations"] or 0
 
 
-    return render_template('jobseeker/jobseeker_dashboard.html', total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations, job_matches=job_matches, applications=applications)
+    return render_template('jobseeker/jobseeker_dashboard.html',instructions=instructions,applications_this_week=applications_this_week, total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations, job_matches=job_matches, applications=applications, profile_views=profile_views)
 
 
 @app.route('/jobseeker/login', methods=['GET', 'POST'])
@@ -3582,7 +3584,6 @@ def jobs_search():
     ]
 
     industries = [
-            ('', 'Select Industry'),
             ('Accounting', 'Accounting'),
             ('Airlines/Aviation', 'Airlines/Aviation'),
             ('Alternative Dispute Resolution', 'Alternative Dispute Resolution'),
@@ -3757,6 +3758,7 @@ def jobs_search():
     }
 
     search = api_calls.get_filtered_jobs(
+        access_token=current_user.id,
         country=country,
         state=state,
         job_type=job_type,

@@ -3055,7 +3055,8 @@ def get_jobseeker_recommendations(jobs_count, access_token: str):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_filtered_jobs(country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None, skip:int = 0, limit:int=10):
+def get_filtered_jobs(access_token:str = None, country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None, skip:int = 0, limit:int=10):
+    headers = {'Authorization': f'Bearer {access_token}'}
     params = {
         'keyword': keyword,
         'address_country': country,
@@ -3067,7 +3068,7 @@ def get_filtered_jobs(country:str = None, state:str = None, job_type:str = None,
         'limit':limit
     }
     try:
-        response = requests.get(constants.BASE_URL + f'/jobs/filter/', params=params)
+        response = requests.get(constants.BASE_URL + f'/jobs/filter/', params=params, headers=headers)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

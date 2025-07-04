@@ -96,8 +96,8 @@
                                         </svg>{{job['salary']}}</span></div>
                             </div>
                             <div class="flex items-center gap-2">
-                                <form method="POST" action="{{ url_for('jobseeker_unsave_job', job_id=job['id']) }}">
-                                <button type="submit" data-lov-id="src/pages/SavedJobs.tsx:184:32"
+                                <button type="button" 
+                                    onclick="openDeleteModal('{{ job['id'] }}', '{{ job['job_title'] }}')"
                                     class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -155,6 +155,42 @@
     {% endfor %}
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-red-600">
+                    <path d="M3 6h18"></path>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    <line x1="10" x2="10" y1="11" y2="17"></line>
+                    <line x1="14" x2="14" y1="11" y2="17"></line>
+                </svg>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900">Delete Saved Job</h3>
+                <p class="text-sm text-gray-600">This action cannot be undone.</p>
+            </div>
+        </div>
+        
+        <div class="mb-6">
+            <p class="text-gray-700">Are you sure you want to remove <span id="jobTitle" class="font-semibold"></span> from your saved jobs?</p>
+        </div>
+        
+        <div class="flex gap-3 justify-end">
+            <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                Cancel
+            </button>
+            <form id="deleteForm" method="POST" style="display: inline;">
+                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    Delete
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
       const elements = document.querySelectorAll(".created-time");
@@ -184,6 +220,30 @@
   
         el.innerText = result;
       });
+    });
+
+    function openDeleteModal(jobId, jobTitle) {
+        document.getElementById('jobTitle').textContent = jobTitle;
+        document.getElementById('deleteForm').action = `/jobseeker/unsave-job/${jobId}`;
+        document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDeleteModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeDeleteModal();
+        }
     });
   </script>
   
