@@ -4751,6 +4751,7 @@ def jobseeker_update_profile():
 
     if request.method == 'POST':
         data = request.get_json()
+        print("Jobseeker data: ",data)
         response = api_calls.update_jobseeker_profile_two(profile_data=data, access_token=current_user.id)
         return jsonify({"success": True, "message": "Profile submitted successfully!"}), 200
 
