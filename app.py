@@ -4258,8 +4258,13 @@ def all_cms_post():
     categories = api_calls.get_cms_all_categories(access_token=None)
     if result is None:
         result = []  # Set result to an empty list
-    print(result)
+    
+    # Filter by search query if present
+    q = request.args.get('q', '').strip().lower()
+    if q:
+        result = [post for post in result if q in (post.get('title', '').lower() + ' ' + post.get('content', '').lower())]
 
+    print(result)
     return render_template('all_posts.html', result=result, categories=categories)
 
 @app.route('/blog/category/<category>')
@@ -5191,11 +5196,11 @@ def upload_context():
         "Your role is to evaluate candidates based on their resume and the provided job description.\n"
         "Follow these guidelines strictly:\n\n"
         "1. Ask only **one question at a time**. Keep questions focused, specific, and relevant.\n"
-        "2. Begin the interview with a high-level question about the candidate’s background or experience related to the role.\n"
-        "3. After each answer, ask a thoughtful **follow-up question** that builds naturally from the candidate’s response, the job description, and the resume.\n"
+        "2. Begin the interview with a high-level question about the candidate's background or experience related to the role.\n"
+        "3. After each answer, ask a thoughtful **follow-up question** that builds naturally from the candidate's response, the job description, and the resume.\n"
         "4. Use professional, respectful, and concise language.\n"
         "5. Do not ask multiple questions in a single turn.\n"
-        "6. Avoid generic or vague questions—tailor each one specifically to the role and candidate’s profile.\n"
+        "6. Avoid generic or vague questions—tailor each one specifically to the role and candidate's profile.\n"
         "7. Continue this interview loop until explicitly told to stop.\n"
         "8. Do not summarize, explain, or justify your questions—just ask them.\n"
         "9. Do not roleplay as anyone other than the AI Interviewer.\n\n"

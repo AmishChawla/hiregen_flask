@@ -12,7 +12,9 @@
             <div class="space-y-8">
                 <div class="grid gap-8">
                     {% for post in result %}
-                    <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100">
+                    <article class="blog-post bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100"
+                             data-title="{{ post.title|lower }}"
+                             data-description="{{ (post.short_description or post.content[:200])|lower }}">
                         <div class="md:flex">
                             <div class="md:w-1/3">
                                 <img src="{{ post.featured_image or url_for('static', filename='images/blog-bg.jpg') }}"
@@ -55,19 +57,6 @@
                                                 <path d="M3 10h18"></path>
                                             </svg><span><time datetime="{{ post.created_at }}">{{ post.created_at }}</time></span></div>
                                     </div>
-                                    <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="lucide lucide-clock w-4 h-4"
-                                            data-lov-id="src/components/blog/BlogCard.tsx:65:14" data-lov-name="Clock"
-                                            data-component-path="src/components/blog/BlogCard.tsx"
-                                            data-component-line="65" data-component-file="BlogCard.tsx"
-                                            data-component-name="Clock"
-                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <polyline points="12 6 12 12 16 14"></polyline>
-                                        </svg><span>5 min read</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,6 +73,7 @@
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Search</h3>
                     <div class="relative"><input
+                            id="blog-search"
                             class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200"
                             value=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -151,5 +141,27 @@
     </div>
 </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('blog-search');
+    const posts = document.querySelectorAll('.blog-post');
+    console.log('Posts found:', posts.length);
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim().toLowerCase();
+        console.log('Search query:', query);
+        posts.forEach(post => {
+            const title = post.getAttribute('data-title');
+            const description = post.getAttribute('data-description');
+            if (title.includes(query) || description.includes(query)) {
+                post.style.display = '';
+            } else {
+                post.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
 
   {% endblock %}
