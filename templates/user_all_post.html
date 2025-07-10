@@ -72,7 +72,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Jobs</p>
-                    <p class="text-2xl font-bold">28</p>
+                    <p class="text-2xl font-bold">{{metrics.total_jobs}}</p>
                 </div>
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -94,7 +94,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Active Jobs</p>
-                    <p class="text-2xl font-bold">12</p>
+                    <p class="text-2xl font-bold">{{metrics.active_jobs}}</p>
                 </div>
                 <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -116,7 +116,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Applications</p>
-                    <p class="text-2xl font-bold">214</p>
+                    <p class="text-2xl font-bold">{{metrics.total_applicants}}</p>
                 </div>
                 <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -138,7 +138,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Avg. Salary</p>
-                    <p class="text-2xl font-bold">$128k</p>
+                    <p class="text-2xl font-bold">{{metrics.avg_salary}}</p>
                 </div>
                 <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -204,17 +204,17 @@ table.dataTable thead th, table.dataTable tfoot th {
                     </tr>
                 </thead>
                 <tbody class="[&amp;_tr:last-child]:border-0">
-                    {% for data in result %}
+                    {% for data in jobs %}
                     {% if data.status == 'published' %}
                     <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                             <div>
                                 <div class="font-medium"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}">{{ data.job_title }}</a></div>
-                                <div class="text-sm text-gray-500">Full-time</div>
+                                <div class="text-sm text-gray-500">{{data.job_type}}</div>
                             </div>
                         </td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                            Engineering</td>
+                            {{data.industry}}</td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                             <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -228,9 +228,9 @@ table.dataTable thead th, table.dataTable tfoot th {
                                         d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
                                     </path>
                                     <circle cx="12" cy="10" r="3"></circle>
-                                </svg><span class="text-sm">Remote</span></div>
+                                </svg><span class="text-sm">{{data.working_style}}</span></div>
                         </td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">$120k - $160k</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{data.salary_currency}} {{data.min_salary}}  - {{data.max_salary}}/{{data.salary_time_unit}}</td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
                             <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -370,17 +370,17 @@ table.dataTable thead th, table.dataTable tfoot th {
                     </tr>
                 </thead>
                 <tbody class="[&amp;_tr:last-child]:border-0">
-                    {% for data in result %}
+                    {% for data in jobs %}
                     {% if data.status == 'draft' %}
                     <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                             <div>
                                 <div class="font-medium"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=data.company_subdomain, job_slug=data.slug) }}">{{ data.job_title }}</a></div>
-                                <div class="text-sm text-gray-500">Full-time</div>
+                                <div class="text-sm text-gray-500">{{data.job_type}}</div>
                             </div>
                         </td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                            Engineering</td>
+                            {{data.industry}}</td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                             <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -394,9 +394,9 @@ table.dataTable thead th, table.dataTable tfoot th {
                                         d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
                                     </path>
                                     <circle cx="12" cy="10" r="3"></circle>
-                                </svg><span class="text-sm">Remote</span></div>
+                                </svg><span class="text-sm">{{data.working_style}}</span></div>
                         </td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">$120k - $160k</td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{data.salary_currency}} {{data.min_salary}}  - {{data.max_salary}}/{{data.salary_time_unit}}</td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
                             <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

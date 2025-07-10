@@ -434,6 +434,8 @@ def user_dashboard():
     statuses = stats["statuses"]
 
     latest_jobs = api_calls.get_user_all_job_openings(maximum_posts=5, access_token=current_user.id)
+    latest_jobs = latest_jobs['jobs']
+    print("latest_jobs: ", latest_jobs)
 
 
     return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses, latest_jobs=latest_jobs)
@@ -1167,10 +1169,12 @@ def admin_all_jobs():
 @login_required
 def user_all_post():
     result = api_calls.get_user_all_job_openings(access_token=current_user.id)
+    jobs = result['jobs']
+    metrics = result['metrics']
     if result is None:
-        result = []  # Set result to an empty list
+        result = {}  # Set result to an empty list
 
-    return render_template('user_all_post.html', result=result)
+    return render_template('user_all_post.html', jobs=jobs, metrics=metrics)
 #['applied', 'shortlisted', 'assessment', 'interview', 'rejected', 'selected']
 @app.route('/user/job/applicants/<job_id>')
 @requires_any_permission("can_track_applicants")
@@ -1395,7 +1399,6 @@ def add_post():
         job_type = form.job_type.data
         work_experience = form.work_experience.data
         industry = form.industry.data
-        salary = form.salary.data
         address_city = form.address_city.data
         address_country = form.address_country.data
         address_province = form.address_province.data
@@ -1404,6 +1407,11 @@ def add_post():
         job_requirements = form.job_requirements.data
         job_benefits = form.job_benefits.data
         job_opening_status = 'Active'
+        work_style = form.work_style.data
+        min_salary = form.min_salary.data
+        max_salary = form.max_salary.data
+        salary_currency = form.salary_currency.data
+        salary_time_unit = form.salary_time_unit.data
 
 
         print(form.data)
@@ -1418,7 +1426,6 @@ def add_post():
                 "job_skills": "",
                 "work_experience": work_experience,
                 "industry": industry,
-                "salary": salary,
                 "address_city": address_city,
                 "address_country": address_country,
                 "address_province": address_province,
@@ -1427,7 +1434,12 @@ def add_post():
                 "job_requirements": job_requirements,
                 "job_benefits": job_benefits,
                 "job_opening_status": job_opening_status,
-                "status": 'draft'
+                "status": 'draft',
+                "working_style": work_style,
+                "min_salary": min_salary,
+                "max_salary": max_salary,
+                "salary_currency": salary_currency,
+                "salary_time_unit": salary_time_unit
             }
 
             try:
@@ -1452,7 +1464,6 @@ def add_post():
                 "job_skills": "",
                 "work_experience": work_experience,
                 "industry": industry,
-                "salary": salary,
                 "address_city": address_city,
                 "address_country": address_country,
                 "address_province": address_province,
@@ -1461,7 +1472,12 @@ def add_post():
                 "job_requirements": job_requirements,
                 "job_benefits": job_benefits,
                 "job_opening_status": job_opening_status,
-                "status": 'published'
+                "status": 'published',
+                "working_style": work_style,
+                "min_salary": min_salary,
+                "max_salary": max_salary,
+                "salary_currency": salary_currency,
+                "salary_time_unit": salary_time_unit
             }
             try:
                 result = api_calls.create_job_opening(
@@ -1471,22 +1487,6 @@ def add_post():
 
                 if result:
                     flash("Post created successfully", "success")
-                    # try:
-                    #     print("trying to send mail")
-                    #     dateiso = result["created_at"]
-                    #     post_slug = result["slug"]
-                    #     date = dateiso.split('T')[0]
-                    #     print(date)
-                    #     post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
-                    #     print(post_url)
-                    #     send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data, body=form.content.data, post_url=post_url)
-                    #     print('done')
-                    # except Exception as e:
-                    #     raise 'Problem sending newsletter' + e
-                    # if current_user.role == 'user':
-                    #     return redirect(url_for('user_all_post'))
-                    # else:
-                    #     return redirect(url_for('all_post'))
                     return redirect(url_for('user_all_post'))
 
                 else:
@@ -1496,22 +1496,14 @@ def add_post():
     else:
         print(form.errors)
 
-    root_url = constants.ROOT_URL + '/'
-    # media_result = api_calls.get_user_all_medias(access_token=current_user.id)
-    # if media_result is None:
-    media_result = []  # Set result to an empty list
-
-    # forms_result = api_calls.get_user_all_forms(access_token=current_user.id)
-    # if forms_result is None:
-    forms_result = []  # Set result to an empty list
 
     if current_user.role == 'user':
         is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
         if is_service_allowed:
-            return render_template('add_post.html', form=form, forms_result=forms_result,result=media_result, root_url=root_url)
+            return render_template('add_post.html', form=form,)
         return redirect(url_for('user_view_plan'))
     else:
-        return render_template('add_post.html', form=form, result=media_result, forms_result=forms_result, root_url=root_url)
+        return render_template('add_post.html', form=form)
 
 
 @app.route('/generate-ai-content', methods=['POST'])
@@ -3564,6 +3556,7 @@ def employer_view_jobseeker_profile(jobseeker_id):
     root_url = constants.ROOT_URL + '/'
 
     profile_info = api_calls.employer_view_jobseeker(jobseeker_id=jobseeker_id)
+    print("profile_info: ", profile_info)
 
     return render_template('cms/job_openings/employer_view_jobseeker_profile.html', root_url=root_url,profile_info=profile_info)
 
