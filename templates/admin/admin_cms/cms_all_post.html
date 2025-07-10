@@ -61,7 +61,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             </div>
 
                 <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-6">
-                    <div id="published-posts" class="inline-block min-w-full align-middle">
+                    <div id="published-posts" class="w-full overflow-x-auto">
                     <table id="publishedTable" class="min-w-full borderseparate border-spacing-0">
                     <thead class="bg-gray-50">
                         <tr>
@@ -78,20 +78,30 @@ table.dataTable thead th, table.dataTable tfoot th {
                         {% for data in result %}
                         {%  if data.status == 'published' %}
                         <tr class="hover:bg-gray-50">
-                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
+                            <td class="whitespace-nowrap border-b border-gray-200 py-2 px-2 text-xs sm:py-4 sm:px-4 sm:text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                                 <div class="flex items-center space-x-2">
                                 <img src="/static/images/man.png" alt="Profile" class="h-10 w-10 rounded-full object-cover border border-purple-100">
-                                <a href="{{ url_for('read_post', slug=data.slug) }}" class="text-purple500 hover:underline">{{ data.title }}</a>
+                                <a href="{{ url_for('read_post', slug=data.slug) }}" class="text-purple500 hover:underline">{{ data.title[:40] }}{% if data.title|length > 40 %}...{% endif %}</a>
                                 </div>
                             </td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.username }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.category_name }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.post_views }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500">Delete</button>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.username }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.category_name }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.post_views }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.created_at }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4 min-w-[44px] min-h-[44px] inline-block">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500 min-w-[44px] min-h-[44px] inline-block">Delete</button>
                             </td>
                         </tr>
                         {% endif %}
@@ -101,7 +111,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             </div>
             </div>
 
-            <div id="draft-posts" class="hidden">
+            <div id="draft-posts" class="hidden w-full overflow-x-auto">
                 <table id="draftTable" class="min-w-full divide-y divide-gray-300">
                     <thead class="bg-gray-50">
                         <tr>
@@ -117,14 +127,22 @@ table.dataTable thead th, table.dataTable tfoot th {
                         {% for data in result if data.status == 'draft' %}
                         {%  if data.status == 'draft' %}
                         <tr>
-                            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><a href="#" class="text-purple500 hover:underline">{{ data.title }}</a></td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.username }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.category_name }}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}</td>
-                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">{{ data.created_at }}</td>
+                            <td class="whitespace-nowrap border-b border-gray-200 py-2 px-2 text-xs sm:py-4 sm:px-4 sm:text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><a href="#" class="text-purple500 hover:underline">{{ data.title[:40] }}{% if data.title|length > 40 %}...{% endif %}</a></td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.username }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.category_name }}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {% if data.tags %}{% for tag in data.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %} No Tags {% endif %}
+                            </td>
+                            <td class="whitespace-nowrap border-b border-gray-200 hidden px-2 py-2 text-xs text-gray-500 sm:table-cell sm:px-3 sm:py-4 sm:text-sm">
+                                {{ data.created_at }}
+                            </td>
                             <td class="px-4 py-2 text-sm">
-                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4">Edit</a>
-                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500">Delete</button>
+                                <a href="{{ url_for('admin_update_cms_post', post_id=data.id) }}" class="text-blue-600 hover:text-blue-500 mr-4 min-w-[44px] min-h-[44px] inline-block">Edit</a>
+                                <button data-post-id="{{ data.id }}" class="deleteModalTrigger text-blue-600 hover:text-blue-500 min-w-[44px] min-h-[44px] inline-block">Delete</button>
                             </td>
                         </tr>
                         {% endif %}
@@ -190,8 +208,8 @@ table.dataTable thead th, table.dataTable tfoot th {
         });
 
         // Initialize DataTables
-        new DataTable('#publishedTable');
-        new DataTable('#draftTable');
+        new DataTable('#publishedTable', { order: [] });
+        new DataTable('#draftTable', { order: [] });
 
         // Modal Logic
         const deleteModal = document.getElementById('deleteModal');
@@ -201,7 +219,7 @@ table.dataTable thead th, table.dataTable tfoot th {
         document.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('deleteModalTrigger')) {
                 const postId = e.target.getAttribute('data-post-id');
-                confirmDeleteButton.href = `/admin/delete-posts/${postId}`;
+                confirmDeleteButton.href = `/admin/delete-blog/${postId}`;
                 deleteModal.classList.remove('hidden');
             }
         });
