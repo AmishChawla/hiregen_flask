@@ -10,6 +10,7 @@ import email_validator
 from wtforms.validators import DataRequired, Optional, ValidationError, URL
 
 import api_calls
+from static_dropdowns import currencies
 
 from flask_login import current_user
 
@@ -332,9 +333,13 @@ class AddJobOpening(FlaskForm):
     target_date = DateField('Target Date', default=lambda: (datetime.datetime.now() + datetime.timedelta(days=60)))
     opening_date = DateField('Opening Date', default=datetime.datetime.now())
     job_type = SelectField('Job Type', default='Full Time',choices=[('', 'Select Type'), ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Training', 'Training'), ('Freelance', 'Freelance'), ('Seasonal', 'Seasonal'), ('Contract', 'Contract'), ('Temporary', 'Temporary')])
-    work_experience= SelectField('Work Experience', choices=[('', 'Select Experience'),('Fresher', 'Fresher'),('0-1 years', '0-1 years'),('1-3 years', '1-3 years'), ('3-5 years', '3-5 years'), ('5+ years', '5+ years')])
+    work_style = SelectField('Work Style', choices=[('', 'Select Work Style'), ('On-Site', 'On-Site'), ('Hybrid', 'Hybrid'), ('Remote', 'Remote')])
+    work_experience= SelectField('Work Experience', choices=[('', 'Select Experience'),('Fresher/Graduate', 'Fresher/Graduate'),('Junior', 'Junior'),('Mid-Level', 'Mid-Level'), ('Senior', 'Senior'), ('Expert', 'Expert')])
     industry= SelectField('Industry')
-    salary= StringField('Salary')
+    min_salary = StringField('Minimum Salary')
+    max_salary = StringField('Maximum Salary')
+    salary_currency = SelectField('Salary Currency', choices=[('', 'Select Currency')] + [(currency['code'], f"{currency['name']} ({currency['symbol']})") for currency in currencies])
+    salary_time_unit = SelectField('Salary Time Unit', choices=[('', 'Select Time Unit'), ('Hourly', 'Hourly'), ('Daily', 'Daily'), ('Weekly', 'Weekly'), ('Monthly', 'Monthly'), ('Yearly', 'Yearly')])
     address_city= StringField('City')
     address_country= StringField('Country')
     address_province= StringField('Province')

@@ -206,3 +206,35 @@ statuses = [
         "on_jobseeker_apply": False
     }
 ]
+currencies = [
+    {"name": "US Dollar", "symbol": "$", "code": "USD"},
+    {"name": "Euro", "symbol": "€", "code": "EUR"},
+    {"name": "British Pound", "symbol": "£", "code": "GBP"},
+    {"name": "Canadian Dollar", "symbol": "$", "code": "CAD"},
+    {"name": "Australian Dollar", "symbol": "$", "code": "AUD"},
+    {"name": "Indian Rupee", "symbol": "₹", "code": "INR"},
+    {"name": "Japanese Yen", "symbol": "¥", "code": "JPY"},
+    {"name": "Chinese Yuan", "symbol": "¥", "code": "CNY"},
+    {"name": "Swiss Franc", "symbol": "CHF", "code": "CHF"},
+    {"name": "South African Rand", "symbol": "R", "code": "ZAR"},
+    {"name": "Brazilian Real", "symbol": "R$", "code": "BRL"},
+    {"name": "Singapore Dollar", "symbol": "$", "code": "SGD"},
+    {"name": "New Zealand Dollar", "symbol": "$", "code": "NZD"},
+    {"name": "Mexican Peso", "symbol": "$", "code": "MXN"},
+    {"name": "Swedish Krona", "symbol": "kr", "code": "SEK"},
+    {"name": "Norwegian Krone", "symbol": "kr", "code": "NOK"},
+    {"name": "Russian Ruble", "symbol": "₽", "code": "RUB"},
+    {"name": "Hong Kong Dollar", "symbol": "$", "code": "HKD"},
+    {"name": "South Korean Won", "symbol": "₩", "code": "KRW"},
+    {"name": "Turkish Lira", "symbol": "₺", "code": "TRY"},
+    {"name": "UAE Dirham", "symbol": "د.إ", "code": "AED"},
+    {"name": "Saudi Riyal", "symbol": "﷼", "code": "SAR"},
+    {"name": "Malaysian Ringgit", "symbol": "RM", "code": "MYR"},
+    {"name": "Indonesian Rupiah", "symbol": "Rp", "code": "IDR"},
+    {"name": "Philippine Peso", "symbol": "₱", "code": "PHP"},
+    {"name": "Thai Baht", "symbol": "฿", "code": "THB"},
+    {"name": "Pakistani Rupee", "symbol": "₨", "code": "PKR"},
+    {"name": "Egyptian Pound", "symbol": "£", "code": "EGP"},
+    {"name": "Bangladeshi Taka", "symbol": "৳", "code": "BDT"},
+    {"name": "Nigerian Naira", "symbol": "₦", "code": "NGN"}
+]

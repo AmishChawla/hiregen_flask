@@ -15,7 +15,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-600">Applications Sent</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">{{ total_applications }}</p>
-                <p class="text-sm mt-1 text-green-600">+3 this week</p>
+                <p class="text-sm mt-1 text-green-600">+{{applications_this_week}} this week</p>
             </div>
             <div class="p-3 rounded-lg bg-blue-50 text-blue-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -86,8 +86,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-gray-600">Profile Views</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">156</p>
-                <p class="text-sm mt-1 text-green-600">+8% this month</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">{{profile_views}}</p>
+                <!-- <p class="text-sm mt-1 text-green-600">+8% this month</p> -->
             </div>
             <div class="p-3 rounded-lg bg-orange-50 text-orange-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -364,20 +364,12 @@
         </div>
                     </div>
                     <div class="space-y-2 text-sm">
-                        <div class="flex items-center gap-2 text-green-600">
-                            <div class="w-2 h-2 bg-green-600 rounded-full"></div><span
-                            >Profile photo
-                                added</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-green-600">
-                            <div class="w-2 h-2 bg-green-600 rounded-full"></div><span
-                                >Skills listed</span>
-                        </div>
+                        {% for instruction in instructions %}
                         <div class="flex items-center gap-2 text-orange-600">
-                            <div class="w-2 h-2 bg-orange-600 rounded-full"></div><span
-                            >Add work
-                                samples</span>
+                            <div class="w-2 h-2 bg-orange-600 rounded-full"></div>
+                            <span>{{instruction}}</span>
                         </div>
+                        {% endfor %}
                     </div>
                     <a href="{{ url_for('jobseeker_profile') }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">Complete
                         Profile</a>

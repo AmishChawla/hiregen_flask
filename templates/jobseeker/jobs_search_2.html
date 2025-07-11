@@ -148,50 +148,222 @@
 let isLoading = false;
 let skip = 10; // already loaded initial 10 from server
 const limit = 10;
+let hasMoreJobs = true; // Track if there are more jobs to load
+
+console.log('Infinite scrolling script initialized');
+
+// Test scroll events are being captured
+window.addEventListener('scroll', () => {
+    console.log('Scroll event detected - scrollY:', window.scrollY, 'innerHeight:', window.innerHeight, 'body.offsetHeight:', document.body.offsetHeight);
+});
 
 window.addEventListener('scroll', async () => {
+    console.log('Infinite scroll check - scrollY:', window.scrollY, 'innerHeight:', window.innerHeight, 'body.offsetHeight:', document.body.offsetHeight);
+    console.log('Distance from bottom:', document.body.offsetHeight - (window.innerHeight + window.scrollY));
+    
+    // Check if we're near the bottom and not already loading
     if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
-        !isLoading
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
+        !isLoading &&
+        hasMoreJobs
     ) {
-        isLoading = true;
+        console.log('Scroll detected - near bottom, triggering loadMoreJobs');
+        await loadMoreJobs();
+    } else {
+        console.log('Scroll detected but conditions not met - isLoading:', isLoading, 'hasMoreJobs:', hasMoreJobs, 'distance from bottom:', document.body.offsetHeight - (window.innerHeight + window.scrollY));
+    }
+});
 
+async function loadMoreJobs() {
+    console.log('loadMoreJobs called - isLoading:', isLoading, 'hasMoreJobs:', hasMoreJobs);
+    
+    if (isLoading || !hasMoreJobs) {
+        console.log('loadMoreJobs blocked - isLoading:', isLoading, 'hasMoreJobs:', hasMoreJobs);
+        return;
+    }
+    
+    isLoading = true;
+    console.log('Starting to load more jobs - skip:', skip, 'limit:', limit);
+    
+    // Show loading indicator
+    const loadingIndicator = document.getElementById('loading-indicator');
+    loadingIndicator.classList.remove('hidden');
+    console.log('Loading indicator shown');
+    
+    try {
         const baseUrl = new URL(window.location.href);
         const params = new URLSearchParams(baseUrl.search);
 
-        // Append pagination
+        // Append pagination parameters
         params.set('skip', skip);
         params.set('limit', limit);
 
         const url = `${baseUrl.pathname}?${params.toString()}`;
+        console.log('Making AJAX request to:', url);
 
-        try {
-            const response = await fetch(url, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
+        const response = await fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
 
-            if (response.ok) {
-    const html = await response.text();
+        console.log('Response received - status:', response.status, 'ok:', response.ok);
 
-    if (!html.trim()) {
-        console.log('No more jobs to load.');
-        return; // No more jobs
-    }
+        if (response.ok) {
+            const html = await response.text();
+            console.log('HTML response length:', html.length);
+            console.log('HTML response preview:', html.substring(0, 200) + '...');
 
-    const jobContainer = document.getElementById('job-results-container');
-    jobContainer.insertAdjacentHTML('beforeend', html);
+            if (!html.trim()) {
+                console.log('Empty HTML response - no more jobs to load');
+                hasMoreJobs = false;
+                loadingIndicator.textContent = 'No more jobs to load';
+                return;
+            }
 
-    skip += limit;
-    isLoading = false;
-} else {
-    console.error('Failed to fetch jobs');
-}        } catch (error) {
-            console.error('Error fetching jobs:', error);
+            // Check if the response contains job cards
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const jobCards = tempDiv.querySelectorAll('.block.p-5.rounded-lg');
+            console.log('Job cards found in response:', jobCards.length);
+            
+            if (jobCards.length === 0) {
+                console.log('No job cards found in response - stopping infinite scroll');
+                hasMoreJobs = false;
+                loadingIndicator.textContent = 'No more jobs to load';
+                return;
+            }
+            
+            // Insert the new job cards
+            const jobContainer = document.getElementById('job-results-container');
+            console.log('Inserting', jobCards.length, 'job cards into container');
+            jobContainer.insertAdjacentHTML('beforeend', html);
+            
+            skip += limit;
+            console.log('Updated skip to:', skip);
+            
+            // If we received fewer jobs than requested, we've reached the end
+            if (jobCards.length < limit) {
+                console.log('Received fewer jobs than requested - reached end of results');
+                hasMoreJobs = false;
+                loadingIndicator.textContent = 'No more jobs to load';
+            }
+        } else {
+            console.error('Failed to fetch jobs - status:', response.status);
+            loadingIndicator.textContent = 'Error loading jobs. Please try again.';
+        }
+    } catch (error) {
+        console.error('Error fetching jobs:', error);
+        loadingIndicator.textContent = 'Error loading jobs. Please try again.';
+    } finally {
+        isLoading = false;
+        console.log('Request completed - isLoading set to false');
+        
+        // Hide loading indicator after a delay if there are no more jobs
+        if (!hasMoreJobs) {
+            console.log('No more jobs - hiding loading indicator after delay');
+            setTimeout(() => {
+                loadingIndicator.classList.add('hidden');
+                console.log('Loading indicator hidden');
+            }, 2000);
+        } else {
+            loadingIndicator.classList.add('hidden');
+            console.log('Loading indicator hidden immediately');
         }
     }
+}
+
+// Reset pagination when search form is submitted
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - setting up event listeners');
+    
+    const searchForm = document.querySelector('form[method="GET"]');
+    if (searchForm) {
+        console.log('Search form found - adding submit listener');
+        searchForm.addEventListener('submit', function() {
+            console.log('Search form submitted - resetting pagination');
+            skip = 10;
+            hasMoreJobs = true;
+            isLoading = false;
+        });
+    } else {
+        console.log('Search form not found');
+    }
+    
+    // Also reset when filter dropdowns change
+    const filterSelects = document.querySelectorAll('select[name="industry"], select[name="job_type"], select[name="date_filter"]');
+    console.log('Filter selects found:', filterSelects.length);
+    filterSelects.forEach((select, index) => {
+        console.log('Adding change listener to filter select', index);
+        select.addEventListener('change', function() {
+            console.log('Filter changed - submitting form');
+            skip = 10;
+            hasMoreJobs = true;
+            isLoading = false;
+            
+            // Submit the search form
+            const searchForm = document.querySelector('form[method="GET"]');
+            if (searchForm) {
+                console.log('Submitting search form due to filter change');
+                searchForm.submit();
+            } else {
+                console.log('Search form not found for submission');
+            }
+        });
+    });
 });
-    </script>
+</script>
+
+<!-- Filter Auto-Submit Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Filter auto-submit script initialized');
+    
+    // Get all filter dropdowns
+    const filterSelects = document.querySelectorAll('select[name="industry"], select[name="job_type"], select[name="date_filter"]');
+    console.log('Filter selects found for auto-submit:', filterSelects.length);
+    
+    // Add change listeners to each filter
+    filterSelects.forEach((select, index) => {
+        console.log('Adding auto-submit listener to filter select', index, 'name:', select.name);
+        select.addEventListener('change', function() {
+            console.log('Filter changed - auto-submitting form:', select.name, 'value:', select.value);
+            
+            // Get the search form
+            const searchForm = document.querySelector('form[method="GET"]');
+            if (searchForm) {
+                // Ensure all current filter values are included
+                const currentParams = new URLSearchParams(window.location.search);
+                
+                // Update the changed filter value
+                if (select.value) {
+                    currentParams.set(select.name, select.value);
+                } else {
+                    currentParams.delete(select.name);
+                }
+                
+                // Preserve other form inputs (keyword, state, etc.)
+                const keywordInput = searchForm.querySelector('input[name="keyword"]');
+                const stateInput = searchForm.querySelector('input[name="state"]');
+                
+                if (keywordInput && keywordInput.value) {
+                    currentParams.set('keyword', keywordInput.value);
+                }
+                if (stateInput && stateInput.value) {
+                    currentParams.set('state', stateInput.value);
+                }
+                
+                console.log('Auto-submitting with params:', currentParams.toString());
+                
+                // Create new URL with all parameters
+                const newUrl = window.location.pathname + '?' + currentParams.toString();
+                window.location.href = newUrl;
+            } else {
+                console.log('Search form not found for auto-submission');
+            }
+        });
+    });
+});
+</script>
     
 {% endblock %}
