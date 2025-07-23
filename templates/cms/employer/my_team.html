@@ -47,6 +47,7 @@ My Team
             </div>
 
             <ul role="list" class="" id="team-member-list">
+              {% if team_members %}
                 {% for member in team_members %}
                 <li class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors my-3" data-id="{{ member.id }}">
                   <div class="flex gap-x-3">
@@ -81,6 +82,11 @@ My Team
               </button>
                 </li>
                 {% endfor %}
+                {% else %}
+                <li class="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors my-3">
+                  <p class="text-gray-500">No team members found</p>
+                </li>
+                {% endif %}
               </ul> 
           </div>
 

@@ -43,7 +43,7 @@ table.dataTable thead th, table.dataTable tfoot th {
             <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Setup Hiring Pipeline</h1>
             <div class="flex space-x-4">
                 <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=current_user.company['company_subdomain']) }}" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Visit Site</a>
-                <a href="{{ url_for('create_applicant_tracker') }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Create New Hiring Status</a>
+                <a href="{{ url_for('create_applicant_tracker') }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Create New Hiring Stage</a>
             </div>
         </div>
 
@@ -58,15 +58,15 @@ table.dataTable thead th, table.dataTable tfoot th {
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                             Desciption</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
-                            Job Status</th>
+                            Stage Type</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                             Date</th>
                         <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0">
                             Actions</th>
                     </tr>
                 </thead>
-                <tbody class="[&amp;_tr:last-child]:border-0">
-                    {% for data in result %}
+                <tbody class="[&_tr:last-child]:border-0">
+                    {% for data in result|sort(attribute='stage_order') %}
                     <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                             {{ data.name }}
@@ -75,7 +75,7 @@ table.dataTable thead th, table.dataTable tfoot th {
                             {{ data.description }}
                         </td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                        {{ data.job_status }}
+                        {{ data.stage_type }}
                         </td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">{{ data.created_at }}</td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">

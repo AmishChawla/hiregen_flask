@@ -625,11 +625,38 @@ class ApplyToJob(FlaskForm):
             return []
 
 class AddTrackers(FlaskForm):
+    stage_type = SelectField('Stage Type', choices=[
+        ('', 'Select Stage Type'),
+        ('Application Review', 'Application Review'),
+        ('Screening', 'Screening'),
+        ('Phone Screening', 'Phone Screening'),
+        ('Pre-Employment Test', 'Pre-Employment Test'),
+        ('Assessment', 'Assessment'),
+        ('Assessment Center', 'Assessment Center'),
+        ('Video Interview', 'Video Interview'),
+        ('Group Interview', 'Group Interview'),
+        ('Panel Interview', 'Panel Interview'),
+        ('Technical Interview', 'Technical Interview'),
+        ('HR Interview', 'HR Interview'),
+        ('Managerial Interview', 'Managerial Interview'),
+        ('Interview', 'Interview'),
+        ('Assignment/Project', 'Assignment/Project'),
+        ('Portfolio Review', 'Portfolio Review'),
+        ('Trial Day/Job Shadowing', 'Trial Day/Job Shadowing'),
+        ('Background Check', 'Background Check'),
+        ('Reference Check', 'Reference Check'),
+        ('Psychometric Test', 'Psychometric Test'),
+        ('Medical/Drug Test', 'Medical/Drug Test'),
+        ('Offer Discussion', 'Offer Discussion'),
+        ('Onboarding', 'Onboarding'),
+        ('Final Interview', 'Final Interview'),
+        ('Other', 'Other')
+    ])
+    stage_number = IntegerField('Stage Number', validators=[validators.DataRequired()])
     name = StringField('Name', validators=[validators.DataRequired()])
     description = TextAreaField('Description')
-    on_apply = BooleanField('On Apply')
     job_status = StringField('Status')
-    submit = SubmitField('Create Tracker')
+    submit = SubmitField('Create Stage')
 
 ################################################# JOBSEEKER FORMS ########################################################
 

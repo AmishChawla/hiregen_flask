@@ -62,9 +62,9 @@
                             <a href="{{ data.job_url }}" class="text-blue-600">{{ data.job_title }}</a>
                           </td>
                         <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                <select class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" id="status-select-{{ data.id }}" onchange="updateApplicationStatus('{{ data.id }}')">
+                <select class="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm" id="status-select-{{ data.application_id }}" onchange="updateApplicationStatus('{{ data.application_id }}')">
                   {% for s in statuses %}
-                    <option value="{{ s.job_status }}" {% if data.application_status == s.job_status %}selected{% endif %}>{{ s.name.capitalize() }}</option>
+                    <option value="{{ s.job_status }}" data-stage-id="{{ s.id }}" data-stage-name="{{ s.name }}" {% if data.application_status == s.job_status %}selected{% endif %}>{{ s.name.capitalize() }}</option>
                   {% endfor %}
                 </select>
                         </td>
@@ -76,7 +76,7 @@
                             <div class="text-sm">{{ data.application_date }}
                             </div>
                         </td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">                
                             <button type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')">Details</button>
                         </td>
                     </tr>
@@ -321,10 +321,25 @@ function updateApplicationStatus(application_id, fromDrawer = false) {
   const selectId = fromDrawer ? `status-select-drawer-${application_id}` : `status-select-${application_id}`;
   const statusSelect = document.getElementById(selectId);
   const newStatus = statusSelect.value;
+  const selectedOption = statusSelect.options[statusSelect.selectedIndex];
+  const stage_id = selectedOption.getAttribute('data-stage-id');
+  const stage_name = selectedOption.getAttribute('data-stage-name');
+
+  console.log('newStatus:', newStatus);
+  console.log('stage_id:', stage_id);
+  console.log('stage_name:', stage_name);
+  console.log('application_id:', typeof application_id);
+  console.log('stage_id:', typeof stage_id);
+  console.log('stage_name:', typeof stage_name);
 
   fetch(`/update-application-status`, {
     method: 'POST',
-    body: JSON.stringify({ id: application_id, newStatus: newStatus }),
+    body: JSON.stringify({
+      id: parseInt(application_id, 10),
+      newStatus: newStatus,
+      stage_id: parseInt(stage_id, 10),
+      stage_name: stage_name
+    }),
     headers: { 'Content-Type': 'application/json' },
   })
   .then(response => response.json())

@@ -431,14 +431,16 @@ def user_dashboard():
     total_views = stats["total_views"]
     applicants_count = stats["applicants_count"]
     in_progress_jobs = stats["in_progress_jobs"]
+    mid_stage_applicants_count = stats["mid_stage_applicants_count"] # these are applicants that are in either interview or assessment stage 
+    hiring_rate = stats["hiring_rate"]
     statuses = stats["statuses"]
+    mid_stage_applicants = stats["mid_stage_applicants"]
 
     latest_jobs = api_calls.get_user_all_job_openings(maximum_posts=5, access_token=current_user.id)
-    latest_jobs = latest_jobs['jobs']
-    print("latest_jobs: ", latest_jobs)
+    latest_jobs = latest_jobs['jobs'] if latest_jobs else []
+    print("MID STAGE APPLICANTS: ", mid_stage_applicants)
 
-
-    return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses, latest_jobs=latest_jobs)
+    return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses, latest_jobs=latest_jobs, mid_stage_applicants=mid_stage_applicants, hiring_rate=hiring_rate, mid_stage_applicants_count=mid_stage_applicants_count)
 
 
 @app.route("/admin/admin-dashboard")
@@ -1169,8 +1171,8 @@ def admin_all_jobs():
 @login_required
 def user_all_post():
     result = api_calls.get_user_all_job_openings(access_token=current_user.id)
-    jobs = result['jobs']
-    metrics = result['metrics']
+    jobs = result['jobs'] if result else []
+    metrics = result['metrics'] if result else {}
     if result is None:
         result = {}  # Set result to an empty list
 
@@ -1183,7 +1185,9 @@ def job_applicants(job_id):
     result = api_calls.get_job_applicants(access_token=current_user.id, job_id=job_id)
     statuses = api_calls.get_applicant_trackers(access_token=current_user.id)
     if statuses is not None:
-        job_statuses = [item['job_status'] for item in statuses]
+        job_statuses = statuses
+    #     job_statuses = sorted(statuses, key=lambda x: x.get('stage_order', 999))
+    #     job_statuses = [item[''] for item in job_statuses]
     if result is None:
         result = []  # Set result to an empty list
     if statuses is None:
@@ -3330,9 +3334,11 @@ def jobseeker_applications():
 def update_application_status():
     item_id = request.json['id']
     new_status = request.json['newStatus']
-    print(item_id, new_status)
+    stage_id = request.json['stage_id']
+    stage_name = request.json['stage_name']
+    print(item_id, new_status, stage_id, stage_name)
 
-    result = api_calls.update_application_status(application_id=item_id, new_status=new_status)
+    result = api_calls.update_application_status(application_id=item_id, new_status=new_status, stage_id=stage_id, stage_name=stage_name)
     return jsonify(result)
 
 
@@ -3357,9 +3363,10 @@ def create_applicant_tracker():
         name = form.name.data
         description = form.description.data
         job_status = form.job_status.data
-        on_apply = form.on_apply.data
+        stage_type = form.stage_type.data
+        stage_number = form.stage_number.data
         print("sending request to add plan")
-        result = api_calls.create_application_tracker(name=name, description=description, job_status=job_status, on_apply=on_apply, access_token=current_user.id)
+        result = api_calls.create_application_tracker(stage_type=stage_type, stage_number=stage_number, name=name, description=description, job_status=job_status, access_token=current_user.id)
         if result:
             return redirect(url_for('applicant_tracking'))
     else:
@@ -5046,7 +5053,32 @@ def jobseeker_settings():
 ############################ EMPLOYER SETTINGS ##########################################################
 @app.route('/user/settings', methods=['GET', 'POST'])
 def employer_settings():
-   return render_template('employer_settings.html')
+    preferences = api_calls.get_user_preferences(access_token=current_user.id)
+    # Ensure preferences is always a dict
+    if preferences is None:
+        preferences = {}
+    
+    if request.method == 'POST':
+        # Build preferences_update dict to match UserPreferencesUpdate model
+        # Checkboxes only appear in form data when checked
+        preferences_update = {
+            "email_notifications": "email_notifications" in request.form,
+            "push_notifications": "push_notifications" in request.form,
+            "resume_alerts": "resume_alerts" in request.form,
+            "is_public_profile": "is_public_profile" in request.form
+        }
+        
+        try:
+            updated_preferences = api_calls.update_user_preferences(
+                access_token=current_user.id,
+                preferences_update=preferences_update
+            )
+            flash("Preferences updated successfully.", "success")
+            preferences = updated_preferences if updated_preferences else {}
+        except Exception as e:
+            flash(f"Failed to update preferences: {str(e)}", "danger")
+    
+    return render_template('employer_settings.html', preferences=preferences)
 
 ############################ EMPLOYER ANALYTICS ##########################################################
 @app.route('/user/analytics', methods=['GET', 'POST'])
@@ -5207,6 +5239,44 @@ def upload_context():
     session["interaction_count"] = 0
 
     return jsonify({"success": True})
+
+
+########################################## APPLICATION LOG ##########################################################
+
+@app.route('/application-log/update/<int:log_id>', methods=['POST'])
+@requires_any_permission("can_track_applicants")
+@login_required
+def update_application_log(log_id):
+    """
+    Endpoint to update an application stage log.
+    Expects JSON body with the fields to update.
+    """
+    try:
+        log_update_data = request.get_json()
+        updated_log = api_calls.update_application_stage_log(log_id, log_update_data)
+        return jsonify({"success": True, "log": updated_log})
+    except Exception as e:
+        print(e)
+        return jsonify({"success": False, "error": str(e)}), 400
+    
+@app.route('/application-log/by-application-and-stage', methods=['POST'])
+@requires_any_permission("can_track_applicants")
+@login_required
+def get_application_log_by_application_and_stage():
+    """
+    API endpoint to get a single application stage log by job_application_id and stage_id.
+    Expects JSON body with: job_application_id and stage_id.
+    """
+    data = request.get_json()
+    job_application_id = data.get('job_application_id')
+    stage_id = data.get('stage_id')
+    if job_application_id is None or stage_id is None:
+        return jsonify({"success": False, "error": "Missing job_application_id or stage_id"}), 400
+    try:
+        log = api_calls.get_application_stage_log_by_application_and_stage(job_application_id, stage_id)
+        return jsonify({"success": True, "log": log})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 400
 
 
 

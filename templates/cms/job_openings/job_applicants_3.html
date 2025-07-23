@@ -81,13 +81,13 @@
 
     <!-- Kanban View -->
     <div id="kanbanView" class="flex space-x-4 overflow-x-auto">
-        {% for status in statuses %}
-        <div class="kanban-column bg-white rounded-lg shadow-md w-80 min-h-[70vh] p-4" data-status="{{ status }}">
+        {% for status in statuses|sort(attribute='stage_order') %}
+        <div class="kanban-column bg-white rounded-lg shadow-md w-80 min-h-[70vh] p-4" data-status="{{ status.job_status }}">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-lg font-semibold text-gray-700">{{ status.capitalize() }}</h3>
+            <h3 class="text-lg font-semibold text-gray-700">{{ status.name }}</h3>
             <label class="text-xs font-medium text-slate-800 flex items-center space-x-1">
-                <input type="checkbox" class="select-all-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status }}">
-                <span id="select-text-{{ status }}">Select All</span>
+                <input type="checkbox" class="select-all-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status.job_status }}">
+                <span id="select-text-{{ status.job_status }}">Select All</span>
             </label>
         </div>
                     <!-- Search and Sort Input -->
@@ -95,12 +95,12 @@
                 <div>
                     <div class="mt-2 flex">
                         <div class="-mr-px grid grow grid-cols-1 focus-within:relative">
-                            <input type="text" name="query_{{ status }}" id="query_{{ status }}" class="col-start-1 row-start-1 block w-full rounded-l-md bg-white py-2 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600 sm:pl-9 sm:text-sm/6" placeholder="John Smith">
+                            <input type="text" name="query_{{ status.job_status }}" id="query_{{ status.job_status }}" class="col-start-1 row-start-1 block w-full rounded-l-md bg-white py-2 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600 sm:pl-9 sm:text-sm/6" placeholder="Search Applicants">
                             <svg class="pointer-events-none col-start-1 row-start-1 ml-3 size-5 self-center text-gray-400 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
                                 <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10.9 12.006c.11.542-.348.994-.9.994H2c-.553 0-1.01-.452-.902-.994a5.002 5.002 0 0 1 9.803 0ZM14.002 12h-1.59a2.556 2.556 0 0 0-.04-.29 6.476 6.476 0 0 0-1.167-2.603 3.002 3.002 0 0 1 3.633 1.911c.18.522-.283.982-.836.982ZM12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
                             </svg>
                         </div>
-                        <button type="button" data-status="{{ status }}" class="filter-button flex shrink-0 items-center gap-x-1.5 rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-gray-50 focus:relative focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
+                        <button type="button" data-status="{{ status.job_status }}" class="filter-button flex shrink-0 items-center gap-x-1.5 rounded-r-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 hover:bg-gray-50 focus:relative focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5 text-gray-400">
                               <path fill-rule="evenodd" d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z" clip-rule="evenodd" />
                             </svg>
@@ -109,41 +109,41 @@
                 </div>
             </div>
             <!-- Filter Panel (Initially Hidden) -->
-            <div class="hidden filter-dropdown bg-white rounded-lg shadow-md p-4 border border-gray-200 absolute z-50" id="filter-panel-{{ status }}">
+            <div class="hidden filter-dropdown bg-white rounded-lg shadow-md p-4 border border-gray-200 absolute z-50" id="filter-panel-{{ status.job_status }}">
         <h4 class="text-sm font-semibold text-gray-700 mb-3">Filter by Score</h4>
 
         <label class="block text-sm font-medium text-gray-900">Overall Score</label>
-        <input type="number" id="min-score-{{ status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
-        <input type="number" id="max-score-{{ status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
+        <input type="number" id="min-score-{{ status.job_status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
+        <input type="number" id="max-score-{{ status.job_status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
 
         <label class="block text-sm font-medium text-gray-900">Experience</label>
-        <input type="number" id="min-exp-{{ status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
-        <input type="number" id="max-exp-{{ status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
+        <input type="number" id="min-exp-{{ status.job_status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
+        <input type="number" id="max-exp-{{ status.job_status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
 
         <label class="block text-sm font-medium text-gray-900">Education</label>
-        <input type="number" id="min-edu-{{ status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
-        <input type="number" id="max-edu-{{ status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
+        <input type="number" id="min-edu-{{ status.job_status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
+        <input type="number" id="max-edu-{{ status.job_status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
 
         <label class="block text-sm font-medium text-gray-900">Skills</label>
-        <input type="number" id="min-skill-{{ status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
-        <input type="number" id="max-skill-{{ status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
+        <input type="number" id="min-skill-{{ status.job_status }}" placeholder="Min" class="block w-full p-1 mt-1 border rounded-md">
+        <input type="number" id="max-skill-{{ status.job_status }}" placeholder="Max" class="block w-full p-1 mt-1 border rounded-md mb-3">
 
-        <button type="button" class="apply-filter bg-purple-500 text-white px-3 py-2 rounded-md w-full mt-3" data-status="{{ status }}">
+        <button type="button" class="apply-filter bg-purple-500 text-white px-3 py-2 rounded-md w-full mt-3" data-status="{{ status.job_status }}">
             Apply Filter
         </button>
     </div>
             {% if not loop.last %}
-            <button id="move-btn-{{ status }}" class="hidden my-1 w-full rounded bg-purple-500 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="moveToNextStage('{{ status }}')">
+            <button id="move-btn-{{ status.job_status }}" class="hidden my-1 w-full rounded bg-purple-500 px-2 py-1 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onclick="moveToNextStage('{{ status.job_status }}')">
                 Move to Next Stage
             </button>
             {% endif %}
 
-            <ul class="space-y-4 draggable-list w-72" data-status="{{ status }}">
-                {% if result | selectattr('application_status', 'equalto', status) | list | length == 0 %}
+            <ul class="space-y-4 draggable-list w-72" data-status="{{ status.job_status }}" data-stage-id="{{status.id}}" data-stage-name="{{status.name}}">
+                {% if result | selectattr('application_status', 'equalto', status.job_status) | list | length == 0 %}
                 <li class="bg-gray-50 p-4 rounded-lg text-center text-gray-400 draggable-placeholder">No Applicants</li>
                 {% endif %}
                 {% for data in result %}
-                {% if data.application_status == status %}
+                {% if data.application_status == status.job_status %}
                 <li class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow draggable-item flex justify-between items-center space-x-4"
                 data-id="{{ data.application_id }}"
                 data-status="{{ data.application_status }}"
@@ -155,7 +155,7 @@
                 data-industry-score="{{ data.similarity_scores.industry_embedding }}">
     <!-- Left Section: Profile Picture and Info -->
     <div class="flex items-center space-x-1 overflow-hidden">
-        <input type="checkbox" class="applicant-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status }}">
+        <input type="checkbox" class="applicant-checkbox w-4 h-4 text-purple-500 border-gray-300 rounded" data-status="{{ status.job_status }}">
 
         <!-- Profile Picture -->
         <img src="{{ data.applicant_profile_picture if data.applicant_profile_picture else url_for('static', filename='images/man.png') }}" alt="{{ data.applicant_name }}'s profile picture" class="w-12 h-12 rounded-full border border-gray-200 flex-shrink-0">
@@ -176,6 +176,14 @@
 </svg>
             <p class="text-lg">{{ data.similarity_scores.overall_score }}</p>
         </div>
+
+        <button onclick="openApplicationLogModal('{{ data.application_id }}', '{{ status.id }}')" class="text-gray-500 hover:text-gray-800 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+        </button>
+
 
         <!-- Action Button -->
         <button onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')" class="text-gray-500 hover:text-gray-800 transition-colors">
@@ -239,7 +247,7 @@
     </div>
 </div>
 
-<!-- Drawer (Initially Hidden) -->
+<!-- Applicant Drawer (Initially Hidden) -->
 <div id="applicantDrawer" class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
   <!-- Background Overlay -->
   <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -385,6 +393,136 @@
   </div>
 </div>
 
+<!-- Modal for Application Log Form -->
+<!-- Application Log Drawer (Slide-over) -->
+<div id="applicationLogModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-40">
+  <!-- Spinner overlay -->
+  <div id="logModalSpinner" style="display:none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.7); z-index: 100; display: flex; align-items: center; justify-content: center;">
+    <div
+    class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-blue-500 motion-reduce:animate-[spin_1.5s_linear_infinite]"
+    role="status">
+    <span
+      class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      >Loading...</span
+    >
+  </div>
+  </div>
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+        <div class="pointer-events-auto w-screen max-w-2xl">
+          <form id="applicationLogForm" class="flex h-full flex-col overflow-y-auto bg-white shadow-xl">
+            <div class="flex-1 flex flex-col">
+              <!-- Header -->
+              <div class="bg-gray-50 px-4 py-6 sm:px-6 border-b border-gray-100">
+                <div class="flex items-start justify-between space-x-3">
+                  <div class="space-y-1">
+                    <h2 id="drawer-title" class="text-lg font-semibold text-gray-900">Application Log</h2>
+                    <p class="text-sm text-gray-500">Fill in the details for this application stage. All fields are <span class="font-medium text-gray-700">Optional</span>.</p>
+                  </div>
+                  <div class="flex h-7 items-center">
+                    <button type="button" onclick="closeApplicationLogModal()" class="relative text-gray-400 hover:text-gray-500 focus:outline-none">
+                      <span class="absolute -inset-2.5"></span>
+                      <span class="sr-only">Close panel</span>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="size-6">
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Fields -->
+              <div class="flex-1 space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0">
+                <!-- Responsive grid for fields -->
+                <div class="space-y-4 px-4 sm:px-6">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label for="logDate" class="block text-sm font-medium text-gray-900 mb-1">
+                        Date <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="date" id="logDate" name="date" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" />
+                    </div>
+                    <div>
+                      <label for="logTime" class="block text-sm font-medium text-gray-900 mb-1">
+                        Time <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="time" id="logTime" name="time" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" />
+                    </div>
+                    <div>
+                      <label for="logPlace" class="block text-sm font-medium text-gray-900 mb-1">
+                        Place <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="text" id="logPlace" name="place" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="e.g. Office, Zoom, etc." />
+                    </div>
+                    <div>
+                      <label for="logEventLink" class="block text-sm font-medium text-gray-900 mb-1">
+                        Event Link <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="url" id="logEventLink" name="event_link" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="https://..." />
+                    </div>
+                    <div>
+                      <label for="logStatus" class="block text-sm font-medium text-gray-900 mb-1">
+                        Status <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <select id="logStatus" name="status" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm">
+                        <option value="in_progress" selected>In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="rescheduled">Rescheduled</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="logDuration" class="block text-sm font-medium text-gray-900 mb-1">
+                        Duration (minutes) <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="number" id="logDuration" name="duration_minutes" min="0" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="e.g. 30" />
+                    </div>
+                    <div>
+                      <label for="logScore" class="block text-sm font-medium text-gray-900 mb-1">
+                        Score <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="number" id="logScore" name="score" step="0.01" min="0" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="e.g. 85.5" />
+                    </div>
+                    <div>
+                      <label for="logRescheduleReason" class="block text-sm font-medium text-gray-900 mb-1">
+                        Reschedule Reason <span class="text-gray-400 font-normal">Optional</span>
+                      </label>
+                      <input type="text" id="logRescheduleReason" name="reschedule_reason" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="Reason for rescheduling" />
+                    </div>
+                  </div>
+                  <div>
+                    <label for="logNotes" class="block text-sm font-medium text-gray-900 mb-1">
+                      Notes <span class="text-gray-400 font-normal">Optional</span>
+                    </label>
+                    <textarea id="logNotes" name="notes" rows="2" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="Notes..."></textarea>
+                  </div>
+                  <div>
+                    <label for="logFeedback" class="block text-sm font-medium text-gray-900 mb-1">
+                      Feedback <span class="text-gray-400 font-normal">Optional</span>
+                    </label>
+                    <textarea id="logFeedback" name="feedback" rows="2" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-purple-600 sm:text-sm" placeholder="Feedback..."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6 bg-gray-50">
+                <div class="flex flex-col sm:flex-row justify-end gap-2">
+                  <button type="button" onclick="closeApplicationLogModal()" class="w-full sm:w-auto px-5 py-2 rounded-md border border-gray-300 bg-white text-gray-700 font-semibold hover:bg-gray-100 transition">Cancel</button>
+                  <button type="submit" class="w-full sm:w-auto px-5 py-2 rounded-md bg-purple-600 text-white font-semibold shadow hover:bg-purple-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-600 transition">Save</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
   function openDrawer(id, name, email, date, resume, overallScore, experienceScore, educationScore, skillScore, leadershipScore, industryScore) {
       const drawer = document.getElementById('applicantDrawer');
@@ -476,7 +614,10 @@
 
                 // Update the status data attribute
                 const newStatus = target.dataset.status;
+                let stage_id = target.dataset.stageId;
+                let stage_name = target.dataset.stageName;
                 el.setAttribute('data-status', newStatus);
+                console.log(stage_id);
 
                 // Make API call to update application status
                 const applicationId = el.getAttribute('data-id');
@@ -486,7 +627,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id: applicationId, newStatus: newStatus })
+                    body: JSON.stringify({ id: applicationId, newStatus: newStatus, stage_id: stage_id, stage_name: stage_name })
                 })
                 .then(response => response.json())
                 .then(data => {
@@ -717,10 +858,27 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function moveToNextStage(currentStatus) {
-    let checkboxes = document.querySelectorAll(`.kanban-column[data-status="${currentStatus}"] .applicant-checkbox:checked`);
-    let selectedApplicants = [];
+    let statuses = {{ statuses | tojson }};
+    let sortedStatuses = [...statuses].sort((a, b) => a.stage_order - b.stage_order);
+    let currentIndex = sortedStatuses.findIndex(s => s.job_status === currentStatus);
+    let nextStatusObj = (currentIndex >= 0 && currentIndex < sortedStatuses.length - 1)
+      ? sortedStatuses[currentIndex + 1]
+      : null;
+    let newStatus = nextStatusObj ? nextStatusObj.job_status : null;
+    let nextStageId = nextStatusObj ? nextStatusObj.id : null;
 
-    checkboxes.forEach(cb => {
+    console.log("sortedStatuses:", sortedStatuses);
+    console.log("currentIndex:", currentIndex);
+    console.log("newStatus:", newStatus);
+    console.log("nextStageId:", nextStageId);
+
+    if (nextStageId === null) {
+        console.log("❌ No next stage found for status:", currentStatus);
+        return;
+    }
+
+    let selectedApplicants = [];
+    document.querySelectorAll(`.kanban-column[data-status="${currentStatus}"] .applicant-checkbox:checked`).forEach(cb => {
         let applicantCard = cb.closest("li");
         let applicationId = applicantCard.getAttribute("data-id");
         selectedApplicants.push({ id: applicationId, element: applicantCard });
@@ -730,13 +888,6 @@ function moveToNextStage(currentStatus) {
         console.log("❌ No applicants selected.");
         return;
     }
-
-    // Determine next status
-    let statusOrder = {{ statuses }};
-    let currentIndex = statusOrder.indexOf(currentStatus);
-    let newStatus = (currentIndex >= 0 && currentIndex < statusOrder.length - 1) ? statusOrder[currentIndex + 1] : 'selected';
-
-    console.log(`🚀 Moving applicants to next stage: ${newStatus}`);
 
     // Target kanban column for new status
     let targetColumn = document.querySelector(`.kanban-column[data-status="${newStatus}"] .draggable-list`);
@@ -876,5 +1027,130 @@ document.getElementById('convertDownloadCsvBtn').addEventListener('click', funct
     document.body.removeChild(a);
 });
 </script>
+
+<script>
+    function updateApplicationLog(logId, logData) {
+        fetch(`/application-log/update/${logId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(logData)
+        })
+    }
+</script>
+
+<script>
+    function openApplicationLogModal(applicationId, stageId) {
+      // Show the drawer
+      document.getElementById('applicationLogModal').classList.remove('hidden');
+      // Show spinner, hide form
+      document.getElementById('logModalSpinner').style.display = 'flex';
+      document.getElementById('applicationLogForm').style.visibility = 'hidden';
+    
+      fetch('/application-log/by-application-and-stage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ job_application_id: applicationId, stage_id: stageId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('logModalSpinner').style.display = 'none';
+        document.getElementById('applicationLogForm').style.visibility = 'visible';
+        // Prefill all fields
+        window.currentLogId = data.log.id;
+        document.getElementById('logDate').value = data.log.event_date || '';
+        document.getElementById('logTime').value = data.log.event_time || '';
+        document.getElementById('logPlace').value = data.log.place || '';
+        document.getElementById('logEventLink').value = data.log.event_link || '';
+        document.getElementById('logStatus').value = data.log.status || 'scheduled';
+        document.getElementById('logNotes').value = data.log.notes || '';
+        document.getElementById('logFeedback').value = data.log.feedback || '';
+        document.getElementById('logRescheduleReason').value = data.log.reschedule_reason || '';
+        document.getElementById('logDuration').value = data.log.duration_minutes || '';
+        document.getElementById('logScore').value = data.log.score || '';      })
+      .catch(error => {
+        document.getElementById('logModalSpinner').style.display = 'none';
+        document.getElementById('applicationLogForm').style.visibility = 'visible';
+        // Prefill with empty/default values
+        document.getElementById('logDate').value = '';
+        document.getElementById('logTime').value = '';
+        document.getElementById('logPlace').value = '';
+        document.getElementById('logEventLink').value = '';
+        document.getElementById('logStatus').value = 'scheduled';
+        document.getElementById('logNotes').value = '';
+        document.getElementById('logFeedback').value = '';
+        document.getElementById('logRescheduleReason').value = '';
+        document.getElementById('logDuration').value = '';
+        document.getElementById('logScore').value = '';
+        console.error('Error:', error);
+      });
+    }
+    
+    function closeApplicationLogModal() {
+      document.getElementById('applicationLogModal').classList.add('hidden');
+    }
+    </script>
+
+    <script>
+        document.getElementById('applicationLogForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Collect form data
+  const form = e.target;
+  const logData = {
+    event_date: form.date.value || null,
+    event_time: form.time.value || null,
+    place: form.place.value || null,
+    event_link: form.event_link.value || null,
+    status: form.status.value,
+    notes: form.notes.value || null,
+    feedback: form.feedback.value || null,
+    reschedule_reason: form.reschedule_reason.value || null,
+    duration_minutes: form.duration_minutes.value ? parseInt(form.duration_minutes.value) : null,
+    score: form.score.value ? parseFloat(form.score.value) : null
+  };
+
+  console.log('event_date:', logData.event_date, 'type:', typeof logData.event_date);
+  console.log('event_time:', logData.event_time, 'type:', typeof logData.event_time);
+  console.log('place:', logData.place, 'type:', typeof logData.place);
+  console.log('event_link:', logData.event_link, 'type:', typeof logData.event_link);
+  console.log('status:', logData.status, 'type:', typeof logData.status);
+  console.log('notes:', logData.notes, 'type:', typeof logData.notes);
+  console.log('feedback:', logData.feedback, 'type:', typeof logData.feedback);
+  console.log('reschedule_reason:', logData.reschedule_reason, 'type:', typeof logData.reschedule_reason);
+
+
+
+  if (!window.currentLogId) {
+    alert('No log ID found. Cannot update log.');
+    return;
+  }
+
+  // Show spinner while saving
+  document.getElementById('logModalSpinner').style.display = 'flex';
+  document.getElementById('applicationLogForm').style.visibility = 'hidden';
+
+  fetch(`/application-log/update/${window.currentLogId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(logData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('logModalSpinner').style.display = 'none';
+    document.getElementById('applicationLogForm').style.visibility = 'visible';
+    alert('Log saved successfully!');
+    closeApplicationLogModal();
+  })
+  .catch(error => {
+    document.getElementById('logModalSpinner').style.display = 'none';
+    document.getElementById('applicationLogForm').style.visibility = 'visible';
+    alert('Error saving log.');
+    console.error('Error:', error);
+  });
+});
+    </script>
+
 
 {% endblock %}

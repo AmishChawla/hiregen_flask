@@ -7,11 +7,16 @@
     <div class="min-h-screen py-0">
       <div class="container px-4 sm:px-6 lg:px-8 max-w-2xl mx-auto">
         <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Create tracker</h1>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Create New Stage</h1>
     </div>
         <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
         <form method="post" action="{{ url_for('create_applicant_tracker') }}">
             {{ form.hidden_tag() }}
+
+            <div class="mb-6">
+                <label for="stage_number" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.stage_number.label.text }}</label>
+                <input type="number" id="stage_number" name="stage_number" class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600" placeholder="Stage Number" required>
+            </div>
 
             <div class="mb-6">
                 <label for="name" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.name.label.text }}</label>
@@ -23,9 +28,13 @@
                 <textarea id="description" name="description" rows="4" class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600" placeholder="Description" required></textarea>
             </div>
 
-            <div class="flex items-center mb-6">
-                <input id="on_apply" name="on_apply" type="checkbox" class="h-4 w-4 text-purple-500 border-gray-300 dark:border-gray-600 rounded focus:ring-blue-500">
-                <label for="on_apply" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">{{ form.on_apply.label.text }}</label>
+            <div class="mb-6">
+                <label for="stage_type" class="block text-sm font-medium text-gray-900 dark:text-gray-100">{{ form.stage_type.label.text }}</label>
+                <select id="stage_type" name="stage_type" class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600" required>
+                    {% for choice in form.stage_type.choices %}
+                        <option value="{{ choice[0] }}">{{ choice[1] }}</option>
+                    {% endfor %}
+                </select>
             </div>
 
             <div class="mb-6">
@@ -34,7 +43,7 @@
             </div>
 
             <div class="flex justif-center">
-                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Create Tracker</button>
+                <button type="submit" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Create Stage</button>
             </div>
         </form>
     </div>

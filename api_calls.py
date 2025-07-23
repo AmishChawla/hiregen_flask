@@ -2702,11 +2702,13 @@ def get_jobseeker_applications(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def update_application_status(application_id, new_status):
+def update_application_status(application_id, new_status, stage_id, stage_name):
     try:
         data = {
             "id": application_id,
-            "new_status": new_status
+            "new_status": new_status,
+            "stage_id": stage_id,
+            "stage_name": stage_name
         }
         response = requests.post(constants.BASE_URL + f'/update-job-application-status', json=data)
         print("Response Status Code:", response.status_code)  # Debug: Print status code
@@ -2770,7 +2772,7 @@ def get_applicant_trackers(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def create_application_tracker(name, description, job_status, on_apply, access_token):
+def create_application_tracker(stage_type, stage_number, name, description, job_status, access_token):
     print("inside api call")
     headers = {'Authorization': f'Bearer {access_token}'}
 
@@ -2778,7 +2780,8 @@ def create_application_tracker(name, description, job_status, on_apply, access_t
         "name": name,
         "description": description,
         "job_status": job_status,
-        "on_jobseeker_apply": on_apply
+        "stage_type": stage_type,
+        "stage_order": stage_number
     }
 
     try:
@@ -3769,3 +3772,119 @@ def get_saved_jobs_for_jobseeker(access_token: str):
         return response.json()
     else:
         raise Exception(f"Failed to get saved jobs: {response.text}")
+
+############################################### APPLICATION LOG ##################################################
+
+
+def create_application_stage_log(log_data):
+    """
+    Create a new application stage log.
+    :param log_data: dict or Pydantic model with log fields
+    :return: dict (created log)
+    """
+    url = constants.BASE_URL + "/application-log/"
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response = requests.post(url, json=log_data, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to create application stage log: {response.text}")
+
+
+def update_application_stage_log(log_id, log_update_data):
+    """
+    Update an application stage log.
+    :param log_id: int, log ID
+    :param log_update_data: dict or Pydantic model with update fields
+    :return: dict (updated log)
+    """
+    url = constants.BASE_URL + f"/application-log/{log_id}"
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response = requests.put(url, json=log_update_data, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to update application stage log: {response.text}")
+
+
+def get_application_stage_log_by_id(log_id):
+    """
+    Get a single application stage log by ID.
+    :param log_id: int, log ID
+    :return: dict (log)
+    """
+    url = constants.BASE_URL + f"/application-log/{log_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to get application stage log by id: {response.text}")
+
+
+def get_application_stage_logs_by_application(job_application_id):
+    """
+    Get all logs for a job application.
+    :param job_application_id: int, job application ID
+    :return: list of dicts (logs)
+    """
+    url = constants.BASE_URL + f"/application-log/by-application/{job_application_id}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to get logs by application: {response.text}")
+
+
+def get_application_stage_log_by_application_and_stage(job_application_id, stage_id):
+    """
+    Get a single application stage log by job_application_id and stage_id.
+    :param job_application_id: int, job application ID
+    :param stage_id: int, stage ID
+    :return: dict (log)
+    """
+    url = constants.BASE_URL + "/application-log/by-application-and-stage/"
+    params = {
+        "job_application_id": job_application_id,
+        "stage_id": stage_id
+    }
+    response = requests.get(url, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to get application stage log by application and stage: {response.text}")
+
+def get_user_preferences(access_token):
+    """
+    Calls the API to get the current user's preferences.
+    :param access_token: str, user's access token
+    :return: dict (user preferences)
+    """
+    headers = {'Authorization': f'Bearer {access_token}'}
+    url = constants.BASE_URL + "/employer/preferences/"
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+def update_user_preferences(access_token, preferences_update):
+    """
+    Calls the API to update the current user's preferences.
+    :param access_token: str, user's access token
+    :param preferences_update: dict, fields to update (e.g., {"email_notifications": True, ...})
+    :return: dict (updated user preferences)
+    """
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    url = constants.BASE_URL + "/employer/preferences/update"
+    response = requests.put(url, headers=headers, json=preferences_update)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to update user preferences: {response.text}")
