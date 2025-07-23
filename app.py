@@ -1175,8 +1175,9 @@ def user_all_post():
     metrics = result['metrics'] if result else {}
     if result is None:
         result = {}  # Set result to an empty list
-
     return render_template('user_all_post.html', jobs=jobs, metrics=metrics)
+
+
 #['applied', 'shortlisted', 'assessment', 'interview', 'rejected', 'selected']
 @app.route('/user/job/applicants/<job_id>')
 @requires_any_permission("can_track_applicants")
@@ -4075,13 +4076,15 @@ def employer_applicants_filter():
 
     if request.method == 'POST':
         # Extract query parameters
-        name = request.args.get('name')
-        email = request.args.get('email')
-        job_title =request.args.get('job_title')
-        job_type = request.args.get('job_type')
-        industry = request.args.get('industry')
-        start_date = request.args.get('application_start_date')
-        end_date = request.args.get('application_end_date')
+        name = request.form.get('name')
+        email = request.form.get('email')
+        job_title =request.form.get('job_title')
+        job_type = request.form.get('job_type')
+        industry = request.form.get('industry')
+        start_date = request.form.get('application_start_date')
+        end_date = request.form.get('application_end_date')
+
+        print(name,email,job_title,job_type,industry,start_date,end_date)
 
         return redirect(url_for('employer_applicants_search',
                                     name=name,
@@ -4122,9 +4125,9 @@ def employer_applicants_search():
 
         params = {}
         if name:
-            params['name'] = name
+            params['seeker_name'] = name
         if email:
-            params['email'] = email
+            params['seeker_email'] = email
         if job_title:
             params['job_title'] = job_title
         if job_type:
@@ -4132,11 +4135,13 @@ def employer_applicants_search():
         if industry:
             params['industry'] = industry
         if start_date:
-            params['application_start_date'] = start_date
+            params['start_date'] = datetime.strptime(start_date, "%Y-%m-%d") #application_start_date
         if end_date:
-            params['application_end_date'] = end_date
+            params['end_date'] = datetime.strptime(end_date, "%Y-%m-%d") #application_end_date
 
         print('here')
+        print(type(start_date))
+        print(type(end_date))
         applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
         print(applicants)
         print(len(applicants))

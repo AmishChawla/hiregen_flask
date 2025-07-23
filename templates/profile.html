@@ -30,45 +30,20 @@
 {% block content %}
 <div class="font-sans leading-tight m-h-screen bg-grey-lighter p-8">
 
-  <div class="max-w-2xl mx-auto rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-0">
+<div class="max-w-2xl mx-auto rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-0">
 <div class="relative">
     <div class="absolute top-8 right-8">
             <button type="button" id="editBtn" class="rounded-full bg-white px-3 py-2 text-sm font-semibold text-black ring-0 ring-inset ring-gray-300 hover:bg-white dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600">
-            <i class="fas fa-pen"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                    <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
+                  </svg>                  
         </button>
     </div>
 </div>
-    <div class="bg-cover h-48 rounded-2xl rounded-b-none" style="background-image: url('{{ profile_picture or url_for('static', filename='images/blog-bg.jpg') }}');"></div>
 
-    <div class="border-b px-4 ">
-        <div class="text-center sm:text-left sm:flex mb-4">
-            <img class="h-28 w-28 rouded-full border-4 bg-white border-white -mt-16 mr-4 p-2" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="profile_picture_img">
-            <form method="POST" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
 
-            <div class="flex justify-center" style="position: relative;left: 400px;top: -23px;">
-                <div class="img-upload">
-                    {{ form.profile_picture.label(class="edit-icon fas fa-camera rounded-full bg-white px-3 py-2 text-sm font-semibold text-black ring-0 ring-inset ring-gray-300 hover:bg-white dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600") }}
-                    {{ form.profile_picture(class="hidden") }}
-                </div>
-            </div>
-
-           <div class="flex justify-center" style="position: relative;left: -182px;top: 57px;">
-                <div class="img-upload">
-                    {{ form.company_logo.label(class="edit-icon fas fa-camera rounded-full bg-white px-3 py-2 text-sm font-semibold text-black ring-0 ring-inset ring-gray-300 hover:bg-white dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600") }}
-                    {{ form.company_logo(class="hidden") }}
-                </div>
-            </div>
-
-            <div class="py-2">
-                <h3 class="font-bold text-2xl mb-1">{{ company['name'] }}</h3>
-                <div class="inline-flex text-grey-dark sm:flex items-center">
-                    <svg class="h-5 w-5 text-grey mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.64 16.36a9 9 0 1 1 12.72 0l-5.65 5.66a1 1 0 0 1-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 1 0-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-                    {{company['location']}}
-                </div>
-            </div>
-        </div>
-    </div>
 
 <div class="px-4 sm:px-6 lg:px-8">
 
@@ -77,8 +52,23 @@
   <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" />
 </svg>
 
-    Personal Details
+    Personal Profile
 </h2>
+
+<div class="flex justify-center">
+    <img class="h-32 w-32 rounded-full border-2 bg-white border-blue-500 p-2" src="{{ profile_picture or url_for('static', filename='images/man.png') }}" alt="" id="profile_picture_img">
+</div>
+<div class="flex justify-center" style="position: relative;left: 45px;top: 2px; margin-bottom: 10px;">
+    <div class="img-upload">
+        <label for="{{ form.profile_picture.id }}" class="edit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
+              </svg>
+        </label>
+        {{ form.profile_picture(class="hidden") }}
+    </div>
+</div>
+
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -127,9 +117,23 @@
     <svg class="w-5 h-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
   <path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16M4 21V3h8v6h8v12M9 17h2M9 13h2M9 9h2M13 17h2M13 13h2" />
 </svg>
-    Comapny Details
+    Company Profile
 </h2>
             {% if is_company_registered %}
+            <div class="flex justify-center">
+                <img class="h-32 w-32 rounded-full border-2 bg-white border-blue-500 p-2" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="company_logo_img">
+            </div>
+            <div class="flex justify-center" style="position: relative;left: 45px;top: 2px; margin-bottom: 10px;">
+                <div class="img-upload">
+                    <label for="{{ form.company_logo.id }}" class="edit-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                            <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
+                          </svg>
+                    </label>
+                    {{ form.company_logo(class="hidden") }}
+                </div>
+            </div>
+            
 
             <div class="">
                 <div>
@@ -179,7 +183,7 @@
         <strong>Current Plan:</strong> {{ current_plan.plan_name }}
     </p>
     <p class="text-gray-700 dark:text-gray-300">
-        <strong>Plan Status:</strong> {{ current_plan.status }}
+        <strong>Plan Status:</strong> {{ current_plan.status | capitalize }}
     </p>
     <p class="text-gray-700 dark:text-gray-300">
         <strong>Next Billing Date:</strong> {{ current_plan.next_billing_date }}
@@ -283,4 +287,50 @@ if (companyLogoInput) {
 }
 </script>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Profile Picture Preview
+        const profileInput = document.getElementById("{{ form.profile_picture.id }}");
+        const profileImg = document.getElementById("profile_picture_img");
+        if (profileInput && profileImg) {
+            profileInput.addEventListener("change", function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert("Profile picture must be less than 2MB.");
+                        profileInput.value = "";
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        profileImg.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    
+        // Company Logo Preview
+        const companyLogoInput = document.getElementById("{{ form.company_logo.id }}");
+        const companyLogoImg = document.getElementById("company_logo_img");
+        if (companyLogoInput && companyLogoImg) {
+            companyLogoInput.addEventListener("change", function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert("Company logo must be less than 2MB.");
+                        companyLogoInput.value = "";
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        companyLogoImg.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+    </script>
 {% endblock %}
