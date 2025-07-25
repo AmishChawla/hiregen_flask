@@ -84,9 +84,18 @@
                                         <circle cx="12" cy="10" r="3"></circle>
                                     </svg>{% if job_details.address_city or job_details.address_province or job_details.address_country %}
       {{ job_details.address_city }}, {{ job_details.address_province }}, {{ job_details.address_country }}
-      {% endif %}</span><span class="flex items-center gap-1">{% if job_details.salary %}
-      ${{ job_details.salary }}
-      {% endif %}</span></div>
+      {% endif %}</span>
+      {% if job_details.min_salary and job_details.max_salary %}
+      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}} - {{job_details.salary_currency}}{{job_details.max_salary}} {{job_details.salary_time_unit}}</span>
+      {% elif job_details.min_salary %}
+      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}} {{job_details.salary_time_unit}}</span>
+      {% elif job_details.max_salary %}
+      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.max_salary}} {{job_details.salary_time_unit}}</span>
+      {% elif job_details.salary %}
+      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary}}</span>
+      {% else %}
+      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">Not specified</span>
+      {% endif %}</div>
                             <div class="flex items-center gap-4 text-sm text-gray-500"><span
                                     class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                         height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -98,19 +107,7 @@
                                         data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>Posted <span class="created-time" data-created="{{ job_details.created_at }}"></span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-users w-4 h-4"
-                                        data-lov-id="src/pages/JobDetails.tsx:109:30" data-lov-name="Users"
-                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="109"
-                                        data-component-file="JobDetails.tsx" data-component-name="Users"
-                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg></span></div>
+                                    </svg>Posted <span class="created-time" data-created="{{ job_details.created_at }}"></span></div>
                         </div>
                         <div class="flex items-center gap-2">
                         {% if job_details.saved == False %}

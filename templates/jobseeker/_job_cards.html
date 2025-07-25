@@ -15,7 +15,17 @@
                 </div>
                 <div class="my-3 text-slate-700 text-sm font-medium flex items-center">
                     <div class="bg-slate-100 rounded-xl px-3 py1 me-4">{{ job.job_type }}</div>
-                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary }}</div>                    
+                    {% if job.min_salary and job.max_salary %}
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary_currency }}{{ job.min_salary }} - {{ job.salary_currency }}{{ job.max_salary }} {{ job.salary_time_unit }}</div>                    
+                    {% elif job.min_salary %}
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary_currency }}{{ job.min_salary }} {{ job.salary_time_unit }}</div>                    
+                    {% elif job.max_salary %}
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary_currency }}{{ job.max_salary }} {{ job.salary_time_unit }}</div> 
+                    {% elif job.salary %}                   
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">{{ job.salary }}</div> 
+                    {% else %}
+                    <div class="bg-white border border-slate-200 rounded-xl px-3">Not specified</div> 
+                    {% endif %}
                     <!--<div class="text-right text-gray-500 text-sm flex items-center gap-2">{{ job.industry }}</div>-->
                 </div>
                 <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{job.job_description | striptags }}</p>

@@ -1401,7 +1401,7 @@ def add_post():
         job_title = form.job_title.data
         target_date = form.target_date.data
         opening_date = form.opening_date.data
-        job_type = form.job_type.data
+        job_type = form.job_type.data or 'Full Time'
         work_experience = form.work_experience.data
         industry = form.industry.data
         address_city = form.address_city.data
@@ -1413,10 +1413,10 @@ def add_post():
         job_benefits = form.job_benefits.data
         job_opening_status = 'Active'
         work_style = form.work_style.data
-        min_salary = form.min_salary.data
-        max_salary = form.max_salary.data
-        salary_currency = form.salary_currency.data
-        salary_time_unit = form.salary_time_unit.data
+        min_salary = form.min_salary.data or None
+        max_salary = form.max_salary.data or None
+        salary_currency = form.salary_currency.data or None
+        salary_time_unit = form.salary_time_unit.data or None
 
 
         print(form.data)
@@ -1485,6 +1485,7 @@ def add_post():
                 "salary_time_unit": salary_time_unit
             }
             try:
+                print("Job Detail: ", job_details)
                 result = api_calls.create_job_opening(
                     job_detail=job_details,
                     access_token=current_user.id
@@ -1919,6 +1920,7 @@ def preview_post():
 @requires_any_permission("can_manage_jobs")
 def admin_edit_post(job_id):
     job_opening = api_calls.get_job(job_id=job_id)
+    job_opening['work_style'] = job_opening.get('working_style', '')
     date_format = '%Y-%m-%dT%H:%M:%S%z'
 
     if 'target_date' in job_opening:
@@ -1936,18 +1938,23 @@ def admin_edit_post(job_id):
         job_title = form.job_title.data
         target_date = form.target_date.data
         opening_date = form.opening_date.data
-        job_type = form.job_type.data
-        work_experience = form.work_experience.data
-        industry = form.industry.data
-        salary = form.salary.data
-        address_city = form.address_city.data
+        job_type = form.job_type.data or 'Full Time'
+        working_style = form.work_style.data 
+        work_experience = form.work_experience.data 
+        industry = form.industry.data 
+        min_salary = form.min_salary.data or None
+        max_salary = form.max_salary.data or None
+        salary_currency = form.salary_currency.data or None
+        salary_time_unit = form.salary_time_unit.data or None
+        address_city = form.address_city.data 
         address_country = form.address_country.data
-        address_province = form.address_province.data
+        address_province = form.address_province.data 
         address_postal_code = form.address_postal_code.data
         job_description = form.job_description.data
-        job_requirements = form.job_requirements.data
-        job_benefits = form.job_benefits.data
-        job_opening_status = form.job_opening_status.data
+        job_requirements = form.job_requirements.data 
+        job_opening_status = 'Active'
+        job_benefits = form.job_benefits.data 
+        
 
         if form.publish.data:
             print(f"Job Title: {job_title}")
@@ -1956,7 +1963,10 @@ def admin_edit_post(job_id):
             print(f"Job Type: {job_type}")
             print(f"Work Experience: {work_experience}")
             print(f"Industry: {industry}")
-            print(f"Salary: {salary}")
+            print(f"Min Salary: {min_salary}")
+            print(f"Max Salary: {max_salary}")
+            print(f"Salary Currency: {salary_currency}")
+            print(f"Salary Time Unit: {salary_time_unit}")
             print(f"City: {address_city}")
             print(f"Country: {address_country}")
             print(f"Province: {address_province}")
@@ -1973,9 +1983,13 @@ def admin_edit_post(job_id):
                     "opening_date": str(opening_date),
                     "job_type": job_type,
                     "job_skills": "",
+                    "working_style": working_style,
                     "work_experience": work_experience,
                     "industry": industry,
-                    "salary": salary,
+                    "min_salary": min_salary,
+                    "max_salary": max_salary,
+                    "salary_currency": salary_currency,
+                    "salary_time_unit": salary_time_unit,
                     "address_city": address_city,
                     "address_country": address_country,
                     "address_province": address_province,
@@ -2035,7 +2049,60 @@ def admin_edit_post(job_id):
             job_benefits = form.job_benefits.data,
             job_opening_status = form.job_opening_status.data
             ))
+        elif form.save_draft.data:
+            print(f"Job Title: {job_title}")
+            print(f"Target Date: {target_date}")
+            print(f"Opening Date: {opening_date}")
+            print(f"Job Type: {job_type}")
+            print(f"Work Experience: {work_experience}")
+            print(f"Industry: {industry}")
+            print(f"Min Salary: {min_salary}")
+            print(f"Max Salary: {max_salary}")
+            print(f"Salary Currency: {salary_currency}")
+            print(f"Salary Time Unit: {salary_time_unit}")
+            print(f"City: {address_city}")
+            print(f"Country: {address_country}")
+            print(f"Province: {address_province}")
+            print(f"Postal Code: {address_postal_code}")
+            print(f"Job Description: {job_description}")
+            print(f"Job Requirements: {job_requirements}")
+            print(f"Job Benefits: {job_benefits}")
+            print(f"Job Opening Status: {job_opening_status}")
 
+            try:
+                job_details=  {
+                    "job_title": job_title,
+                    "target_date": str(target_date),
+                    "opening_date": str(opening_date),
+                    "job_type": job_type,
+                    "job_skills": "",
+                    "working_style": working_style,
+                    "work_experience": work_experience,
+                    "industry": industry,
+                    "min_salary": min_salary,
+                    "max_salary": max_salary,
+                    "salary_currency": salary_currency,
+                    "salary_time_unit": salary_time_unit,
+                    "address_city": address_city,
+                    "address_country": address_country,
+                    "address_province": address_province,
+                    "address_postal_code": address_postal_code,
+                    "job_description": job_description,
+                    "job_requirements": job_requirements,
+                    "job_benefits": job_benefits,
+                    "job_opening_status": 'Inactive',
+                    "status": 'draft'
+                }
+
+                result = api_calls.update_job(
+                    job_id=job_id,
+                    job_details=job_details,
+                    access_token=current_user.id
+                )
+                print("redirecting")
+                return redirect(url_for('user_all_post'))
+            except Exception as e:
+                print(f"Error updating post: {e}")
     else:
         print('Not Working')
         print(form.errors)
@@ -3139,8 +3206,13 @@ def jobseeker_dashboard():
     profile_completion_percentage = stats["profile_completion_percentage"]
     profile_views = stats["profile_views"]
     applications_this_week = stats["applications_this_week"]
+    interview_invites_count = stats["interview_invites_count"]
+    interview_invites_this_week = stats["interview_invites_this_week_count"]
+    upcoming_events = stats["upcoming_events"]
 
-    applications = api_calls.get_jobseeker_applications(access_token=current_user.id) or []
+    applications_result = api_calls.get_jobseeker_applications(access_token=current_user.id) or {}
+    applications = applications_result.get("applications", [])
+    print("applications: ",applications)
 
     try:
         recommendations_result = api_calls.get_jobseeker_recommendations(jobs_count=5, access_token=current_user.id) or {}
@@ -3155,7 +3227,7 @@ def jobseeker_dashboard():
         job_matches = recommendations_result["total_recommendations"] or 0
 
 
-    return render_template('jobseeker/jobseeker_dashboard.html',instructions=instructions,applications_this_week=applications_this_week, total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations, job_matches=job_matches, applications=applications, profile_views=profile_views)
+    return render_template('jobseeker/jobseeker_dashboard.html',instructions=instructions,applications_this_week=applications_this_week, total_resumes=total_resumes, total_applications=total_applications, profile_completion_percentage=profile_completion_percentage, recommendations=recommendations, job_matches=job_matches, applications=applications, profile_views=profile_views, interview_invites_count=interview_invites_count, interview_invites_this_week=interview_invites_this_week, upcoming_events=upcoming_events)
 
 
 @app.route('/jobseeker/login', methods=['GET', 'POST'])
@@ -3324,7 +3396,7 @@ def jobseeker_logout():
 def jobseeker_applications():
     result = api_calls.get_jobseeker_applications(access_token=current_user.id)
     if result is None:
-        result = []  # Set result to an empty list
+        result = {}  # Set result to an empty list
 
     return render_template('jobseeker/job_applications.html', result=result)
 

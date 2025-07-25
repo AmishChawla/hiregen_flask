@@ -52,7 +52,7 @@
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-1">{{job['job_title']}}</h3>
                                 <div class="flex items-center gap-4 text-sm text-gray-600 mb-2"><span
-                                        class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                        class="flex items-center gap-1 rounded-full border border-blue-600 px-2 py-1 text-xs"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="lucide lucide-building w-4 h-4"
@@ -71,7 +71,7 @@
                                             <path d="M16 14h.01"></path>
                                             <path d="M8 10h.01"></path>
                                             <path d="M8 14h.01"></path>
-                                        </svg>{{job['company']['name']}}</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
+                                        </svg>{{job['company']['name']}}</span><span class="flex items-center gap-1 rounded-full border border-blue-600 px-2 py-1 text-xs"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                             class="lucide lucide-map-pin w-4 h-4"
@@ -83,17 +83,19 @@
                                                 d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
                                             </path>
                                             <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>{{job['address_city']}}, {{job['address_country']}}</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                            class="lucide lucide-dollar-sign w-4 h-4"
-                                            data-lov-id="src/pages/SavedJobs.tsx:178:36" data-lov-name="DollarSign"
-                                            data-component-path="src/pages/SavedJobs.tsx" data-component-line="178"
-                                            data-component-file="SavedJobs.tsx" data-component-name="DollarSign"
-                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                            <line x1="12" x2="12" y1="2" y2="22"></line>
-                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                                        </svg>{{job['salary']}}</span></div>
+                                        </svg>{{job['address_city']}}, {{job['address_country']}}</span>
+                                        {% if job['min_salary'] and job['max_salary'] %}
+                                        <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job['salary_currency']}}{{job['min_salary']}} - {{job['salary_currency']}}{{job['max_salary']}} {{job['salary_time_unit']}}</span>
+                                        {% elif job['min_salary'] %}
+                                        <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job['salary_currency']}}{{job['min_salary']}} {{job['salary_time_unit']}}</span>
+                                        {% elif job['max_salary'] %}
+                                        <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job['salary_currency']}}{{job['max_salary']}} {{job['salary_time_unit']}}</span>
+                                        {% elif job['salary'] %}
+                                        <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job['salary']}}</span>
+                                        {% else %}
+                                        <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">Not specified</span>
+                                        {% endif %}
+                                        </div>
                             </div>
                             <div class="flex items-center gap-2">
                                 <button type="button" 
@@ -126,7 +128,7 @@
                                     </svg></button><a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job['company']['company_subdomain'], job_slug=job['slug'])}}" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply
                                     Now</a></div>
                         </div>
-                        <p class="text-gray-600 mb-3 line-clamp-3">{{job['description'] | striptags}}</p>
+                        <p class="text-gray-600 mb-3 line-clamp-3">{{job['job_description'] | striptags}}</p>
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
                                 {% for skill in job['job_skills'] %}

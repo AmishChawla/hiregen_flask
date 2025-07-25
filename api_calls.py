@@ -1194,6 +1194,8 @@ def create_job_opening(job_detail, access_token):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 
 def update_job(job_id, job_details: dict, access_token):

@@ -39,8 +39,8 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-sm font-medium text-gray-600">Interview Invites</p>
-                <p class="text-2xl font-bold text-gray-900 mt-1">5</p>
-                <p class="text-sm mt-1 text-green-600">+2 this week</p>
+                <p class="text-2xl font-bold text-gray-900 mt-1">{{interview_invites_count}}</p>
+                <p class="text-sm mt-1 text-green-600">+{{interview_invites_this_week}} this week</p>
             </div>
             <div class="p-3 rounded-lg bg-green-50 text-green-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -64,7 +64,7 @@
             <div>
                 <p class="text-sm font-medium text-gray-600">Job Matches</p>
                 <p class="text-2xl font-bold text-gray-900 mt-1">{{ job_matches }}</p>
-                <p class="text-sm mt-1 text-green-600">+12 new today</p>
+                <!-- <p class="text-sm mt-1 text-green-600">+12 new today</p> -->
             </div>
             <div class="p-3 rounded-lg bg-purple-50 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -257,7 +257,7 @@
                                 <div class="flex items-center gap-2 text-gray-600"><svg
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4"
+                                        stroke-linejoin="round" class="lucide lucide-building2 w-4 h-4 size-4"
                                         data-lov-id="src/components/ApplicationCard.tsx:39:14" data-lov-name="Building2"
                                         data-component-path="src/components/ApplicationCard.tsx"
                                         data-component-line="39" data-component-file="ApplicationCard.tsx"
@@ -270,21 +270,21 @@
                                         <path d="M10 10h4"></path>
                                         <path d="M10 14h4"></path>
                                         <path d="M10 18h4"></path>
-                                    </svg><span data-lov-id="src/components/ApplicationCard.tsx:40:14"
+                                    </svg><span class="text-xs" data-lov-id="src/components/ApplicationCard.tsx:40:14"
                                         data-lov-name="span" data-component-path="src/components/ApplicationCard.tsx"
                                         data-component-line="40" data-component-file="ApplicationCard.tsx"
                                         data-component-name="span" data-component-content="%7B%7D">{{application.company.name}}</span></div>
                             </div>
-                            <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-purple-100 text-purple-800">
-                                {{ application.job_application_status.capitalize() }}</div>
+                            <div class="inline-flex items-center rounded-full border border-blue-500 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                                {{ application.current_stage_log.stage_name }}</div>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
-                        <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div class="flex items-center justify-between text-sm mb-4">
                             <div class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-calendar w-4 h-4"
+                                    class="lucide lucide-calendar w-4 h-4 size-4"
                                     data-lov-id="src/components/ApplicationCard.tsx:52:12" data-lov-name="Calendar"
                                     data-component-path="src/components/ApplicationCard.tsx" data-component-line="52"
                                     data-component-file="ApplicationCard.tsx" data-component-name="Calendar"
@@ -293,8 +293,9 @@
                                     <path d="M16 2v4"></path>
                                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                                     <path d="M3 10h18"></path>
-                                </svg><span>Applied: {{application.application_date}}</span></div>
-                            <div class="flex items-center gap-1 text-purple-600"><svg xmlns="http://www.w3.org/2000/svg"
+                                </svg><span class="text-xs">Applied on {{application.application_date}}</span></div>
+                            {% if application.current_stage_log.event_date or application.current_stage_log.event_time %}
+                            <div class="flex items-center gap-1 text-xs rounded-full border border-blue-500 px-2 py-1"><svg xmlns="http://www.w3.org/2000/svg"
                                     width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-calendar w-4 h-4"
@@ -306,11 +307,11 @@
                                     <path d="M16 2v4"></path>
                                     <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                                     <path d="M3 10h18"></path>
-                                </svg><span data-lov-id="src/components/ApplicationCard.tsx:58:14" data-lov-name="span"
+                                </svg><span class="" data-lov-id="src/components/ApplicationCard.tsx:58:14" data-lov-name="span"
                                     data-component-path="src/components/ApplicationCard.tsx" data-component-line="58"
                                     data-component-file="ApplicationCard.tsx" data-component-name="span"
-                                    data-component-content="%7B%22text%22%3A%22Interview%3A%22%7D">Interview: Jan 25,
-                                    2024</span></div>
+                                    data-component-content="%7B%22text%22%3A%22Interview%3A%22%7D">Scheduled on <span class="text-blue-600">{{application.current_stage_log.event_date}}</span> at <span class="text-blue-600">{{application.current_stage_log.event_time}}</span></span></div>
+                                    {% endif %}
                         </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -376,7 +377,7 @@
                 </div>
             </div>
         </div>
-        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+        <!-- <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
             <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="text-2xl font-semibold leading-none tracking-tight">Quick Actions</h3>
             </div>
@@ -432,7 +433,7 @@
                         <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                         <path d="M3 10h18"></path>
                     </svg>Schedule Mock Interview</button></div>
-        </div>
+        </div> -->
         <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
             <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2"><svg
@@ -449,14 +450,17 @@
                     </svg>Upcoming Events</h3>
             </div>
             <div class="p-6 pt-0 space-y-3">
+                {% for event in upcoming_events %}
                 <div class="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-600">
-                    <p class="font-medium text-sm">Interview at Google</p>
-                    <p class="text-xs text-gray-600">Tomorrow, 2:00 PM</p>
+                    <p class="font-medium text-sm">{{event.stage_name}}</p>
+                    {% if event.event_date or event.event_time %}
+                    <p class="text-xs text-gray-600">{{event.event_date}} at {{event.event_time}}</p>
+                    {% else %}
+                    <p class="text-xs text-gray-600">No date or time provided</p>
+                    {% endif %}
                 </div>
-                <div class="p-3 bg-green-50 rounded-lg border-l-4 border-green-600">
-                    <p class="font-medium text-sm">Career Fair</p>
-                    <p class="text-xs text-gray-600">Jan 28, 10:00 AM</p>
-                </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">View
+                {% endfor %}
+                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">View
                     Calendar</button>
             </div>
         </div>
