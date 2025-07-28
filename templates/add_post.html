@@ -188,15 +188,91 @@
   var quillBenefits = new Quill('#job_benefits', quillOptions);
   var quillDescription = new Quill('#job_description', quillOptions);
 
+  // Add validation function
+  function validateForm() {
+    let isValid = true;
+    const errorMessages = document.getElementById('errorMessages');
+    errorMessages.innerHTML = ''; // Clear previous errors
+    
+    // Reset all error styles
+    document.getElementById('job_title').classList.remove('outline-red-500', 'outline-2');
+    document.getElementById('job_title').classList.add('outline-gray-300');
+    
+    // Remove error styles from Quill containers
+    const quillContainers = document.querySelectorAll('.ql-container');
+    quillContainers.forEach(container => {
+      container.style.border = '';
+    });
+    
+    // Validate Position field
+    const jobTitle = document.getElementById('job_title').value.trim();
+    if (!jobTitle) {
+      isValid = false;
+      document.getElementById('job_title').classList.remove('outline-gray-300');
+      document.getElementById('job_title').classList.add('outline-red-500', 'outline-2');
+      errorMessages.innerHTML += '<p class="text-sm text-red-600 dark:text-red-400">Position field is required.</p>';
+    }
+    
+    // Validate Job Description field
+    const jobDescription = quillDescription.root.innerHTML.trim();
+    if (!jobDescription || jobDescription === '<p><br></p>' || jobDescription === '<p></p>') {
+      isValid = false;
+      // Add red border to Quill container
+      const descriptionContainer = quillDescription.container.querySelector('.ql-container');
+      if (descriptionContainer) {
+        descriptionContainer.style.border = '2px solid #ef4444';
+      }
+      errorMessages.innerHTML += '<p class="text-sm text-red-600 dark:text-red-400">Job description field is required.</p>';
+    }
+    
+    return isValid;
+  }
 
-
-
-  document.querySelector("#addjobForm").addEventListener('submit', function () {
-      document.getElementById("hidden_job_description").value = quillDescription.root.innerHTML;
-      document.getElementById("hidden_job_requirements").value = quillRequirements.root.innerHTML;
-      document.getElementById("hidden_job_benefits").value = quillBenefits.root.innerHTML;
+  document.querySelector("#addjobForm").addEventListener('submit', function (e) {
+    // Validate form before submission
+    if (!validateForm()) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // If validation passes, set the hidden field values
+    document.getElementById("hidden_job_description").value = quillDescription.root.innerHTML;
+    document.getElementById("hidden_job_requirements").value = quillRequirements.root.innerHTML;
+    document.getElementById("hidden_job_benefits").value = quillBenefits.root.innerHTML;
   });
 
+  // Add real-time validation for job title
+  document.getElementById('job_title').addEventListener('input', function() {
+    const jobTitle = this.value.trim();
+    if (jobTitle) {
+      this.classList.remove('outline-red-500', 'outline-2');
+      this.classList.add('outline-gray-300');
+      // Clear error message if it exists
+      const errorMessages = document.getElementById('errorMessages');
+      const errorText = errorMessages.innerHTML;
+      if (errorText.includes('Position field is required')) {
+        errorMessages.innerHTML = errorText.replace(/<p class="text-sm text-red-600 dark:text-red-400">Position field is required\.<\/p>/, '');
+      }
+    }
+  });
+
+  // Add real-time validation for job description
+  quillDescription.on('text-change', function() {
+    const jobDescription = quillDescription.root.innerHTML.trim();
+    const descriptionContainer = quillDescription.container.querySelector('.ql-container');
+    
+    if (jobDescription && jobDescription !== '<p><br></p>' && jobDescription !== '<p></p>') {
+      if (descriptionContainer) {
+        descriptionContainer.style.border = '';
+      }
+      // Clear error message if it exists
+      const errorMessages = document.getElementById('errorMessages');
+      const errorText = errorMessages.innerHTML;
+      if (errorText.includes('Job description field is required')) {
+        errorMessages.innerHTML = errorText.replace(/<p class="text-sm text-red-600 dark:text-red-400">Job description field is required\.<\/p>/, '');
+      }
+    }
+  });
 
 
 

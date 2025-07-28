@@ -329,7 +329,7 @@ class AddPost(FlaskForm):
 
 
 class AddJobOpening(FlaskForm):
-    job_title = StringField('Position', validators=[DataRequired(message='This field is required')])
+    job_title = StringField('Position')
     target_date = DateField('Target Date', default=lambda: (datetime.datetime.now() + datetime.timedelta(days=60)))
     opening_date = DateField('Opening Date', default=datetime.datetime.now())
     job_type = SelectField('Job Type', default='Full Time',choices=[('', 'Select Type'), ('Full Time', 'Full Time'), ('Part Time', 'Part Time'), ('Training', 'Training'), ('Freelance', 'Freelance'), ('Seasonal', 'Seasonal'), ('Contract', 'Contract'), ('Temporary', 'Temporary')])
@@ -344,7 +344,7 @@ class AddJobOpening(FlaskForm):
     address_country= StringField('Country')
     address_province= StringField('Province')
     address_postal_code= StringField('Postal Code')
-    job_description= TextAreaField('Job Description' , render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
+    job_description= TextAreaField('Job Description', render_kw={'rows': 30, 'cols': 30, 'id': 'job_description'})
     job_requirements= TextAreaField('Job Requirements', render_kw={'rows': 30, 'cols': 30, 'id': 'job_requirements'})
     job_benefits= TextAreaField('Job Benefits', render_kw={'rows': 30, 'cols': 30, 'id': 'job_benefits'})
     job_opening_status = SelectField('Job Opening Status', default='Active', choices=[('', 'Select status'),('Active', 'Active'),('Inactive', 'Inactive')])
