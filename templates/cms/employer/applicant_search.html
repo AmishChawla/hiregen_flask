@@ -93,5 +93,21 @@
   </div>
 <script>
   // No Select2 required as Tailwind's dropdown and select styles are native
+  
+  // Set default dates when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get today's date
+    const today = new Date();
+    const todayString = today.toISOString().split('T')[0];
+    
+    // Get date 1 month ago
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+    const oneMonthAgoString = oneMonthAgo.toISOString().split('T')[0];
+    
+    // Set default values
+    document.getElementById('application_start_date').value = oneMonthAgoString;
+    document.getElementById('application_end_date').value = todayString;
+  });
 </script>
 {% endblock %}

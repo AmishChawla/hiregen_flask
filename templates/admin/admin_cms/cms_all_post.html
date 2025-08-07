@@ -80,7 +80,7 @@ table.dataTable thead th, table.dataTable tfoot th {
                         <tr class="hover:bg-gray-50">
                             <td class="whitespace-nowrap border-b border-gray-200 py-2 px-2 text-xs sm:py-4 sm:px-4 sm:text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                                 <div class="flex items-center space-x-2">
-                                <img src="/static/images/man.png" alt="Profile" class="h-10 w-10 rounded-full object-cover border border-purple-100">
+                                <img src="{{ data.featured_image or url_for('static', filename='images/man.png') }}" alt="Profile" class="h-10 w-10 rounded-full object-cover border border-purple-100">
                                 <a href="{{ url_for('read_post', slug=data.slug) }}" class="text-purple500 hover:underline">{{ data.title[:40] }}{% if data.title|length > 40 %}...{% endif %}</a>
                                 </div>
                             </td>

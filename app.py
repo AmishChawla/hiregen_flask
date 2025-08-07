@@ -81,14 +81,15 @@ def load_user(user_id):
                     company=user_from_session.get('company'),
                     group=user_from_session.get('group'),
                     profile_picture=user_from_session.get('profile_picture'),
-                    employer_permissions=user_from_session.get('employer_permissions'))
+                    employer_permissions=user_from_session.get('employer_permissions'),
+                    is_demo_user=user_from_session.get('is_demo_user', False))
         return user
     else:
         return None
 
 
 class User(UserMixin):
-    def __init__(self, id, user_id, role, username, email, company, group, profile_picture, firstname=None, lastname=None, employer_permissions=None):
+    def __init__(self, id, user_id, role, username, email, company, group, profile_picture, firstname=None, lastname=None, employer_permissions=None, is_demo_user=False):
         self.user_id = id
         self.id = user_id
         self.role = role
@@ -100,6 +101,7 @@ class User(UserMixin):
         self.group = group
         self.profile_picture = profile_picture
         self.employer_permissions = employer_permissions or ''
+        self.is_demo_user = is_demo_user
 
     def has_permission(self, allowed_permissions):
         # Iterate over each item in the allowed permissions list
@@ -421,6 +423,67 @@ def register():
             flash('Registration unsuccessful. Please check username, email and password.', category='error')
 
     return render_template('register.html', form=form)
+
+
+@app.route("/employer/demo-login", methods=['GET', 'POST'])
+def employer_demo_login():
+    session.pop('_flashes', None)
+    print('trying')
+    if current_user.is_authenticated:
+        next_page = request.args.get('next')
+        if next_page:
+            return redirect(next_page)
+        return redirect(url_for('user_dashboard'))
+
+    next_page = request.args.get('next') or request.form.get('next')
+    print(f"Next Page Before Validation: {next_page}")
+    email = constants.EMPLOYER_DEMO_LOGIN_EMAIL
+    password = constants.EMPLOYER_DEMO_LOGIN_PASSWORD
+    response = api_calls.user_login(email, password)
+
+    if response is not None and response.status_code == 200:
+        data = response.json()
+        id = data.get('id')
+        token = data.get('access_token')
+        role = data.get('role')
+        firstname = data.get('firstname')
+        lastname = data.get('lastname')
+        username = data.get('username')
+        email = data.get('email')
+        company = data.get('company', {})
+        group = data.get('group', {})
+        profile_picture = data['profile_picture']
+        employer_permissions = data['employer_permissions']
+
+        user = User(id=id, user_id=token, role=role, firstname=firstname, lastname=lastname, username=username, email=email, company=company,
+                    group=group, profile_picture=profile_picture, employer_permissions=employer_permissions, is_demo_user=True)
+        login_user(user)
+        session['user'] = {
+            'id': id,
+            'user_id': token,
+            'role': role,
+            'firstname': firstname,
+            'lastname': lastname,
+            'username': username,
+            'email': email,
+            'company': company,
+            'group':group,
+            'profile_picture': profile_picture,
+            'employer_permissions': employer_permissions,
+            'is_demo_user': True  # Add flag to identify demo user
+        }
+        next_page = next_page or url_for('user_dashboard')
+        print(f"Redirecting to: {next_page}")
+        return redirect(next_page)
+
+    elif response.status_code == 400:
+        result = response.json()
+        message = result["detail"]
+        flash(message, category='error')
+    else:
+        # Handle the case where the response is None or the status code is not 200
+        print("Error: Response is None or status code is not 200")
+        flash('Something went wrong. Please try again.', category='error')
 
 
 @app.route("/dashboard")

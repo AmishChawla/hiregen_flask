@@ -82,27 +82,23 @@
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
+          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 mt-4">
             <div>
               <label for="min_salary" class="block text-sm font-medium text-gray-900 mb-2">{{ form.min_salary.label }}</label>
-              {{ form.min_salary(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+              <div class="flex">
+                {{ form.salary_currency(class="mt-2 block w-16 rounded-l-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+                {{ form.min_salary(class="mt-2 block w-full rounded-r-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+              </div>
             </div>
             <div>
               <label for="max_salary" class="block text-sm font-medium text-gray-900 mb-2">{{ form.max_salary.label }}</label>
-              {{ form.max_salary(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+              <div class="flex">
+                {{ form.max_salary(class="mt-2 block w-full rounded-l-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+                {{ form.salary_time_unit(class="mt-2 block w-20 rounded-r-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
+              </div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 mt-4">
-            <div>
-              <label for="salary_currency" class="block text-sm font-medium text-gray-900 mb-2">{{ form.salary_currency.label }}</label>
-              {{ form.salary_currency(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
-            </div>
-            <div>
-              <label for="salary_time_unit" class="block text-sm font-medium text-gray-900 mb-2">{{ form.salary_time_unit.label }}</label>
-              {{ form.salary_time_unit(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-1 focus:-outline-offset-1 focus:outline-blue-600") }}
-            </div>
-          </div>
 
           <div class="mt-4">
   <div class="flex items-center justify-between">

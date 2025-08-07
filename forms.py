@@ -338,7 +338,7 @@ class AddJobOpening(FlaskForm):
     industry= SelectField('Industry')
     min_salary = StringField('Minimum Salary')
     max_salary = StringField('Maximum Salary')
-    salary_currency = SelectField('Salary Currency', choices=[('', 'Select Currency')] + [(currency['symbol'], f"{currency['name']} ({currency['symbol']})") for currency in currencies])
+    salary_currency = SelectField('Salary Currency', choices=[('', '')] + [(currency['symbol'], f"{currency['code']}") for currency in currencies])
     salary_time_unit = SelectField('Salary Time Unit', choices=[('', 'Select Time Unit'), ('Hourly', 'Hourly'), ('Daily', 'Daily'), ('Weekly', 'Weekly'), ('Monthly', 'Monthly'), ('Yearly', 'Yearly')])
     address_city= StringField('City')
     address_country= StringField('Country')
