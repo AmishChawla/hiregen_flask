@@ -2207,7 +2207,12 @@ def create_subscription(plan_id):
         # Directly create the subscription for free plans
         result = api_calls.start_subscription(plan_id=plan_id, stripe_token=None, access_token=current_user.id)
         if result:
-            return redirect(url_for('company_register'))  # Redirect to the user dashboard
+            if current_user.is_authenticated and current_user.company is None:
+                return redirect(url_for('company_register'))  # Redirect to the user dashboard
+            elif current_user.is_authenticated and current_user.company is not None:
+                return redirect(url_for('user_dashboard'))
+            else:
+                return redirect(url_for('login'))
         else:
             return redirect(url_for('user_view_plan'))
     else:
