@@ -3,18 +3,18 @@
 {% else %}
 {% extends 'common_base.html' %}
 {% endif %}
-{% block title %}Hiregen | Chat{% endblock %}
+{% block title %}Hiregen | AI Assistant{% endblock %}
 {% block content %}
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
+<style>
+  body {
     background-color: #f8f9fa;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+  }
 
-    nav{
+  nav {
     display: flex !important;
-    }
+  }
 
   .chat-container {
     width: 100%;
@@ -23,268 +23,511 @@
     flex-direction: column;
     border-radius: 0;
     overflow: hidden;
+  }
 
-    }
   .chat-header {
-      background-color: #007bff;
-      color: #fff;
-      padding: 10px;
-      font-size: 18px;
-    }
-  .chat-body {
-      padding: 10px;
-      height: 70vh;
-      width:100%;
-
-      overflow-y: scroll;
-      font-size: 14px;
-    }
-  .message {
-      margin-bottom: 10px;
-    }
-  .message-bot {
-      background-color: #e9ecef;
-      border-radius: 10px;
-      padding: 5px 10px;
-      font-size: 14px;
-    }
-  .message-user {
-      background-color: #254657;
-      color: #fff;
-      border-radius: 10px;
-      padding: 5px 10px;
-      text-align: right;
-      font-size: 14px;
-    }
-  .input-container {
-      padding: 10px;
-      background-color: #f8f9fa;
-      border-top: 1px solid #ccc;
-      display: flex;
-      align-items: center;
-    }
-  .input-container input[type="text"] {
-      flex-grow: 1;
-      border-radius: 10px;
-      padding: 10px;
-      border: none;
-      outline: none;
-      font-size: 14px;
-    }
-.final-button {
-    border: none;
-    outline: none;
-    background-color: royalblue;
-    padding: 8px 25px; /* Increased padding */
-    border-radius: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: #fff;
-    font-size: 18px; /* Optional: Adjust font size if needed */
-    transform: .3s ease;
-    text-decoration: none;
-    display: block; /* Make it a block element to apply margin auto */
-    margin: auto; /* Center the button horizontally */
-    width: fit-content; /* Adjust width to fit content */
-    margin-top: 20px; /* Optional: Adjust vertical positioning */
-    margin-bottom: 20px; /* Optional: Adjust vertical spacing below the button */
-    margin-left:10px;
-}
+    padding: 15px 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-.final-button:hover {
-  background-color: rgb(56, 90, 194);
-}
-    @media (max-width: 768px) {
-    .chat-container {
-        max-width: 100%;
-      }
-    .chat-header,.chat-body,.message-bot,.message-user,.input-container input[type="text"],.input-container button {
-        font-size: 12px;
-      }
-    }
+  .chat-header .ai-status {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  .ai-status .status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #4ade80;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .chat-body {
+    padding: 20px;
+    height: 70vh;
+    width: 100%;
+    overflow-y: scroll;
+    font-size: 14px;
+    background-color: #f8f9fa;
+  }
+
+  .message {
+    margin-bottom: 15px;
+    max-width: 80%;
+  }
+
+  .message-bot {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 18px 18px 18px 4px;
+    padding: 12px 16px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .message-user {
+    background-color: #254657;
+    color: #fff;
+    border-radius: 18px 18px 4px 18px;
+    padding: 12px 16px;
+    text-align: right;
+    font-size: 14px;
+    margin-left: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .message-action {
+    background-color: #e8f5e8;
+    border: 1px solid #4ade80;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .input-container {
+    padding: 20px;
+    background-color: #fff;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .input-container input[type="text"] {
+    flex-grow: 1;
+    border-radius: 25px;
+    padding: 12px 20px;
+    border: 2px solid #e9ecef;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+  }
+
+  .input-container input[type="text"]:focus {
+    border-color: #667eea;
+  }
+
+  .send-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  .send-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+  }
+
+  .quick-action-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #495057;
+  }
+
+  .quick-action-btn:hover {
+    background-color: #667eea;
+    color: white;
+    border-color: #667eea;
+  }
+
+  .typing-indicator {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 16px;
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  .typing-dots {
+    display: flex;
+    gap: 2px;
+  }
+
+  .typing-dot {
+    width: 4px;
+    height: 4px;
+    background-color: #6c757d;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .success-message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
+
+  .error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 8px 0;
+  }
 </style>
- <div class="page-header">
-     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Chat</h1>
-          </div><!-- /.col --><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
- </div>
-                <div class="row">
-                    <div class="col-lg-12">
 
- <div style="display: flex; justify-content: space-between;">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="chat-container">
+        <div class="chat-header">
+          <div>
+            <h5 class="mb-0">🤖 AI Assistant</h5>
+            <small>Powered by OpenAI GPT-4</small>
+          </div>
+          <div class="ai-status">
+            <div class="status-dot"></div>
+            <span>AI Online</span>
+          </div>
+        </div>
 
+        <div class="chat-body" id="chat-body">
+          <div class="message message-bot">
+            👋 Hello! I'm your AI recruitment assistant. I can help you with:
+            <ul style="margin: 8px 0; padding-left: 20px;">
+              <li>Posting new job openings</li>
+              <li>Managing applications</li>
+              <li>Viewing analytics</li>
+              <li>Creating forms</li>
+              <li>And much more!</li>
+            </ul>
+            Just tell me what you'd like to do! 🚀
+          </div>
 
-<div class="container">
-     <div class="chat-container">
+          <div class="quick-actions">
+            <button class="quick-action-btn" onclick="sendQuickMessage('Post a new job')">📝 Post Job</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Show my job applications')">📋 View Applications</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('Show recruitment analytics')">📊 Analytics</button>
+            <button class="quick-action-btn" onclick="sendQuickMessage('What can you do?')">❓ Help</button>
+          </div>
+        </div>
 
-      <div class="chat-body" id="chat-body">
-        <div class="message message-bot">
-          Hello! How can I assist you today?
+        <div class="typing-indicator" id="typing-indicator">
+          <span>AI is thinking</span>
+          <div class="typing-dots">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <input type="text" id="user-input" placeholder="Tell me what you'd like to do...">
+          <button onclick="sendMessage()" class="send-btn">Send</button>
+          <button onclick="saveChat()" class="send-btn" style="background: #6c757d;">Save</button>
+          <button type="button" class="send-btn" data-bs-toggle="modal" data-bs-target="#chatsModal" style="background: #17a2b8;">Load</button>
         </div>
       </div>
-      <div class="input-container">
-        <input type="text" id="user-input" placeholder="Type your message...">
-        <button onclick="sendMessage()" class="final-button">Send</button>
-        <button onclick="saveChat()" class="final-button">Save</button>
-        <button type="button" class="final-button" data-bs-toggle="modal" data-bs-target="#chatsModal">Load</button>
-      </div>
-         </div>
-</div>
-                              </div>
-
-                  </div>
-      </div>
-
- <div class="modal fade" id="chatsModal" tabindex="-1" aria-labelledby="chatsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="formsModalLabel">All Chats</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <table id="userFormsTable" class="table table-hover" style="width:100%;">
-                    <thead>
-                        <tr>
-                            <th>Created Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% if all_chats %}
-                        {% for data in all_chats %}
-                        <tr style="max-height: 100px; overflow-y: auto; " onclick="loadChat({{data.messages}})">
-                            <td class="py-1">{{ data.upload_datetime.split('T')[0] }} {{ data.upload_datetime.split('T')[1][:8] }}</td>
-                        </tr>
-                        {% endfor %}
-                    {% endif %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
     </div>
-</div>
- <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successModalLabel">Chat Saved Successfully</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Your chat has been saved.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
- <script>
-            function sendMessage() {
+<!-- Existing modals -->
+<div class="modal fade" id="chatsModal" tabindex="-1" aria-labelledby="chatsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatsModalLabel">Saved Conversations</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {% if all_chats %}
+          {% for chat in all_chats %}
+            <div class="chat-item mb-3 p-3 border rounded">
+              <h6>Chat {{ loop.index }}</h6>
+              <button class="btn btn-sm btn-primary" onclick="loadChat({{ chat | tojson }})">Load</button>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No saved conversations found.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel">Chat Saved Successfully</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Your chat has been saved.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let conversationHistory = [];
+
+function sendQuickMessage(message) {
+  document.getElementById('user-input').value = message;
+  sendMessage();
+}
+
+function sendMessage() {
   var userInput = document.getElementById("user-input").value;
   if (userInput.trim() === "") return;
+  
   var chatBody = document.getElementById("chat-body");
   var userMessageDiv = document.createElement("div");
   userMessageDiv.classList.add("message", "message-user");
   userMessageDiv.innerText = userInput;
   chatBody.appendChild(userMessageDiv);
+  
+  // Show typing indicator
+  showTypingIndicator();
+  
+  // Add to conversation history
+  conversationHistory.push({ role: "user", content: userInput });
+  
   // Send user input to server using AJAX
   fetch('/send_message', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'user_input=' + userInput
+    body: 'user_input=' + encodeURIComponent(userInput)
   })
- .then(response => response.json())
- .then(data => {
-    // Convert Markdown to HTML using marked
+  .then(response => response.json())
+  .then(data => {
+    hideTypingIndicator();
+    
+    // Add to conversation history
+    conversationHistory.push({ role: "assistant", content: data.bot_response });
+    
     var botMessageDiv = document.createElement("div");
     botMessageDiv.classList.add("message", "message-bot");
-    botMessageDiv.innerHTML = data.bot_response.replace(/\n/g, '<br>'); // Convert Markdown to HTML
+    
+    // Handle different response types
+    if (data.response_type === 'action_response') {
+      botMessageDiv.innerHTML = data.bot_response.replace(/\n/g, '<br>');
+      
+      // Add action buttons if data contains actions
+      if (data.data && data.data.action) {
+        var actionDiv = document.createElement("div");
+        actionDiv.classList.add("message-action");
+        actionDiv.innerHTML = `
+          <strong>Action Available:</strong> ${data.data.action}
+          <div class="action-buttons">
+            <button class="action-btn" onclick="handleAction('${data.data.action}', ${JSON.stringify(data.data)})">Execute</button>
+            <button class="action-btn" onclick="this.parentElement.parentElement.remove()">Dismiss</button>
+          </div>
+        `;
+        chatBody.appendChild(actionDiv);
+      }
+    } else {
+      botMessageDiv.innerHTML = data.bot_response.replace(/\n/g, '<br>');
+    }
+    
     chatBody.appendChild(botMessageDiv);
     chatBody.scrollTop = chatBody.scrollHeight;
+  })
+  .catch(error => {
+    hideTypingIndicator();
+    console.error('Error:', error);
+    
+    var errorDiv = document.createElement("div");
+    errorDiv.classList.add("message", "message-bot", "error-message");
+    errorDiv.innerHTML = "❌ Sorry, I encountered an error. Please try again.";
+    chatBody.appendChild(errorDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
   });
+  
   document.getElementById("user-input").value = "";
   chatBody.scrollTop = chatBody.scrollHeight;
 }
 
+function showTypingIndicator() {
+  document.getElementById('typing-indicator').style.display = 'flex';
+}
+
+function hideTypingIndicator() {
+  document.getElementById('typing-indicator').style.display = 'none';
+}
+
+function handleAction(action, data) {
+  console.log('Handling action:', action, data);
+  
+  // Handle different actions
+  switch(action) {
+    case 'list_jobs':
+      window.location.href = '/user/job-openings';
+      break;
+    case 'edit_job':
+      window.location.href = `/job-openings/${data.job_id}`;
+      break;
+    case 'create_form':
+      window.location.href = '/formbuilder/form-create';
+      break;
+    default:
+      console.log('Action not implemented:', action);
+  }
+}
+
 function saveChat() {
-    var chatBody = document.getElementById("chat-body");
-    var messages = [];
-    Array.from(chatBody.getElementsByClassName("message")).forEach(message => {
-        const role = message.classList.contains("message-user") ? "user" : "assistant";
-        const content = message.innerText;
-        messages.push({
-            role,
-            content: [{ type: "text", text: content }]
-        });
+  var chatBody = document.getElementById("chat-body");
+  var messages = [];
+  Array.from(chatBody.getElementsByClassName("message")).forEach(message => {
+    const role = message.classList.contains("message-user") ? "user" : "assistant";
+    const content = message.innerText;
+    messages.push({
+      role,
+      content: [{ type: "text", text: content }]
     });
-    fetch('/save-chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ messages })
-    }).then(response => {
-        if (response.ok) {
-            return response.text().then(text => {
-                if (text.toLowerCase() === 'true') {
-                    // Attempt to show the success modal
-                    var modalSuccess = document.getElementById('successModal');
-                    if (modalSuccess) {
-                        var modalInstance = new bootstrap.Modal(modalSuccess);
-                        modalInstance.show();
-                    } else {
-                        console.error('Success modal element not found.');
-                    }
-                } else {
-                    console.error('Unexpected response:', text);
-                }
-            });
-        } else {
-            throw new Error('Failed to save chat');
+  });
+  
+  fetch('/save-chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ messages })
+  }).then(response => {
+    if (response.ok) {
+      return response.text().then(text => {
+        if (text.toLowerCase() === 'true') {
+          var modalSuccess = document.getElementById('successModal');
+          if (modalSuccess) {
+            var modalInstance = new bootstrap.Modal(modalSuccess);
+            modalInstance.show();
+          }
         }
-    }).catch(error => {
-        console.error('Error saving chat:', error.message);
-    });
+      });
+    } else {
+      throw new Error('Failed to save chat');
+    }
+  }).catch(error => {
+    console.error('Error saving chat:', error.message);
+  });
 }
+
 function loadChat(messages) {
-    var chatBody = document.getElementById("chat-body");
-    chatBody.innerHTML = ""; // Clear existing messages
-    messages.forEach(messageObj => {
-        const messageDiv = document.createElement("div");
-        messageDiv.className = messageObj.role === "user" ? "message message-user" : "message message-bot";
-        messageDiv.innerText = messageObj.content[0].text;
-        chatBody.appendChild(messageDiv);
-    });
-    chatBody.scrollTop = chatBody.scrollHeight;
+  var chatBody = document.getElementById("chat-body");
+  chatBody.innerHTML = ""; // Clear existing messages
+  
+  // Add welcome message back
+  var welcomeDiv = document.createElement("div");
+  welcomeDiv.classList.add("message", "message-bot");
+  welcomeDiv.innerHTML = `👋 Hello! I'm your AI recruitment assistant. I can help you with:
+    <ul style="margin: 8px 0; padding-left: 20px;">
+      <li>Posting new job openings</li>
+      <li>Managing applications</li>
+      <li>Viewing analytics</li>
+      <li>Creating forms</li>
+      <li>And much more!</li>
+    </ul>
+    Just tell me what you'd like to do! 🚀`;
+  chatBody.appendChild(welcomeDiv);
+  
+  // Add quick actions
+  var quickActionsDiv = document.createElement("div");
+  quickActionsDiv.classList.add("quick-actions");
+  quickActionsDiv.innerHTML = `
+    <button class="quick-action-btn" onclick="sendQuickMessage('Post a new job')">📝 Post Job</button>
+    <button class="quick-action-btn" onclick="sendQuickMessage('Show my job applications')">📋 View Applications</button>
+    <button class="quick-action-btn" onclick="sendQuickMessage('Show recruitment analytics')">📊 Analytics</button>
+    <button class="quick-action-btn" onclick="sendQuickMessage('What can you do?')">❓ Help</button>
+  `;
+  chatBody.appendChild(quickActionsDiv);
+  
+  // Load saved messages
+  messages.forEach(messageObj => {
+    const messageDiv = document.createElement("div");
+    messageDiv.className = messageObj.role === "user" ? "message message-user" : "message message-bot";
+    messageDiv.innerText = messageObj.content[0].text;
+    chatBody.appendChild(messageDiv);
+  });
+  
+  chatBody.scrollTop = chatBody.scrollHeight;
 
-    // Close the modal
-    var myModalEl = document.getElementById('chatsModal')
-    var modalInstance = bootstrap.Modal.getInstance(myModalEl)
-    modalInstance.hide()
+  // Close the modal
+  var myModalEl = document.getElementById('chatsModal')
+  var modalInstance = bootstrap.Modal.getInstance(myModalEl)
+  modalInstance.hide()
 }
 
-     document.getElementById("user-input").addEventListener("keydown", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault(); // Prevent form submission if this is inside a form
-        sendMessage();
-      }
-    });
-
-
-
-
- </script>
+document.getElementById("user-input").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+</script>
 
 {% endblock %}
 

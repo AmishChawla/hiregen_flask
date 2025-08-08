@@ -33,15 +33,15 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
-app.config['SERVER_NAME'] = 'hiregen.com'
+app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
-# app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
+app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -334,6 +334,17 @@ def callback():
         'profile_picture': profile_picture,
         'employer_permissions': employer_permissions
     }
+    # Check if user has an active subscription
+    try:
+        if user.role == 'user':
+            is_service_allowed = api_calls.is_service_access_allowed(current_user.id)
+            if not is_service_allowed:
+                # User doesn't have active subscription, redirect to create free plan
+                return redirect(url_for('create_subscription', plan_id=1))
+    except Exception as e:
+        print(f"Error checking subscription: {e}")
+        return redirect(url_for('user_view_plan'))
+    
     if current_user.company is not None:
         return redirect(url_for('user_dashboard'))
     else:
@@ -3008,31 +3019,57 @@ def chatbot():
 
 
 @app.route('/send_message', methods=['POST'])
-# @requires_any_permission("access_chatbot")
+@login_required
 def send_message():
+    try:
+        user_input = request.form['user_input']
+        print(f"User input: {user_input}")
 
-    user_input = request.form['user_input']
-    print(user_input)
+        # Get user context
+        user_context = {
+            'user_role': current_user.role,
+            'company': current_user.company,
+            'user_id': current_user.id,
+            'permissions': current_user.employer_permissions
+        }
 
-    # Send the user input to OpenAI's GPT-3.5
-    completion = openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[
-            {
-                "role": "user",
-                "content": user_input,
-            },
-        ],
-        temperature=0.7,
-        max_tokens=256,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
-    )
-    bot_response = completion.choices[0].message.content
-    print(bot_response)
-
-    return jsonify({'bot_response': bot_response})
+        # Import and use the chatbot agent
+        from chatbot_agent import ChatbotAgent
+        agent = ChatbotAgent()
+        
+        # Check if this is a confirmation response
+        if user_input.lower().strip() in ['yes', 'yes, confirm job posting', 'confirm', 'proceed']:
+            # Handle confirmation for job posting
+            response = agent.confirm_job_posting_action({
+                "confirmation": True,
+                "job_details": session.get('pending_job_details', {})
+            })
+            # Clear the pending job details
+            session.pop('pending_job_details', None)
+        else:
+            # Process the message normally
+            response = agent.process_message(user_input, user_context)
+            
+            # Store job details in session if confirmation is needed
+            if response.get('data', {}).get('needs_confirmation'):
+                session['pending_job_details'] = response['data']['job_details']
+        
+        print(f"Agent response: {response}")
+        
+        return jsonify({
+            'bot_response': response['content'],
+            'response_type': response['type'],
+            'success': response['success'],
+            'data': response.get('data', {})
+        })
+        
+    except Exception as e:
+        print(f"Error in send_message: {str(e)}")
+        return jsonify({
+            'bot_response': f"I encountered an error: {str(e)}. Please try again.",
+            'response_type': 'error',
+            'success': False
+        })
 
 
 @app.route('/save-chat', methods=['POST'])
