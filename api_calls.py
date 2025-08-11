@@ -5,15 +5,22 @@ import requests
 import constants
 
 
-def user_login(email, password):
+def user_login(email, password, client_ip: str = None):
+    print("CLIENT IP: ", client_ip)
     print('trying2')
     data = {
         "username": email,
-        "password": password
+        "password": password,
     }
+    headers = {}
+    if client_ip:
+        headers = {
+            "X-Client-IP": client_ip
+        }
+
 
     try:
-        response = requests.post(constants.BASE_URL + '/login', data=data)
+        response = requests.post(constants.BASE_URL + '/login', data=data, headers=headers)
         print(response.text)
         print(constants.BASE_URL + '/login')
         return response

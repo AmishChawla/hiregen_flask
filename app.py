@@ -445,12 +445,15 @@ def employer_demo_login():
         if next_page:
             return redirect(next_page)
         return redirect(url_for('user_dashboard'))
+    
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    print("CLIENT IP: ", client_ip)
 
     next_page = request.args.get('next') or request.form.get('next')
     print(f"Next Page Before Validation: {next_page}")
     email = constants.EMPLOYER_DEMO_LOGIN_EMAIL
     password = constants.EMPLOYER_DEMO_LOGIN_PASSWORD
-    response = api_calls.user_login(email, password)
+    response = api_calls.user_login(email, password, client_ip)
 
     if response is not None and response.status_code == 200:
         data = response.json()
