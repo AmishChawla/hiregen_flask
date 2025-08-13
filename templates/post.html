@@ -111,8 +111,7 @@
                         </div>
                         <div class="flex items-center gap-2">
                         {% if job_details.saved == False %}
-                          <form method="POST" action="{{ url_for('jobseeker_save_job', job_id=job_details.id) }}">
-                          <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                          <button id="save-job-btn" data-job-id="{{ job_details.id }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-heart w-4 h-4"
@@ -124,7 +123,6 @@
                                         d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
                                     </path>
                                 </svg></button>
-                                </form>
                                 {% else %}
                                 <button disabled class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3"><svg
                                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -188,7 +186,11 @@
                     <h3 class="text-2xl font-semibold leading-none tracking-tight">Job Description</h3>
                 </div>
                 <div class="p-6 pt-0 space-y-4">
-                    {{ job_details.job_description | safe or "No Description" }}
+                    {% if job_details.job_description and job_details.job_description|striptags|trim %}
+                    {{ job_details.job_description | safe }}
+                    {% else %}
+                    <p class="text-gray-500 italic">No description available</p>
+                    {% endif %}
                 </div>
             </div>
 
@@ -197,8 +199,10 @@
                     <h3 class="text-2xl font-semibold leading-none tracking-tight">Requirements</h3>
                 </div>
                 <div class="p-6 pt-0">
-                {% if job_details.job_requirements %} 
-                {{ job_details.job_requirements | safe or "No Requirements" }}
+                {% if job_details.job_requirements and job_details.job_requirements|striptags|trim %} 
+                {{ job_details.job_requirements | safe }}
+                {% else %}
+                <p class="text-gray-500 italic">No requirements specified</p>
                 {% endif %}
                 </div>
             </div>
@@ -208,10 +212,12 @@
                 </div>
                 <div class="p-6 pt-0">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {% if job_details.job_benefits %}
+                      {% if job_details.job_benefits and job_details.job_benefits|striptags|trim %}
                         <div class="flex items-start gap-2">
-                            <span class="text-gray-600">{{ job_details.job_benefits | safe or "No Benefits" }}</span>
+                            <span class="text-gray-600">{{ job_details.job_benefits | safe }}</span>
                         </div>
+                      {% else %}
+                        <p class="text-gray-500 italic">No benefits specified</p>
                       {% endif %}
                     </div>
                 </div>
@@ -392,6 +398,108 @@
               alert("Unable to copy the link.");
           });
       }
+  }
+
+  // Save job functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const saveJobBtn = document.getElementById('save-job-btn');
+    
+    if (saveJobBtn) {
+      saveJobBtn.addEventListener('click', function() {
+        const jobId = this.getAttribute('data-job-id');
+        const button = this;
+        
+        // Disable button to prevent multiple clicks
+        button.disabled = true;
+        button.style.opacity = '0.5';
+        
+        fetch(`/jobseeker/save-job/${jobId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Update button appearance to show saved state
+            button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+            </svg>`;
+            button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
+            button.disabled = true;
+            
+            // Show success notification
+            showNotification('Job saved successfully!', 'success');
+          } else {
+            showNotification(data.message || 'Failed to save job', 'error');
+            // Re-enable button on error
+            button.disabled = false;
+            button.style.opacity = '1';
+          }
+        })
+        .catch(error => {
+          console.error('Error saving job:', error);
+          showNotification('Failed to save job. Please try again.', 'error');
+          // Re-enable button on error
+          button.disabled = false;
+          button.style.opacity = '1';
+        });
+      });
+    }
+  });
+
+  function showNotification(message, type) {
+    const container = document.querySelector("#notification-container > div");
+    const notification = document.createElement("div");
+    notification.className = "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5 transition transform ease-out duration-300 opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-2";
+    
+    let iconClass = "text-blue-400";
+    let iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />`;
+
+    if (type === "success") {
+      iconClass = "text-green-400";
+      iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />`;
+    } else if (type === "error") {
+      iconClass = "text-red-400";
+      iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />`;
+    }
+
+    notification.innerHTML = `
+      <div class="p-4 flex items-start">
+        <div class="shrink-0">
+          <svg class="size-6 ${iconClass}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+            ${iconPath}
+          </svg>
+        </div>
+        <div class="ml-3 w-0 flex-1 pt-0.5">
+          <p class="text-sm font-medium text-gray-900">${message}</p>
+        </div>
+        <div class="ml-4 flex shrink-0">
+          <button onclick="this.parentElement.parentElement.parentElement.remove()" class="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <span class="sr-only">Close</span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(notification);
+
+    // Show with animation
+    setTimeout(() => {
+      notification.classList.remove("opacity-0", "translate-y-2", "sm:translate-x-2");
+      notification.classList.add("opacity-100", "translate-y-0", "sm:translate-x-0");
+    }, 100);
+
+    // Hide after 5 seconds
+    setTimeout(() => {
+      notification.classList.add("opacity-0", "translate-y-2", "sm:translate-x-2");
+      setTimeout(() => notification.remove(), 300);
+    }, 5000);
   }
   </script>
   

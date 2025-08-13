@@ -33,7 +33,7 @@ CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
 #TODO CHANGE TO 'hiregen.com' before deploying
-# app.config['SERVER_NAME'] = 'localhost.com:5000'  # Base domain for subdomains
+# app.config['SERVER_NAME'] = 'localhost.com:3000'  # Base domain for subdomains
 app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
 # app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
@@ -1026,6 +1026,10 @@ def company_details_by_company_slug(company_slug):
 @app.route('/', subdomain="<company_subdomain>", methods=['GET', 'POST'])
 def company_details_by_company_subdomain(company_subdomain):
 
+    # Handle empty subdomain (root domain access)
+    if not company_subdomain or company_subdomain == "" or company_subdomain == "www":
+        return redirect(url_for('index'))
+    
     if company_subdomain == "www":
         return redirect(url_for('index'))  # assuming you have a route named 'index'
 
@@ -2589,6 +2593,7 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
         slug=job_slug,
         access_token=access_token
     )
+    print("job_details", job_details)
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
     print(job_details.get('saved'))
@@ -5207,15 +5212,36 @@ def jobseeker_saved_jobs():
     return render_template('jobseeker/jobseeker_saved_jobs.html', saved_jobs=saved_jobs)
 
 @app.route("/jobseeker/save-job/<int:job_id>", methods=["POST"])
+@app.route("/jobseeker/save-job/<int:job_id>", subdomain="<company_subdomain>", methods=["POST"])
 @login_required
-def jobseeker_save_job(job_id):
+def jobseeker_save_job(job_id, company_subdomain=None):
     try:
         result = api_calls.save_job_for_jobseeker(job_id=job_id, access_token=current_user.id)
         print(result)
-        flash(result["message"], "success")
+        
+        # Check if this is an AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if result and result.get("message"):
+                return jsonify({"success": True, "message": result["message"]})
+            else:
+                return jsonify({"success": False, "message": "Failed to save job"})
+        else:
+            # Handle regular form submission
+            flash(result["message"], "success")
+            return redirect(request.referrer or url_for("jobseeker_dashboard"))
+            
     except Exception as e:
-        flash(f"Error saving job: {str(e)}", "danger")
-    return redirect(request.referrer or url_for("jobseeker_dashboard"))
+        error_message = f"Error saving job: {str(e)}"
+        
+        # Check if this is an AJAX request
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({"success": False, "message": error_message})
+        else:
+            # Handle regular form submission
+            flash(error_message, "danger")
+            return redirect(request.referrer or url_for("jobseeker_dashboard"))
+
+
 
 @app.route("/jobseeker/unsave-job/<int:job_id>", methods=["POST"])
 @login_required
@@ -5226,13 +5252,6 @@ def jobseeker_unsave_job(job_id):
     except Exception as e:
         flash(f"Error unsaving job: {str(e)}", "danger")
     return redirect(request.referrer or url_for("jobseeker_dashboard"))
-
-
-
-############################# JOBSEEKER SETTINGS ##########################################################
-@app.route('/jobseeker/jobseeker-settings', methods=['GET', 'POST'])
-def jobseeker_settings():
-    return render_template('jobseeker/jobseeker_settings.html')
 
 
 ############################ EMPLOYER SETTINGS ##########################################################
@@ -5264,6 +5283,40 @@ def employer_settings():
             flash(f"Failed to update preferences: {str(e)}", "danger")
     
     return render_template('employer_settings.html', preferences=preferences)
+
+############################ JOBSEEKER SETTINGS ##########################################################
+@app.route('/jobseeker/settings', methods=['GET', 'POST'])
+@login_required
+@requires_any_permission("applicants")
+def jobseeker_settings():
+    preferences = api_calls.get_jobseeker_preferences(access_token=current_user.id)
+    # Ensure preferences is always a dict
+    if preferences is None:
+        preferences = {}
+    
+    if request.method == 'POST':
+        # Build preferences_update dict for jobseekers
+        # Checkboxes only appear in form data when checked
+        preferences_update = {
+            "email_notifications": "email_notifications" in request.form,
+            "push_notifications": "push_notifications" in request.form,
+            "job_alerts": "job_alerts" in request.form,
+            "application_updates": "application_updates" in request.form,
+            "is_public_profile": "is_public_profile" in request.form,
+            "allow_employer_contact": "allow_employer_contact" in request.form
+        }
+        
+        try:
+            updated_preferences = api_calls.update_jobseeker_preferences(
+                access_token=current_user.id,
+                preferences_update=preferences_update
+            )
+            flash("Preferences updated successfully.", "success")
+            preferences = updated_preferences if updated_preferences else {}
+        except Exception as e:
+            flash(f"Failed to update preferences: {str(e)}", "danger")
+    
+    return render_template('jobseeker/jobseeker_settings.html', preferences=preferences)
 
 ############################ EMPLOYER ANALYTICS ##########################################################
 @app.route('/user/analytics', methods=['GET', 'POST'])

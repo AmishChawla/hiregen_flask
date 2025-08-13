@@ -3897,3 +3897,35 @@ def update_user_preferences(access_token, preferences_update):
         return response.json()
     else:
         raise Exception(f"Failed to update user preferences: {response.text}")
+
+def get_jobseeker_preferences(access_token):
+    """
+    Calls the API to get the current jobseeker's preferences.
+    :param access_token: str, jobseeker's access token
+    :return: dict (jobseeker preferences)
+    """
+    headers = {'Authorization': f'Bearer {access_token}'}
+    url = constants.BASE_URL + "/jobseeker/preferences/"
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return None
+
+def update_jobseeker_preferences(access_token, preferences_update):
+    """
+    Calls the API to update the current jobseeker's preferences.
+    :param access_token: str, jobseeker's access token
+    :param preferences_update: dict, fields to update (e.g., {"email_notifications": True, "job_alerts": True, ...})
+    :return: dict (updated jobseeker preferences)
+    """
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    url = constants.BASE_URL + "/jobseeker/preferences/update"
+    response = requests.put(url, headers=headers, json=preferences_update)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception(f"Failed to update jobseeker preferences: {response.text}")

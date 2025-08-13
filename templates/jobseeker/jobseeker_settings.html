@@ -1,6 +1,6 @@
 {% extends "jobseeker/jobseeker_base.html" %}
 
-{%block title%}Settings{%endblock%}
+{% block title %}Jobseeker Settings{% endblock %}
 
 {% block content %}
 
@@ -24,7 +24,8 @@ input:checked ~ .block {
 </style>
  <div class="max-w-4xl mx-auto space-y-6">
     <h1 class="text-3xl font-bold text-gray-900">Settings</h1>
-    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+
+    <!-- <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
         <div class="space-y-1.5 p-6 flex flex-row items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-5 h-5"
@@ -50,7 +51,8 @@ input:checked ~ .block {
                         id="new-password"></div>
             </div>
         </div>
-    </div>
+    </div> -->
+<form method="POST" action="{{ url_for('jobseeker_settings') }}">
     <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
         <div class="space-y-1.5 p-6 flex flex-row items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="24"
                 height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -73,7 +75,7 @@ input:checked ~ .block {
                         <!-- toggle -->
                         <div class="relative">
                         <!-- input -->
-                        <input type="checkbox" id="EmailNotifications" class="sr-only">
+                        <input type="checkbox" id="EmailNotifications" name="email_notifications" value="1" class="sr-only"{% if preferences and preferences.get('email_notifications') %} checked{% endif %}>
                         <!-- line -->
                         <div class="block bg-slate-200 w-12 h-7 rounded-full"></div>
                         <!-- dot -->
@@ -91,7 +93,7 @@ input:checked ~ .block {
                         <!-- toggle -->
                         <div class="relative">
                         <!-- input -->
-                        <input type="checkbox" id="PushNotifications" class="sr-only">
+                        <input type="checkbox" id="PushNotifications" name="push_notifications" value="1" class="sr-only"{% if preferences and preferences.get('push_notifications') %} checked{% endif %}>
                         <!-- line -->
                         <div class="block bg-slate-200 w-12 h-7 rounded-full"></div>
                         <!-- dot -->
@@ -110,7 +112,7 @@ input:checked ~ .block {
                         <!-- toggle -->
                         <div class="relative">
                         <!-- input -->
-                        <input type="checkbox" id="JobAlerts" class="sr-only">
+                        <input type="checkbox" id="JobAlerts" name="job_alerts" value="1" class="sr-only"{% if preferences and preferences.get('job_alerts') %} checked{% endif %}>
                         <!-- line -->
                         <div class="block bg-slate-200 w-12 h-7 rounded-full"></div>
                         <!-- dot -->
@@ -146,7 +148,7 @@ input:checked ~ .block {
                         <!-- toggle -->
                         <div class="relative">
                         <!-- input -->
-                        <input type="checkbox" id="ProfileVisibility" class="sr-only">
+                        <input type="checkbox" id="ProfileVisibility" name="is_public_profile" class="sr-only"{% if preferences and preferences.get('is_public_profile') %} checked{% endif %}>
                         <!-- line -->
                         <div class="block bg-slate-200 w-12 h-7 rounded-full"></div>
                         <!-- dot -->
@@ -159,6 +161,7 @@ input:checked ~ .block {
     <div class="flex justify-end"><button
             class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 bg-blue-600 hover:bg-blue-700">Save
             All Changes</button></div>
+</form>
 </div>
 
 {%endblock%}

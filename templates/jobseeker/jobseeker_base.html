@@ -171,9 +171,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </span>
         <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-gray-900 truncate">{{current_user.username}}</p>
-        <!-- </div><a href="{{ url_for('jobseeker_settings') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-gray-400 hover:text-gray-600" data-lov-id="src/components/AppSidebar.tsx:143:12" data-lov-name="Settings" data-component-path="src/components/AppSidebar.tsx" data-component-line="143" data-component-file="AppSidebar.tsx" data-component-name="Settings" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </div><a href="{{ url_for('jobseeker_settings') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-gray-400 hover:text-gray-600" data-lov-id="src/components/AppSidebar.tsx:143:12" data-lov-name="Settings" data-component-path="src/components/AppSidebar.tsx" data-component-line="143" data-component-file="AppSidebar.tsx" data-component-name="Settings" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 </a>
-    </div> -->
+    </div>
 </div>
 </aside>
   {% endif %}
@@ -208,8 +208,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.3-4.3"></path>
-            </svg><a href="{{ url_for('jobs_search') }}"><input class="flex h-10 rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 w-96 bg-gray-50 border-gray-200 focus:bg-white"
-                placeholder="Job title, keywords, or company"></a></div>
+            </svg>
+            <form method="GET" action="{{ url_for('jobs_search') }}" class="flex-1">
+                <input type="text" name="keyword" class="flex h-10 rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 w-96 bg-gray-50 border-gray-200 focus:bg-white"
+                    placeholder="Job title, keywords, or company">
+            </form>
+        </div>
     </div>
 
     <!-- <div class="flex flex-1 items-center justify-center sm:justify-end">

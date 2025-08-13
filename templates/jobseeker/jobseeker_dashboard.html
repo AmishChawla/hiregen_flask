@@ -186,8 +186,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form method="POST" action="{{ url_for('jobseeker_save_job', job_id=job.id) }}">
-                            <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-blue-50 hover:text-accent-foreground h-10 w-10"><svg
+                            <button class="save-job-btn inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-blue-50 hover:text-accent-foreground h-10 w-10" data-job-id="{{ job.id }}" title="Save Job"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round" class="lucide lucide-bookmark w-4 h-4"
@@ -197,7 +196,6 @@
                                     data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
                                     <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
                                 </svg></button>
-                            </form>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
@@ -448,6 +446,7 @@
                         <rect width="18" height="18" x="3" y="4" rx="2"></rect>
                         <path d="M3 10h18"></path>
                     </svg>Upcoming Events</h3>
+                    {% if upcoming_events %}
             </div>
             <div class="p-6 pt-0 space-y-3">
                 {% for event in upcoming_events %}
@@ -460,8 +459,11 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-                <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">View
-                    Calendar</button>
+                <!-- <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full">View
+                    Calendar</button> -->
+                    {% else %}
+                    <p class="text-xs text-gray-600">No upcoming events</p>
+                    {% endif %}
             </div>
         </div>
     </div>
@@ -512,5 +514,72 @@
         });
     });
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const saveJobBtns = document.querySelectorAll('.save-job-btn');
+  
+  saveJobBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const jobId = this.getAttribute('data-job-id');
+      const button = this;
+      
+      // Disable button to prevent multiple clicks
+      button.disabled = true;
+      button.style.opacity = '0.5';
+      
+      fetch(`/jobseeker/save-job/${jobId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Update button appearance to show saved state
+          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bookmark w-4 h-4 text-blue-600">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+          </svg>`;
+          button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-blue-200 bg-blue-50 text-blue-600 cursor-not-allowed h-10 w-10';
+          button.title = 'Saved';
+          button.disabled = true;
+          button.style.opacity = '1';
+          
+          // Show success notification if showNotification function exists
+          if (typeof showNotification === 'function') {
+            showNotification('Job saved successfully!', 'success');
+          } else {
+            // Simple alert fallback
+            alert('Job saved successfully!');
+          }
+        } else {
+          // Show error notification
+          if (typeof showNotification === 'function') {
+            showNotification(data.message || 'Failed to save job', 'error');
+          } else {
+            alert(data.message || 'Failed to save job');
+          }
+          // Re-enable button on error
+          button.disabled = false;
+          button.style.opacity = '1';
+        }
+      })
+      .catch(error => {
+        console.error('Error saving job:', error);
+        if (typeof showNotification === 'function') {
+          showNotification('Failed to save job. Please try again.', 'error');
+        } else {
+          alert('Failed to save job. Please try again.');
+        }
+        // Re-enable button on error
+        button.disabled = false;
+        button.style.opacity = '1';
+      });
+    });
+  });
+});
+</script>
     
 {% endblock %}

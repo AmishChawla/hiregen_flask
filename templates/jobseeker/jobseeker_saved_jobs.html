@@ -41,6 +41,7 @@
     {% for saved_job in saved_jobs %}
     {% set job = saved_job["job"] %}
     {% set saved_at = saved_job["saved_at"] %}
+    {% set has_applied = saved_job["has_applied"] %}
   
     <div class="space-y-4">
         <div class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
@@ -125,8 +126,14 @@
                                         <path d="M15 3h6v6"></path>
                                         <path d="M10 14 21 3"></path>
                                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    </svg></button><a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job['company']['company_subdomain'], job_slug=job['slug'])}}" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply
-                                    Now</a></div>
+                                    </svg></button>
+                                    {% if has_applied %}
+                                    <a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job['company']['company_subdomain'], job_slug=job['slug'])}}" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-green-600 hover:bg-green-700" disabled>Applied</a>
+                                    {% else %}
+                                    <a href="{{url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job['company']['company_subdomain'], job_slug=job['slug'])}}" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply
+                                    Now</a>
+                                    {% endif %}
+                                    </div>
                         </div>
                         <p class="text-gray-600 mb-3 line-clamp-3">{{job['job_description'] | striptags}}</p>
                         <div class="flex items-center justify-between">
