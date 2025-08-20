@@ -1,362 +1,575 @@
 import openai
 import json
-import constants
+import datetime
 from typing import Dict, Any, List
 from flask_login import current_user
 import api_calls
-import datetime
 
-class ChatbotAgent:
+class JobPostingAgent:
     def __init__(self):
-        self.available_actions = {
-            "post_job": self.post_job_action,
-            "view_applications": self.view_applications_action,
-            "manage_jobs": self.manage_jobs_action,
-            "view_analytics": self.view_analytics_action,
-            "help": self.help_action,
-            "create_form": self.create_form_action,
-            "manage_pages": self.manage_pages_action
-        }
+        self.conversation_state = {}
         
-        # Define available functions for OpenAI
-        self.functions = [
-            {
-                "name": "post_job",
-                "description": "Create a new job posting on the user's account",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "job_title": {"type": "string", "description": "Title of the job position"},
-                        "job_description": {"type": "string", "description": "Detailed description of the job"},
-                        "job_requirements": {"type": "string", "description": "Requirements for the position"},
-                        "job_benefits": {"type": "string", "description": "Benefits offered"},
-                        "job_type": {"type": "string", "enum": ["Full Time", "Part Time", "Training", "Freelance", "Seasonal", "Contract", "Temporary"]},
-                        "work_style": {"type": "string", "enum": ["On-Site", "Hybrid", "Remote"]},
-                        "work_experience": {"type": "string", "enum": ["Fresher/Graduate", "Junior", "Mid-Level", "Senior", "Expert"]},
-                        "industry": {"type": "string", "description": "Industry for the job"},
-                        "min_salary": {"type": "string", "description": "Minimum salary"},
-                        "max_salary": {"type": "string", "description": "Maximum salary"},
-                        "salary_currency": {"type": "string", "description": "Salary currency"},
-                        "salary_time_unit": {"type": "string", "description": "Salary time unit"},
-                        "address_city": {"type": "string", "description": "City location"},
-                        "address_country": {"type": "string", "description": "Country location"},
-                        "target_date": {"type": "string", "description": "Target hiring date (YYYY-MM-DD)"}
-                    },
-                    "required": ["job_title", "job_description"]
-                }
-            },
-            {
-                "name": "view_applications",
-                "description": "View job applications and applicant data",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "job_id": {"type": "string", "description": "Specific job ID to view applications for"},
-                        "status": {"type": "string", "enum": ["all", "pending", "reviewed", "shortlisted", "rejected"]},
-                        "limit": {"type": "integer", "description": "Number of applications to return"}
-                    }
-                }
-            },
-            {
-                "name": "manage_jobs",
-                "description": "Manage existing job postings",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "action": {"type": "string", "enum": ["list", "edit", "delete", "activate", "deactivate"]},
-                        "job_id": {"type": "string", "description": "Job ID for specific actions"},
-                        "status": {"type": "string", "enum": ["Active", "Inactive", "Draft"]}
-                    }
-                }
-            },
-            {
-                "name": "view_analytics",
-                "description": "View recruitment analytics and reports",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "report_type": {"type": "string", "enum": ["applications", "jobs", "performance", "overview"]},
-                        "date_range": {"type": "string", "description": "Date range for analytics (e.g., 'last_30_days')"}
-                    }
-                }
-            },
-            {
-                "name": "create_form",
-                "description": "Create a custom form for data collection",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "form_name": {"type": "string", "description": "Name of the form"},
-                        "form_description": {"type": "string", "description": "Description of the form"},
-                        "fields": {"type": "array", "items": {"type": "object"}, "description": "Form fields configuration"}
-                    },
-                    "required": ["form_name", "form_description"]
-                }
-            }
-        ]
-
     def process_message(self, user_message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Process user message and return appropriate response
+        Main entry point for processing user messages
         """
         try:
-            # Analyze intent using OpenAI
-            intent_response = self.analyze_intent(user_message, user_context)
+            # Ensure user_context is not None
+            if user_context is None:
+                user_context = {}
             
-            if intent_response.function_call:
-                # Execute the action
-                action_result = self.execute_action(intent_response.function_call)
-                return {
-                    "type": "action_response",
-                    "content": action_result["message"],
-                    "data": action_result.get("data"),
-                    "success": action_result.get("success", True)
+            user_id = user_context.get('user_id', 'default')
+            current_state = self.conversation_state.get(user_id, {})
+            
+            print(f"DEBUG: Processing message: '{user_message}'")
+            print(f"DEBUG: User ID: {user_id}")
+            print(f"DEBUG: Current state: {current_state}")
+            print(f"DEBUG: Full conversation state: {self.conversation_state}")
+            
+            # Check if we're in an active job posting flow
+            if current_state.get('flow') == 'job_posting':
+                print(f"DEBUG: Continuing job posting flow, step: {current_state.get('step')}")
+                return self.handle_job_posting_flow(user_message, user_context, current_state)
+            
+            # Check if this is a job posting request
+            if self.is_job_posting_request(user_message):
+                print(f"DEBUG: Starting new job posting flow")
+                # Start job posting flow
+                new_state = {
+                    'flow': 'job_posting',
+                    'step': 'waiting_for_title'
                 }
-            else:
-                # General conversation response
-                return {
-                    "type": "conversation",
-                    "content": intent_response.content,
-                    "success": True
-                }
-                
+                self.conversation_state[user_id] = new_state
+                print(f"DEBUG: Set new state: {new_state}")
+                return self.handle_job_posting_flow(user_message, user_context, new_state)
+            
+            # Default response for non-job posting requests
+            return {
+                "type": "conversation",
+                "message": "Hello! I'm your job posting assistant. I can help you create and post job openings with AI-powered suggestions. Just say 'Post a job' or 'Create a job posting' to get started!",
+                "content": "Hello! I'm your job posting assistant. I can help you create and post job openings with AI-powered suggestions. Just say 'Post a job' or 'Create a job posting' to get started!",
+                "success": True
+            }
+            
         except Exception as e:
             return {
                 "type": "error",
-                "content": f"I encountered an error: {str(e)}. Please try again or ask for help.",
+                "message": f"I encountered an error: {str(e)}. Please try again.",
+                "content": f"I encountered an error: {str(e)}. Please try again.",
                 "success": False
             }
-
-    def analyze_intent(self, user_message: str, user_context: Dict[str, Any]):
+    
+    def is_job_posting_request(self, user_message: str) -> bool:
         """
-        Use OpenAI to analyze user intent and extract parameters
+        Check if user wants to post a job
         """
-        system_prompt = f"""You are an AI assistant for a recruitment platform. The user is logged in as {user_context.get('user_role', 'unknown')} with company {user_context.get('company', 'unknown')}.
-
-Available actions:
-- post_job: Create new job postings
-- view_applications: View job applications
-- manage_jobs: Manage existing jobs
-- view_analytics: View recruitment analytics
-- create_form: Create custom forms
-
-Analyze the user's message and determine what action they want to perform. Extract relevant parameters."""
-
-        response = openai.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message}
-            ],
-            functions=self.functions,
-            function_call="auto",
-            temperature=0.1
-        )
+        user_message_lower = user_message.lower()
         
-        return response.choices[0].message
-
-    def execute_action(self, function_call):
-        """
-        Execute the determined action
-        """
-        function_name = function_call.name
-        arguments = json.loads(function_call.arguments)
+        job_keywords = [
+            'post a job', 'create job', 'new job', 'hire', 'job posting',
+            'post job', 'create a job', 'job opening', 'recruit'
+        ]
         
-        if function_name in self.available_actions:
-            return self.available_actions[function_name](arguments)
+        return any(keyword in user_message_lower for keyword in job_keywords)
+    
+    def handle_job_posting_flow(self, user_message: str, user_context: Dict[str, Any], current_state: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Handle the job posting conversation flow
+        """
+        user_id = user_context.get('user_id', 'default')
+        step = current_state.get('step', 'waiting_for_title')
+        
+        if step == 'waiting_for_title':
+            return self.handle_job_title_step(user_message, user_context)
+        elif step == 'waiting_for_accept_reject':
+            return self.handle_suggestions_response(user_message, user_context)
+        elif step == 'waiting_for_modifications':
+            return self.handle_modifications(user_message, user_context)
+        elif step == 'waiting_for_confirmation':
+            return self.handle_final_confirmation(user_message, user_context)
+        else:
+            # Reset and start over
+            self.conversation_state[user_id] = {'flow': 'job_posting', 'step': 'waiting_for_title'}
+            return {
+                "type": "prompt",
+                "message": "Please provide the job title for the position you want to post.",
+                "content": "Please provide the job title for the position you want to post.",
+                "success": True
+            }
+    
+    def handle_job_title_step(self, user_message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Handle the job title input step
+        """
+        user_id = user_context.get('user_id', 'default')
+        
+        # Extract job title using OpenAI
+        job_title = self.extract_job_title(user_message)
+        
+        if job_title:
+            # Generate suggestions
+            return self.generate_job_suggestions(job_title, user_context)
         else:
             return {
-                "success": False,
-                "message": f"Action '{function_name}' is not available."
+                "type": "prompt",
+                "message": "Please provide the job title for the position you want to post. For example: 'Software Engineer', 'Marketing Manager', 'Customer Service Representative'",
+                "content": "Please provide the job title for the position you want to post. For example: 'Software Engineer', 'Marketing Manager', 'Customer Service Representative'",
+                "success": True
             }
-
-    def post_job_action(self, params: Dict[str, Any]):
+    
+    def extract_job_title(self, user_message: str) -> str:
         """
-        Create a new job posting
+        Extract job title from user message using OpenAI
         """
         try:
-            # Prepare job details
+            prompt = f"""Extract the job title from this user message. If no specific job title is mentioned, return an empty string.
+
+User message: "{user_message}"
+
+Examples:
+- "I want to hire a software engineer" → "Software Engineer"
+- "Post a job for marketing manager" → "Marketing Manager"
+- "Create a job for data analyst" → "Data Analyst"
+- "Post a new job" → ""
+- "I need to hire someone" → ""
+
+Return only the job title or empty string."""
+
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a helpful assistant. Extract job titles from user messages."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.1,
+                max_tokens=50
+            )
+            
+            job_title = response.choices[0].message.content.strip()
+            return job_title if job_title and job_title.lower() not in ['', 'none', 'n/a'] else ""
+            
+        except Exception as e:
+            print(f"Error extracting job title: {e}")
+            return ""
+    
+    def generate_job_suggestions(self, job_title: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Generate job suggestions using OpenAI
+        """
+        try:
+            prompt = f"""Generate a complete job posting for the position: "{job_title}"
+
+IMPORTANT: Return ONLY valid JSON without any additional text, quotes, or formatting.
+
+{{
+    "job_title": "{job_title}",
+    "job_description": "Detailed job description (2-3 paragraphs)",
+    "job_requirements": "Key requirements and qualifications",
+    "job_benefits": "Attractive benefits package",
+    "job_type": "Full Time",
+    "work_style": "On-Site",
+    "work_experience": "Mid-Level",
+    "industry": "Relevant industry",
+    "min_salary": "50000",
+    "max_salary": "80000",
+    "salary_currency": "$",
+    "salary_time_unit": "per year",
+    "address_city": "City name",
+    "address_country": "Country name"
+}}
+
+Make the suggestions realistic, professional, and tailored to the job title. Use appropriate salary ranges and currency symbols. Return ONLY the JSON object, nothing else."""
+
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional HR consultant. You must return ONLY valid JSON responses without any additional text, quotes, or formatting. Never include markdown, code blocks, or explanatory text."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.3,
+                max_tokens=1000
+            )
+            
+            content = response.choices[0].message.content.strip()
+            
+            # Debug: Print the raw response
+            print(f"DEBUG: Raw AI response: {content}")
+            
+            # Clean JSON response
+            if content.startswith('```json'):
+                content = content[7:]
+            if content.endswith('```'):
+                content = content[:-3]
+            content = content.strip()
+            
+            print(f"DEBUG: Cleaned content: {content}")
+            
+            try:
+                suggestions = json.loads(content)
+            except json.JSONDecodeError as e:
+                # Try to extract JSON from the response using regex
+                import re
+                json_match = re.search(r'\{.*\}', content, re.DOTALL)
+                if json_match:
+                    try:
+                        suggestions = json.loads(json_match.group())
+                    except:
+                        # If still fails, return error
+                        return {
+                            "type": "error",
+                            "message": f"❌ I couldn't parse the AI response. Please try again.",
+                            "content": f"❌ I couldn't parse the AI response. Please try again.",
+                            "success": False
+                        }
+                else:
+                    return {
+                        "type": "error",
+                        "message": f"❌ I couldn't parse the AI response. Please try again.",
+                        "content": f"❌ I couldn't parse the AI response. Please try again.",
+                        "success": False
+                    }
+            
+            # Store in conversation state
+            user_id = user_context.get('user_id', 'default')
+            new_state = {
+                'flow': 'job_posting',
+                'step': 'waiting_for_accept_reject',
+                'job_title': job_title,
+                'suggestions': suggestions
+            }
+            self.conversation_state[user_id] = new_state
+            
+            # Create suggestion message
+            suggestion_message = f"""🤖 **I've generated suggestions for your "{job_title}" position:**
+
+**Job Title:** {suggestions.get('job_title', job_title)}
+**Job Type:** {suggestions.get('job_type', 'Full Time')}
+**Work Style:** {suggestions.get('work_style', 'On-Site')}
+**Experience Level:** {suggestions.get('work_experience', 'Mid-Level')}
+**Industry:** {suggestions.get('industry', 'N/A')}
+**Salary Range:** {suggestions.get('min_salary', 'N/A')} - {suggestions.get('max_salary', 'N/A')} {suggestions.get('salary_currency', '$')} {suggestions.get('salary_time_unit', 'per year')}
+**Location:** {suggestions.get('address_city', 'N/A')}, {suggestions.get('address_country', 'N/A')}
+
+**Job Description:**
+{suggestions.get('job_description', 'N/A')}
+
+**Requirements:**
+{suggestions.get('job_requirements', 'N/A')}
+
+**Benefits:**
+{suggestions.get('job_benefits', 'N/A')}
+
+**What would you like to do?**
+1. ✅ **Accept these suggestions**
+2. ✏️ **Modify some details**
+3. 🔄 **Generate different suggestions**
+4. ❌ **Cancel job posting**
+
+Please respond with your choice (1, 2, 3, or 4)."""
+
+            return {
+                "type": "suggestions",
+                "message": suggestion_message,
+                "content": suggestion_message,
+                "success": True
+            }
+            
+        except Exception as e:
+            return {
+                "type": "error",
+                "message": f"❌ I couldn't generate suggestions: {str(e)}. Please try again.",
+                "content": f"❌ I couldn't generate suggestions: {str(e)}. Please try again.",
+                "success": False
+            }
+    
+    def handle_suggestions_response(self, user_message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Handle user response to suggestions
+        """
+        user_id = user_context.get('user_id', 'default')
+        current_state = self.conversation_state.get(user_id, {})
+        suggestions = current_state.get('suggestions', {})
+        
+        print(f"DEBUG: handle_suggestions_response - User message: '{user_message}'")
+        print(f"DEBUG: handle_suggestions_response - Current state: {current_state}")
+        print(f"DEBUG: handle_suggestions_response - Suggestions: {suggestions}")
+        
+        user_message_lower = user_message.lower().strip()
+        
+        # Check for accept
+        if any(phrase in user_message_lower for phrase in ['accept', 'yes', '1', 'ok', 'good', 'approve']):
+            # Get the actual suggestions from the current state
+            suggestions = current_state.get('suggestions', {})
+            print(f"DEBUG: Current state: {current_state}")
+            print(f"DEBUG: Suggestions: {suggestions}")
+            return self.show_final_confirmation(user_context, suggestions)
+        
+        # Check for modify
+        elif any(phrase in user_message_lower for phrase in ['modify', 'change', 'edit', '2', 'update']):
+            current_state['step'] = 'waiting_for_modifications'
+            self.conversation_state[user_id] = current_state
+            return {
+                "type": "modify_prompt",
+                "message": "What would you like to modify? You can say things like:\n• 'Change salary to $80,000-$100,000'\n• 'Make it remote work'\n• 'Change job type to part-time'\n• 'Update the requirements'\n• 'Change location to New York'\n\nPlease specify what you want to change:",
+                "content": "What would you like to modify? You can say things like:\n• 'Change salary to $80,000-$100,000'\n• 'Make it remote work'\n• 'Change job type to part-time'\n• 'Update the requirements'\n• 'Change location to New York'\n\nPlease specify what you want to change:",
+                "success": True
+            }
+        
+        # Check for regenerate
+        elif any(phrase in user_message_lower for phrase in ['regenerate', 'different', 'new', '3', 'generate']):
+            return self.generate_job_suggestions(current_state.get('job_title', ''), user_context)
+        
+        # Check for cancel - be more specific to avoid false positives
+        elif any(phrase in user_message_lower for phrase in ['cancel', 'stop', 'quit', '4']) or (user_message_lower.strip() == 'no' and len(user_message_lower.split()) == 1):
+            self.conversation_state[user_id] = {}
+            return {
+                "type": "cancelled",
+                "message": "❌ Job posting cancelled. How else can I help you?",
+                "content": "❌ Job posting cancelled. How else can I help you?",
+                "success": True
+            }
+        
+        else:
+            return {
+                "type": "clarification",
+                "message": "I'm not sure what you'd like to do. Please choose:\n1. ✅ Accept these suggestions\n2. ✏️ Modify some details\n3. 🔄 Generate different suggestions\n4. ❌ Cancel job posting",
+                "content": "I'm not sure what you'd like to do. Please choose:\n1. ✅ Accept these suggestions\n2. ✏️ Modify some details\n3. 🔄 Generate different suggestions\n4. ❌ Cancel job posting",
+                "success": True
+            }
+    
+    def handle_modifications(self, user_message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Handle user modifications to suggestions
+        """
+        user_id = user_context.get('user_id', 'default')
+        current_state = self.conversation_state.get(user_id, {})
+        suggestions = current_state.get('suggestions', {})
+        
+        try:
+            modification_prompt = f"""The user wants to modify their job posting suggestions.
+
+Current suggestions:
+{json.dumps(suggestions, indent=2)}
+
+User modification request: "{user_message}"
+
+Please update the suggestions based on the user's request. Return only the modified JSON object with the updated fields. Keep other fields unchanged unless specifically requested to modify them.
+
+Return only valid JSON without any additional text."""
+
+            response = openai.chat.completions.create(
+                model="gpt-4",
+                messages=[
+                    {"role": "system", "content": "You are a professional HR consultant. Provide only valid JSON responses."},
+                    {"role": "user", "content": modification_prompt}
+                ],
+                temperature=0.2,
+                max_tokens=800
+            )
+            
+            modified_suggestions = json.loads(response.choices[0].message.content)
+            
+            # Merge with existing suggestions
+            updated_suggestions = {**suggestions, **modified_suggestions}
+            
+            # Update conversation state
+            current_state['suggestions'] = updated_suggestions
+            current_state['step'] = 'waiting_for_accept_reject'
+            self.conversation_state[user_id] = current_state
+            
+            # Show updated suggestions
+            suggestion_message = f"""✏️ **I've updated your job posting suggestions:**
+
+**Job Title:** {updated_suggestions.get('job_title', 'N/A')}
+**Job Type:** {updated_suggestions.get('job_type', 'Full Time')}
+**Work Style:** {updated_suggestions.get('work_style', 'On-Site')}
+**Experience Level:** {updated_suggestions.get('work_experience', 'Mid-Level')}
+**Industry:** {updated_suggestions.get('industry', 'N/A')}
+**Salary Range:** {updated_suggestions.get('min_salary', 'N/A')} - {updated_suggestions.get('max_salary', 'N/A')} {updated_suggestions.get('salary_currency', '$')} {updated_suggestions.get('salary_time_unit', 'per year')}
+**Location:** {updated_suggestions.get('address_city', 'N/A')}, {updated_suggestions.get('address_country', 'N/A')}
+
+**Job Description:**
+{updated_suggestions.get('job_description', 'N/A')}
+
+**Requirements:**
+{updated_suggestions.get('job_requirements', 'N/A')}
+
+**Benefits:**
+{updated_suggestions.get('job_benefits', 'N/A')}
+
+**What would you like to do?**
+1. ✅ **Accept these suggestions**
+2. ✏️ **Modify more details**
+3. 🔄 **Generate different suggestions**
+4. ❌ **Cancel job posting**
+
+Please respond with your choice (1, 2, 3, or 4)."""
+
+            return {
+                "type": "suggestions",
+                "message": suggestion_message,
+                "content": suggestion_message,
+                "success": True
+            }
+            
+        except Exception as e:
+            return {
+                "type": "error",
+                "message": f"❌ I couldn't modify the suggestions: {str(e)}. Please try again with clearer instructions.",
+                "content": f"❌ I couldn't modify the suggestions: {str(e)}. Please try again with clearer instructions.",
+                "success": False
+            }
+    
+    def show_final_confirmation(self, user_context: Dict[str, Any], suggestions: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Show final confirmation with all job details
+        """
+        user_id = user_context.get('user_id', 'default')
+        
+        # Update conversation state
+        new_state = {
+            'flow': 'job_posting',
+            'step': 'waiting_for_confirmation',
+            'final_job_details': suggestions
+        }
+        self.conversation_state[user_id] = new_state
+        
+        confirmation_message = f"""📋 **Final Job Details - Please Confirm:**
+
+**Job Title:** {suggestions.get('job_title', 'N/A')}
+**Job Type:** {suggestions.get('job_type', 'Full Time')}
+**Work Style:** {suggestions.get('work_style', 'On-Site')}
+**Experience Level:** {suggestions.get('work_experience', 'Mid-Level')}
+**Industry:** {suggestions.get('industry', 'N/A')}
+**Salary Range:** {suggestions.get('min_salary', 'N/A')} - {suggestions.get('max_salary', 'N/A')} {suggestions.get('salary_currency', '$')} {suggestions.get('salary_time_unit', 'per year')}
+**Location:** {suggestions.get('address_city', 'N/A')}, {suggestions.get('address_country', 'N/A')}
+
+**Job Description:**
+{suggestions.get('job_description', 'N/A')}
+
+**Requirements:**
+{suggestions.get('job_requirements', 'N/A')}
+
+**Benefits:**
+{suggestions.get('job_benefits', 'N/A')}
+
+**Are you ready to post this job?**
+✅ **Yes, post the job**
+❌ **No, let me make changes**
+
+Please confirm with 'Yes' or 'No'."""
+
+        return {
+            "type": "confirmation",
+            "message": confirmation_message,
+            "content": confirmation_message,
+            "success": True
+        }
+    
+    def handle_final_confirmation(self, user_message: str, user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Handle final confirmation and post the job
+        """
+        user_id = user_context.get('user_id', 'default')
+        current_state = self.conversation_state.get(user_id, {})
+        job_details = current_state.get('final_job_details', {})
+        
+        user_message_lower = user_message.lower().strip()
+        
+        if any(phrase in user_message_lower for phrase in ['yes', 'confirm', 'post', 'ok', 'go ahead', 'proceed']):
+            # Post the job
+            result = self.post_job(job_details, user_context)
+            
+            # Clear conversation state
+            self.conversation_state[user_id] = {}
+            
+            return result
+        
+        elif any(phrase in user_message_lower for phrase in ['no', 'change', 'modify', 'edit', 'back']):
+            # Go back to modification step
+            new_state = {
+                'flow': 'job_posting',
+                'step': 'waiting_for_accept_reject',
+                'suggestions': job_details
+            }
+            self.conversation_state[user_id] = new_state
+            
+            return {
+                "type": "modify_prompt",
+                "message": "What would you like to modify? You can say things like:\n• 'Change salary to $80,000-$100,000'\n• 'Make it remote work'\n• 'Change job type to part-time'\n• 'Update the requirements'\n\nPlease specify what you want to change:",
+                "content": "What would you like to modify? You can say things like:\n• 'Change salary to $80,000-$100,000'\n• 'Make it remote work'\n• 'Change job type to part-time'\n• 'Update the requirements'\n\nPlease specify what you want to change:",
+                "success": True
+            }
+        
+        else:
+            return {
+                "type": "clarification",
+                "message": "Please confirm with 'Yes' to post the job or 'No' to make changes.",
+                "content": "Please confirm with 'Yes' to post the job or 'No' to make changes.",
+                "success": True
+            }
+    
+    def post_job(self, job_details: Dict[str, Any], user_context: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Post the job using the API
+        """
+        try:
+            # Calculate dates
             today = datetime.date.today()
-            one_month_later = today + datetime.timedelta(days=30)
-            job_details = {
-                "job_title": params.get("job_title"),
-                "job_description": params.get("job_description"),
-                "job_requirements": params.get("job_requirements", ""),
-                "job_benefits": params.get("job_benefits", ""),
-                "job_type": params.get("job_type", "Full Time"),
-                "job_skills":"",
-                "work_style": params.get("work_style", "On-Site"),
-                "work_experience": params.get("work_experience", "Mid-Level"),
-                "industry": params.get("industry", ""),
-                "min_salary": float(params.get("min_salary")) if params.get("min_salary") else None,
-                "max_salary": float(params.get("max_salary")) if params.get("max_salary") else None,
-                "salary_currency": params.get("salary_currency"),
-                "salary_time_unit": params.get("salary_time_unit"),
-                "address_city": params.get("address_city", ""),
-                "address_country": params.get("address_country", ""),
+            target_date = today + datetime.timedelta(days=30)
+            
+            # Prepare job details for API
+            api_job_details = {
+                "job_title": job_details.get("job_title", ""),
+                "job_description": job_details.get("job_description", ""),
+                "job_requirements": job_details.get("job_requirements", ""),
+                "job_benefits": job_details.get("job_benefits", ""),
+                "job_type": job_details.get("job_type", "Full Time"),
+                "job_skills": "",
+                "work_style": job_details.get("work_style", "On-Site"),
+                "work_experience": job_details.get("work_experience", "Mid-Level"),
+                "industry": job_details.get("industry", ""),
+                "min_salary": float(job_details.get("min_salary")) if job_details.get("min_salary") else None,
+                "max_salary": float(job_details.get("max_salary")) if job_details.get("max_salary") else None,
+                "salary_currency": job_details.get("salary_currency", "$"),
+                "salary_time_unit": job_details.get("salary_time_unit", "per year"),
+                "address_city": job_details.get("address_city", ""),
+                "address_country": job_details.get("address_country", ""),
                 "address_province": "",
                 "address_postal_code": "",
-                "target_date": str(one_month_later.strftime("%Y-%m-%d")),
+                "target_date": str(target_date.strftime("%Y-%m-%d")),
                 "opening_date": str(today.strftime("%Y-%m-%d")),
                 "job_opening_status": "Active",
                 "status": "published"
             }
 
-            print("job_details", job_details)
-
             # Call API to create job
+            access_token = getattr(current_user, 'id', 'default') if current_user else 'default'
             result = api_calls.create_job_opening(
-                job_detail=job_details,
-                access_token=current_user.id
+                job_detail=api_job_details,
+                access_token=access_token
             )
             
-            if result:
+            if result and isinstance(result, dict):
                 return {
-                    "success": True,
-                    "message": f"✅ Job '{params.get('job_title')}' has been successfully posted! The job is now live and accepting applications.",
-                    "data": {"job_id": result.get("id")}
+                    "type": "success",
+                    "message": f"✅ Job '{job_details.get('job_title')}' has been successfully posted! The job is now live and accepting applications.",
+                    "content": f"✅ Job '{job_details.get('job_title')}' has been successfully posted! The job is now live and accepting applications.",
+                    "data": {"job_id": result.get("id") if result else None},
+                    "success": True
                 }
             else:
                 return {
-                    "success": False,
-                    "message": "❌ Failed to create job posting. Please try again or contact support."
+                    "type": "error",
+                    "message": "❌ Failed to create job posting. Please try again or contact support.",
+                    "content": "❌ Failed to create job posting. Please try again or contact support.",
+                    "success": False
                 }
                 
         except Exception as e:
             return {
-                "success": False,
-                "message": f"❌ Error creating job posting: {str(e)}"
-            }
-
-    def view_applications_action(self, params: Dict[str, Any]):
-        """
-        View job applications
-        """
-        try:
-            # This would integrate with your existing applicant tracking
-            job_id = params.get("job_id")
-            status = params.get("status", "all")
-            
-            # Call API to get applications
-            # applications = api_calls.get_applications(access_token=current_user.id, job_id=job_id, status=status)
-            
-            return {
-                "success": True,
-                "message": f"📋 Here are the applications for job {job_id if job_id else 'all jobs'} (Status: {status})",
-                "data": {
-                    "applications": [],  # Would contain actual application data
-                    "count": 0
-                }
-            }
-            
-        except Exception as e:
-            return {
-                "success": False,
-                "message": f"❌ Error retrieving applications: {str(e)}"
-            }
-
-    def manage_jobs_action(self, params: Dict[str, Any]):
-        """
-        Manage existing jobs
-        """
-        action = params.get("action", "list")
-        
-        if action == "list":
-            return {
-                "success": True,
-                "message": "📋 Here are your current job postings:",
-                "data": {"action": "list_jobs"}
-            }
-        elif action == "edit":
-            return {
-                "success": True,
-                "message": f"✏️ I'll help you edit job {params.get('job_id')}",
-                "data": {"action": "edit_job", "job_id": params.get("job_id")}
-            }
-        else:
-            return {
-                "success": True,
-                "message": f"🔄 Performing {action} action on jobs",
-                "data": {"action": action}
-            }
-
-    def view_analytics_action(self, params: Dict[str, Any]):
-        """
-        View recruitment analytics
-        """
-        report_type = params.get("report_type", "overview")
-        date_range = params.get("date_range", "last_30_days")
-        
-        return {
-            "success": True,
-            "message": f"📊 Here are your {report_type} analytics for {date_range}:",
-            "data": {
-                "report_type": report_type,
-                "date_range": date_range,
-                "analytics": {}  # Would contain actual analytics data
-            }
-        }
-
-    def create_form_action(self, params: Dict[str, Any]):
-        """
-        Create a custom form
-        """
-        form_name = params.get("form_name")
-        form_description = params.get("form_description")
-        
-        return {
-            "success": True,
-            "message": f"📝 I'll help you create a form called '{form_name}'",
-            "data": {
-                "form_name": form_name,
-                "form_description": form_description,
-                "action": "create_form"
-            }
-        }
-
-    def help_action(self, params: Dict[str, Any] = None):
-        """
-        Provide help and available commands
-        """
-        help_text = """🤖 **I can help you with the following tasks:**
-
-**Job Management:**
-• "Post a new job for Software Engineer"
-• "Create a job posting for Marketing Manager"
-• "Show me my current job postings"
-• "Edit job posting #123"
-
-**Application Tracking:**
-• "Show applications for job #123"
-• "View pending applications"
-• "Review applications for Software Engineer position"
-
-**Analytics & Reports:**
-• "Show me recruitment analytics"
-• "View application statistics"
-• "Generate performance report"
-
-**Forms & Pages:**
-• "Create a custom application form"
-• "Build a contact form"
-
-**General:**
-• "What can you do?"
-• "Help me with job posting"
-
-Just tell me what you'd like to do! 🚀"""
-
-        return {
-            "success": True,
-            "message": help_text
-        }
-
-    def manage_pages_action(self, params: Dict[str, Any]):
-        """
-        Manage pages (placeholder for future implementation)
-        """
-        return {
-            "success": True,
-            "message": "📄 Page management features are coming soon!",
-            "data": {"action": "manage_pages"}
-        } 
+                "type": "error",
+                "message": f"❌ Error creating job posting: {str(e)}",
+                "content": f"❌ Error creating job posting: {str(e)}",
+                "success": False
+            } 

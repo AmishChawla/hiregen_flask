@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Posting Assistant - HireGen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #4ade80;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .chat-header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .chat-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 1rem;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e1e5e9;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .message.user .message-avatar {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--info-color);
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid #e1e5e9;
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .send-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-action-btn {
+            background: white;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: #666;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 0.2rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .suggestion-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-btn {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .suggestion-btn.modify {
+            background: var(--warning-color);
+        }
+
+        .suggestion-btn.regenerate {
+            background: var(--info-color);
+        }
+
+        .suggestion-btn.cancel {
+            background: var(--error-color);
+        }
+
+        .job-details {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .job-details h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .job-details p {
+            margin: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .status-error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .status-info {
+            background: var(--info-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 1rem;
+                border-radius: 15px;
+            }
+
+            .chat-messages {
+                height: 400px;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .quick-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1><i class="fas fa-robot"></i> Job Posting Assistant</h1>
+            <p>AI-powered job posting with smart suggestions</p>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="message-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div>
+                <div>AI is thinking...</div>
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="quick-actions" id="quickActions">
+                <button class="quick-action-btn" onclick="sendQuickMessage('Post a job')">
+                    <i class="fas fa-plus"></i> Post a Job
+                </button>
+                <button class="quick-action-btn" onclick="sendQuickMessage('What can you do?')">
+                    <i class="fas fa-question"></i> Help
+                </button>
+            </div>
+
+            <div class="chat-input-group">
+                <input type="text" class="chat-input" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let isTyping = false;
+
+        // Initialize chat
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add welcome message
+            addBotMessage("Hello! I'm your job posting assistant. I can help you create and post job openings with AI-powered suggestions. Just say 'Post a job' or 'Create a job posting' to get started!");
+        });
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message || isTyping) return;
+
+            // Add user message
+            addUserMessage(message);
+            input.value = '';
+
+            // Show typing indicator
+            showTypingIndicator();
+
+            // Send to server
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `user_input=${encodeURIComponent(message)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideTypingIndicator();
+                
+                if (data.success) {
+                    addBotMessage(data.bot_response, data.response_type);
+                } else {
+                    addBotMessage('Sorry, I encountered an error. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                hideTypingIndicator();
+                addBotMessage('Sorry, I encountered an error. Please try again.', 'error');
+                console.error('Error:', error);
+            });
+        }
+
+        function addUserMessage(message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message user';
+            messageDiv.innerHTML = `
+                <div class="message-content">${escapeHtml(message)}</div>
+                <div class="message-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function addBotMessage(message, type = 'conversation') {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+            
+            let content = message;
+            
+            // Handle different message types
+            if (type === 'suggestions') {
+                content = formatSuggestionsMessage(message);
+            } else if (type === 'confirmation') {
+                content = formatConfirmationMessage(message);
+            } else if (type === 'error') {
+                content = `<div class="status-badge status-error">Error</div> ${message}`;
+            } else if (type === 'success') {
+                content = `<div class="status-badge status-success">Success</div> ${message}`;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">${content}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        function formatSuggestionsMessage(message) {
+            // Extract job details and create formatted display
+            const lines = message.split('\n');
+            let formattedMessage = '';
+            let inJobDetails = false;
+            
+            for (let line of lines) {
+                if (line.includes('**Job Title:**') || line.includes('**Job Type:**') || line.includes('**Work Style:**')) {
+                    if (!inJobDetails) {
+                        formattedMessage += '<div class="job-details"><h4>Job Details</h4>';
+                        inJobDetails = true;
+                    }
+                    formattedMessage += `<p>${line}</p>`;
+                } else if (line.includes('**Job Description:**') || line.includes('**Requirements:**') || line.includes('**Benefits:**')) {
+                    if (inJobDetails) {
+                        formattedMessage += '</div>';
+                        inJobDetails = false;
+                    }
+                    formattedMessage += `<p><strong>${line.replace('**', '').replace('**', '')}</strong></p>`;
+                } else if (line.includes('**What would you like to do?**')) {
+                    formattedMessage += '<div class="suggestion-options">';
+                } else if (line.includes('1. ✅') || line.includes('2. ✏️') || line.includes('3. 🔄') || line.includes('4. ❌')) {
+                    const option = line.match(/\d\.\s*([^:]+):\s*(.+)/);
+                    if (option) {
+                        const action = option[1].trim();
+                        const text = option[2].trim();
+                        let btnClass = 'suggestion-btn';
+                        if (action.includes('Accept')) btnClass += ' accept';
+                        else if (action.includes('Modify')) btnClass += ' modify';
+                        else if (action.includes('Generate')) btnClass += ' regenerate';
+                        else if (action.includes('Cancel')) btnClass += ' cancel';
+                        
+                        formattedMessage += `<button class="${btnClass}" onclick="sendQuickMessage('${action}')">${text}</button>`;
+                    }
+                } else if (line.includes('Please respond with your choice')) {
+                    formattedMessage += '</div>';
+                } else {
+                    formattedMessage += `<p>${line}</p>`;
+                }
+            }
+            
+            if (inJobDetails) {
+                formattedMessage += '</div>';
+            }
+            
+            return formattedMessage;
+        }
+
+        function formatConfirmationMessage(message) {
+            // Format confirmation message with action buttons
+            const lines = message.split('\n');
+            let formattedMessage = '';
+            let inJobDetails = false;
+            
+            for (let line of lines) {
+                if (line.includes('**Job Title:**') || line.includes('**Job Type:**') || line.includes('**Work Style:**')) {
+                    if (!inJobDetails) {
+                        formattedMessage += '<div class="job-details"><h4>Final Job Details</h4>';
+                        inJobDetails = true;
+                    }
+                    formattedMessage += `<p>${line}</p>`;
+                } else if (line.includes('**Job Description:**') || line.includes('**Requirements:**') || line.includes('**Benefits:**')) {
+                    if (inJobDetails) {
+                        formattedMessage += '</div>';
+                        inJobDetails = false;
+                    }
+                    formattedMessage += `<p><strong>${line.replace('**', '').replace('**', '')}</strong></p>`;
+                } else if (line.includes('**Are you ready to post this job?**')) {
+                    formattedMessage += '<div class="suggestion-options">';
+                } else if (line.includes('✅ **Yes, post the job**') || line.includes('❌ **No, let me make changes**')) {
+                    const isYes = line.includes('Yes, post the job');
+                    const btnClass = isYes ? 'suggestion-btn accept' : 'suggestion-btn modify';
+                    const action = isYes ? 'Yes' : 'No';
+                    const text = isYes ? 'Yes, post the job' : 'No, let me make changes';
+                    
+                    formattedMessage += `<button class="${btnClass}" onclick="sendQuickMessage('${action}')">${text}</button>`;
+                } else if (line.includes('Please confirm with')) {
+                    formattedMessage += '</div>';
+                } else {
+                    formattedMessage += `<p>${line}</p>`;
+                }
+            }
+            
+            if (inJobDetails) {
+                formattedMessage += '</div>';
+            }
+            
+            return formattedMessage;
+        }
+
+        function showTypingIndicator() {
+            isTyping = true;
+            document.getElementById('typingIndicator').style.display = 'flex';
+            document.getElementById('sendBtn').disabled = true;
+            scrollToBottom();
+        }
+
+        function hideTypingIndicator() {
+            isTyping = false;
+            document.getElementById('typingIndicator').style.display = 'none';
+            document.getElementById('sendBtn').disabled = false;
+        }
+
+        function scrollToBottom() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

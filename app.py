@@ -37,6 +37,9 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
 # app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
+# app.config['SESSION_COOKIE_HTTPONLY'] = True
+# app.config['SESSION_COOKIE_SECURE'] = False  # Set to True for HTTPS
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)  # Session lifetime
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
@@ -3019,16 +3022,16 @@ def get_page_by_username_and_slug(username, page_slug):
 
 ###################################################### CHATBOT ####################################################################
 
-@app.route('/chatbot')
-# @requires_any_permission("access_chatbot")
-# @login_required
-def chatbot():
-    try:
-        all_chats = api_calls.get_user_all_chats(access_token=current_user.id)
-    except:
-        all_chats = []
+# @app.route('/chatbot')
+# # @requires_any_permission("access_chatbot")
+# # @login_required
+# def chatbot():
+#     try:
+#         all_chats = api_calls.get_user_all_chats(access_token=current_user.id)
+#     except:
+#         all_chats = []
 
-    return render_template('cms/AI/chatbot.html', all_chats=all_chats)
+#     return render_template('cms/AI/chatbot.html', all_chats=all_chats)
 
 
 @app.route('/send_message', methods=['POST'])
@@ -3046,33 +3049,68 @@ def send_message():
             'permissions': current_user.employer_permissions
         }
 
-        # Import and use the chatbot agent
-        from chatbot_agent import ChatbotAgent
-        agent = ChatbotAgent()
+        # Get or create agent for this user
+        # Use a simple, stable key for testing
+        session_key = "user_default"
         
-        # Check if this is a confirmation response
-        if user_input.lower().strip() in ['yes', 'yes, confirm job posting', 'confirm', 'proceed']:
-            # Handle confirmation for job posting
-            response = agent.confirm_job_posting_action({
-                "confirmation": True,
-                "job_details": session.get('pending_job_details', {})
-            })
-            # Clear the pending job details
-            session.pop('pending_job_details', None)
+        if 'agents' not in session:
+            session['agents'] = {}
+        
+        # Always create a new agent instance (this is fine since we're storing state in session)
+        from chatbot_agent import JobPostingAgent
+        agent = JobPostingAgent()
+        
+        # Restore conversation state from session if it exists
+        if session_key in session['agents']:
+            # Restore the state for this specific user
+            agent.conversation_state[session_key] = session['agents'][session_key]
+            print(f"DEBUG: Restored state from session for key: {session_key}")
+            print(f"DEBUG: Restored state content: {session['agents'][session_key]}")
         else:
-            # Process the message normally
-            response = agent.process_message(user_input, user_context)
-            
-            # Store job details in session if confirmation is needed
-            if response.get('data', {}).get('needs_confirmation'):
-                session['pending_job_details'] = response['data']['job_details']
+            print(f"DEBUG: No existing state found for key: {session_key}")
+            print(f"DEBUG: Available session keys: {list(session.get('agents', {}).keys())}")
+        
+        # Update user_context with session key for agent to use
+        user_context['session_key'] = session_key
+        
+        # Ensure session is properly initialized
+        if 'agents' not in session:
+            session['agents'] = {}
+        
+        # Process the message
+        response = agent.process_message(user_input, user_context)
+        
+        # Update session with agent state using session key
+        # Store only the state for this specific user, not the entire conversation_state dict
+        user_state = agent.conversation_state.get(session_key, {})
+        session['agents'][session_key] = user_state
+        
+        # Force session to be marked as modified and save it
+        session.modified = True
+        
+        # For cross-domain sessions, we need to ensure the session is properly saved
+        try:
+            # This ensures the session is written to the backend
+            session.permanent = True
+        except Exception as e:
+            print(f"DEBUG: Session save warning: {e}")
+        
+        # Debug: Print current state
+        print(f"DEBUG: Current conversation state: {agent.conversation_state}")
+        print(f"DEBUG: User state being saved: {user_state}")
+        print(f"DEBUG: Session state for key {session_key}: {session['agents'].get(session_key, {})}")
+        print(f"DEBUG: All session keys: {list(session['agents'].keys())}")
+        print(f"DEBUG: Session modified flag: {session.modified}")
+        print(f"DEBUG: Session ID: {session.sid if hasattr(session, 'sid') else 'No sid'}")
         
         print(f"Agent response: {response}")
+        print(f"Response type: {type(response)}")
+        print(f"Response keys: {response.keys() if isinstance(response, dict) else 'Not a dict'}")
         
         return jsonify({
-            'bot_response': response['content'],
-            'response_type': response['type'],
-            'success': response['success'],
+            'bot_response': response.get('content', response.get('message', 'No response content')),
+            'response_type': response.get('type', 'unknown'),
+            'success': response.get('success', False),
             'data': response.get('data', {})
         })
         
@@ -3084,6 +3122,27 @@ def send_message():
             'success': False
         })
 
+
+@app.route('/chatbot')
+@login_required
+def chatbot_page():
+    """Initialize chatbot page and create agent for user"""
+    # Use a simple, stable key for testing
+    session_key = "user_default"
+    
+    # Initialize agents in session if not exists
+    if 'agents' not in session:
+        session['agents'] = {}
+    
+    # Create new agent for this user if not exists
+    if session_key not in session['agents']:
+        from chatbot_agent import JobPostingAgent
+        agent = JobPostingAgent()
+        # Store empty state for this user
+        session['agents'][session_key] = {}
+        print(f"DEBUG: Created new agent state for key: {session_key}")
+    
+    return render_template('chatbot.html')
 
 @app.route('/save-chat', methods=['POST'])
 @requires_any_permission("access_chatbot")
