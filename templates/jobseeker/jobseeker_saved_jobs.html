@@ -33,7 +33,7 @@
                         data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
-                    </svg><input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
+                    </svg><input id="searchInput" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
                         placeholder="Search saved jobs..." value=""></div>
             </div>
         </div>
@@ -228,6 +228,42 @@
         }
   
         el.innerText = result;
+      });
+
+      // Search functionality
+      const searchInput = document.getElementById('searchInput');
+      const jobCards = document.querySelectorAll('.space-y-4 > div');
+
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        jobCards.forEach(card => {
+          const jobTitle = card.querySelector('h3').textContent.toLowerCase();
+          const companyName = card.querySelector('.lucide-building').parentElement.textContent.toLowerCase();
+          const location = card.querySelector('.lucide-map-pin').parentElement.textContent.toLowerCase();
+          const jobDescription = card.querySelector('p').textContent.toLowerCase();
+          const skills = Array.from(card.querySelectorAll('.bg-blue-50')).map(skill => skill.textContent.toLowerCase());
+          
+          const matchesSearch = 
+            jobTitle.includes(searchTerm) ||
+            companyName.includes(searchTerm) ||
+            location.includes(searchTerm) ||
+            jobDescription.includes(searchTerm) ||
+            skills.some(skill => skill.includes(searchTerm));
+          
+          if (searchTerm === '' || matchesSearch) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Update the count of visible jobs
+        const visibleJobs = Array.from(jobCards).filter(card => card.style.display !== 'none').length;
+        const countElement = document.querySelector('.text-sm.text-gray-600');
+        if (countElement) {
+          countElement.textContent = `${visibleJobs} saved jobs`;
+        }
       });
     });
 

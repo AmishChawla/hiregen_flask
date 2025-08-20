@@ -274,7 +274,7 @@
                                         data-component-name="span" data-component-content="%7B%7D">{{application.company.name}}</span></div>
                             </div>
                             <div class="inline-flex items-center rounded-full border border-blue-500 px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-                                {{ application.current_stage_log.stage_name }}</div>
+                                {{ application.current_stage_log.stage_name or 'Applied' }}</div>
                         </div>
                     </div>
                     <div class="p-6 pt-0">
@@ -310,7 +310,7 @@
                                     data-component-file="ApplicationCard.tsx" data-component-name="span"
                                     data-component-content="%7B%22text%22%3A%22Interview%3A%22%7D">Scheduled on <span class="text-blue-600">{{application.current_stage_log.event_date}}</span> at <span class="text-blue-600">{{application.current_stage_log.event_time}}</span></span></div>
                                     {% endif %}
-                        </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full"><svg
+                        </div><a href="{{ url_for('jobseeker_application_details', application_id=application.id) }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-9 rounded-md px-3 w-full text-center no-underline"><svg
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-eye w-4 h-4 mr-2"
@@ -322,7 +322,7 @@
                                     d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
                                 </path>
                                 <circle cx="12" cy="12" r="3"></circle>
-                            </svg>View Application</button>
+                            </svg>View Application</a>
                     </div>
                 </div>
                 {% endfor %}

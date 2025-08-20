@@ -27,7 +27,7 @@
 
 {% block content %}
 
-<div class="max-w-4xl mx-auto space-y-6"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mb-4"><svg
+<div class="max-w-4xl mx-auto space-y-6"><button onclick="goBack()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mb-4"><svg
             xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-arrow-left w-4 h-4 mr-2" data-lov-id="src/pages/JobDetails.tsx:73:16"
@@ -409,46 +409,60 @@
         const jobId = this.getAttribute('data-job-id');
         const button = this;
         
-        // Disable button to prevent multiple clicks
-        button.disabled = true;
-        button.style.opacity = '0.5';
+        // Check if current user is a jobseeker
+        const userRole = '{{ current_user.role if current_user.is_authenticated else "none" }}';
+        const isAuthenticated = {{ 'true' if current_user.is_authenticated else 'false' }};
         
-        fetch(`/jobseeker/save-job/${jobId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-          }
-        })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            // Update button appearance to show saved state
-            button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
-              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-            </svg>`;
-            button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
-            button.disabled = true;
-            
-            // Show success notification
-            showNotification('Job saved successfully!', 'success');
-          } else {
-            showNotification(data.message || 'Failed to save job', 'error');
-            // Re-enable button on error
-            button.disabled = false;
-            button.style.opacity = '1';
-          }
-        })
-        .catch(error => {
-          console.error('Error saving job:', error);
-          showNotification('Failed to save job. Please try again.', 'error');
-          // Re-enable button on error
-          button.disabled = false;
-          button.style.opacity = '1';
-        });
+        if (isAuthenticated && userRole === 'jobseeker') {
+          // User is a jobseeker, proceed with saving job
+          saveJob(jobId, button);
+        } else {
+          // User is not a jobseeker or not authenticated, redirect to jobseeker login
+          window.location.href = "{{ url_for('jobseeker_login') }}";
+        }
       });
     }
   });
+
+  function saveJob(jobId, button) {
+    // Disable button to prevent multiple clicks
+    button.disabled = true;
+    button.style.opacity = '0.5';
+    
+    fetch(`/jobseeker/save-job/${jobId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Update button appearance to show saved state
+        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+        </svg>`;
+        button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
+        button.disabled = true;
+        
+        // Show success notification
+        showNotification('Job saved successfully!', 'success');
+      } else {
+        showNotification(data.message || 'Failed to save job', 'error');
+        // Re-enable button on error
+        button.disabled = false;
+        button.style.opacity = '1';
+      }
+    })
+    .catch(error => {
+      console.error('Error saving job:', error);
+      showNotification('Failed to save job. Please try again.', 'error');
+      // Re-enable button on error
+      button.disabled = false;
+      button.style.opacity = '1';
+    });
+  }
 
   function showNotification(message, type) {
     const container = document.querySelector("#notification-container > div");
@@ -500,6 +514,16 @@
       notification.classList.add("opacity-0", "translate-y-2", "sm:translate-x-2");
       setTimeout(() => notification.remove(), 300);
     }, 5000);
+  }
+
+  // Function to go back one page
+  function goBack() {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      // Fallback: redirect to jobs page if no history
+      window.location.href = "{{ url_for('jobs_search') }}";
+    }
   }
   </script>
   

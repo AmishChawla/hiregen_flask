@@ -74,7 +74,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="flex items-center w-full justify-between">
     <div class="logo">
       <a href="{{url_for('index')}}">
-        <Image src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
+        <Image src="{{url_for('static', filename='images/logo.webp')}}" alt="Logo" width="144" height="36" />
       </a>
     </div>
 
@@ -137,9 +137,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <li class="w-14"><a href="{{url_for('login')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Sign in</a></li>
       <li>
-        <a href="{{url_for('employer_demo_login')}}"
+        <a href="{{url_for('register')}}"
           class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">
-          Try Demo
+          Try for free
         </a>
       </li>
     </ul>
@@ -235,7 +235,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="logo"><a href="{{url_for('index')}}">
         <Image
     alt="Logo"
-    src="/static/images/logo.webp"
+    src="{{url_for('static', filename='images/logo.webp')}}"
     class="w-auto h-6"
     width="6659"
     height="1086"

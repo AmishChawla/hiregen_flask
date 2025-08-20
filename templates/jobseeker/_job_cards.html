@@ -45,7 +45,7 @@
         <!-- Save Job Button Top Right -->
         <div>
         {% if job.saved == False %}
-            <button class="save-job-btn inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" title="Save Job" data-job-id="{{ job.id }}">
+            <button class="save-job-btn inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" title="Save Job" data-job-id="{{ job.id }}" data-user-role="{{ current_user.role if current_user.is_authenticated else 'none' }}" data-is-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
               </svg>
@@ -65,67 +65,96 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const saveJobBtns = document.querySelectorAll('.save-job-btn');
+// Define saveJob function globally
+function saveJob(jobId, button) {
+  console.log('saveJob function called with jobId:', jobId);
   
-  saveJobBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+  // Disable button to prevent multiple clicks
+  button.disabled = true;
+  button.style.opacity = '0.5';
+  
+  fetch(`/jobseeker/save-job/${jobId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Save job response:', data);
+    if (data.success) {
+      // Update button appearance to show saved state
+      button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
+      </svg>`;
+      button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
+      button.title = 'Saved';
+      button.disabled = true;
+      button.style.opacity = '1';
+      
+      // Show success notification if showNotification function exists
+      if (typeof showNotification === 'function') {
+        showNotification('Job saved successfully!', 'success');
+      } else {
+        // Simple alert fallback
+        alert('Job saved successfully!');
+      }
+    } else {
+      // Show error notification
+      if (typeof showNotification === 'function') {
+        showNotification(data.message || 'Failed to save job', 'error');
+      } else {
+        alert(data.message || 'Failed to save job');
+      }
+      // Re-enable button on error
+      button.disabled = false;
+      button.style.opacity = '1';
+    }
+  })
+  .catch(error => {
+    console.error('Error saving job:', error);
+    if (typeof showNotification === 'function') {
+      showNotification('Failed to save job. Please try again.', 'error');
+    } else {
+      alert('Failed to save job. Please try again.');
+    }
+    // Re-enable button on error
+    button.disabled = false;
+    button.style.opacity = '1';
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOMContentLoaded event fired');
+  const saveJobBtns = document.querySelectorAll('.save-job-btn');
+  console.log('Found save job buttons:', saveJobBtns.length);
+  
+  saveJobBtns.forEach((btn, index) => {
+    console.log(`Adding event listener to button ${index}`);
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Save job button clicked');
+      
       const jobId = this.getAttribute('data-job-id');
+      const userRole = this.getAttribute('data-user-role');
+      const isAuthenticated = this.getAttribute('data-is-authenticated') === 'true';
       const button = this;
       
-      // Disable button to prevent multiple clicks
-      button.disabled = true;
-      button.style.opacity = '0.5';
+      console.log('Job ID:', jobId);
+      console.log('User Role:', userRole);
+      console.log('Is Authenticated:', isAuthenticated);
       
-      fetch(`/jobseeker/save-job/${jobId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Update button appearance to show saved state
-          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
-            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
-          </svg>`;
-          button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
-          button.title = 'Saved';
-          button.disabled = true;
-          button.style.opacity = '1';
-          
-          // Show success notification if showNotification function exists
-          if (typeof showNotification === 'function') {
-            showNotification('Job saved successfully!', 'success');
-          } else {
-            // Simple alert fallback
-            alert('Job saved successfully!');
-          }
-        } else {
-          // Show error notification
-          if (typeof showNotification === 'function') {
-            showNotification(data.message || 'Failed to save job', 'error');
-          } else {
-            alert(data.message || 'Failed to save job');
-          }
-          // Re-enable button on error
-          button.disabled = false;
-          button.style.opacity = '1';
-        }
-      })
-      .catch(error => {
-        console.error('Error saving job:', error);
-        if (typeof showNotification === 'function') {
-          showNotification('Failed to save job. Please try again.', 'error');
-        } else {
-          alert('Failed to save job. Please try again.');
-        }
-        // Re-enable button on error
-        button.disabled = false;
-        button.style.opacity = '1';
-      });
+      // Check if current user is a jobseeker
+      if (isAuthenticated && userRole === 'jobseeker') {
+        console.log('User is jobseeker, proceeding with save job');
+        // User is a jobseeker, proceed with saving job
+        saveJob(jobId, button);
+      } else {
+        console.log('User is not jobseeker, redirecting to login');
+        // User is not a jobseeker or not authenticated, redirect to jobseeker login
+        window.location.href = "{{ url_for('jobseeker_login') }}";
+      }
     });
   });
 });

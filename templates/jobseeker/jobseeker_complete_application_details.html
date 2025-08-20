@@ -1,0 +1,473 @@
+{% extends 'jobseeker/jobseeker_base.html' %}
+
+{% block title %}Application Details{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Back Button -->
+    <div class="mb-6">
+      <button onclick="goBack()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-4 h-4">
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path>
+        </svg>
+        Back to Applications
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Left Column - Application Details -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Application Header -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+                {% if application_data.company.company_logo %}
+                  <img src="{{ application_data.company.company_logo }}" alt="{{ application_data.company.name }}" class="w-12 h-12 object-contain">
+                {% else %}
+                  <div class="w-12 h-12 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center text-lg">
+                    {{ application_data.company.name[0:2] | upper if application_data.company.name else 'CO' }}
+                  </div>
+                {% endif %}
+              </div>
+              <div>
+                <h1 class="text-2xl font-bold text-gray-900">{{ application_data.job.job_title or 'Job Title Not Available' }}</h1>
+                <p class="text-lg text-gray-600">{{ application_data.company.name or 'Company Not Available' }}</p>
+                <p class="text-sm text-gray-500">{{ application_data.job.address_city or 'N/A' }}, {{ application_data.job.address_province or 'N/A' }}, {{ application_data.job.address_country or 'N/A' }}</p>
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
+                {% if application_data.application.application_status == 'applied' %}bg-blue-100 text-blue-800
+                {% elif application_data.application.application_status == 'under_review' %}bg-yellow-100 text-yellow-800
+                {% elif application_data.application.application_status == 'interview' %}bg-purple-100 text-purple-800
+                {% elif application_data.application.application_status == 'hired' %}bg-green-100 text-green-800
+                {% elif application_data.application.application_status == 'rejected' %}bg-red-100 text-red-800
+                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                {{ application_data.application.application_status | replace('_', ' ') | title or 'Unknown Status' }}
+              </div>
+              <p class="text-sm text-gray-500 mt-1">Applied: {{ application_data.application.application_date if application_data.application.application_date else 'N/A' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Details -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Job Details</h2>
+          
+          <!-- Job Info Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div class="space-y-3">
+              <div>
+                <span class="text-sm font-medium text-gray-500">Job Type:</span>
+                <p class="text-gray-900">{{ application_data.job.job_type or 'Not specified' }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Industry:</span>
+                <p class="text-gray-900">{{ application_data.job.industry or 'Not specified' }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Work Style:</span>
+                <p class="text-gray-900">{{ application_data.job.working_style or 'Not specified' }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Experience Level:</span>
+                <p class="text-gray-900">{{ application_data.job.work_experience or 'Not specified' }}</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <span class="text-sm font-medium text-gray-500">Salary Range:</span>
+                <p class="text-gray-900">
+                  {% if application_data.job.min_salary and application_data.job.max_salary %}
+                    {{ application_data.job.salary_currency or '$' }}{{ application_data.job.min_salary }} - {{ application_data.job.salary_currency or '$' }}{{ application_data.job.max_salary }} {{ application_data.job.salary_time_unit or 'per year' }}
+                  {% elif application_data.job.min_salary %}
+                    {{ application_data.job.salary_currency or '$' }}{{ application_data.job.min_salary }} {{ application_data.job.salary_time_unit or 'per year' }}
+                  {% elif application_data.job.max_salary %}
+                    {{ application_data.job.salary_currency or '$' }}{{ application_data.job.max_salary }} {{ application_data.job.salary_time_unit or 'per year' }}
+                  {% else %}
+                    Not specified
+                  {% endif %}
+                </p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Opening Date:</span>
+                <p class="text-gray-900">{{ application_data.job.opening_date if application_data.job.opening_date else 'Not specified' }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Target Date:</span>
+                <p class="text-gray-900">{{ application_data.job.target_date  if application_data.job.target_date else 'Not specified' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Job Skills -->
+          {% if application_data.job.job_skills %}
+          <div class="mb-6">
+            <span class="text-sm font-medium text-gray-500">Required Skills:</span>
+            <div class="flex flex-wrap gap-2 mt-2">
+              {% for skill in application_data.job.job_skills %}
+                <span class="inline-flex items-center rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-800">{{ skill }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Collapsible Sections -->
+          <div class="space-y-4">
+            <!-- Job Description -->
+            <div class="border border-gray-200 rounded-lg">
+              <button onclick="toggleSection('job-description')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50">
+                <span class="font-medium text-gray-900">Job Description</span>
+                <svg id="job-description-icon" class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div id="job-description-content" class="hidden px-4 pb-4">
+                <div class="prose prose-sm max-w-none text-gray-700">
+                  {{ application_data.job.job_description | safe if application_data.job.job_description else 'No job description available.' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Requirements -->
+            <div class="border border-gray-200 rounded-lg">
+              <button onclick="toggleSection('job-requirements')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50">
+                <span class="font-medium text-gray-900">Job Requirements</span>
+                <svg id="job-requirements-icon" class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div id="job-requirements-content" class="hidden px-4 pb-4">
+                <div class="prose prose-sm max-w-none text-gray-700">
+                  {{ application_data.job.job_requirements | safe if application_data.job.job_requirements else 'No job requirements available.' }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Job Benefits -->
+            <div class="border border-gray-200 rounded-lg">
+              <button onclick="toggleSection('job-benefits')" class="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-gray-50">
+                <span class="font-medium text-gray-900">Job Benefits</span>
+                <svg id="job-benefits-icon" class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div id="job-benefits-content" class="hidden px-4 pb-4">
+                <div class="prose prose-sm max-w-none text-gray-700">
+                  {{ application_data.job.job_benefits | safe if application_data.job.job_benefits else 'No job benefits available.' }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Company Information -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Company Information</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <div>
+                <span class="text-sm font-medium text-gray-500">Company Name:</span>
+                <p class="text-gray-900">{{ application_data.company.name or 'Not available' }}</p>
+              </div>
+              <div>
+                <span class="text-sm font-medium text-gray-500">Location:</span>
+                <p class="text-gray-900">{{ application_data.company.location or 'Not specified' }}</p>
+              </div>
+              {% if application_data.company.website_url %}
+              <div>
+                <span class="text-sm font-medium text-gray-500">Website:</span>
+                <a href="{{ application_data.company.website_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline">{{ application_data.company.website_url }}</a>
+              </div>
+              {% endif %}
+              {% if application_data.company.linkedin_url %}
+              <div>
+                <span class="text-sm font-medium text-gray-500">LinkedIn:</span>
+                <a href="{{ application_data.company.linkedin_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline">View Company Profile</a>
+              </div>
+              {% endif %}
+            </div>
+            <div>
+              <span class="text-sm font-medium text-gray-500">Description:</span>
+              <p class="text-gray-700 mt-2">{{ application_data.company.description or 'No company description available.' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column - Progress & Timeline -->
+      <div class="space-y-6">
+        
+        <!-- Application Progress -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Application Progress</h2>
+          
+          <!-- Progress Bar -->
+          <div class="mb-4">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Progress</span>
+              <span>{{ application_data.application_timeline.progress_percentage or 0 }}%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: {{ application_data.application_timeline.progress_percentage or 0 }}%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-500 mt-1">
+              <span>{{ application_data.application_timeline.completed_stages or 0 }} of {{ application_data.application_timeline.total_stages or 0 }} stages completed</span>
+            </div>
+          </div>
+
+          <!-- Current Stage -->
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h3 class="font-medium text-blue-900 mb-3">Current Stage</h3>
+            
+            <div class="space-y-2">
+              <!-- Stage Name -->
+              <div>
+                <span class="text-sm font-medium text-blue-800">Stage:</span>
+                <p class="text-blue-900 font-semibold">
+                  {% if application_data.current_stage %}
+                    {{ application_data.current_stage.stage_name or 'Not specified' }}
+                  {% else %}
+                    Applied
+                  {% endif %}
+                </p>
+              </div>
+              
+              <!-- Stage Type -->
+              {% if application_data.current_stage and application_data.current_stage.stage_type %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Type:</span>
+                <p class="text-blue-900">{{ application_data.current_stage.stage_type }}</p>
+              </div>
+              {% endif %}
+              
+              <!-- Event Date and Time -->
+              {% if application_data.current_stage and (application_data.current_stage.event_date or application_data.current_stage.event_time) %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Scheduled:</span>
+                <p class="text-blue-900">
+                  {% if application_data.current_stage.event_date %}
+                    {{ application_data.current_stage.event_date }}
+                  {% endif %}
+                  {% if application_data.current_stage.event_time %}
+                    at {{ application_data.current_stage.event_time }}
+                  {% endif %}
+                </p>
+              </div>
+              {% endif %}
+              
+              <!-- Duration -->
+              {% if application_data.current_stage and application_data.current_stage.duration_minutes %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Duration:</span>
+                <p class="text-blue-900">{{ application_data.current_stage.duration_minutes }} minutes</p>
+              </div>
+              {% endif %}
+                            
+              <!-- Notes -->
+              {% if application_data.current_stage and application_data.current_stage.notes %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Notes:</span>
+                <p class="text-blue-900 text-sm">{{ application_data.current_stage.notes }}</p>
+              </div>
+              {% endif %}
+              
+              <!-- Feedback -->
+              {% if application_data.current_stage and application_data.current_stage.feedback %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Feedback:</span>
+                <p class="text-blue-900 text-sm">{{ application_data.current_stage.feedback }}</p>
+              </div>
+              {% endif %}
+              
+              <!-- Score -->
+              {% if application_data.current_stage and application_data.current_stage.score %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Score:</span>
+                <p class="text-blue-900">{{ application_data.current_stage.score }}</p>
+              </div>
+              {% endif %}
+              
+              <!-- Reschedule Reason -->
+              {% if application_data.current_stage and application_data.current_stage.reschedule_reason %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Reschedule Reason:</span>
+                <p class="text-blue-900 text-sm">{{ application_data.current_stage.reschedule_reason }}</p>
+              </div>
+              {% endif %}
+              
+              <!-- Panel Members -->
+              {% if application_data.current_stage and application_data.current_stage.panel_members and application_data.current_stage.panel_members|length > 0 %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Panel Members:</span>
+                <div class="mt-1">
+                  {% for member in application_data.current_stage.panel_members %}
+                    <span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800 mr-1 mb-1">{{ member }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              
+              <!-- Attachments -->
+              {% if application_data.current_stage and application_data.current_stage.attachments and application_data.current_stage.attachments|length > 0 %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Attachments:</span>
+                <div class="mt-1">
+                  {% for attachment in application_data.current_stage.attachments %}
+                    <a href="{{ attachment.url }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm mr-3 mb-1">
+                      <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      {{ attachment.name or 'Attachment' }}
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+              
+              <!-- Application Date for Applied stage -->
+              {% if not application_data.current_stage %}
+              <div>
+                <span class="text-sm font-medium text-blue-800">Completed:</span>
+                <p class="text-blue-900">{{ application_data.application.application_date or 'N/A' }}</p>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Application Timeline -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Application Timeline</h2>
+          
+          <div class="space-y-4">
+            <!-- Always show "Applied" as the first completed stage -->
+            <div class="flex items-start space-x-3">
+              <!-- Timeline Dot -->
+              <div class="flex-shrink-0 mt-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm"></div>
+              </div>
+              
+              <!-- Stage Content -->
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-sm font-medium text-gray-900">Applied</h3>
+                  <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Completed
+                  </span>
+                </div>    
+            </div>
+            </div>
+            
+            <!-- Timeline Line after Applied stage -->
+            <div class="flex items-start space-x-3">
+              <div class="flex-shrink-0 mt-2">
+                <div class="w-0.5 h-6 bg-gray-200 ml-1.5"></div>
+              </div>
+              <div class="flex-1"></div>
+            </div>
+            
+            <!-- Show other stages from API -->
+            {% if application_data.application_stages %}
+              {% for stage in application_data.application_stages %}
+              <div class="flex items-start space-x-3">
+                <!-- Timeline Dot -->
+                <div class="flex-shrink-0 mt-2">
+                  {% if stage.is_current_stage %}
+                    <div class="w-3 h-3 bg-blue-600 rounded-full border-2 border-white shadow-sm"></div>
+                  {% elif stage.status == 'complete' %}
+                    <div class="w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm"></div>
+                  {% else %}
+                    <div class="w-3 h-3 bg-gray-300 rounded-full border-2 border-white shadow-sm"></div>
+                  {% endif %}
+                </div>
+                
+                <!-- Stage Content -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-medium text-gray-900">{{ stage.stage_name or 'Unknown Stage' }}</h3>
+                    {% if stage.status == 'complete' %}
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Completed
+                      </span>
+                    {% elif stage.is_current_stage %}
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        Current
+                      </span>
+                    {% else %}
+                      <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        Pending
+                      </span>
+                    {% endif %}
+                  </div>
+                  
+                  {% if stage.description %}
+                  <p class="text-sm text-gray-600 mt-1">{{ stage.description }}</p>
+                  {% endif %}
+                  
+                  {% if stage.completed_date %}
+                  <p class="text-xs text-gray-500 mt-1">Completed: {{ stage.completed_date }}</p>
+                  {% endif %}
+                </div>
+              </div>
+              
+              <!-- Timeline Line (except for last item) -->
+              {% if not loop.last %}
+              <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0 mt-2">
+                  <div class="w-0.5 h-6 bg-gray-200 ml-1.5"></div>
+                </div>
+                <div class="flex-1"></div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            {% else %}
+              <p class="text-gray-500 text-sm">No additional stages available.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Function to go back one page
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    // Fallback: redirect to applications page
+    window.location.href = "{{ url_for('jobseeker_applications') }}";
+  }
+}
+
+// Function to toggle collapsible sections
+function toggleSection(sectionId) {
+  const content = document.getElementById(sectionId + '-content');
+  const icon = document.getElementById(sectionId + '-icon');
+  
+  if (content.classList.contains('hidden')) {
+    content.classList.remove('hidden');
+    icon.classList.add('rotate-180');
+  } else {
+    content.classList.add('hidden');
+    icon.classList.remove('rotate-180');
+  }
+}
+</script>
+{% endblock %}

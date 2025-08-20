@@ -2711,6 +2711,32 @@ def get_jobseeker_applications(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
+def get_jobseeker_application_details(application_id, access_token):
+    headers = {'Authorization': f'Bearer {access_token}'}
+    try:
+        response = requests.get(constants.BASE_URL + f'/jobseeker/application/{application_id}/detailed', headers=headers)
+        print("Response Status Code:", response.status_code)  # Debug: Print status code
+        if response.status_code == 200:
+            result = response.json()
+            print("API Result:", result)  # Debug: Print API result
+            return result
+        else:
+            print("API Error:", response.text)
+            return None
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP Error: {errh}")
+        return None
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Error Connecting: {errc}")
+        return None
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout Error: {errt}")
+        return None
+    except requests.exceptions.RequestException as err:
+        print(f"An unexpected error occurred: {err}")
+        return None
+
+
 def update_application_status(application_id, new_status, stage_id, stage_name):
     try:
         data = {

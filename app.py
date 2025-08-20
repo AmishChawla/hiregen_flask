@@ -39,7 +39,7 @@ app.config['SERVER_NAME'] = 'hiregen.com'
 # app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
 # app.config['SESSION_COOKIE_HTTPONLY'] = True
 # app.config['SESSION_COOKIE_SECURE'] = False  # Set to True for HTTPS
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)  # Session lifetime
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)  # Session lifetime
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
@@ -1622,13 +1622,24 @@ def generate_ai_content():
     completion = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful AI that generates structured job postings."},
-            {"role": "user", "content": f"Generate a job posting for: {json.dumps(job_details, indent=2)}"}
+            {"role": "system", "content": """You are a professional HR specialist and job posting expert. Generate comprehensive, detailed job postings that are engaging and informative.
+
+IMPORTANT INSTRUCTIONS:
+- Write detailed, comprehensive content for each section
+- Job Description: Write 3-4 detailed paragraphs explaining the role, responsibilities, and impact
+- Job Requirements: List 8-12 specific requirements with detailed explanations
+- Job Benefits: Provide 6-10 comprehensive benefits with detailed descriptions
+- Use professional, engaging language that attracts top talent
+- Be specific about skills, experience, and qualifications
+- Include industry-specific terminology and best practices
+- Make the content compelling and detailed enough to attract qualified candidates
+- Each section should be substantial and informative"""},
+            {"role": "user", "content": f"Generate a comprehensive, detailed job posting for: {json.dumps(job_details, indent=2)}. Please provide extensive content for each section - job description, requirements, and benefits. Make it detailed and engaging."}
         ],
         functions=functions,
         function_call={"name": "generate_job_posting"},  # Force function calling
-        temperature=0.7,
-        max_tokens=512,
+        temperature=0.8,
+        max_tokens=3072,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
@@ -3571,6 +3582,26 @@ def jobseeker_applications():
         result = {}  # Set result to an empty list
 
     return render_template('jobseeker/job_applications.html', result=result)
+
+
+@app.route('/jobseeker/application/<int:application_id>/details')
+@requires_any_permission("applicants")
+@login_required
+def jobseeker_application_details(application_id):
+    # Get the detailed application information from the API
+    application_data = api_calls.get_jobseeker_application_details(application_id=application_id, access_token=current_user.id)
+    
+    if application_data is None:
+        flash('Failed to load application details. Please try again.', 'error')
+        return redirect(url_for('jobseeker_applications'))
+    
+    # Check if the application data contains the expected structure
+    if not isinstance(application_data, dict):
+        flash('Invalid application data received.', 'error')
+        return redirect(url_for('jobseeker_applications'))
+    
+    return render_template('jobseeker/jobseeker_complete_application_details.html', 
+                         application_data=application_data)
 
 
 @app.route('/update-application-status', methods=['GET','POST'])
