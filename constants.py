@@ -15,7 +15,7 @@ MY_ROOT_URL = 'https://hiregen.com'
 
 #TODO UNCOMMENT BEFORE DEPLOYING
 ROOT_URL = 'https://hiregen.com/api'
-BASE_URL = 'https://hiregen.com/api'
+BASE_URL = 'https://hiregen.com/api/api'
 
 
 
