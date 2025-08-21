@@ -74,7 +74,7 @@
 
 <div class="font-sans leading-tight bg-grey-lighter p-8">
   <div class="max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-    <div class="bg-cover h-48" style="background-image: url('{{ company.company_cover_image or url_for('static', filename='images/blog-bg.jpg') }}');"></div>
+    <div class="bg-cover h-48" style="background-image: url('{{ company.cover_image or url_for('static', filename='images/company-bg.jpg') }}');"></div>
     <div class="border-b px-4 pb-6">
         <div class="text-center sm:text-left sm:flex mb-4">
 
