@@ -383,6 +383,7 @@ def update_user_profile(
         company_description=None,
         profile_picture=None,
         company_logo=None,
+        company_cover_image=None,
         password=None
 ):
 
@@ -405,12 +406,14 @@ def update_user_profile(
         "Authorization": f"Bearer {token}"
     }
 
-    # Prepare the files for profile picture and company logo
+    # Prepare the files for profile picture, company logo, and company cover image
     files = {}
     if profile_picture:
         files["profile_picture"] = profile_picture
     if company_logo:
         files["company_logo"] = company_logo
+    if company_cover_image:
+        files["company_cover_image"] = company_cover_image
 
     # Send POST request to FastAPI
     response = requests.put(constants.BASE_URL + f'/update-profile', data=form_data, files=files, headers=headers)

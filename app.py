@@ -603,11 +603,16 @@ def profile():
             'company_website': form.company_website.data,
             'company_description': form.company_description.data,
             'company_logo': form.company_logo.data,
+            'company_cover_image': form.company_cover_image.data,
         }
 
         profile_picture = form.profile_picture.data or None
         if profile_picture:
-            profile_picture_filename = secure_filename(profile_picture.filename)
+            import time
+            timestamp = int(time.time())
+            original_filename = secure_filename(profile_picture.filename)
+            name, ext = os.path.splitext(original_filename)
+            profile_picture_filename = f"{name}_profile_{timestamp}{ext}"
             # Save the file to a designated folder
             profile_picture_path = 'profile_pictures/' + profile_picture_filename
             print(profile_picture_path)
@@ -618,21 +623,40 @@ def profile():
 
         company_logo = form.company_logo.data or None
         if company_logo:
-            company_logo_filename = secure_filename(company_logo.filename)
+            import time
+            timestamp = int(time.time())
+            original_filename = secure_filename(company_logo.filename)
+            name, ext = os.path.splitext(original_filename)
+            company_logo_filename = f"{name}_logo_{timestamp}{ext}"
             # Save the file to a designated folder
             company_logo_path = 'uploads/' + company_logo_filename
             print(company_logo_path)
             company_logo.save(company_logo_path)
             company_logo = (company_logo_filename, open(company_logo_path, 'rb'))
 
+        company_cover_image = form.company_cover_image.data or None
+        if company_cover_image:
+            import time
+            timestamp = int(time.time())
+            original_filename = secure_filename(company_cover_image.filename)
+            name, ext = os.path.splitext(original_filename)
+            company_cover_image_filename = f"{name}_cover_{timestamp}{ext}"
+            # Save the file to a designated folder
+            company_cover_image_path = 'uploads/' + company_cover_image_filename
+            print(company_cover_image_path)
+            company_cover_image.save(company_cover_image_path)
+            company_cover_image = (company_cover_image_filename, open(company_cover_image_path, 'rb'))
 
-        response = api_calls.update_user_profile(token=current_user.id, firstname=profile_data.get('firstname'),lastname=profile_data.get('lastname'),phone_number=profile_data.get('phone_number'),username=profile_data.get('username'),email=profile_data.get('email'),profile_picture=profile_picture,company_name=profile_data.get('company_name'),company_location=profile_data.get('company_location'),company_website=profile_data.get('company_website'),company_description=profile_data.get('company_description'),company_logo=company_logo)
+
+        response = api_calls.update_user_profile(token=current_user.id, firstname=profile_data.get('firstname'),lastname=profile_data.get('lastname'),phone_number=profile_data.get('phone_number'),username=profile_data.get('username'),email=profile_data.get('email'),profile_picture=profile_picture,company_name=profile_data.get('company_name'),company_location=profile_data.get('company_location'),company_website=profile_data.get('company_website'),company_description=profile_data.get('company_description'),company_logo=company_logo,company_cover_image=company_cover_image)
 
         if response.status_code == 200:
             response=response.json()
             session['user']['profile_picture'] = response['user']['profile_picture']
             if response['company']:
                 session['user']['company']['company_logo'] = response['company']['company_logo']
+                if 'cover_image' in response['company']:
+                    session['user']['company']['cover_image'] = response['company']['cover_image']
             session.modified = True
 
             flash('Profile updated successfully!', 'success')
@@ -978,16 +1002,26 @@ def company_register():
         description = form.description.data
 
         empty_folder(uploads_folder)
-        file = form.company_logo.data
+        
+        # Handle company logo
+        logo_file = form.company_logo.data
+        logo_filename = secure_filename('company_logo_'+logo_file.filename)
+        logo_file_path = 'uploads/' + logo_filename
+        logo_file.save(logo_file_path)
+        
+        # Handle cover image
+        cover_file = form.cover_image.data
+        cover_filename = secure_filename('cover_image_'+cover_file.filename)
+        cover_file_path = 'uploads/' + cover_filename
+        cover_file.save(cover_file_path)
+        
+        # Create payload with both files
+        payload = {
+            'company_logo': (logo_filename, open(logo_file_path, 'rb')),
+            'cover_image': (cover_filename, open(cover_file_path, 'rb'))
+        }
 
-        filename = secure_filename(file.filename)
-        # Save the file to a designated folder
-        file_path = 'uploads/' + filename
-        print(file_path)
-        file.save(file_path)
-        payload = {'company_logo': (filename, open(file_path, 'rb'))}
-
-        response = api_calls.company_register(name, website_url,logo=payload,location=location, description=description,company_subdomain=company_subdomain, access_token=current_user.id)
+        response = api_calls.company_register(name, website_url, logo=payload, location=location, description=description, company_subdomain=company_subdomain, access_token=current_user.id)
         print("inside")
 
         if (response.status_code == 200):

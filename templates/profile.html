@@ -120,6 +120,7 @@
     Company Profile
 </h2>
             {% if is_company_registered %}
+            <!-- Company Logo -->
             <div class="flex justify-center">
                 <img class="h-32 w-32 rounded-full border-2 bg-white border-blue-500 p-2" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="company_logo_img">
             </div>
@@ -131,6 +132,24 @@
                           </svg>
                     </label>
                     {{ form.company_logo(class="hidden") }}
+                </div>
+            </div>
+
+            <!-- Company Cover Image -->
+            <div class="mt-6">
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">Company Cover Image</label>
+                <div class="flex justify-center">
+                    <img class="h-48 w-full object-cover rounded-lg border-2 bg-white border-blue-500" src="{{ company['company_cover_image'] or url_for('static', filename='images/company-bg.jpg') }}" alt="" id="company_cover_img">
+                </div>
+                <div class="flex justify-center mt-2">
+                    <div class="img-upload">
+                        <label for="{{ form.company_cover_image.id }}" class="edit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
+                                <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
+                              </svg>
+                        </label>
+                        {{ form.company_cover_image(class="hidden") }}
+                    </div>
                 </div>
             </div>
             
@@ -326,6 +345,27 @@ if (companyLogoInput) {
                     const reader = new FileReader();
                     reader.onload = function (event) {
                         companyLogoImg.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Company Cover Image Preview
+        const companyCoverInput = document.getElementById("{{ form.company_cover_image.id }}");
+        const companyCoverImg = document.getElementById("company_cover_img");
+        if (companyCoverInput && companyCoverImg) {
+            companyCoverInput.addEventListener("change", function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert("Company cover image must be less than 2MB.");
+                        companyCoverInput.value = "";
+                        return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        companyCoverImg.src = event.target.result;
                     };
                     reader.readAsDataURL(file);
                 }

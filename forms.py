@@ -119,6 +119,9 @@ class CompanyRegisterForm(FlaskForm):
     company_logo = FileField('Upload a File', validators=[
         FileRequired(message="Logo file is required")
     ])
+    cover_image = FileField('Upload a File', validators=[
+        FileRequired(message="Cover image is required")
+    ])
     name = StringField('Name', validators=[DataRequired()])
     company_subdomain = StringField('Subdomain', validators=[
         DataRequired(),        
@@ -259,6 +262,7 @@ class EmployerProfileForm(FlaskForm):
     company_website = StringField('Company Website', validators=[DataRequired()])
     company_description = TextAreaField('Company Description', validators=[DataRequired()])
     company_logo = FileField('')
+    company_cover_image = FileField('')
 
     # Submit buttons
     submit = SubmitField('Save Changes')
