@@ -1,0 +1,1199 @@
+{% if current_user %}
+{% if current_user.role == 'user' %}
+{% extends 'base.html' %}
+{% endif %}
+{% endif %}
+{% block content %}
+
+<style>
+    .chat-container {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 #f1f5f9;
+    }
+    .chat-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    .chat-container::-webkit-scrollbar-track {
+        background: #f1f5f9;
+    }
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+    .chat-container::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    .message-bubble {
+        animation: fadeInUp 0.3s ease-out;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .typing-indicator {
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+</style>
+
+<div class="h-full">
+    <div class="min-h-full bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <!-- Header -->
+        <div class="bg-white shadow-sm border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900">AI Recruitment Assistant</h1>
+                            <p class="text-sm text-gray-500">Powered by OpenAI</p>
+                        </div>
+                    </div>
+                    <button onclick="resetSession()" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        New Chat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+                <!-- Chat Container -->
+                <div id="chat-container" class="chat-container h-96 overflow-y-auto p-6 space-y-6">
+                    <div class="message-bubble">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-md px-6 py-4">
+                                    <p class="text-gray-800 leading-relaxed">
+                                        Hello! I'm your AI recruitment assistant. I can help you create job postings, view your existing jobs, and manage applicants. Choose an action below to get started!
+                                    </p>
+                                    
+                                    <!-- Quick Action Buttons -->
+                                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+                                        <button onclick="sendQuickMessage('I want to post a job')" class="group relative bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                </svg>
+                                                <span>Post a Job</span>
+                                            </div>
+                                            <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                        </button>
+                                        
+                                        <button onclick="sendQuickMessage('Show me my jobs')" class="group relative bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                                </svg>
+                                                <span>View my Jobs</span>
+                                            </div>
+                                            <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                        </button>
+                                        
+                                        <button onclick="sendQuickMessage('Show me my applicants')" class="group relative bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center justify-center space-x-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                                </svg>
+                                                <span>See my Applicants</span>
+                                            </div>
+                                            <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div id="typing-indicator" class="hidden px-6 py-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                            </svg>
+                        </div>
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full typing-indicator"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full typing-indicator" style="animation-delay: 0.2s;"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full typing-indicator" style="animation-delay: 0.4s;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+                    <div class="flex space-x-4">
+                        <div class="flex-1">
+                            <input type="text" id="message-input" 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-gray-900 placeholder-gray-500"
+                                   placeholder="Type your message here..." 
+                                   onkeypress="handleKeyPress(event)">
+                        </div>
+                        <button id="send-btn" onclick="sendMessage()" 
+                                class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                  </svg>
+                                  
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Post Job Section -->
+                <div id="post-job-section" class="hidden border-t border-gray-200 bg-gradient-to-r from-green-50 to-emerald-50 px-6 py-4">
+                    <div class="text-center">
+                        <button id="post-job-btn" onclick="postJob()" 
+                                class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                            </svg>
+                            Post Job
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSessionId = null;
+        let jobDetails = null;
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Send to API
+            fetch('/ai-chat/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideTypingIndicator();
+                
+                if (data.success) {
+                    currentSessionId = data.session_id;
+                    jobDetails = data.job_details;
+                    
+                    // Add bot response only if there's a message
+                    if (data.message && data.message.trim() !== '') {
+                        addMessage(data.message, 'bot');
+                    }
+                    
+                    // Show post job button if ready
+                    if (data.ready_to_post) {
+                        showPostJobButton();
+                    }
+                    
+                    // Fetch user jobs if requested
+                    if (data.fetch_user_jobs) {
+                        fetchUserJobs(data.maximum_posts);
+                    }
+                    
+                    // Fetch user applicants if requested
+                    if (data.fetch_user_applicants) {
+                        fetchUserApplicants(data.maximum_applicants);
+                    }
+                    
+                } else {
+                    addMessage('Error: ' + data.error, 'bot');
+                }
+            })
+            .catch(error => {
+                hideTypingIndicator();
+                addMessage('Error: Could not connect to server', 'bot');
+                console.error('Error:', error);
+            });
+        }
+
+        function sendQuickMessage(message) {
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Send to API
+            fetch('/ai-chat/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                hideTypingIndicator();
+                
+                if (data.success) {
+                    currentSessionId = data.session_id;
+                    jobDetails = data.job_details;
+                    
+                    // Add bot response only if there's a message
+                    if (data.message && data.message.trim() !== '') {
+                        addMessage(data.message, 'bot');
+                    }
+                    
+                    // Show post job button if ready
+                    if (data.ready_to_post) {
+                        showPostJobButton();
+                    }
+                    
+                    // Fetch user jobs if requested
+                    if (data.fetch_user_jobs) {
+                        fetchUserJobs(data.maximum_posts);
+                    }
+                    
+                    // Fetch user applicants if requested
+                    if (data.fetch_user_applicants) {
+                        fetchUserApplicants(data.maximum_applicants);
+                    }
+                    
+                } else {
+                    addMessage('Error: ' + data.error, 'bot');
+                }
+            })
+            .catch(error => {
+                hideTypingIndicator();
+                addMessage('Error: Could not connect to server', 'bot');
+                console.error('Error:', error);
+            });
+        }
+
+        function addMessage(content, sender) {
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-bubble';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start justify-end space-x-3">
+                        <div class="flex-1 min-w-0 max-w-xs lg:max-w-md">
+                            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-tr-md px-6 py-4">
+                                <p class="leading-relaxed">${content}</p>
+                            </div>
+                        </div>
+                        <div class="w-8 h-8 bg-gradient-to-r from-gray-500 to-gray-600 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                            </svg>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Check if we have job details to display
+                if (jobDetails && sender === 'bot') {
+                    messageDiv.innerHTML = `
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-md px-6 py-4">
+                                    <p class="text-gray-800 leading-relaxed mb-4">${content}</p>
+                                    ${createJobDetailsCard(jobDetails)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="bg-gray-50 rounded-2xl rounded-tl-md px-6 py-4">
+                                    <p class="text-gray-800 leading-relaxed">${content}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function createJobDetailsCard(details) {
+            if (!details) return '';
+            
+            return `
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mt-4">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">Job Details Summary</h4>
+                            <p class="text-sm text-gray-500">Review your job posting details</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="text-sm font-semibold text-gray-700 mb-2">Basic Information</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.732.886 2.61.886H19.5a2.25 2.25 0 002.25-2.25v-2.16c0-.597-.237-1.17-.659-1.591l-9.581-9.581A2.25 2.25 0 009.568 3z" />
+                                        </svg>
+                                        <span><strong>Title:</strong> ${details.job_title}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                        </svg>
+                                        <span><strong>Type:</strong> ${details.job_type}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        <span><strong>Style:</strong> ${details.working_style || 'Not specified'}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                        <span><strong>Experience:</strong> ${details.work_experience}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                                        </svg>
+                                        <span><strong>Industry:</strong> ${details.industry}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="text-sm font-semibold text-gray-700 mb-2">Compensation & Location</h5>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span><strong>Salary:</strong> ${details.min_salary} - ${details.max_salary} ${details.salary_currency} ${details.salary_time_unit}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                        </svg>
+                                        <span><strong>Location:</strong> ${details.address_city}, ${details.address_country}</span>
+                                    </div>
+                                    <div class="flex items-center text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5v-.008z" />
+                                        </svg>
+                                        <span><strong>Status:</strong> <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">${details.job_opening_status}</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 space-y-4">
+                        <div>
+                            <h5 class="text-sm font-semibold text-gray-700 mb-2">Description</h5>
+                            <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700">
+                                ${details.job_description || 'No description provided'}
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="text-sm font-semibold text-gray-700 mb-2">Requirements</h5>
+                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700">
+                                    ${details.job_requirements || 'No requirements specified'}
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-semibold text-gray-700 mb-2">Benefits</h5>
+                                <div class="bg-gray-50 rounded-lg p-3 text-sm text-gray-700">
+                                    ${details.job_benefits || 'No benefits specified'}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>Posted: ${details.opening_date}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5v-.008z" />
+                                </svg>
+                                <span>Target: ${details.target_date}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showPostJobButton() {
+            document.getElementById('post-job-section').classList.remove('hidden');
+        }
+
+        function hidePostJobButton() {
+            document.getElementById('post-job-section').classList.add('hidden');
+        }
+
+        function postJob() {
+            if (!currentSessionId) {
+                addMessage('Error: No active session found', 'bot');
+                return;
+            }
+            
+            // Show loading state
+            const postBtn = document.getElementById('post-job-btn');
+            const originalText = postBtn.innerHTML;
+            postBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-3 animate-spin"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>Posting...';
+            postBtn.disabled = true;
+            
+            fetch('/ai-chat/post-job', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    session_id: currentSessionId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addMessage(data.message, 'bot');
+                    hidePostJobButton();
+                    jobDetails = null;
+                } else {
+                    addMessage('Error: ' + data.error, 'bot');
+                }
+            })
+            .catch(error => {
+                addMessage('Error: Could not post job', 'bot');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                postBtn.innerHTML = originalText;
+                postBtn.disabled = false;
+            });
+        }
+
+        function resetSession() {
+            fetch('/ai-chat/session/reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Clear chat
+                    document.getElementById('chat-container').innerHTML = `
+                        <div class="message-bubble">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                                    </svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="bg-gray-50 rounded-2xl rounded-tl-md px-6 py-4">
+                                        <p class="text-gray-800 leading-relaxed">
+                                            Hello! I'm your AI recruitment assistant. I can help you create job postings, view your existing jobs, and manage applicants. Choose an action below to get started!
+                                        </p>
+                                        
+                                        <!-- Quick Action Buttons -->
+                                        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+                                            <button onclick="sendQuickMessage('I want to post a job')" class="group relative bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                    </svg>
+                                                    <span>Post a Job</span>
+                                                </div>
+                                                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                            </button>
+                                            
+                                            <button onclick="sendQuickMessage('Show me my jobs')" class="group relative bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                                    </svg>
+                                                    <span>View my Jobs</span>
+                                                </div>
+                                                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                            </button>
+                                            
+                                            <button onclick="sendQuickMessage('Show me my applicants')" class="group relative bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                                                <div class="flex items-center justify-center space-x-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                                    </svg>
+                                                    <span>See my Applicants</span>
+                                                </div>
+                                                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-200"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Reset variables
+                    currentSessionId = null;
+                    jobDetails = null;
+                    hidePostJobButton();
+                    
+                    // Focus on input
+                    document.getElementById('message-input').focus();
+                }
+            })
+            .catch(error => {
+                console.error('Error resetting session:', error);
+            });
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typing-indicator').classList.remove('hidden');
+            document.getElementById('send-btn').disabled = true;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typing-indicator').classList.add('hidden');
+            document.getElementById('send-btn').disabled = false;
+        }
+
+        function fetchUserJobs(maximumPosts) {
+            console.log('Fetching user jobs with maximum posts:', maximumPosts);
+            
+            fetch('/ai-chat/fetch-user-jobs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    maximum_posts: maximumPosts
+                })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetch jobs response:', data);
+                
+                if (data.success) {
+                    console.log('Jobs data:', data.jobs);
+                    // Store the response for metrics access
+                    window.lastFetchResponse = data;
+                    displayUserJobs(data.jobs, data.message);
+                } else {
+                    console.error('API error:', data.error);
+                    addMessage('Error fetching jobs: ' + data.error, 'bot');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                addMessage('Error: Could not fetch jobs', 'bot');
+            });
+        }
+
+        function fetchUserApplicants(maximumApplicants) {
+            console.log('Fetching user applicants with maximum applicants:', maximumApplicants);
+            
+            fetch('/ai-chat/fetch-user-applicants', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    maximum_applicants: maximumApplicants
+                })
+            })
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('Fetch applicants response:', data);
+                
+                if (data.success) {
+                    console.log('Applicants data:', data.applicants);
+                    displayUserApplicants(data.applicants, data.message);
+                } else {
+                    console.error('API error:', data.error);
+                    addMessage('Error fetching applicants: ' + data.error, 'bot');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                addMessage('Error: Could not fetch applicants', 'bot');
+            });
+        }
+
+        function displayUserJobs(jobs, message) {
+            console.log('Displaying jobs:', jobs);
+            console.log('Message:', message);
+            console.log('Jobs type:', typeof jobs);
+            console.log('Is array:', Array.isArray(jobs));
+            
+            // Handle different data formats
+            let jobsArray = [];
+            if (Array.isArray(jobs)) {
+                jobsArray = jobs;
+            } else if (jobs && typeof jobs === 'object') {
+                if (jobs.data && Array.isArray(jobs.data)) {
+                    jobsArray = jobs.data;
+                } else if (jobs.jobs && Array.isArray(jobs.jobs)) {
+                    jobsArray = jobs.jobs;
+                } else {
+                    jobsArray = [jobs];
+                }
+            }
+            
+            console.log('Processed jobs array:', jobsArray);
+            
+            if (!jobsArray || jobsArray.length === 0) {
+                console.log('No jobs to display');
+                addMessage(message || 'No job postings found.', 'bot');
+                return;
+            }
+
+            // Format dates function
+            function formatDate(dateString) {
+                if (!dateString) return 'Not set';
+                try {
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                } catch (e) {
+                    return 'Invalid date';
+                }
+            }
+
+            let jobsHtml = `
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Your Recent Job Postings</h3>
+                            <p class="text-sm text-gray-500">${message}</p>
+                        </div>
+                    </div>
+            `;
+            
+            // Add metrics if available
+            if (window.lastFetchResponse && window.lastFetchResponse.metrics) {
+                const metrics = window.lastFetchResponse.metrics;
+                jobsHtml += `
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 mb-6">
+                        <h4 class="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                            </svg>Job Statistics
+                        </h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">${metrics.total_jobs || 0}</div>
+                                <div class="text-xs text-gray-500">Total Jobs</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">${metrics.active_jobs || 0}</div>
+                                <div class="text-xs text-gray-500">Active Jobs</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-indigo-600">${metrics.total_applicants || 0}</div>
+                                <div class="text-xs text-gray-500">Total Applicants</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-amber-600">${metrics.avg_salary || 'N/A'}</div>
+                                <div class="text-xs text-gray-500">Avg Salary</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            jobsArray.forEach((job, index) => {
+                jobsHtml += `
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between mb-3">
+                                    <div>
+                                        <h4 class="text-lg font-semibold text-gray-900 mb-1">${job.job_title || 'Untitled Position'}</h4>
+                                        <p class="text-sm text-gray-600 mb-3">${job.job_description || 'No description available'}</p>
+                                    </div>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${job.job_opening_status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                                        ${job.job_opening_status || 'Unknown'}
+                                    </span>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div class="space-y-2">
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                                            </svg>
+                                            <span>${job.job_type || 'Not specified'}</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                            </svg>
+                                            <span>${job.working_style || 'Not specified'}</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                            </svg>
+                                            <span>${job.work_experience || 'Not specified'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>${job.min_salary || '0'} - ${job.max_salary || '0'} ${job.salary_currency || '$'} ${job.salary_time_unit || 'Yearly'}</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                            </svg>
+                                            <span>${job.address_city || 'Remote'}, ${job.address_country || 'Not specified'}</span>
+                                        </div>
+                                        <div class="flex items-center text-gray-600">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                                            </svg>
+                                            <span>${job.industry || 'Not specified'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="flex items-center justify-between text-xs text-gray-500">
+                                        <div class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            <span>Posted: ${formatDate(job.opening_date)}</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5v-.008z" />
+                                            </svg>
+                                            <span>Target: ${formatDate(job.target_date)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col space-y-2">
+                                <button onclick="deleteJob(${job.id}, '${job.job_title}')" class="inline-flex items-center px-4 py-2 border border-red-300 rounded-lg text-sm font-medium text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                    </svg>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Add "View All Jobs" link
+            jobsHtml += `
+                <div class="text-center">
+                    <a href="/user/job-openings" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0021 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                        View All Jobs
+                    </a>
+                </div>
+            `;
+
+            jobsHtml += '</div>';
+
+            // Add the jobs display as a bot message
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-bubble';
+            messageDiv.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        ${jobsHtml}
+                    </div>
+                </div>
+            `;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function displayUserApplicants(applicants, message) {
+            console.log('Displaying applicants:', applicants);
+            console.log('Message:', message);
+            console.log('Applicants type:', typeof applicants);
+            console.log('Is array:', Array.isArray(applicants));
+            
+            // Handle different data formats
+            let applicantsArray = [];
+            if (Array.isArray(applicants)) {
+                applicantsArray = applicants;
+            } else if (applicants && typeof applicants === 'object') {
+                if (applicants.data && Array.isArray(applicants.data)) {
+                    applicantsArray = applicants.data;
+                } else if (applicants.applicants && Array.isArray(applicants.applicants)) {
+                    applicantsArray = applicants.applicants;
+                } else {
+                    applicantsArray = [applicants];
+                }
+            }
+            
+            console.log('Processed applicants array:', applicantsArray);
+            
+            if (!applicantsArray || applicantsArray.length === 0) {
+                console.log('No applicants to display');
+                addMessage(message || 'No applicants found.', 'bot');
+                return;
+            }
+
+            // Format dates function
+            function formatDate(dateString) {
+                if (!dateString) return 'Not set';
+                try {
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                } catch (e) {
+                    return 'Invalid date';
+                }
+            }
+
+            let applicantsHtml = `
+                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-white">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Your Job Applicants</h3>
+                            <p class="text-sm text-gray-500">${message}</p>
+                        </div>
+                    </div>
+            `;
+
+            applicantsArray.forEach((applicant, index) => {
+                // Get current job info
+                const currentJob = applicant.current_job || {};
+                const similarityScores = applicant.similarity_scores || {};
+                
+                // Calculate overall score percentage
+                const overallScore = similarityScores.overall_score || 0;
+                const scorePercentage = Math.round(overallScore);
+                
+                // Get score color based on percentage
+                const getScoreColor = (score) => {
+                    if (score >= 80) return 'text-green-600';
+                    if (score >= 60) return 'text-yellow-600';
+                    if (score >= 40) return 'text-blue-600';
+                    return 'text-red-600';
+                };
+                
+                // Get job_opening_id from the applicant data
+                const jobOpeningId = applicant.job_opening_id || null;
+                
+                applicantsHtml += `
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 mb-4 hover:shadow-md transition-shadow duration-200">
+                        <div class="flex flex-col lg:flex-row lg:items-start lg:space-x-6">
+                            <!-- Profile Section -->
+                            <div class="flex items-center space-x-4 mb-4 lg:mb-0">
+                                <div class="relative">
+                                    <img src="${applicant.applicant_profile_picture || '/static/images/default-avatar.png'}" 
+                                         alt="Profile" 
+                                         class="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg">
+                                    <div class="absolute -bottom-1 -right-1">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBadgeClass(applicant.application_status)}">
+                                            ${applicant.application_status || 'Unknown'}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900">${applicant.applicant_name || 'Unknown Applicant'}</h4>
+                                    <p class="text-sm text-gray-600">${applicant.job_title || 'No job specified'}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Details Section -->
+                            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                        </svg>
+                                        <span class="truncate">${applicant.applicant_email || 'Not provided'}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                                        </svg>
+                                        <span>${currentJob.position || 'Not specified'}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
+                                        </svg>
+                                        <span>${currentJob.company_name || 'Not specified'}</span>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5v-.008z" />
+                                        </svg>
+                                        <span>${applicant.application_date || 'Not specified'}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                                        </svg>
+                                        <span>${currentJob.responsibilities ? 'Has Experience' : 'No Experience'}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0021 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                        </svg>
+                                        <a href="${applicant.job_url}" target="_blank" class="text-blue-600 hover:text-blue-800">View Job</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Match Score Section -->
+                            <div class="flex flex-col items-center space-y-3">
+                                <div class="text-center">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="text-2xl font-bold ${getScoreColor(scorePercentage)}">${scorePercentage}%</span>
+                                        <div class="w-16 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                            <div class="h-full ${scorePercentage >= 80 ? 'bg-green-500' : scorePercentage >= 60 ? 'bg-yellow-500' : scorePercentage >= 40 ? 'bg-blue-500' : 'bg-red-500'}" 
+                                                 style="width: ${scorePercentage}%"></div>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 font-medium">Match Score</p>
+                                </div>
+                                
+                                <!-- Action Buttons -->
+                                <div class="flex flex-col space-y-2 w-full">
+                                    <button onclick="viewApplicantProfile(${applicant.applicant_id})" class="inline-flex items-center justify-center px-4 py-2 border border-blue-300 rounded-lg text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.639 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.639 0-8.573-3.007-9.963-7.178z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                        </svg>
+                                        View Profile
+                                    </button>
+                                    <button onclick="shortlistApplicant('${jobOpeningId}')" class="inline-flex items-center justify-center px-4 py-2 border border-green-300 rounded-lg text-sm font-medium text-green-700 bg-white hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                        </svg>
+                                        Shortlist
+                                    </button>
+                                </div>
+                                
+                                <!-- Similarity Scores -->
+                                <div class="w-full">
+                                    <h5 class="text-xs font-semibold text-gray-700 mb-2 text-center">Similarity Scores</h5>
+                                    <div class="space-y-1">
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500">Experience:</span>
+                                            <span class="font-medium">${similarityScores.experience_embedding || 0}%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500">Skills:</span>
+                                            <span class="font-medium">${similarityScores.skill_embedding || 0}%</span>
+                                        </div>
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500">Education:</span>
+                                            <span class="font-medium">${similarityScores.education_embedding || 0}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Add "View All Applicants" link
+            applicantsHtml += `
+                <div class="text-center">
+                    <a href="/applicant-tracking" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-xl transition-all duration-200 transform hover:scale-105 hover:shadow-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0021 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                        </svg>
+                        View All Applicants
+                    </a>
+                </div>
+            `;
+
+            applicantsHtml += '</div>';
+
+            // Add the applicants display as a bot message
+            const container = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-bubble';
+            messageDiv.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        ${applicantsHtml}
+                    </div>
+                </div>
+            `;
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function getStatusBadgeClass(status) {
+            const statusLower = (status || '').toLowerCase();
+            if (statusLower.includes('shortlisted') || statusLower.includes('selected')) {
+                return 'bg-green-100 text-green-800';
+            } else if (statusLower.includes('interview') || statusLower.includes('assessment') || statusLower.includes('online_assessment')) {
+                return 'bg-yellow-100 text-yellow-800';
+            } else if (statusLower.includes('rejected')) {
+                return 'bg-red-100 text-red-800';
+            } else if (statusLower.includes('applied')) {
+                return 'bg-blue-100 text-blue-800';
+            } else {
+                return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function viewApplicantProfile(applicantId) {
+            // Redirect to employer view jobseeker profile page
+            window.open(`/view-jobseeker/${applicantId}`, '_blank');
+        }
+
+        function shortlistApplicant(jobId) {
+            if (jobId) {
+                // Redirect to job applicants page for the specific job
+                window.open(`/user/job/applicants/${jobId}`, '_blank');
+            } else {
+                // Fallback to general applicant tracking if job_id is not available
+                window.open('/applicant-tracking', '_blank');
+            }
+        }
+
+        function deleteJob(jobId, jobTitle) {
+            if (confirm(`Are you sure you want to delete the job "${jobTitle}"? This action cannot be undone.`)) {
+                // Show loading state
+                const deleteBtn = event.target.closest('button');
+                const originalText = deleteBtn.innerHTML;
+                deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2 animate-spin"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>Deleting...';
+                deleteBtn.disabled = true;
+                
+                // Redirect to delete endpoint
+                window.location.href = `/user/delete-job/${jobId}`;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Focus on input
+            document.getElementById('message-input').focus();
+        });
+    </script>
+</div>  
+{% endblock %}
+
+
+
+
+

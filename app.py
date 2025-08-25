@@ -37,9 +37,6 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SERVER_NAME'] = 'hiregen.com'
 #TODO CHANGE TO '.hiregen.com' before deploying
 # app.config['SESSION_COOKIE_DOMAIN'] = '.localhost.com'  # Leading dot to share session across subdomains
-# app.config['SESSION_COOKIE_HTTPONLY'] = True
-# app.config['SESSION_COOKIE_SECURE'] = False  # Set to True for HTTPS
-# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=24)  # Session lifetime
 app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share session across subdomains
 
 app.config['SESSION_COOKIE_PATH'] = '/'
@@ -1505,8 +1502,8 @@ def user_delete_job(job_id):
 
 
 @app.route('/jobs/add-job', methods=['GET', 'POST'])
-@requires_any_permission("can_manage_jobs")
 @login_required
+@requires_any_permission("can_manage_jobs")
 def add_post():
     form = forms.AddJobOpening()
 
@@ -5645,9 +5642,14 @@ def get_application_log_by_application_and_stage():
 
 
 
+# Import and register AI chat agent blueprint
+from ai_chat_agent_flask import register_ai_chat_blueprint
 
-
-
+@app.route('/ai-chat')
+@login_required
+def ai_chat():
+    """Route to serve the AI chat interface"""
+    return render_template('ai_chat.html')
 
 #####################################################################################################################################
 ############################################## ALL ROUTES ABOVE THIS ################################################################
@@ -5770,6 +5772,10 @@ def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
 
+
+
+# Register the AI chat agent blueprint
+register_ai_chat_blueprint(app)
 
 
 if __name__ == '__main__':
