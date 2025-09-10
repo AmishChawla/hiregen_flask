@@ -41,7 +41,7 @@ app.config['SESSION_COOKIE_DOMAIN'] = '.hiregen.com'  # Leading dot to share ses
 
 app.config['SESSION_COOKIE_PATH'] = '/'
 #TODO UNCOMMENT BEFORE DEPLOYING
-# app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
+app.config['SESSION_COOKIE_SECURE'] = True  # Uncomment if running on HTTPS
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Adjust based on cross-domain requirements
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -1071,8 +1071,9 @@ def company_details_by_company_subdomain(company_subdomain):
     result = api_calls.get_company_details_by_subdomain(company_subdomain=company_subdomain)
     # Retrieve jobs associated with the company
     company_id = result["id"]
+    print("result: ", result)
     jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
-    print(jobs_by_company)
+    print("jobs_by_company: ", jobs_by_company)
     # Render the template with company details and job postings
     return render_template('company_details.html', company=result, job_posts=jobs_by_company)
 
@@ -4050,7 +4051,7 @@ def jobs_search():
     industry = request.args.get('industry')
     date_filter = request.args.get('date_filter')
     keyword = request.args.get('keyword')
-
+    company_subdomain = request.args.get('company_subdomain')
     # Pagination via skip and limit
     limit = int(request.args.get('limit', 10))
     skip = int(request.args.get('skip', 0))
@@ -4061,7 +4062,8 @@ def jobs_search():
         'state': state,
         'job_type': job_type,
         'industry': industry,
-        'date_filter': date_filter
+        'date_filter': date_filter,
+        'company_subdomain': company_subdomain
     }
 
     search = api_calls.get_filtered_jobs(
@@ -4072,6 +4074,7 @@ def jobs_search():
         industry=industry,
         date_filter=date_filter,
         keyword=keyword,
+        company_subdomain=company_subdomain,
         skip=skip,
         limit=limit
     )
@@ -4269,18 +4272,19 @@ def jobs_filter():
         industry = request.args.get('industry') or ''
         date_filter = request.args.get('date_filter') or ''
         keyword= request.args.get('keyword') or ''
-
+        company_subdomain = request.args.get('company_subdomain') or ''
         prefilled_data = {
             'keyword': keyword,
             'country': country,
             'state': state,
             'job_type': job_type,
             'industry': industry,
-            'date_filter': date_filter
+            'date_filter': date_filter,
+            'company_subdomain': company_subdomain
         }
 
-        if country or state or job_type or industry or date_filter or keyword:
-            jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword)
+        if country or state or job_type or industry or date_filter or keyword or company_subdomain:
+            jobs = api_calls.get_filtered_jobs(country=country, state=state, job_type=job_type, industry=industry, date_filter=date_filter, keyword=keyword, company_subdomain=company_subdomain)
             return redirect(url_for('job_search'))
 
     return render_template('jobseeker/jobs_search_1.html', countries=countries, job_types=job_types, industries=industries, prefilled_data=prefilled_data)
@@ -4556,16 +4560,22 @@ def homepage_contactus_submission():
 def about_us():
     return render_template('aboutus.html')
 
-@app.route('/all_companies')
+@app.route('/all-companies')
 def all_companies():
-    return render_template('all_companies.html')
+
+    companies = api_calls.get_companies() or []
+    return render_template('all_companies.html', companies=companies)
 
 ################## ADMIN CmS ####################################################
 
 
 @app.route('/blog')
 def all_cms_post():
-    result = api_calls.get_all_posts()
+    # Get pagination parameters
+    skip = request.args.get('skip', 0, type=int)
+    limit = request.args.get('limit', 10, type=int)
+    
+    result = api_calls.get_all_posts(skip=skip, limit=limit)
     categories = api_calls.get_cms_all_categories(access_token=None)
     if result is None:
         result = []  # Set result to an empty list
@@ -4574,6 +4584,15 @@ def all_cms_post():
     q = request.args.get('q', '').strip().lower()
     if q:
         result = [post for post in result if q in (post.get('title', '').lower() + ' ' + post.get('content', '').lower())]
+
+    # If it's an AJAX request, return JSON
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return jsonify({
+            'posts': result,
+            'has_more': len(result) == limit,  # If we got exactly the limit, there might be more
+            'skip': skip,
+            'limit': limit
+        })
 
     print(result)
     return render_template('all_posts.html', result=result, categories=categories)

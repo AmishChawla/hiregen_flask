@@ -13,10 +13,12 @@ MY_ROOT_URL = 'https://hiregen.com'
 # BASE_URL = 'http://127.0.0.1:8000/api'
 # ROOT_URL = 'http://127.0.0.1:8000'
 
+
 #TODO UNCOMMENT BEFORE DEPLOYING
 ROOT_URL = 'https://hiregen.com/api'
 BASE_URL = 'https://hiregen.com/api/api'
 #
+
 
 
 
@@ -35,18 +37,5 @@ OPEN_AI_API_KEY = os.getenv("OPEN_AI_API_KEY")
 EMPLOYER_DEMO_LOGIN_EMAIL = os.getenv("EMPLOYER_DEMO_LOGIN_EMAIL")
 EMPLOYER_DEMO_LOGIN_PASSWORD = os.getenv("EMPLOYER_DEMO_LOGIN_PASSWORD")
 
-# < div
-#
-#
-# class ="card" style="overflow-x:auto;" >
-#
-# < div
-#
-#
-# class ="card-body" style="padding: 2rem;" >
-
-
-# < / div >
-# < / div >
 
 

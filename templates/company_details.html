@@ -1,4 +1,4 @@
-{% if current_user %}
+{% if current_user.is_authenticated %}
 {% if current_user.role == 'user' %}
 {% extends 'base.html' %}
 {% elif current_user.role == 'jobseeker' %}
@@ -6,14 +6,15 @@
 {% elif current_user.role == 'admin' %}
 {% extends 'admin_base.html' %}
 {% endif %}
-{% elif current_user.is_authenticated is None %}
-{% extends 'common_base.html' %}
+{% else %}
+{% extends 'company_base.html' %}
 {% endif %}
 
 
 {% block metatags %} 
 <meta name="title" content="{{ company.name }}" />
 <meta name="description" content="{{ company.description }}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
@@ -54,131 +55,104 @@
 
 {% block content %}
 
-<!-- Tailwind CSS Integration -->
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-    tailwind.config = {
-        darkMode: 'class',
-    };
-</script>
-
-<style>
-  body {
-    background-color: #f8fafc; /* Light mode background color */
-  }
-</style>
 
 
-
-<div class="font-sans leading-tight bg-grey-lighter p-8">
+<div class="font-sans leading-tight bg-grey-lighter p-3 sm:p-6 lg:p-8">
   <div class="max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
-    <div class="bg-cover h-48" style="background-image: url('{{ company.cover_image or url_for('static', filename='images/company-bg.jpg') }}');"></div>
-    <div class="border-b px-4 pb-6">
-        <div class="text-center sm:text-left sm:flex mb-4">
+    <div class="bg-cover h-32 sm:h-40 lg:h-48" style="background-image: url('{{ company.cover_image or url_for('static', filename='images/company-bg.jpg') }}');"></div>
+    <div class="border-b px-3 sm:px-4 pb-4 sm:pb-6">
+        <div class="text-center sm:text-left sm:flex mb-3 sm:mb-4">
 
           {% if company.company_logo %}
           <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo"
-              class="w-32 h-32 rounded-full border-4 border-white -mt-16 mr-4">
+              class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white -mt-10 sm:-mt-12 lg:-mt-16 mx-auto sm:mx-0 sm:mr-4">
           {% else %}
           <img src="https://via.placeholder.com/150" alt="Default Logo"
-              class="w-32 h-32 rounded-full border-4 border-white -mt-16 mr-4">
+              class="w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white -mt-10 sm:-mt-12 lg:-mt-16 mx-auto sm:mx-0 sm:mr-4">
           {% endif %}
 
-            <div class="py-2">
-                <h3 class="font-bold text-2xl mb-1">{{company.name }}</h3>
-                <div class="inline-flex text-grey-dark sm:flex items-center">
-                    <svg class="h-5 w-5 text-grey mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.64 16.36a9 9 0 1 1 12.72 0l-5.65 5.66a1 1 0 0 1-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 1 0-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
-                    {{ company.location }}
+            <div class="py-2 text-center sm:text-left">
+                <h3 class="font-bold text-xl sm:text-2xl mb-1">{{company.name }}</h3>
+                <div class="inline-flex text-grey-dark sm:flex items-center justify-center sm:justify-start">
+                    <svg class="h-4 w-4 sm:h-5 sm:w-5 text-grey mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path class="heroicon-ui" d="M5.64 16.36a9 9 0 1 1 12.72 0l-5.65 5.66a1 1 0 0 1-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 1 0-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg>
+                    <span class="text-sm sm:text-base">{{ company.location }}</span>
                 </div>
             </div>
         </div>
-        <div class="flex items-center text-grey-darker">
+        <div class="flex items-center justify-center sm:justify-start text-grey-darker">
           {% if job_posts %}
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor"
           class="bi bi-briefcase mt-1" viewBox="0 0 16 16">
           <path
             d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z" />
         </svg>
         
-            <span><strong class="text-black ml-2">{{ job_posts | length }}</strong> Jobs</span>
+            <span class="text-sm sm:text-base"><strong class="text-black ml-2">{{ job_posts | length }}</strong> Jobs</span>
         {%endif%}
         </div>
     </div>
-    <div class="px-4 py-4">
-        <div class="px-4 sm:px-0 lg:px-2">
-            <div class="sm:flex sm:items-center pb-3">
+    <div class="px-3 sm:px-4 py-3 sm:py-4">
+        <div class="px-2 sm:px-4 lg:px-2">
+            <div class="sm:flex sm:items-center pb-2 sm:pb-3">
               <div class="sm:flex-auto">
-                <h1 class="text-xl font-semibold text-gray-900">Latest jobs</h1>
+                <h1 class="text-lg sm:text-xl font-semibold text-gray-900 text-center sm:text-left">Latest jobs</h1>
               </div>
             </div>
-            <div class="mt-4 flow-root">
-              <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 border-t border-gray-200">
+            <div class="mt-3 sm:mt-4 flow-root">
+              <div class="-mx-2 sm:-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-0 align-middle sm:px-6 lg:px-8">
-                  <table class="min-w-full divide-y divide-gray-300">
-                    <tbody class="divide-y divide-gray-200 bg-white">
+                  <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg border-t border-gray-200">
+                    <table class="min-w-full divide-y ">
+                      <tbody class="divide-y divide-gray-200 bg-white">
                       {% if job_posts %}
 
                       {% for data in job_posts %}
-                    <tr class="hover:bg-white-50 hover:cursor-pointer">
-                        <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                          <div class="flex items-center">
-                            <div class="">
-                              <div class="text-lg font-medium text-gray-900"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}"
-                                class="dark:text-blue-400 hover:text-purple500 hover:underline">
+                    <tr class="hover:bg-gray-50 hover:cursor-pointer">
+                        <td class="px-3 sm:px-4 py-4 sm:py-5 text-sm">
+                          <div class="flex flex-col sm:flex-row sm:items-center">
+                            <div class="flex-1">
+                              <div class="text-base sm:text-lg font-medium text-gray-900 mb-1"><a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}"
+                                class="dark:text-blue-400 hover:text-purple-500 hover:underline">
                                 {{ data.job_title }}
                             </a></div>
-                              <div class="mt-1 text-gray-500">{{ data.job_type }} <span class="mx-1">•</span> {{data.address_country}}</div>
+                              <div class="text-sm text-gray-500 mb-2 sm:mb-0">{{ data.job_type }} <span class="mx-1">•</span> {{data.address_country}}</div>
+                              <div class="flex items-center text-xs sm:text-sm text-gray-500 sm:hidden">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-clock me-1" viewBox="0 0 16 16">
+                                  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                </svg> 
+                                <span data-date="{{ data.created_at }}"></span>
+                              </div>
+                            </div>
+                            <div class="flex items-center justify-between sm:justify-end mt-2 sm:mt-0">
+                              <div class="hidden sm:flex items-center text-sm text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-clock me-1" viewBox="0 0 16 16">
+                                  <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                </svg> 
+                                <span data-date="{{ data.created_at }}" class="mr-1"></span>
+                              </div>
+                              <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}" class="rounded-lg sm:rounded-2xl bg-blue-600 py-2 px-3 sm:px-4 text-center text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-blue-500 ml-2 sm:ml-0 touch-target min-h-[44px] flex items-center justify-center">Apply</a>
                             </div>
                           </div>
-                        </td>
-                        <td class="flex whitespace-nowrap px-3 py-9 text-sm text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock me-1 mt-1" viewBox="0 0 16 16">
-                          <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-                          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-                        </svg> <span data-date="{{ data.created_at }}"></span></td>
-                        <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                          <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company.company_subdomain, job_slug=data.slug) }}" class="rounded-2xl bg-blue-600 py-2 px-4 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500">Apply</a>
                         </td>
                     </tr>
                     {% endfor %}
                     {% else %}
-                    <p class="mt-4 text-center text-gray-500 dark:text-gray-400">No Job Openings right now.</p>
+                    <tr>
+                      <td colspan="1" class="px-3 sm:px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                        No Job Openings right now.
+                      </td>
+                    </tr>
                     {% endif %}
                       <!-- More people... -->
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             </div>
 
-                            <!-- Social Links -->
-                            <div class="flex justify-center space-x-4 mt-6">
-                              {% if company.linkedin_url %}
-                              <a href="{{ company.linkedin_url }}"
-                                  class="text-blue-700 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-500">
-                                  <i class="bi bi-linkedin text-2xl"></i>
-                              </a>
-                              {% endif %}
-                              {% if company.google_map_url %}
-                              <a href="{{ company.google_map_url }}"
-                                  class="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500">
-                                  <i class="bi bi-geo-alt-fill text-2xl"></i>
-                              </a>
-                              {% endif %}
-                              {% if company.twitter_url %}
-                              <a href="{{ company.twitter_url }}"
-                                  class="text-black hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300">
-                                  <i class="bi bi-twitter text-2xl"></i>
-                              </a>
-                              {% endif %}
-                              {% if company.instagram_url %}
-                              <a href="{{ company.instagram_url }}"
-                                  class="text-pink-500 hover:text-pink-600 dark:text-pink-400 dark:hover:text-pink-500">
-                                  <i class="bi bi-instagram text-2xl"></i>
-                              </a>
-                              {% endif %}
-                          </div>
 
 
           </div>          
@@ -186,24 +160,24 @@
   </div>
 </div>
 
-<div class="font-sans leading-tight bg-grey-lighter mb-8">
-<div class="max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg border px-5 py-6">
-    <div class="sm:flex sm:items-center pb-3">
+<div id="about" class="font-sans leading-tight bg-grey-lighter mb-6 sm:mb-8">
+<div class="max-w-5xl mx-auto bg-white rounded-lg overflow-hidden shadow-lg border px-3 sm:px-5 py-4 sm:py-6">
+    <div class="sm:flex sm:items-center pb-2 sm:pb-3">
         <div class="sm:flex-auto">
-          <h1 class="text-xl font-semibold text-gray-900">About company</h1>
+          <h1 class="text-lg sm:text-xl font-semibold text-gray-900 text-center sm:text-left">About company</h1>
         </div>
       </div>
-      <div class="mt-4 flow-root">
-        <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 border-t border-gray-200">
+      <div class="mt-3 sm:mt-4 flow-root">
+        <div class="-mx-2 sm:-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 border-t border-gray-200">
         </div>
     </div>
-    <div class="mt-2 flow-root">
-      <div class="text-lg text-violet-700">
+    <div class="mt-2 sm:mt-3 flow-root">
+      <div class="text-base sm:text-lg text-violet-700">
         <div x-data="{ expanded: false }" class="text-gray-700 dark:text-gray-300">
-            <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3">{{ company.description }}
+            <p x-bind:class="{ 'line-clamp-3': !expanded }" class="line-clamp-3 text-sm sm:text-base leading-relaxed">{{ company.description }}
             </p>
             <button @click="expanded = !expanded"
-                class="text-lg text-purple-500 dark:text-blue-400 hover:text-blue-800">
+                class="text-sm sm:text-base text-purple-500 dark:text-blue-400 hover:text-blue-800 mt-2">
                 <span x-text="expanded ? 'Show less' : 'Read more...'">Read more...</span>
             </button>
         </div>
@@ -213,20 +187,6 @@
 </div>
 
 
-<!--Footer-->
-<!-- <div class="py-10 bg-black mt-10">
-  <nav class="flex flex-wrap justify-center items-center mb-4 gap-6">
-    <a href="/rss/jobs" class="text-slate-100 text-base font-normal leading-normal tracking-normal">RSS</a>
-    <span class="text-slate-100 text-base font-normal leading-normal tracking-normal">•</span>
-    <a href="/jobs" class="text-slate-100 text-base font-normal leading-normal tracking-normal">About Us</a>
-    <span class="text-slate-100 text-base font-normal leading-normal tracking-normal">•</span>
-    <a href="/contact-us" class="text-slate-100 text-base font-normal leading-normal tracking-normal">Contact Us</a>
-  </nav>
-
-  <div class="text-slate-100 text-base font-normal leading-normal tracking-normal pt-0 text-center">
-    © 2025 Hiregen.com
-  </div>
-</div> -->
 
 
 <script>

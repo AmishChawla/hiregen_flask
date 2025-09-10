@@ -12,7 +12,7 @@
 {% block content %}
 <div class="">
     <div class="min-h-screen py-0">
-      <div class="containermax-w6xl mx-ato px-4 sm:px-6 lg:px-0">
+      <div class="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-0">
         
     <!--Left Sidebar -->
 <div class="">
@@ -127,7 +127,7 @@
     <!-- Left Column: Filters (4/12) -->
     <div class="md:col-span-12">
     <div>
-    <div id="job-results-container" class="containerpx-4 sm:px-6 lg:px-0">
+    <div id="job-results-container" class="container px-4 sm:px-6 lg:px-0">
         
         {% include 'jobseeker/_job_cards.html' %}
     </div>
@@ -149,29 +149,79 @@ let isLoading = false;
 let skip = 10; // already loaded initial 10 from server
 const limit = 10;
 let hasMoreJobs = true; // Track if there are more jobs to load
+let scrollTimeout = null;
 
 console.log('Infinite scrolling script initialized');
 
-// Test scroll events are being captured
-window.addEventListener('scroll', () => {
-    console.log('Scroll event detected - scrollY:', window.scrollY, 'innerHeight:', window.innerHeight, 'body.offsetHeight:', document.body.offsetHeight);
-});
-
-window.addEventListener('scroll', async () => {
-    console.log('Infinite scroll check - scrollY:', window.scrollY, 'innerHeight:', window.innerHeight, 'body.offsetHeight:', document.body.offsetHeight);
-    console.log('Distance from bottom:', document.body.offsetHeight - (window.innerHeight + window.scrollY));
+// Cross-browser compatible scroll detection
+function getScrollPosition() {
+    // Cross-browser scroll position
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
+    const documentHeight = Math.max(
+        document.body.scrollHeight || 0,
+        document.body.offsetHeight || 0,
+        document.documentElement.clientHeight || 0,
+        document.documentElement.scrollHeight || 0,
+        document.documentElement.offsetHeight || 0
+    );
     
-    // Check if we're near the bottom and not already loading
-    if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
-        !isLoading &&
-        hasMoreJobs
-    ) {
-        console.log('Scroll detected - near bottom, triggering loadMoreJobs');
-        await loadMoreJobs();
-    } else {
-        console.log('Scroll detected but conditions not met - isLoading:', isLoading, 'hasMoreJobs:', hasMoreJobs, 'distance from bottom:', document.body.offsetHeight - (window.innerHeight + window.scrollY));
+    return {
+        scrollTop: scrollTop,
+        windowHeight: windowHeight,
+        documentHeight: documentHeight,
+        distanceFromBottom: documentHeight - (windowHeight + scrollTop)
+    };
+}
+
+// Throttled scroll handler for better performance
+function handleScroll() {
+    if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
     }
+    
+    scrollTimeout = setTimeout(async () => {
+        const scrollInfo = getScrollPosition();
+        
+        console.log('Infinite scroll check - scrollTop:', scrollInfo.scrollTop, 'windowHeight:', scrollInfo.windowHeight, 'documentHeight:', scrollInfo.documentHeight);
+        console.log('Distance from bottom:', scrollInfo.distanceFromBottom);
+        
+        // Check if we're near the bottom and not already loading
+        // Use a more generous threshold for better cross-browser compatibility
+        if (
+            scrollInfo.distanceFromBottom <= 300 &&
+            !isLoading &&
+            hasMoreJobs
+        ) {
+            console.log('Scroll detected - near bottom, triggering loadMoreJobs');
+            await loadMoreJobs();
+        } else {
+            console.log('Scroll detected but conditions not met - isLoading:', isLoading, 'hasMoreJobs:', hasMoreJobs, 'distance from bottom:', scrollInfo.distanceFromBottom);
+        }
+    }, 100); // Throttle to 100ms
+}
+
+// Cross-browser scroll event listener
+if (window.addEventListener) {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Also listen for resize events in case window size changes
+    window.addEventListener('resize', handleScroll, { passive: true });
+} else if (window.attachEvent) {
+    // Fallback for older IE
+    window.attachEvent('onscroll', handleScroll);
+    window.attachEvent('onresize', handleScroll);
+}
+
+// Additional fallback: Check on page load and after a delay
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we need to load more jobs immediately (in case page is short)
+    setTimeout(() => {
+        const scrollInfo = getScrollPosition();
+        if (scrollInfo.distanceFromBottom <= 300 && !isLoading && hasMoreJobs) {
+            console.log('Page loaded - checking if we need to load more jobs immediately');
+            loadMoreJobs();
+        }
+    }, 1000);
 });
 
 async function loadMoreJobs() {
@@ -201,11 +251,45 @@ async function loadMoreJobs() {
         const url = `${baseUrl.pathname}?${params.toString()}`;
         console.log('Making AJAX request to:', url);
 
-        const response = await fetch(url, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        });
+        // Cross-browser compatible fetch with fallback
+        let response;
+        try {
+            response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Cache-Control': 'no-cache'
+                },
+                credentials: 'same-origin'
+            });
+        } catch (fetchError) {
+            console.error('Fetch failed, trying XMLHttpRequest fallback:', fetchError);
+            // Fallback to XMLHttpRequest for older browsers
+            response = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8');
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve({
+                                ok: true,
+                                status: xhr.status,
+                                text: () => Promise.resolve(xhr.responseText)
+                            });
+                        } else {
+                            reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`));
+                        }
+                    }
+                };
+                
+                xhr.onerror = () => reject(new Error('Network error'));
+                xhr.send();
+            });
+        }
 
         console.log('Response received - status:', response.status, 'ok:', response.ok);
 

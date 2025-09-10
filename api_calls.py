@@ -424,7 +424,7 @@ def update_user_profile(
 
 def get_companies():
     try:
-        response = requests.get(constants.BASE_URL + f'/companies')
+        response = requests.get(constants.BASE_URL + f'/all/companies/')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -1011,9 +1011,13 @@ def get_all_subscriptions(access_token):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_all_posts():
+def get_all_posts(skip=0, limit=10):
     try:
-        response = requests.get(constants.BASE_URL + '/all-posts/')
+        params = {
+            'skip': skip,
+            'limit': limit
+        }
+        response = requests.get(constants.BASE_URL + '/all-posts/', params=params)
         print("Response Status Code:", response.status_code)  # Debug: Print status code
         if response.status_code == 200:
             result = response.json()
@@ -3096,7 +3100,7 @@ def get_jobseeker_recommendations(jobs_count, access_token: str):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_filtered_jobs(access_token:str = None, country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None, skip:int = 0, limit:int=10):
+def get_filtered_jobs(access_token:str = None, country:str = None, state:str = None, job_type:str = None, industry:str = None, date_filter:str = None, keyword:str = None, company_subdomain:str = None, skip:int = 0, limit:int=10):
     headers = {'Authorization': f'Bearer {access_token}'}
     params = {
         'keyword': keyword,
@@ -3105,6 +3109,7 @@ def get_filtered_jobs(access_token:str = None, country:str = None, state:str = N
         'job_type': job_type,
         'industry': industry,
         'date_filter': date_filter,
+        'company_subdomain': company_subdomain,
         'skip':skip,
         'limit':limit
     }
@@ -3265,24 +3270,24 @@ def homepage_contact_form_submission(name, email, message):
         print(f"An unexpected error occurred: {err}")
 
 
-def get_all_posts():
-    try:
-        response = requests.get(constants.BASE_URL + '/all-posts/')
-        print("Response Status Code:", response.status_code)  # Debug: Print status code
-        if response.status_code == 200:
-            result = response.json()
-            print("API Result:", result)  # Debug: Print API result
-            return result
-        else:
-            print("API Error:", response.text)  # Debug: Print error message from API
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
-    except requests.exceptions.RequestException as err:
-        print(f"An unexpected error occurred: {err}")
+# def get_all_posts():
+#     try:
+#         response = requests.get(constants.BASE_URL + '/all-posts/')
+#         print("Response Status Code:", response.status_code)  # Debug: Print status code
+#         if response.status_code == 200:
+#             result = response.json()
+#             print("API Result:", result)  # Debug: Print API result
+#             return result
+#         else:
+#             print("API Error:", response.text)  # Debug: Print error message from API
+#     except requests.exceptions.HTTPError as errh:
+#         print(f"HTTP Error: {errh}")
+#     except requests.exceptions.ConnectionError as errc:
+#         print(f"Error Connecting: {errc}")
+#     except requests.exceptions.Timeout as errt:
+#         print(f"Timeout Error: {errt}")
+#     except requests.exceptions.RequestException as err:
+#         print(f"An unexpected error occurred: {err}")
 
 
 def get_admin_all_posts(access_token):

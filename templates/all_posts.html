@@ -10,62 +10,23 @@
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div class="lg:col-span-3">
             <div class="space-y-8">
-                <div class="grid gap-8">
+                <div class="space-y-6">
                     {% for post in result %}
-                    <article class="blog-post bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100"
-                             data-title="{{ post.title|lower }}"
-                             data-description="{{ (post.short_description or post.content[:200])|lower }}">
-                        <div class="md:flex">
-                            <div class="md:w-1/3">
-                                <img src="{{ post.featured_image or url_for('static', filename='images/blog-bg.jpg') }}"
-                                    alt="{{ post.title }}"
-                                    class="w-full h-48 md:h-full object-cover"></div>
-                            <div class="md:w-2/3 p-6">
-                                <div class="inline-block"><a href="{{url_for('cms_posts_by_category', category=post.category_name)}}"><span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">{{ post.category_name }}</span></a></div>
-
-                                <h2 class="text-xl font-bold text-gray-900 mt-3 mb-3 hover:text-blue-600 cursor-pointer transition-colors duration-200">
-                                    <a href="{{url_for('read_post', slug=post.slug)}}">{{ post.title }}</a></h2>
-                                <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ post.short_description or (post.content[:200] + '...') | safe }}</p>
-                                <div class="flex items-center justify-between text-sm text-gray-500">
-                                    <div class="flex items-center space-x-4">
-                                        <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="lucide lucide-user w-4 h-4"
-                                                data-lov-id="src/components/blog/BlogCard.tsx:56:16"
-                                                data-lov-name="User"
-                                                data-component-path="src/components/blog/BlogCard.tsx"
-                                                data-component-line="56" data-component-file="BlogCard.tsx"
-                                                data-component-name="User"
-                                                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                                <circle cx="12" cy="7" r="4"></circle>
-                                            </svg><span>{{ post.username }}</span></div>
-                                        <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                                stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4"
-                                                data-lov-id="src/components/blog/BlogCard.tsx:60:16"
-                                                data-lov-name="Calendar"
-                                                data-component-path="src/components/blog/BlogCard.tsx"
-                                                data-component-line="60" data-component-file="BlogCard.tsx"
-                                                data-component-name="Calendar"
-                                                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                                <path d="M8 2v4"></path>
-                                                <path d="M16 2v4"></path>
-                                                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                                                <path d="M3 10h18"></path>
-                                            </svg><span><time datetime="{{ post.created_at }}">{{ post.created_at }}</time></span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                        {% include 'widgets/blog_card.html' %}
                     {% endfor %}
                 </div>
-                <div class="text-center pt-8">
-                    <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Load
-                        More Posts</button></div>
+                <!-- Loading indicator -->
+                <div id="loading-indicator" class="text-center pt-8 hidden">
+                    <div class="inline-flex items-center justify-center gap-2 text-gray-600">
+                        <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                        <span>Loading more posts...</span>
+                    </div>
+                </div>
+                
+                <!-- End of posts message -->
+                <div id="end-message" class="text-center pt-8 hidden">
+                    <p class="text-gray-500">You've reached the end of all posts!</p>
+                </div>
             </div>
         </div>
         <div class="lg:col-span-1">
@@ -145,6 +106,17 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('blog-search');
+    const postsContainer = document.querySelector('.space-y-6');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const endMessage = document.getElementById('end-message');
+    
+    // Infinite scroll variables
+    let currentSkip = 10; // Start from 10 since we already loaded first 10 posts
+    let isLoading = false;
+    let hasMorePosts = true;
+    let scrollTimeout;
+
+    // Search functionality
     const posts = document.querySelectorAll('.blog-post');
     console.log('Posts found:', posts.length);
 
@@ -161,7 +133,166 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Cross-browser compatible scroll detection
+    function getScrollPosition() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0;
+        const documentHeight = Math.max(
+            document.body.scrollHeight || 0,
+            document.body.offsetHeight || 0,
+            document.documentElement.clientHeight || 0,
+            document.documentElement.scrollHeight || 0,
+            document.documentElement.offsetHeight || 0
+        );
+        
+        return {
+            scrollTop: scrollTop,
+            windowHeight: windowHeight,
+            documentHeight: documentHeight,
+            distanceFromBottom: documentHeight - (windowHeight + scrollTop)
+        };
+    }
+
+    // Load more posts function
+    async function loadMorePosts() {
+        if (isLoading || !hasMorePosts) return;
+        
+        isLoading = true;
+        loadingIndicator.classList.remove('hidden');
+        
+        try {
+            const response = await fetch(`/blog?skip=${currentSkip}&limit=10`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            console.log('Loaded posts:', data);
+            
+            if (data.posts && data.posts.length > 0) {
+                // Create HTML for new posts - matching the horizontal list layout
+                const newPostsHTML = data.posts.map(post => `
+                    <article class="blog-post bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden border border-gray-100"
+                             data-title="${post.title ? post.title.toLowerCase() : ''}"
+                             data-description="${(post.short_description || post.content ? (post.short_description || post.content.substring(0, 200)) : '').toLowerCase()}">
+                        <div class="flex">
+                            <div class="flex-shrink-0 w-48 h-32 overflow-hidden">
+                                <img src="${post.featured_image || '/static/images/blog-bg.jpg'}"
+                                    alt="${post.title || ''}"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div class="flex-1 p-6">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-2">
+                                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full">Blog</span>
+                                            <span class="text-xs text-gray-500">${post.created_at || 'Unknown date'}</span>
+                                        </div>
+                                        <h2 class="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 cursor-pointer transition-colors duration-200">
+                                            <a href="/blog/post/${post.slug || ''}">${post.title || 'Untitled'}</a>
+                                        </h2>
+                                        <p class="text-gray-600 text-sm leading-relaxed mb-3">${post.short_description || (post.content ? post.content.substring(0, 200) + '...' : 'No description available')}</p>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <div class="flex items-center space-x-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                    width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round" class="w-4 h-4">
+                                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                                <span>${post.username || 'admin'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+                
+                // Append new posts to the existing posts container
+                postsContainer.insertAdjacentHTML('beforeend', newPostsHTML);
+                
+                // Update skip for next request
+                currentSkip += data.posts.length;
+                
+                // Check if there are more posts
+                hasMorePosts = data.has_more;
+                
+                if (!hasMorePosts) {
+                    endMessage.classList.remove('hidden');
+                }
+            } else {
+                hasMorePosts = false;
+                endMessage.classList.remove('hidden');
+            }
+        } catch (error) {
+            console.error('Error loading more posts:', error);
+            // Show error message or handle error appropriately
+        } finally {
+            isLoading = false;
+            loadingIndicator.classList.add('hidden');
+        }
+    }
+
+    // Throttled scroll handler for better performance
+    function handleScroll() {
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+        
+        scrollTimeout = setTimeout(() => {
+            const scrollInfo = getScrollPosition();
+            
+            console.log('Infinite scroll check - distance from bottom:', scrollInfo.distanceFromBottom);
+            
+            // Check if we're near the bottom and not already loading
+            if (scrollInfo.distanceFromBottom <= 300 && !isLoading && hasMorePosts) {
+                console.log('Scroll detected - near bottom, triggering loadMorePosts');
+                loadMorePosts();
+            }
+        }, 100); // Throttle to 100ms
+    }
+
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Also listen for resize events in case window size changes
+    window.addEventListener('resize', handleScroll, { passive: true });
+
+    // Check on page load if we need to load more posts immediately
+    setTimeout(() => {
+        const scrollInfo = getScrollPosition();
+        if (scrollInfo.distanceFromBottom <= 300 && !isLoading && hasMorePosts) {
+            console.log('Page loaded - checking if we need to load more posts immediately');
+            loadMorePosts();
+        }
+    }, 1000);
 });
 </script>
+
+<style>
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
 
   {% endblock %}

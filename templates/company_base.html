@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>{% block title %}{{ company.name }}{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        };
+    </script>
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.10.5/dist/cdn.min.js" defer></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        
+        /* Mobile-specific improvements */
+        @media (max-width: 640px) {
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            /* Ensure touch targets are at least 44px */
+            .touch-target {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Better spacing for mobile */
+            .mobile-spacing {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+        }
+        
+        /* Tablet-specific improvements */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            .tablet-spacing {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+    </style>
+    
+    {% block metatags %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+            <div class="flex justify-between items-center h-14 sm:h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=company.company_subdomain) }}" class="flex items-center space-x-2 sm:space-x-3">
+                        {% if company.company_logo %}
+                        <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover">
+                        {% else %}
+                        <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-blue-600 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm sm:text-lg">{{ company.name[0] }}</span>
+                        </div>
+                        {% endif %}
+                        <span class="text-lg sm:text-xl font-bold text-gray-900 truncate max-w-32 sm:max-w-none">{{ company.name }}</span>
+                    </a>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="hidden lg:flex space-x-6 xl:space-x-8">
+                    <a href="{{ url_for('jobs_search', company_subdomain=company.company_subdomain) }}" 
+                       class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Jobs
+                    </a>
+                    
+                    <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=company.company_subdomain) }}#about" 
+                       class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        About Us
+                    </a>
+                    
+                    <!-- Categories Dropdown -->
+                    <div class="relative" x-data="{ categoriesOpen: false }">
+                        <button @click="categoriesOpen = !categoriesOpen" 
+                                class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center">
+                            Categories
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div x-show="categoriesOpen" 
+                             @click.away="categoriesOpen = false"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                            <div class="py-1">
+                                {% if company.industries %}
+                                    {% for industry in company.industries %}
+                                    <a href="{{ url_for('jobs_search', company_subdomain=company.company_subdomain, industry=industry.industry) }}" 
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-blue-600 transition-colors duration-200">
+                                        <div class="flex justify-between items-center">
+                                            <span>{{ industry.industry }}</span>
+                                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                                {{ industry.job_count }} job{{ 's' if industry.job_count != 1 else '' }}
+                                            </span>
+                                        </div>
+                                    </a>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="px-4 py-2 text-sm text-gray-500">
+                                        No categories available
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="{{url_for('all_cms_post')}}" 
+                       class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Blogs
+                    </a>
+                    <a href="{{url_for('homepage_contactus_submission')}}" 
+                       class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                        Contact Us
+                    </a>
+                </nav>
+                
+                <!-- Mobile menu button -->
+                <div class="lg:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" 
+                            class="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 p-1">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation Menu -->
+            <div x-show="mobileMenuOpen" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 scale-95"
+                 x-transition:enter-end="opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95"
+                 class="lg:hidden border-t border-gray-200 py-3">
+                <div class="space-y-1">
+                    <a href="{{url_for('jobs_search', company_subdomain=company.company_subdomain) }}" 
+                       class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm sm:text-base font-medium">
+                        Jobs
+                    </a>
+                    
+                    <a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=company.company_subdomain) }}#about" 
+                       class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm sm:text-base font-medium">
+                        About Us
+                    </a>
+                    
+                    <!-- Mobile Categories Dropdown -->
+                    <div x-data="{ mobileCategoriesOpen: false }">
+                        <button @click="mobileCategoriesOpen = !mobileCategoriesOpen" 
+                                class="w-full text-left text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm sm:text-base font-medium flex items-center justify-between">
+                            Categories
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Mobile Dropdown Menu -->
+                        <div x-show="mobileCategoriesOpen" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95"
+                             class="ml-4 mt-2 space-y-1">
+                            {% if company.industries %}
+                                {% for industry in company.industries %}
+                                <a href="{{ url_for('jobs_search', company_subdomain=company.company_subdomain, industry=industry.industry) }}" 
+                                   class="block text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm">
+                                    <div class="flex justify-between items-center">
+                                        <span>{{ industry.industry }}</span>
+                                        <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                            {{ industry.job_count }} job{{ 's' if industry.job_count != 1 else '' }}
+                                        </span>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            {% else %}
+                                <div class="px-3 py-2 text-sm text-gray-500">
+                                    No categories available
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <a href="{{url_for('all_cms_post')}}" 
+                       class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm sm:text-base font-medium">
+                        Blogs
+                    </a>
+                    <a href="{{url_for('homepage_contactus_submission')}}" 
+                       class="block text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm sm:text-base font-medium">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-8 sm:py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1 sm:col-span-2 lg:col-span-2">
+                    <div class="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+                        {% if company.company_logo %}
+                        <img src="{{ company.company_logo }}" alt="{{ company.name }} Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover">
+                        {% else %}
+                        <div class="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-blue-600 flex items-center justify-center">
+                            <span class="text-white font-bold text-lg sm:text-xl">{{ company.name[0] }}</span>
+                        </div>
+                        {% endif %}
+                        <span class="text-xl sm:text-2xl font-bold">{{ company.name }}</span>
+                    </div>
+                    <p class="text-gray-300 mb-3 sm:mb-4 max-w-md text-sm sm:text-base">
+                        {{ company.description or 'Connecting talented professionals with great opportunities.' }}
+                    </p>
+                    <div class="flex items-center text-gray-300 text-sm sm:text-base">
+                        <i class="bi bi-geo-alt-fill mr-2"></i>
+                        <span>{{ company.location }}</span>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Quick Links</h3>
+                    <ul class="space-y-1 sm:space-y-2">
+                        <li><a href="{{ url_for('jobs_search', company_subdomain=company.company_subdomain) }}" class="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">Jobs</a></li>
+                        <li><a href="{{ url_for('company_details_by_company_subdomain', company_subdomain=company.company_subdomain) }}#about" class="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">About Us</a></li>
+                        <li class="text-gray-300 text-sm sm:text-base">Categories</li>
+                        {% if company.industries %}
+                            {% for industry in company.industries %}
+                            <li class="ml-3 sm:ml-4">
+                                <a href="{{ url_for('jobs_search', company_subdomain=company.company_subdomain, industry=industry.industry) }}" class="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm">
+                                    {{ industry.industry }} ({{ industry.job_count }})
+                                </a>
+                            </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="ml-3 sm:ml-4 text-gray-400 text-xs sm:text-sm">No categories available</li>
+                        {% endif %}
+                        <li><a href="{{url_for('all_cms_post')}}" class="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">Blogs</a></li>
+                        <li><a href="{{url_for('homepage_contactus_submission')}}" class="text-gray-300 hover:text-white transition-colors text-sm sm:text-base">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social Links -->
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Follow Us</h3>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        {% if company.linkedin_url %}
+                        <a href="{{ company.linkedin_url }}" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="bi bi-linkedin text-xl sm:text-2xl"></i>
+                        </a>
+                        {% endif %}
+                        {% if company.twitter_url %}
+                        <a href="{{ company.twitter_url }}" class="text-gray-300 hover:text-blue-400 transition-colors">
+                            <i class="bi bi-twitter text-xl sm:text-2xl"></i>
+                        </a>
+                        {% endif %}
+                        {% if company.instagram_url %}
+                        <a href="{{ company.instagram_url }}" class="text-gray-300 hover:text-pink-400 transition-colors">
+                            <i class="bi bi-instagram text-xl sm:text-2xl"></i>
+                        </a>
+                        {% endif %}
+                        {% if company.google_map_url %}
+                        <a href="{{ company.google_map_url }}" class="text-gray-300 hover:text-red-400 transition-colors">
+                            <i class="bi bi-geo-alt-fill text-xl sm:text-2xl"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Footer -->
+            <div class="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+                    <div class="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
+                        © 2025 {{ company.name }}. All rights reserved.
+                    </div>
+                    <div class="flex space-x-4 sm:space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
