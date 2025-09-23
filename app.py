@@ -970,7 +970,6 @@ def admin_edit_company(company_id):
         # Update user information
         name = form.name.data
         website_url = form.website_url.data
-        print(location)
 
         response = api_calls.admin_edit_any_company(company_id=company_id,
                                                     name=name, website_url=website_url)
@@ -3529,7 +3528,24 @@ def validate_phone():
         return jsonify({"valid": False, "error": "Phone number and country code are required"}), 400
 
     try:
-        parsed_number = phonenumbers.parse(phone, country_code)
+        # Support both region codes (e.g., "IN") and numeric country codes (e.g., "91" or "+91")
+        country_code_str = str(country_code).strip()
+        if country_code_str.startswith("+"):
+            country_code_str = country_code_str[1:]
+
+        region_for_parsing = None
+        if country_code_str.isdigit():
+            # Map numeric country code to a region code
+            from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
+            regions = COUNTRY_CODE_TO_REGION_CODE.get(int(country_code_str), [])
+            if not regions:
+                return jsonify({"valid": False, "error": "Invalid country code"}), 400
+            region_for_parsing = regions[0]
+        else:
+            # Assume a region code like "IN", "AE", etc.
+            region_for_parsing = country_code_str
+
+        parsed_number = phonenumbers.parse(phone, region_for_parsing)
         if phonenumbers.is_valid_number(parsed_number):
             return jsonify({"valid": True})
         else:

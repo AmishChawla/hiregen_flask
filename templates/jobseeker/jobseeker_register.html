@@ -10,6 +10,10 @@
         a.login-logo img {
             object-fit: contain;
         }
+        /* Native select styling tweaks to match Tailwind inputs */
+        select.tailwind-select {
+            height: 2.5rem; /* h-10 */
+        }
     </style>
 
         <div class="isolate flex min-h-dvh items-center justify-center flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
@@ -56,11 +60,16 @@
 
                         <div class="mt-8 space-y-3">
                             <label class="text-sm/5 font-medium" for="phone_number">Mobile</label>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    {{ form.country_code(class="block rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-2 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black") }}
-                                    {{ form.phone_number(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="123-456-7890", required=True) }}
+                                <div id="phone_input_group" class="flex items-center gap-3">
+                                    <div class="w-36 sm:w-40 grid grid-cols-1">
+                                      {{ form.country_code(class="col-start-1 row-start-1 w-full appearance-none rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base/6 sm:text-sm/6 bg-white text-gray-900 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black pr-8 dark:bg-white/5 dark:text-white") }}
+                                      <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400">
+                                        <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                                      </svg>
+                                    </div>
+                                    {{ form.phone_number(class="flex-1 rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="123-456-7890", required=True) }}
                                 </div>
-                                <small id="error_message" style="color: red; display: none;">Invalid phone number</small>
+                                <small id="error_message" class="text-red-600 text-xs" style="display: none;">Invalid phone number</small>
                         </div>
 
                         <div class="mt-8 flex space-x-6">
@@ -86,15 +95,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Fetch country codes and populate the dropdown
-        $.getJSON("/get-country-codes", function (data) {
-            const countryCodeDropdown = $("#country_code");
-            data.forEach((country) => {
-                const option = `<option value="${country.name}">${country.name}</option>`;
-                countryCodeDropdown.append(option);
-            });
-        });
-
         // Validate phone number on blur
         $("#phone_number").on("blur", function () {
             const phoneNumber = $(this).val();

@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 {# jobseeker/_job_cards.html #}
 {% for job in jobs %}
-<div class="block p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+<div class="block p-5 rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-shadow relative">
     <div class="flex justify-between items-center">
         <div class="flex items-start space-x-4">
             <img src="{{ job.company_logo }}" alt="{{ job.company_name }} Logo"
@@ -30,20 +30,23 @@
                 </div>
                 <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{job.job_description | striptags }}</p>
                 
-                {% for skill in job.job_skills %}
-                <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                    {{skill}}</div>
-                {% endfor %}
+                <div class="flex flex-wrap gap-2">
+                  {% for skill in job.job_skills %}
+                  <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                    {{skill}}
+                  </span>
+                  {% endfor %}
+                </div>
 
-            <div class="flex gap-2">
+            <div class="flex flex-col sm:flex-row gap-2">
                 <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply Now</a>
                 <a href="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job.company_subdomain, job_slug=job.job_slug) }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">View Details</a>
             </div>
 
             </div>
         </div>
-        <!-- Save Job Button Top Right -->
-        <div>
+        <!-- Save Job Button (stays within header flow to avoid overflow) -->
+        <div class="ml-2 mt-3 sm:mt-0 shrink-0">
         {% if job.saved == False %}
             <button class="save-job-btn inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" title="Save Job" data-job-id="{{ job.id }}" data-user-role="{{ current_user.role if current_user.is_authenticated else 'none' }}" data-is-authenticated="{{ 'true' if current_user.is_authenticated else 'false' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4">

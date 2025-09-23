@@ -101,6 +101,10 @@
 
 
     </style>
+    <style>
+      /* Responsive tables */
+      .table-responsive { overflow-x: auto; width: 100%; }
+    </style>
 
 
       <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -347,6 +351,19 @@ function redirectToPage(pageUrl) {
 </script>
 
 
+  <script>
+    // Wrap all tables in a responsive container
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('table').forEach(function (tbl) {
+        if (!tbl.closest('.table-responsive')) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'table-responsive';
+          tbl.parentNode.insertBefore(wrapper, tbl);
+          wrapper.appendChild(tbl);
+        }
+      });
+    });
+  </script>
   </body>
 
 <footer id="footer" class="py-5 bg-light" style="margin-top: 25vh;width:100%">

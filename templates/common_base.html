@@ -50,6 +50,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   transform: rotate(90deg);
 }
 </style>
+<style>
+  /* Responsive tables */
+  .table-responsive { overflow-x: auto; width: 100%; }
+  /* Responsive media */
+  img { max-width: 100%; height: auto; }
+  .responsive-embed { position: relative; width: 100%; }
+  .responsive-embed::before { content: ""; display: block; padding-top: 56.25%; }
+  .responsive-embed > iframe, .responsive-embed > video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+</style>
 <!-- Favicon -->
 <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
@@ -196,6 +205,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 }
 </script>
 <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+<script>
+  // Wrap all tables in a responsive container
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('table').forEach(function (tbl) {
+      if (!tbl.closest('.table-responsive')) {
+        var wrapper = document.createElement('div');
+        wrapper.className = 'table-responsive';
+        tbl.parentNode.insertBefore(wrapper, tbl);
+        wrapper.appendChild(tbl);
+      }
+    });
+  });
+</script>
 </body>
 
 <footer class="bg-white py-10 sm:py-20 border-y border-gray-200">

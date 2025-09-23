@@ -29,6 +29,10 @@
     }
   </style>
   <style>
+    /* Responsive tables */
+    .table-responsive { overflow-x: auto; width: 100%; }
+  </style>
+  <style>
   /* Hide scrollbar but keep scrolling using Tailwind CSS */
   .hide-scrollbar {
     @apply overflow-y-auto;
@@ -337,5 +341,18 @@
   });
 </script>
 </body>
+  <script>
+    // Wrap all tables in a responsive container
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('table').forEach(function (tbl) {
+        if (!tbl.closest('.table-responsive')) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'table-responsive';
+          tbl.parentNode.insertBefore(wrapper, tbl);
+          wrapper.appendChild(tbl);
+        }
+      });
+    });
+  </script>
 </html>
 

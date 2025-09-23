@@ -428,7 +428,7 @@
     field.classList.add('field');
     const hrefAttribute = buttonAction ? `href="${buttonAction}"` : '';
     field.innerHTML = `
-        <a class="custom-button" role="button" ${hrefAttribute} target="_blank" style="margin-top: 10px;">${buttonText || 'Click Me!'}</a>
+        <a class="custom-button" role="button" ${hrefAttribute} target="_blank" rel="noopener noreferrer" style="margin-top: 10px;">${buttonText || 'Click Me!'}</a>
     `;
 
 
@@ -738,7 +738,7 @@ function generateUserBuiltFormHTML() {
                     break;
                 case 'a':
                     // Custom button or link
-                    fieldHTML += `<a class="custom-button" role="button" href="${input.getAttribute('href')}" target="_blank">${input.textContent}</a>`;
+                    fieldHTML += `<a class="custom-button" role="button" href="${input.getAttribute('href')}" target="_blank" rel="noopener noreferrer">${input.textContent}</a>`;
                     break;
             }
         });

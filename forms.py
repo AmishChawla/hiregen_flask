@@ -72,16 +72,18 @@ class JobseekerRegisterForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Populate the country_code dropdown dynamically
+        # Populate the country_code dropdown with phone country codes
         country_list = []
         from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
         for code, regions in COUNTRY_CODE_TO_REGION_CODE.items():
             if str(code) == "001":  # Exclude non-geographic codes
                 continue
-            for region in regions:
-                country_list.append((region,region))
+            # Use the first region for each country code to avoid duplicates
+            if regions:
+                region = regions[0]
+                country_list.append((str(code), f"+{code} ({region})"))
         # Sort and assign choices to the SelectField
-        self.country_code.choices = sorted(country_list, key=lambda x: x[1])
+        self.country_code.choices = sorted(country_list, key=lambda x: int(x[0]))
 
     # Custom validator for phone_number
     def validate_phone_number(self, field):
@@ -90,8 +92,17 @@ class JobseekerRegisterForm(FlaskForm):
             if not country_code:
                 raise ValidationError("Country code is required.")
 
+            # Get the region code from the country code
+            from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
+            regions = COUNTRY_CODE_TO_REGION_CODE.get(int(country_code), [])
+            if not regions:
+                raise ValidationError("Invalid country code selected.")
+            
+            # Use the first region for validation
+            region_code = regions[0]
+            
             # Parse and validate the phone number
-            parsed_number = phonenumbers.parse(field.data, country_code)
+            parsed_number = phonenumbers.parse(field.data, region_code)
             if not phonenumbers.is_valid_number(parsed_number):
                 raise ValidationError("Invalid phone number for the selected country.")
         except phonenumbers.NumberParseException:

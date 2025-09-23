@@ -185,13 +185,13 @@
               {% if application_data.company.website_url %}
               <div>
                 <span class="text-sm font-medium text-gray-500">Website:</span>
-                <a href="{{ application_data.company.website_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline">{{ application_data.company.website_url }}</a>
+                <a href="{{ application_data.company.website_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">{{ application_data.company.website_url }}</a>
               </div>
               {% endif %}
               {% if application_data.company.linkedin_url %}
               <div>
                 <span class="text-sm font-medium text-gray-500">LinkedIn:</span>
-                <a href="{{ application_data.company.linkedin_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 underline">View Company Profile</a>
+                <a href="{{ application_data.company.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">View Company Profile</a>
               </div>
               {% endif %}
             </div>
@@ -322,7 +322,7 @@
                 <span class="text-sm font-medium text-blue-800">Attachments:</span>
                 <div class="mt-1">
                   {% for attachment in application_data.current_stage.attachments %}
-                    <a href="{{ attachment.url }}" target="_blank" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm mr-3 mb-1">
+                    <a href="{{ attachment.url }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-blue-600 hover:text-blue-800 text-sm mr-3 mb-1">
                       <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                       </svg>
