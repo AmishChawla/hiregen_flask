@@ -1,63 +1,58 @@
-# Open Source SaaS Boilerplate built with Python, Flask and FastAPI
-Open Source SaaS boilerplate with API, CMS, Membership, Subscriptions, Admin Panel and AI integration, designed to accelerate your software development process. \
-Checkout demo at [SaaS Boilerplate Demo](http://35.154.190.245:5000) 
-## Features
-Built with Python, Flask and FastAPI, our boilerplate is designed to accelerate
-your development process, ensuring scalability, flexibility, and top-notch
-performance.
+# Hiregen.com Overview
 
-### FastAPI Integration
-Experience the speed and simplicity of FastAPI, a modern web framework for
-building APIs with Python.
-FastAPI’s asynchronous capabilities enable you to create high-performance
-applications that handle concurrent tasks effortlessly.
+Hiregen.com is an advanced recruitment platform designed to streamline the hiring process for employers and jobseekers alike. Leveraging AI-driven technology, Hiregen offers a comprehensive suite of tools that make talent acquisition efficient, collaborative, and data-driven.
 
-### Asynchronous Support
-Our boilerplate is fully equipped with asynchronous programming support,
-allowing you to build responsive and scalable applications.
-This ensures your SaaS application can manage multiple requests
-simultaneously without compromising on performance.
-### User Authentication and Authorization
-Implement robust user authentication and authorization systems out-of-the-
-box.
-Our boilerplate includes secure login, registration, password management, and
-role-based access control to protect your application and its users.
-### Database Integration
-Seamlessly integrate with popular databases such as PostgreSQL, MySQL, and
-SQLite.
-Our boilerplate provides a flexible and efficient way to manage your
-application’s data, ensuring reliability and performance.
-### API Documentation with Swagger UI
-Benefit from auto-generated API documentation using Swagger UI.
-This feature provides a user-friendly interface for developers to explore and
-test your APIs, enhancing the development experience and collaboration.
-### Email and Notification System
-Efficient email and notification system with built-in support for
-sending emails and notifications to users.
-This feature is essential for user engagement and communication within your
-application.
-### Admin Dashboard
-Manage your application with ease using the built-in admin dashboard.
-Monitor user activities, manage content, and perform administrative tasks
-through a user-friendly interface.
-### Security Best Practices
-Our boilerplate follows security best practices, ensuring your application is
-protected against common vulnerabilities.
-Features such as secure password hashing, input validation, and CSRF
-protection are built-in to safeguard your data and users.
+## Demo Video
+
+Watch a quick demo of Hiregen.com in action:
+
+[![Hiregen.com Demo Video](documentation/screenshots/demo_video_thumbnail.png)](documentation/hiregen_demo_video.mp4)
+
+> Click the image above or [this link](documentation/hiregen_demo_video.mp4) to view the demo video.
+
+Checkout demo at [Hiregen Demo](https://hiregen.com/demo-login)
+or
+Register at [Employer Registration](https://hiregen.com/register)
+
+## Key Features
+
+### For Employers
+
+- **Application Tracking System (ATS):** Visual Kanban board to track candidates through every stage of the hiring pipeline, from application to onboarding.
+- **Job Management:** Easily post, edit, and manage job listings from a centralized dashboard.
+- **Candidate Management:** Review, search, and take action on applicants with advanced filtering and bulk actions.
+- **Team Collaboration:** Invite colleagues and assign roles to manage hiring collaboratively and securely.
+- **Smart Interview Scoring:** Objectively evaluate candidates with AI-powered scoring and comparison tools.
+- **Integrated Chat Agent:** Get real-time assistance and best-practice guidance directly within the employer dashboard.
+- **Seamless Interview Scheduling:** Schedule interviews, send invites, and coordinate with candidates effortlessly.
+
+### For Jobseekers
+
+- **Personalized Dashboard:** Access a tailored dashboard with AI-based job recommendations that match your skills and experience.
+- **Automatic Resume Scanning:** Instantly parse and build your profile from your resume for smarter job matching.
+- **Easy Application Process:** Apply to jobs quickly and track your application status in real time.
+
+## Why Choose Hiregen?
+
+- **AI-Powered Matching:** Both employers and jobseekers benefit from intelligent recommendations and automation.
+- **Collaboration & Security:** Role-based permissions and team features ensure secure, efficient hiring.
+- **User-Friendly Interface:** Intuitive dashboards and workflows for both employers and jobseekers.
+- **Comprehensive Support:** Integrated chat agent and detailed documentation to guide users at every step.
+
+With Hiregen.com, organizations can build high-performing teams faster, and jobseekers can discover opportunities that truly fit their aspirations.
+
+
+
 
 ## Installation
 ### 1. Install required libraries
-`pip install requirements3.txt`
+`pip install requirements.txt`
 
 ### 2. Configure `secrets.env` and `constants.py`
 
 
 > [!IMPORTANT]
 > Get your google keys from google console.
-
-> [!NOTE]  
-> Download this api project from [API](https://github.com/AmishChawla/saas_cms_fastapi)
 
 _secrets.env_
 ```
@@ -80,15 +75,12 @@ Run `python app.py` to run this project
 
 ## Documentation
 [Admin Panel](documentation/admin_panel.md) \
-[User Panel](documentation/user_panel.md) \
-[Formbuilder](documentation/formbuilder.md) \
-[Posts](documentation/posts.md) \
-[Pages](documentation/pages.md) \
-[Newsletter](documentation/newsletter.md) \
-[Mail Setup](documentation/mail_setup.md) \
-[User Site](documentation/user_site.md)
+[Employer Panel](documentation/employer_panel.md) \
+[Jobseeker Panel](documentation/jobseeker_panel.md)
+
+
  
 ## Demo
-Checkout the demo of the project at [SaaS Boilerplate](http://35.154.190.245:5000/login) \
-Checkout our API repo at [API Repo](https://github.com/AmishChawla/saas_cms_fastapi) \
-Link to our [API Docs](http://35.154.190.245:8000/docs)
+Checkout demo at [Hiregen Demo](https://hiregen.com/demo-login)
+or
+Register at [Employer Registration](https://hiregen.com/register)
