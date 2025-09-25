@@ -1,6 +1,6 @@
 title: "HireGen"
 description: "An advanced recruitment platform designed to streamline the hiring process for employers and jobseekers."
-theme: jekyll-theme-slate
+theme: jekyll-theme-minimal
 
 # Optional settings
 show_downloads: false
