@@ -6,7 +6,7 @@ Hiregen.com is an advanced recruitment platform designed to streamline the hirin
 
 Watch a quick demo of Hiregen.com in action:
 
-[![Hiregen.com Demo Video](documentation/screenshots/demo_video_thumbnail.png)](documentation/hiregen_demo_video.mp4)
+[![Hiregen.com Demo Video](documentation/screenshots/HireGen_Demo_Thumbnail.png)](documentation/hiregen_demo_video.mp4)
 
 > Click the image above or [this link](documentation/hiregen_demo_video.mp4) to view the demo video.
 
