@@ -8,7 +8,7 @@ Dashboard is the one page representation of employer stats such as jobs, candida
 ![img.png](screenshots/employer_dashboard.png)
 
 ### Features of Employer Panel
-[1.Create and manage Jobs](manage_jobs.md) \
-[2.Manage Cnadidates](manage_candidates.md)  \
-[3.Application Tracking System](ATS.md) \
-[4.Mnage Teams](manage_team.md) \
+[1. Create and manage Jobs](manage_jobs.md) \
+[2. Manage Canadidates](manage_candidates.md)  \
+[3. Application Tracking System](ATS.md) \
+[4. Manage Teams](manage_team.md) 
