@@ -10,6 +10,7 @@ import PyPDF2
 import stripe as stripe
 from flask import Flask, render_template, redirect, url_for, flash, request, session, send_file, jsonify,g ,Response,send_from_directory,abort
 import xml.etree.ElementTree as ET
+from feedgen.feed import FeedGenerator
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from jinja2 import Environment, FileSystemLoader
 from werkzeug.utils import secure_filename
@@ -1073,8 +1074,12 @@ def company_details_by_company_subdomain(company_subdomain):
     print("result: ", result)
     jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
     print("jobs_by_company: ", jobs_by_company)
-    # Render the template with company details and job postings
-    return render_template('company_details.html', company=result, job_posts=jobs_by_company)
+    
+    # Generate RSS feed URL for this company
+    rss_feed_url = f"http://{constants.MY_ROOT_URL}/rss/company/{company_subdomain}/jobs.xml"
+    
+    # Render the template with company details, job postings, and RSS feed URL
+    return render_template('company_details.html', company=result, job_posts=jobs_by_company, rss_feed_url=rss_feed_url)
 
 
 
@@ -1741,89 +1746,89 @@ def generate_ai_blog_post():
     return jsonify(success=False, error="Invalid request")
 
 
-@app.route('/posts/preview-post', methods=['GET', 'POST'])
-@requires_any_permission("can_manage_job")
-@login_required
-def preview_post():
-    date_obj = datetime.utcnow()
-    formatted_date = date_obj.strftime('%d %B %Y')
-    form = forms.AddPost()
-    post_preview_json = request.form.get('postPreview', '{}')
-    print(f"post_preview_json: {post_preview_json}")  # Debugging line
-    post_preview = json.loads(post_preview_json)
-    print(f"post_preview: {post_preview}")
+# @app.route('/posts/preview-post', methods=['GET', 'POST'])
+# @requires_any_permission("can_manage_job")
+# @login_required
+# def preview_post():
+#     date_obj = datetime.utcnow()
+#     formatted_date = date_obj.strftime('%d %B %Y')
+#     form = forms.AddPost()
+#     post_preview_json = request.form.get('postPreview', '{}')
+#     print(f"post_preview_json: {post_preview_json}")  # Debugging line
+#     post_preview = json.loads(post_preview_json)
+#     print(f"post_preview: {post_preview}")
 
-    # post_preview = session.get('post_preview', {})
-    if request.method == 'GET':
-        # Populate the form with the data from the query parameters
-        # form.title.data = request.args.get('title')
-        # form.content.data = request.args.get('content')
-        # form.category.data = request.args.get('category')
-        # form.subcategory.data = request.args.get('subcategory')
-        # form.tags.data = request.args.get('tags')
-        tags_list = post_preview.get('tags', '').split(",")
-
-
+#     # post_preview = session.get('post_preview', {})
+#     if request.method == 'GET':
+#         # Populate the form with the data from the query parameters
+#         # form.title.data = request.args.get('title')
+#         # form.content.data = request.args.get('content')
+#         # form.category.data = request.args.get('category')
+#         # form.subcategory.data = request.args.get('subcategory')
+#         # form.tags.data = request.args.get('tags')
+#         tags_list = post_preview.get('tags', '').split(",")
 
 
-    if request.method == 'POST':
-        tags_list = form.tags.data.split(",")
-        if form.save_draft.data:
-            try:
-                result = api_calls.create_post(
-                    title=form.title.data,
-                    content=form.content.data,
-                    category_id=form.category.data,
-                    subcategory_id=form.subcategory.data,
-                    tags=tags_list,
-                    status='draft',
-                    access_token=current_user.id
-                )
 
-                if result:
 
-                    if current_user.role == 'user':
-                        return redirect(url_for('user_all_post'))
-                    else:
-                        return redirect(url_for('all_post'))
-                else:
-                    flash("Failed to create post", "danger")
-            except Exception as e:
-                flash(f"Error creating post: {e}", "danger")
-        elif form.publish.data:
-            try:
-                result = api_calls.create_post(
-                    title=form.title.data,
-                    content=form.content.data,
-                    category_id=form.category.data,
-                    subcategory_id=form.subcategory.data,
-                    tags=tags_list,
-                    status='published',
-                    access_token=current_user.id
-                )
+#     if request.method == 'POST':
+#         tags_list = form.tags.data.split(",")
+#         if form.save_draft.data:
+#             try:
+#                 result = api_calls.create_post(
+#                     title=form.title.data,
+#                     content=form.content.data,
+#                     category_id=form.category.data,
+#                     subcategory_id=form.subcategory.data,
+#                     tags=tags_list,
+#                     status='draft',
+#                     access_token=current_user.id
+#                 )
 
-                if result:
-                    session.pop('post_preview', None)
-                    flash("Post created successfully", "success")
-                    try:
-                        dateiso = result["created_at"]
-                        post_slug = result["slug"]
-                        date = dateiso.split('T')[0]
-                        post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
-                        send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data,
-                                                               body=form.content.data, post_url=post_url)
-                    except Exception as e:
-                        raise 'Problem sending newsletter' + e
-                    if current_user.role == 'user':
-                        return redirect(url_for('user_all_post'))
-                    else:
-                        return redirect(url_for('all_post'))
-                else:
-                    flash("Failed to create post", "danger")
-            except Exception as e:
-                flash(f"Error creating post: {e}", "danger")
+#                 if result:
 
-    return render_template('preview_post.html', post_preview=post_preview, author_name=current_user.username, form=form, tags=tags_list, created_at=formatted_date)
+#                     if current_user.role == 'user':
+#                         return redirect(url_for('user_all_post'))
+#                     else:
+#                         return redirect(url_for('all_post'))
+#                 else:
+#                     flash("Failed to create post", "danger")
+#             except Exception as e:
+#                 flash(f"Error creating post: {e}", "danger")
+#         elif form.publish.data:
+#             try:
+#                 result = api_calls.create_post(
+#                     title=form.title.data,
+#                     content=form.content.data,
+#                     category_id=form.category.data,
+#                     subcategory_id=form.subcategory.data,
+#                     tags=tags_list,
+#                     status='published',
+#                     access_token=current_user.id
+#                 )
+
+#                 if result:
+#                     session.pop('post_preview', None)
+#                     flash("Post created successfully", "success")
+#                     try:
+#                         dateiso = result["created_at"]
+#                         post_slug = result["slug"]
+#                         date = dateiso.split('T')[0]
+#                         post_url = f'{constants.MY_ROOT_URL}/{current_user.username}/posts/{date}/{post_slug}'
+#                         send_mails = api_calls.send_newsletter(access_token=current_user.id, subject=form.title.data,
+#                                                                body=form.content.data, post_url=post_url)
+#                     except Exception as e:
+#                         raise 'Problem sending newsletter' + e
+#                     if current_user.role == 'user':
+#                         return redirect(url_for('user_all_post'))
+#                     else:
+#                         return redirect(url_for('all_post'))
+#                 else:
+#                     flash("Failed to create post", "danger")
+#             except Exception as e:
+#                 flash(f"Error creating post: {e}", "danger")
+
+#     return render_template('preview_post.html', post_preview=post_preview, author_name=current_user.username, form=form, tags=tags_list, created_at=formatted_date)
 
 # @app.route("/posts/preview_post", methods=['GET', 'POST'])
 # @login_required
@@ -5806,8 +5811,170 @@ def sitemap():
 def robots_txt():
     return send_from_directory('static', 'robots.txt', mimetype='text/plain')
 
+def format_salary_range(job):
+    """Format salary range for display"""
+    if job.get('min_salary') and job.get('max_salary'):
+        return f"{job['salary_currency']} {job['min_salary']:,.0f} - {job['max_salary']:,.0f} {job.get('salary_time_unit', '')}"
+    elif job.get('min_salary'):
+        return f"{job['salary_currency']} {job['min_salary']:,.0f}+ {job.get('salary_time_unit', '')}"
+    elif job.get('max_salary'):
+        return f"{job['salary_currency']} up to {job['max_salary']:,.0f} {job.get('salary_time_unit', '')}"
+    else:
+        return "Salary not specified"
 
+def clean_html_description(html_text):
+    """Remove HTML tags and clean up description"""
+    if not html_text:
+        return ""
+    import re
+    # Remove HTML tags
+    clean = re.compile('<.*?>')
+    text = re.sub(clean, '', html_text)
+    # Clean up extra whitespace
+    text = ' '.join(text.split())
+    return text
 
+def generate_jobs_rss_feed(jobs_data, company_name=None):
+    """Generate RSS feed from jobs data"""
+    print(f"Generating RSS feed for {len(jobs_data)} jobs")  # Debug
+    fg = FeedGenerator()
+    
+    # Set feed metadata
+    if company_name:
+        fg.title(f'Latest Jobs - {company_name}')
+        fg.description(f'Latest job openings at {company_name} on HireGen')
+    else:
+        fg.title('Latest Jobs - HireGen')
+        fg.description('Latest job openings on HireGen recruitment platform')
+    
+    fg.link(href=f'{constants.MY_ROOT_URL}')
+    fg.language('en')
+    
+    # Create timezone-aware datetime for lastBuildDate (feedgen expects this)
+    from datetime import timezone
+    build_date = datetime.now(timezone.utc)
+    print(f"Build date: {build_date}")  # Debug
+    fg.lastBuildDate(build_date)
+    
+    # Add jobs as feed items
+    for job in jobs_data:
+        fe = fg.add_entry()
+        
+        # Job title with company info
+        title = f"{job['job_title']}"
+        if company_name:
+            title += f" at {company_name}"
+        fe.title(title)
+        
+        # Job URL - format: {company_subdomain}.domain.com/jobs/{job_slug}
+        job_url = f"{job['company_subdomain']}.{constants.MY_ROOT_URL}/jobs/{job['slug']}"
+        fe.link(href=job_url)
+        
+        # Job description (clean HTML)
+        description = clean_html_description(job.get('job_description', ''))
+        if len(description) > 300:
+            description = description[:300] + "..."
+        
+        # Add job details to description
+        details = []
+        if job.get('work_experience'):
+            details.append(f"Experience: {job['work_experience']}")
+        if job.get('job_type'):
+            details.append(f"Type: {job['job_type']}")
+        if job.get('working_style'):
+            details.append(f"Work Style: {job['working_style']}")
+        if job.get('address_city') and job.get('address_country'):
+            details.append(f"Location: {job['address_city']}, {job['address_country']}")
+        
+        salary_info = format_salary_range(job)
+        if salary_info != "Salary not specified":
+            details.append(f"Salary: {salary_info}")
+        
+        if details:
+            description += "\n\n" + " | ".join(details)
+        
+        fe.description(description)
+        
+        # Publication date
+        try:
+            # Handle different datetime formats
+            created_at = job['created_at']
+            print(f"Original created_at: {created_at}")  # Debug
+            
+            if created_at.endswith('Z'):
+                created_at = created_at.replace('Z', '+00:00')
+            
+            pub_date = datetime.fromisoformat(created_at)
+            print(f"Parsed pub_date: {pub_date}, tzinfo: {pub_date.tzinfo}")  # Debug
+            
+            # Ensure timezone info is present (feedgen expects timezone-aware datetimes)
+            if pub_date.tzinfo is None:
+                pub_date = pub_date.replace(tzinfo=timezone.utc)
+                print(f"After adding UTC tzinfo: {pub_date}")  # Debug
+            
+            fe.pubDate(pub_date)
+        except (ValueError, TypeError) as e:
+            print(f"Date parsing error: {e}")  # Debug
+            # Fallback to current time if date parsing fails
+            fe.pubDate(datetime.now(timezone.utc))
+        
+        # Unique identifier
+        fe.guid(job_url, permalink=True)
+        
+        # Category
+        if job.get('industry'):
+            fe.category(term=job['industry'])
+    
+    return fg.rss_str(pretty=True)
+
+@app.route('/rss/jobs.xml')
+def jobs_rss_feed():
+    """RSS feed for all jobs"""
+    try:
+        # Get latest jobs from your database
+        # You'll need to replace this with your actual database query
+        jobs_data = api_calls.get_all_jobs(limit=50)  # Adjust based on your API
+        
+        rss_content = generate_jobs_rss_feed(jobs_data)
+        return Response(rss_content, mimetype='application/rss+xml')
+    except Exception as e:
+        return f"Error generating RSS feed: {str(e)}", 500
+
+@app.route('/rss/company/<company_subdomain>/jobs.xml')
+def company_jobs_rss_feed(company_subdomain):
+    """RSS feed for specific company jobs"""
+    try:   
+        # Get company name
+        company_info = api_calls.get_company_details_by_subdomain(company_subdomain)
+        if not company_info:
+            return f"Company not found: {company_subdomain}", 404
+            
+        company_name = company_info.get('company_name', company_subdomain)
+        company_id = company_info["id"]
+
+        # Get jobs for specific company
+        jobs_data = api_calls.get_jobs_by_company_id(company_id=company_id)
+        
+        if not jobs_data:
+            jobs_data = []  # Empty list if no jobs found
+        
+        rss_content = generate_jobs_rss_feed(jobs_data, company_name)
+        return Response(rss_content, mimetype='application/rss+xml')
+    except Exception as e:
+        print(f"RSS Feed Error: {str(e)}")  # Debug logging
+        return f"Error generating company RSS feed: {str(e)}", 500
+
+@app.route('/rss/industry/<industry>/jobs.xml')
+def industry_jobs_rss_feed(industry):
+    """RSS feed for jobs in specific industry"""
+    try:
+        # Get jobs for specific industry
+        jobs_data = api_calls.get_jobs_by_industry(industry, limit=50)
+        
+        rss_content = generate_jobs_rss_feed(jobs_data, f"{industry} Industry")
+        return Response(rss_content, mimetype='application/rss+xml')
+    except Exception as e:
+        return f"Error generating industry RSS feed: {str(e)}", 500
 
 # Register the AI chat agent blueprint
 register_ai_chat_blueprint(app)
