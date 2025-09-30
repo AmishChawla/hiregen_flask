@@ -4678,7 +4678,6 @@ def admin_delete_cms_post(post_id):
 @login_required
 def add_cms_post():
     form = forms.AddPost()
-    media_form = forms.AddMediaForm()
 
     try:
         categories = api_calls.get_cms_all_categories(access_token=current_user.id)
@@ -4919,25 +4918,40 @@ def admin_update_cms_post(post_id):
     # Fetch categories and format them for the form choices
     try:
         categories = api_calls.get_cms_all_categories(access_token=current_user.id)
-        category_choices = [(category['id'], category['category']) for category in categories]
+        category_choices = [(int(category['id']), category['category']) for category in categories]
         if not category_choices:
-            category_choices = [('', 'Select Category')]
+            category_choices = [(0, 'Select Category')]
     except Exception as e:
         print(f"Error fetching categories: {e}")
-        category_choices = [('', 'Select Category')]
+        category_choices = [(0, 'Select Category')]
     form.category.choices = category_choices
 
-    # If a category is selected, fetch and set subcategories
-    if form.category.data:
+    # Determine which category to use for loading subcategories
+    # On GET: use the post's category to prefill
+    # On POST: use the submitted form value (do not overwrite user's choice)
+    from flask import request
+    if request.method == 'GET':
         try:
-            subcategories = api_calls.get_subcategories_by_category(form.category.data)
-            subcategory_choices = [(subcategory['id'], subcategory['subcategory']) for subcategory in subcategories]
+            form.category.data = int(post['category_id']) if post and post.get('category_id') is not None else 0
+        except Exception:
+            form.category.data = 0
+        selected_category_id = form.category.data
+    else:
+        selected_category_id = form.category.data or 0
+
+    # Load subcategories based on the selected category
+    try:
+        if selected_category_id:
+            subcategories = api_calls.get_subcategories_by_category(selected_category_id)
+            subcategory_choices = [(int(subcategory['id']), subcategory['subcategory']) for subcategory in subcategories]
             if not subcategory_choices:
-                subcategory_choices = [('', 'Select Subcategory')]
-        except Exception as e:
-            print(f"Error fetching subcategories: {e}")
-            subcategory_choices = [('', 'Select Subcategory')]
-        form.subcategory.choices = subcategory_choices
+                subcategory_choices = [(0, 'Select Subcategory')]
+        else:
+            subcategory_choices = [(0, 'Select Subcategory')]
+    except Exception as e:
+        print(f"Error fetching subcategories: {e}")
+        subcategory_choices = [(0, 'Select Subcategory')]
+    form.subcategory.choices = subcategory_choices
 
 
     if form.validate_on_submit():
@@ -5028,9 +5042,12 @@ def admin_update_cms_post(post_id):
 
 
 
-    form.title.data = post['title']
-    form.category.data = post['category_id']
-    form.subcategory.data = post['subcategory_id']
+    if request.method == 'GET':
+        form.title.data = post['title']
+        try:
+            form.subcategory.data = int(post['subcategory_id']) if post and post.get('subcategory_id') is not None else 0
+        except Exception:
+            form.subcategory.data = 0
     form.short_description.data = post['short_description']
     form.content.data = post['content']
     form.tags.data= tags_string
@@ -5867,7 +5884,11 @@ def generate_jobs_rss_feed(jobs_data, company_name=None):
         fe.title(title)
         
         # Job URL - format: {company_subdomain}.domain.com/jobs/{job_slug}
-        job_url = f"{job['company_subdomain']}.{constants.MY_ROOT_URL}/jobs/{job['slug']}"
+        slug_value = job.get('slug') or job.get('job_slug')
+        if not slug_value:
+            # Skip entries without any slug identifier
+            continue
+        job_url = f"{job['company_subdomain']}.{constants.MY_ROOT_URL}/jobs/{slug_value}"
         fe.link(href=job_url)
         
         # Job description (clean HTML)
@@ -5969,12 +5990,54 @@ def industry_jobs_rss_feed(industry):
     """RSS feed for jobs in specific industry"""
     try:
         # Get jobs for specific industry
-        jobs_data = api_calls.get_jobs_by_industry(industry, limit=50)
-        
+        jobs_data = api_calls.get_filtered_jobs(industry=industry, limit=50)
+        jobs_data = jobs_data['jobs']
         rss_content = generate_jobs_rss_feed(jobs_data, f"{industry} Industry")
         return Response(rss_content, mimetype='application/rss+xml')
     except Exception as e:
         return f"Error generating industry RSS feed: {str(e)}", 500
+
+
+@app.route('/rss/country/<country>/jobs.xml')
+def country_jobs_rss_feed(country):
+    """RSS feed for jobs in a specific country"""
+    try:
+        country_name = country.replace('-', ' ')
+        jobs_data = api_calls.get_filtered_jobs(country=country_name, limit=50)
+        jobs_data = jobs_data['jobs']
+        print("jobs_data_country: " , jobs_data)
+        rss_content = generate_jobs_rss_feed(jobs_data, f"Jobs in {country_name}")
+        return Response(rss_content, mimetype='application/rss+xml')
+    except Exception as e:
+        return f"Error generating country RSS feed: {str(e)}", 500
+
+
+@app.route('/rss/jobtype/<job_type>/jobs.xml')
+def jobtype_jobs_rss_feed(job_type):
+    """RSS feed for jobs by job type"""
+    try:
+        job_type_name = job_type.replace('-', ' ')
+        jobs_data = api_calls.get_filtered_jobs(job_type=job_type_name, limit=50)
+        jobs_data = jobs_data['jobs']
+        print("jobs_data_jobtype: " , jobs_data)
+        rss_content = generate_jobs_rss_feed(jobs_data, f"{job_type_name} Jobs")
+        return Response(rss_content, mimetype='application/rss+xml')
+    except Exception as e:
+        return f"Error generating job type RSS feed: {str(e)}", 500
+
+
+@app.route('/rss-feeds')
+def rss_feeds_index():
+    try:
+        import static_dropdowns as sd
+        countries = sd.countries
+        job_types = [jt[0] for jt in sd.job_types]
+        industries = [item[0] for item in sd.industries if item[0]]
+        return render_template('rss_feeds.html', countries=countries, job_types=job_types, industries=industries)
+    except Exception as e:
+        return f"Error loading RSS feeds page: {str(e)}", 500
+
+
 
 # Register the AI chat agent blueprint
 register_ai_chat_blueprint(app)

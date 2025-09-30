@@ -62,7 +62,7 @@
                 <div class="mb-6">
                     {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
                     <div class="relative mt-2">
-                        {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600", id="subcategory") }}
+                        {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600", id="subcategory", **{"data-selected": form.subcategory.data}) }}
                     </div>
                 </div>
                 <div class="mb-6">
@@ -152,6 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                 option.textContent = sub.subcategory;
                                 subcategorySelect.appendChild(option);
                             });
+
+                            // try to preselect current subcategory if provided
+                            const selectedSub = subcategorySelect.getAttribute('data-selected');
+                            if (selectedSub) {
+                                subcategorySelect.value = selectedSub;
+                            }
                         } else {
                             console.error('No subcategories found or invalid format:', data);
                         }
@@ -161,6 +167,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
             }
         });
+
+        // If there is a preselected category and subcategory list is empty, trigger initial fetch
+        const hasPreselectedCategory = categorySelect && categorySelect.value && categorySelect.value !== '0';
+        const subcategoryHasOptions = subcategorySelect && subcategorySelect.options && subcategorySelect.options.length > 0;
+        if (hasPreselectedCategory && !subcategoryHasOptions) {
+            categorySelect.dispatchEvent(new Event('change'));
+        } else {
+            // ensure preselection if options already exist
+            const selectedSub = subcategorySelect.getAttribute('data-selected');
+            if (selectedSub) {
+                subcategorySelect.value = selectedSub;
+            }
+        }
     });
 </script>
 <script>

@@ -323,8 +323,8 @@ class AddPlan(FlaskForm):
 
 class AddPost(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    category = SelectField('Category', validators=[DataRequired()], choices=[('', 'Select a category')])
-    subcategory = SelectField('Subcategory', validators=[DataRequired()], choices=[('', 'Select a subcategory')])
+    category = SelectField('Category', validators=[DataRequired()], coerce=int, choices=[(0, 'Select a category')])
+    subcategory = SelectField('Subcategory', validators=[DataRequired()], coerce=int, choices=[(0, 'Select a subcategory')])
     content = TextAreaField('Content', render_kw={'rows': 30, 'cols': 30, 'id': 'content',
                                                                                'placeholder': 'Write details about the post.'})
     tags = StringField('Tags', render_kw={

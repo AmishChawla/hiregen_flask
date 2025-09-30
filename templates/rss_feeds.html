@@ -1,0 +1,51 @@
+{% extends 'common_base.html' %}
+
+{% block title %}RSS Feeds{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 py-10">
+  <div class="container mx-auto max-w-5xl px-4">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">RSS Feeds</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Jobs by Country</h2>
+        <ul class="list-disc list-inside space-y-1">
+          {% for country in countries %}
+            {% set slug = country|lower|replace(' ', '-') %}
+            <li>
+              <a class="text-blue-600 hover:underline" href="{{ url_for('country_jobs_rss_feed', country=slug) }}">{{ country }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Jobs by Job Type</h2>
+        <ul class="list-disc list-inside space-y-1">
+          {% for jt in job_types %}
+            {% set slug = jt|lower|replace(' ', '-') %}
+            <li>
+              <a class="text-blue-600 hover:underline" href="{{ url_for('jobtype_jobs_rss_feed', job_type=slug) }}">{{ jt }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Jobs by Industry</h2>
+        <ul class="list-disc list-inside space-y-1">
+          {% for industry in industries %}
+            {% set slug = industry|lower|replace(' ', '-') %}
+            <li>
+              <a class="text-blue-600 hover:underline" href="{{ url_for('industry_jobs_rss_feed', industry=slug) }}">{{ industry }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
