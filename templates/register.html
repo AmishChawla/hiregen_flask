@@ -53,15 +53,22 @@
                             {{ form.lastname(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
                         </div>
                         </div>
-                        <div class="mt-8 flex space-x-6">
-                        <div class="w-1/2">
-                            <label class="text-sm/5 font-medium mb-3 block" for="phone_number">Mobile</label>
-                            {{ form.phone_number(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
-                        </div>
-                        <div class="w-1/2">
+                            <div class="mt-8 space-y-3">
+                                <label class="text-sm/5 font-medium" for="phone_number">Mobile</label>
+                                    <div id="phone_input_group" class="flex items-center gap-3">
+                                        <div class="w-36 sm:w-40 grid grid-cols-1">
+                                          {{ form.country_code(class="col-start-1 row-start-1 w-full appearance-none rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-3 py-2 text-base/6 sm:text-sm/6 bg-white text-gray-900 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black pr-8 dark:bg-white/5 dark:text-white") }}
+                                          <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4 dark:text-gray-400">
+                                            <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+                                          </svg>
+                                        </div>
+                                        {{ form.phone_number(class="flex-1 rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="123-456-7890", required=True) }}
+                                    </div>
+                                    <small id="error_message" class="text-red-600 text-xs" style="display: none;">Invalid phone number</small>
+                            </div>   
+                        <div class="mt-8 space-y-3">
                             <label class="text-sm/5 font-medium mb-3 block" for="email">Email</label>
                             {{ form.email(class="block w-full rounded-lg border border-transparent ring-1 shadow-sm ring-black/10 px-4 py-2 text-base/6 sm:text-sm/6 focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-black", placeholder="", required=True) }}
-                        </div>
                         </div>
                      <div class="mt-8 space-y-3">
                         <label class="text-sm/5 font-medium" for="password">Password</label>
@@ -98,6 +105,7 @@
         </div>
 
 <script src="https://www.google.com/recaptcha/api.js?render=6LfjmMUqAAAAAM5YMYcXwGqaUN6mK8UAG4j0zjrT"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function toggleMenu() {
             document.getElementById('nav-menu').classList.toggle('active');
@@ -138,6 +146,29 @@
             });
         });
     });
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Validate phone number on blur
+            $("#phone_number").on("blur", function () {
+                const phoneNumber = $(this).val();
+                const countryCode = $("#country_code").val();
+                console.log(phoneNumber);
+                console.log(countryCode);
+                $.ajax({
+                    url: "/validate-phone",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ phone: phoneNumber, country_code: countryCode }),
+                    success: function () {
+                        $("#error_message").hide();
+                    },
+                    error: function () {
+                        $("#error_message").text("Invalid phone number").show();
+                    },
+                });
+            });
+        });
     </script>
     
     
