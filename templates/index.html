@@ -34,6 +34,8 @@
       darkMode: 'class',
     };
   </script>
+  <!-- Tailwind+ Elements for popovers -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -128,18 +130,115 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       <li><a href="{{url_for('user_view_plan')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Pricing</a></li>
       <li><a href="{{url_for('all_companies')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Companies</a></li>
 
-      <!-- Resources -->
-      <li class="relative group w-full md:w-auto">
-        <a href="#" class="flex items-center py-2 text-base font-medium text-gray-700 hover:text-blue-600">
-          Resources <i class="fa-solid fa-chevron-down fa-sm ml-2"></i>
-        </a>
-        <ul class="absolute bg-white p-0 border w-52 top-10 left-0 hidden group-hover:block transition duration-150 ease-in-out shadow-lg rounded-lg z-50">
-          <li><a href="{{url_for('all_cms_post')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Blog</a></li>
-          <li><a href="{{url_for('faqs')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">FAQ's</a></li>
-          <li><a href="{{url_for('about_us')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">About Us</a></li>
-          <li><a href="{{url_for('privacy_policy')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Privacy Policy</a></li>
-          <li><a href="{{url_for('terms_of_service')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Terms of Service</a></li>
-        </ul>
+      <!-- Resources (Popover) -->
+      <li class="relative w-full md:w-auto">
+        <div class="relative">
+          <button popovertarget="home-menu-resources" class="inline-flex items-center gap-x-1 py-2 text-base font-medium text-gray-700 hover:text-blue-600">
+            <span>Resources</span>
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-5">
+              <path d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+            </svg>
+          </button>
+
+          <el-popover id="home-menu-resources" anchor="bottom" popover class="m-0 w-screen max-w-max overflow-visible bg-transparent p-0 px-4 transition [--anchor-gap:theme(spacing.5)] [transition-behavior:allow-discrete] backdrop:bg-transparent open:flex data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in">
+            <div class="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg outline outline-1 outline-gray-900/5 lg:max-w-3xl">
+              <div class="grid grid-cols-1 gap-x-6 gap-y-1 p-4 lg:grid-cols-2">
+                <!-- Calculators -->
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-coins text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('resources_cost_per_hire') }}" class="font-semibold text-gray-900">Cost-per-Hire<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Calculate average cost per hire</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-hourglass-half text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('resources_time_to_hire') }}" class="font-semibold text-gray-900">Time-to-Hire<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Measure days from post to offer</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-chart-line text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('resources_recruitment_roi') }}" class="font-semibold text-gray-900">Recruitment ROI<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Estimate ROI of your hiring</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-arrows-rotate text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('resources_attrition_cost') }}" class="font-semibold text-gray-900">Attrition Cost<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Quantify yearly attrition cost</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-bullseye text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('resources_job_board_effectiveness') }}" class="font-semibold text-gray-900">Job Board Effectiveness<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Compare sources by cost & hires</p>
+                  </div>
+                </div>
+                <!-- Blog/Docs -->
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-newspaper text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('all_cms_post') }}" class="font-semibold text-gray-900">Blog<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Articles and updates</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-circle-question text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('faqs') }}" class="font-semibold text-gray-900">FAQs<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Common questions answered</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-circle-info text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('about_us') }}" class="font-semibold text-gray-900">About Us<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Learn about HireGen</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-lock text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('privacy_policy') }}" class="font-semibold text-gray-900">Privacy Policy<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Data and privacy terms</p>
+                  </div>
+                </div>
+                <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                  <div class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                    <i class="fa-solid fa-scroll text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                  </div>
+                  <div>
+                    <a href="{{ url_for('terms_of_service') }}" class="font-semibold text-gray-900">Terms of Service<span class="absolute inset-0"></span></a>
+                    <p class="mt-1 text-gray-600">Usage terms and policies</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </el-popover>
+        </div>
       </li>
 
       <li class="w-14"><a href="{{url_for('login')}}" class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Sign in</a></li>

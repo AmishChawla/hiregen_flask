@@ -1,0 +1,90 @@
+{% extends 'common_base.html' %}
+{% block title %}Recruitment ROI Calculator{% endblock %}
+{% block content %}
+<section class="bg-gray-50 border-b">
+  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
+    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2">
+        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
+        <li>/</li>
+        <li><span>Resources</span></li>
+        <li>/</li>
+        <li class="text-slate-700">Recruitment ROI</li>
+      </ol>
+    </nav>
+    <h1 class="mt-4 text-3xl font-semibold">Recruitment ROI Calculator</h1>
+    <p class="mt-2 text-slate-600 max-w-2xl">Understand the return on investment for your hiring by comparing the value created by new hires against the cost to hire them.</p>
+
+    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm mb-1">Cost per hire</label>
+      <input id="cph" type="number" class="w-full border rounded p-2" placeholder="e.g., 4000">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Employee revenue contribution (annual)</label>
+      <input id="rev" type="number" class="w-full border rounded p-2" placeholder="e.g., 120000">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Retention rate (%)</label>
+      <input id="ret" type="number" class="w-full border rounded p-2" placeholder="e.g., 80">
+    </div>
+      </div>
+
+        <div class="mt-4">
+          <button id="calc" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
+        </div>
+
+        <div id="result" class="mt-6 hidden">
+          <h2 class="text-xl font-semibold">Results</h2>
+          <p class="mt-2">Recruitment ROI: <span id="roi" class="font-bold"></span>%</p>
+          <div id="resultTips" class="mt-4 hidden">
+            <p class="text-sm text-slate-600">Tip: Improve ROI by increasing early retention and prioritizing roles with measurable revenue impact.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-1 rounded-xl border border-gray-200 bg-white p-4 md:p-6 flex items-center justify-center">
+        <img src="{{ url_for('static', filename='images/Analytics.png') }}" alt="Recruitment ROI illustration" class="max-h-56 w-auto">
+      </div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
+        <h3 class="text-lg font-semibold mb-2">How it works</h3>
+        <p class="text-slate-600 text-sm">We estimate the value created by a hire adjusted by retention and compare it to the cost to hire.</p>
+        <p class="text-slate-700 text-sm mt-2"><strong>Formula:</strong> ROI (%) = ((Revenue × Retention − Cost per Hire) ÷ Cost per Hire) × 100</p>
+      </div>
+      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
+        <h3 class="text-lg font-semibold mb-2">Improve ROI</h3>
+        <p class="text-slate-600 text-sm">Increase retention, target high-ROI roles, and reduce hiring costs.</p>
+        <a href="#" class="inline-block mt-3 text-blue-600 underline">Download your ROI breakdown PDF</a>
+      </div>
+    </div>
+
+    <div class="mt-10 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+      <h3 class="text-lg font-semibold mb-3">Other calculators</h3>
+      <div class="flex flex-wrap gap-2 text-sm">
+        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_cost_per_hire') }}">Cost-per-Hire</a>
+        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_time_to_hire') }}">Time-to-Hire</a>
+        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_attrition_cost') }}">Attrition Cost</a>
+        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_job_board_effectiveness') }}">Job Board Effectiveness</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('calc').addEventListener('click', () => {
+    const cph = Number(document.getElementById('cph').value) || 0;
+    const rev = Number(document.getElementById('rev').value) || 0;
+    const ret = (Number(document.getElementById('ret').value) || 0) / 100;
+    const effectiveValue = rev * ret;
+    const roi = cph === 0 ? 0 : ((effectiveValue - cph) / cph) * 100;
+    document.getElementById('roi').textContent = roi.toFixed(2);
+    document.getElementById('result').classList.remove('hidden');
+  });
+  </script>
+{% endblock %}
+
+

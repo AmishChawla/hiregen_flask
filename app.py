@@ -155,6 +155,32 @@ def index():
     return render_template('index.html')
 
 
+# ============================ RESOURCES CALCULATORS ============================
+@app.route('/resources/cost-per-hire')
+def resources_cost_per_hire():
+    return render_template('resources/cost_per_hire.html')
+
+
+@app.route('/resources/time-to-hire')
+def resources_time_to_hire():
+    return render_template('resources/time_to_hire.html')
+
+
+@app.route('/resources/recruitment-roi')
+def resources_recruitment_roi():
+    return render_template('resources/recruitment_roi.html')
+
+
+@app.route('/resources/attrition-cost')
+def resources_attrition_cost():
+    return render_template('resources/attrition_cost.html')
+
+
+@app.route('/resources/job-board-effectiveness')
+def resources_job_board_effectiveness():
+    return render_template('resources/job_board_effectiveness.html')
+
+
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload_pdf():
@@ -1079,7 +1105,7 @@ def company_details_by_company_subdomain(company_subdomain):
     print("jobs_by_company: ", jobs_by_company)
     
     # Generate RSS feed URL for this company
-    rss_feed_url = f"http://{constants.MY_ROOT_URL}/rss/company/{company_subdomain}/jobs.xml"
+    rss_feed_url = f"https://{constants.MY_ROOT_URL}/rss/company/{company_subdomain}/jobs.xml"
     
     # Render the template with company details, job postings, and RSS feed URL
     return render_template('company_details.html', company=result, job_posts=jobs_by_company, rss_feed_url=rss_feed_url)

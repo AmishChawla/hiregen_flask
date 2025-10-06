@@ -1,0 +1,103 @@
+{% extends 'common_base.html' %}
+{% block title %}Attrition Cost Calculator{% endblock %}
+{% block content %}
+<section class="bg-gray-50 border-b">
+  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
+    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
+      <ol class="flex items-center space-x-2">
+        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
+        <li>/</li>
+        <li><span>Resources</span></li>
+        <li>/</li>
+        <li class="text-slate-700">Attrition Cost</li>
+      </ol>
+    </nav>
+    <h1 class="mt-4 text-3xl font-semibold">Attrition Cost Calculator</h1>
+    <p class="mt-2 text-slate-600 max-w-2xl">Quantify the annual cost of employee turnover to guide retention strategy and investment.</p>
+
+    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm mb-1">Average salary</label>
+      <input id="salary" type="number" class="w-full border rounded p-2" placeholder="e.g., 70000">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Replacement cost multiplier (e.g., 0.5 = 50%)</label>
+      <input id="replaceMul" type="number" step="0.01" class="w-full border rounded p-2" placeholder="e.g., 0.5">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Turnover rate (%)</label>
+      <input id="turnover" type="number" class="w-full border rounded p-2" placeholder="e.g., 20">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Training investment per hire</label>
+      <input id="training" type="number" class="w-full border rounded p-2" placeholder="e.g., 1500">
+    </div>
+    <div>
+      <label class="block text-sm mb-1">Total employees</label>
+      <input id="employees" type="number" class="w-full border rounded p-2" placeholder="e.g., 100">
+    </div>
+          <p id="error" class="hidden text-xs text-red-600 mt-1">Provide non-negative values; employees must be at least 1.</p>
+        </div>
+
+        <div class="mt-4">
+          <button id="calc" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
+        </div>
+
+        <div id="result" class="mt-6 hidden">
+          <h2 class="text-xl font-semibold">Results</h2>
+          <p class="mt-2">Estimated Yearly Attrition Cost: <span id="cost" class="font-bold"></span></p>
+          <div id="resultTips" class="mt-4 hidden">
+            <p class="text-sm text-slate-600">Tip: Target the top drivers of turnover; improve onboarding and manager enablement.</p>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-1 rounded-xl border border-gray-200 bg-white p-4 md:p-6 flex items-center justify-center">
+        <img src="{{ url_for('static', filename='images/Analytics.png') }}" alt="Attrition cost illustration" class="max-h-56 w-auto">
+      </div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
+        <h3 class="text-lg font-semibold mb-2">How it works</h3>
+        <p class="text-slate-600 text-sm">We estimate separations and multiply by the per-hire replacement cost.</p>
+        <p class="text-slate-700 text-sm mt-2"><strong>Formula:</strong> Attrition Cost = (Employees × Turnover%) × (Salary × Replacement Multiplier + Training)</p>
+      </div>
+      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
+        <h3 class="text-lg font-semibold mb-2">Cut attrition costs</h3>
+        <p class="text-slate-600 text-sm">Boost retention with better screening, onboarding, and career paths.</p>
+        <a href="#" class="inline-block mt-3 text-blue-600 underline">See how predictive hiring helps</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.getElementById('calc').addEventListener('click', () => {
+    const salary = Number(document.getElementById('salary').value) || 0;
+    const repMul = Number(document.getElementById('replaceMul').value) || 0;
+    const turnoverRate = (Number(document.getElementById('turnover').value) || 0) / 100;
+    const training = Number(document.getElementById('training').value) || 0;
+    const employees = Math.max(1, Number(document.getElementById('employees').value) || 1);
+    const hasNegative = [salary, repMul, turnoverRate, training, employees].some(v => v < 0);
+    if (hasNegative || employees < 1){
+      const err = document.getElementById('error');
+      if (err) err.classList.remove('hidden');
+      return;
+    } else {
+      const err = document.getElementById('error');
+      if (err) err.classList.add('hidden');
+    }
+    const separations = employees * turnoverRate;
+    const perHireCost = salary * repMul + training;
+    const total = separations * perHireCost;
+    document.getElementById('cost').textContent = `$${total.toFixed(2)}`;
+    document.getElementById('result').classList.remove('hidden');
+    const tips = document.getElementById('resultTips');
+    if (tips) tips.classList.remove('hidden');
+  });
+</script>
+{% endblock %}
+
+
