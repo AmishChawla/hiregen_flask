@@ -4712,10 +4712,10 @@ def add_cms_post():
 
     try:
         categories = api_calls.get_cms_all_categories(access_token=current_user.id)
-        category_choices = [('', 'Select a category')] + [(category['id'], category['category']) for category in categories]
+        category_choices = [(0, 'Select a category')] + [(category['id'], category['category']) for category in categories]
     except Exception as e:
         print(f"Error fetching categories: {e}")
-        category_choices = [('', 'Select Category')]
+        category_choices = [(0, 'Select Category')]
 
     form.category.choices = category_choices
 
@@ -4726,7 +4726,7 @@ def add_cms_post():
             subcategory_choices = [(subcategory['id'], subcategory['subcategory']) for subcategory in subcategories]
         except Exception as e:
             print(f"Error fetching subcategories: {e}")
-            subcategory_choices = [('', 'Select Subcategory')]
+            subcategory_choices = [(0, 'Select Subcategory')]
         form.subcategory.choices = subcategory_choices
 
     
@@ -4802,7 +4802,7 @@ def add_cms_post():
     # Fetch media and forms
     root_url = constants.ROOT_URL + '/'
 
-    return render_template('admin/admin_cms/cms_add_post.html', form=form, media_form=media_form,categories=category_choices)
+    return render_template('admin/admin_cms/cms_add_post.html', form=form, categories=category_choices)
 
 
 @app.route("/admin/cms/add-category/", methods=['GET', 'POST'])
