@@ -515,15 +515,43 @@ table.dataTable thead th, table.dataTable tfoot th {
 </div>
 </div>
 </div>
+{% set published_jobs = jobs|selectattr('status', 'equalto', 'published')|list %}
+{% set draft_jobs = jobs|selectattr('status', 'equalto', 'draft')|list %}
+
+<script>
+    // Set job counts for JavaScript
+    window.publishedJobsCount = {{ published_jobs|length }};
+    window.draftJobsCount = {{ draft_jobs|length }};
+</script>
+
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
 <script>
 function showTab(tabId, tabLinkId) {
-    document.querySelectorAll('.tab-pane').forEach(tab => tab.classList.add('hidden'));
-    document.getElementById(tabId).classList.remove('hidden');
+    // Hide all tab panes
+    document.querySelectorAll('.tab-pane').forEach(tab => {
+        tab.classList.add('hidden');
+        tab.classList.remove('show', 'active');
+    });
+    
+    // Show the selected tab pane
+    const selectedTab = document.getElementById(tabId);
+    if (selectedTab) {
+        selectedTab.classList.remove('hidden');
+        selectedTab.classList.add('show', 'active');
+    }
 
-    document.querySelectorAll('nav a').forEach(tab => tab.classList.remove('text-blue-700', 'border-purple-300'));
-    document.getElementById(tabLinkId).classList.add('text-blue-700', 'border-purple-300');
+    // Update tab navigation styling
+    document.querySelectorAll('nav a').forEach(tab => {
+        tab.classList.remove('text-blue-700', 'border-blue-500', 'border-b-2');
+        tab.classList.add('text-gray-500', 'border-transparent');
+    });
+    
+    const selectedTabLink = document.getElementById(tabLinkId);
+    if (selectedTabLink) {
+        selectedTabLink.classList.remove('text-gray-500', 'border-transparent');
+        selectedTabLink.classList.add('text-blue-700', 'border-blue-500', 'border-b-2');
+    }
 }
 
 function openModal(id) {
@@ -536,8 +564,48 @@ function closeModal(id) {
 
 
 $(document).ready(function() {
-    const userPostTable = new DataTable('#userpostTable', { order: [] });
-    const draftPostTable = new DataTable('#draftpostTable', { order: [] });
+    // Initialize DataTables for both tables
+    let userPostTable, draftPostTable;
+    
+    // Initialize published jobs table
+    if ($('#userpostTable').length) {
+        userPostTable = new DataTable('#userpostTable', { 
+            order: [],
+            responsive: true,
+            pageLength: 10,
+            language: {
+                emptyTable: "<div class='flex flex-col items-center p-8 text-gray-500'><svg class='w-12 h-12 text-gray-300 mb-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path></svg><p class='text-lg font-medium'>No published jobs</p><p class='text-sm'>Your published job postings will appear here.</p></div>"
+            }
+        });
+    }
+    
+    // Initialize draft jobs table
+    if ($('#draftpostTable').length) {
+        draftPostTable = new DataTable('#draftpostTable', { 
+            order: [],
+            responsive: true,
+            pageLength: 10,
+            language: {
+                emptyTable: "<div class='flex flex-col items-center p-8 text-gray-500'><svg class='w-12 h-12 text-gray-300 mb-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'></path></svg><p class='text-lg font-medium'>No draft jobs</p><p class='text-sm'>Your draft job postings will appear here.</p></div>"
+            }
+        });
+    }
+    
+    // Set initial active tab styling and show appropriate tab
+    if (window.publishedJobsCount > 0) {
+        // Show published tab if there are published jobs
+        $('#published-tab').addClass('text-blue-700 border-blue-500 border-b-2');
+        $('#published-tab').removeClass('text-gray-500 border-transparent');
+    } else if (window.draftJobsCount > 0) {
+        // Show drafts tab if there are draft jobs but no published jobs
+        $('#drafts-tab').addClass('text-blue-700 border-blue-500 border-b-2');
+        $('#drafts-tab').removeClass('text-gray-500 border-transparent');
+        showTab('draft-posts', 'drafts-tab');
+    } else {
+        // Default to published tab
+        $('#published-tab').addClass('text-blue-700 border-blue-500 border-b-2');
+        $('#published-tab').removeClass('text-gray-500 border-transparent');
+    }
 });
 </script>
 {% endblock %}
