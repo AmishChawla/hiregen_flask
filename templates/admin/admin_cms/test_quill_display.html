@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+  <div id="quill-editor" style="height: 100px;"></div>
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  <script>
+    var quill = new Quill('#quill-editor', { theme: 'snow' });
+    document.getElementById('quill-editor').style.display = 'none';
+    quill.root.innerHTML = '<h1>TEST HTML</h1>';
+    document.getElementById('quill-editor').style.display = 'block';
+    console.log("After setting while hidden:", quill.root.innerHTML);
+    
+    setTimeout(() => {
+        console.log("After delay:", quill.root.innerHTML);
+        
+        quill.root.innerHTML = '<h1>TEST 2 HTML</h1>';
+        console.log("After setting while visible:", quill.root.innerHTML);
+    }, 1000);
+  </script>
+</body>
+</html>

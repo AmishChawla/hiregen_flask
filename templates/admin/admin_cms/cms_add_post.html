@@ -1,7 +1,7 @@
 {% if current_user.role == "user" %}
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 {% else %}
-    {% extends 'admin_base.html' %}
+{% extends 'admin_base.html' %}
 {% endif %}
 
 {% block title %}Add Post{% endblock %}
@@ -9,88 +9,112 @@
 {% block content %}
 <div class="">
     <div class="min-h-screen py-0">
-      <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <form method="post" action="{{ url_for('add_cms_post') }}" id="postForm" enctype="multipart/form-data">
-            <div class="mb-6 md:flex md:items-center md:justify-between">
-                <div class="min-w-0 flex-1">
-                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">New Post</h2>
+        <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <form method="post" action="{{ url_for('add_cms_post') }}" id="postForm" enctype="multipart/form-data">
+                <div class="mb-6 md:flex md:items-center md:justify-between">
+                    <div class="min-w-0 flex-1">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">New Post</h2>
+                    </div>
+                    <div class="flex shrink-0 md:ml-4 md:mt-0">
+                        {{ form.save_draft(class="rounded-md bg-white px-3.5 py-2.5 font-semibold text-blue-600
+                        shadow-xs text-base border border-blue-600 ring-inset hover:bg-gray-50 me-3", type="submit") }}
+                        {{ form.publish(class="inline-flex items-center justify-center whitespace-nowrap rounded-md
+                        text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none
+                        focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+                        disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4
+                        [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4
+                        text-white", type="submit") }}
+                    </div>
                 </div>
-                <div class="flex shrink-0 md:ml-4 md:mt-0">
-                    {{ form.save_draft(class="rounded-md bg-white px-3.5 py-2.5 font-semibold text-blue-600 shadow-xs text-base border border-blue-600 ring-inset hover:bg-gray-50 me-3", type="submit") }}
-                    {{ form.publish(class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white", type="submit") }}
-                </div>
-            </div>
-            <div class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
-                {{ form.hidden_tag() }}
-                <div class=" bg-white flex flex-col">
-                    <div class="container mx-auto px-4">
-                        <div class="mb-6">
-                            {{ form.title.label(class="block text-sm font-medium text-gray-900") }}
-                            <div class="mt-2">
-                                {{ form.title(class="block w-full rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-purple-600") }}
-                            </div>
-                        </div>    
-                        
-                        <div class="flex space-x-8 mb-6">
-                            <div class="w-1/2">
-                                {{ form.category.label(class="block text-sm font-medium text-gray-900") }}
-                                <div class="relative mt-2">
-                                    {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600", id="category") }}
+                <div
+                    class="rounded-lg border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6  shadow-sm animate-fade-in">
+                    {{ form.hidden_tag() }}
+                    <div class=" bg-white flex flex-col">
+                        <div class="container mx-auto px-4">
+                            <div class="mb-6">
+                                {{ form.title.label(class="block text-sm font-medium text-gray-900") }}
+                                <div class="mt-2">
+                                    {{ form.title(class="block w-full rounded-md bg-white px-3 py-2 text-lg
+                                    font-semibold text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400
+                                    focus:outline-purple-600") }}
                                 </div>
                             </div>
-                            <div class="w-1/2">
-                                {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
-                                <div class="relative mt-2">
-                                    {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600", id="subcategory") }}
+
+                            <div class="flex space-x-8 mb-6">
+                                <div class="w-1/2">
+                                    {{ form.category.label(class="block text-sm font-medium text-gray-900") }}
+                                    <div class="relative mt-2">
+                                        {{ form.category(class="block w-full rounded-md bg-white px-3 py-2 text-base
+                                        text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600",
+                                        id="category") }}
+                                    </div>
+                                </div>
+                                <div class="w-1/2">
+                                    {{ form.subcategory.label(class="block text-sm font-medium text-gray-900") }}
+                                    <div class="relative mt-2">
+                                        {{ form.subcategory(class="block w-full rounded-md bg-white px-3 py-2 text-base
+                                        text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600",
+                                        id="subcategory") }}
+                                    </div>
                                 </div>
                             </div>
-                          </div>
 
-                          <div class="flex space-x-8 mb-6">
-                            <div class="w-1/2">
-                                {{ form.tags.label(class="block text-sm font-medium text-gray-900") }}
-                            <div class="relative mt-2">
-                                {{ form.tags(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600") }}
+                            <div class="flex space-x-8 mb-6">
+                                <div class="w-1/2">
+                                    {{ form.tags.label(class="block text-sm font-medium text-gray-900") }}
+                                    <div class="relative mt-2">
+                                        {{ form.tags(class="block w-full rounded-md bg-white px-3 py-2 text-base
+                                        text-gray-900 outline outline-1 outline-gray-300 focus:outline-purple-600") }}
+                                    </div>
+                                </div>
+                                <div class="w-1/2">
+                                    {{ form.featured_image.label(class="block text-sm font-medium text-gray-900") }}
+                                    <div class="mt-2">
+                                        {{ form.featured_image(class="block w-full text-sm text-gray-900 border p-1.5
+                                        border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none") }}
+                                    </div>
+                                </div>
                             </div>
-                            </div>
-                            <div class="w-1/2">
-                                {{ form.featured_image.label(class="block text-sm font-medium text-gray-900") }}
-                            <div class="mt-2">
-                                {{ form.featured_image(class="block w-full text-sm text-gray-900 border p-1.5 border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none") }}
-                            </div>
-                            </div>
-                          </div>
 
-                          <div class="mb-6 flex items-center">
-                            <button type="button" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" aria-checked="false" aria-labelledby="annual-billing-label">
-                              <span aria-hidden="true" class="pointer-events-none inline-block size-5 translate-x-0 transform rounded-full bg-white shadow transition duration-200 ease-in-out"></span>
-                            </button>
-                            <span class="ml-3 text-sm" id="annual-billing-label">
-                              <span class="font-medium text-gray-900">Send as Newsletter to all subscribers</span>
-                            </span>
-                          </div>
-
-                          <input type="hidden" name="send_newsletter" id="send_newsletter" value="false">
-                          <button id="generate-from-ai" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Generate from AI</button>
-
-                        <div class="mb-6">
-                            {{ form.short_description.label(class="block text-sm font-medium text-gray-900") }}
-                            <div class="mt-2">
-                                {{ form.short_description(class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400 focus:outline-purple-600") }}
+                            <div class="mb-6 flex items-center">
+                                <button type="button"
+                                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none"
+                                    role="switch" aria-checked="false" aria-labelledby="annual-billing-label">
+                                    <span aria-hidden="true"
+                                        class="pointer-events-none inline-block size-5 translate-x-0 transform rounded-full bg-white shadow transition duration-200 ease-in-out"></span>
+                                </button>
+                                <span class="ml-3 text-sm" id="annual-billing-label">
+                                    <span class="font-medium text-gray-900">Send as Newsletter to all subscribers</span>
+                                </span>
                             </div>
-                        </div>
-                        <div>
-                            {{ form.content.label(class="block text-sm font-medium text-gray-900") }}
-                            <div class="mt-2">
-                                <div id="quill-editor" class="block w-full rounded-md bg-white px-3 py-10 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-blue-600"></div>
-                                {{ form.content(class="hidden", id="content") }}
+
+                            <input type="hidden" name="send_newsletter" id="send_newsletter" value="false">
+                            <button id="generate-from-ai"
+                                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">Generate
+                                from AI</button>
+
+                            <div class="mb-6">
+                                {{ form.short_description.label(class="block text-sm font-medium text-gray-900") }}
+                                <div class="mt-2">
+                                    {{ form.short_description(class="block w-full rounded-md bg-white px-3 py-2
+                                    text-base text-gray-900 outline outline-1 outline-gray-300 placeholder-gray-400
+                                    focus:outline-purple-600") }}
+                                </div>
+                            </div>
+                            <div>
+                                {{ form.content.label(class="block text-sm font-medium text-gray-900") }}
+                                <div class="mt-2">
+                                    <div id="quill-editor"
+                                        class="block w-full rounded-md bg-white px-3 py-10 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-blue-600">
+                                    </div>
+                                    {{ form.content(class="hidden", id="content") }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-       </div>
+            </form>
+        </div>
     </div>
 </div>
 {% block scripts %}
@@ -98,114 +122,183 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Add custom icon for the HTML button
+        const icons = Quill.import('ui/icons');
+        icons['html'] = '<svg viewBox="0 0 18 18"><text class="ql-fill" x="1" y="12" font-family="sans-serif" font-size="7" font-weight="bold">RAW</text></svg>';
+
         window.quill = new Quill('#quill-editor', {
             theme: 'snow',
             placeholder: 'Write details about the post.',
             modules: {
-                toolbar: [
-                    [{ header: [1, 2, 3, false] }],
-                    ['bold', 'italic', 'underline', 'strike'],
-                    [{ list: 'ordered' }, { list: 'bullet' }],
-                    ['blockquote', 'code-block'],
-                    [{ script: 'sub' }, { script: 'super' }],
-                    [{ indent: '-1' }, { indent: '+1' }],
-                    [{ direction: 'rtl' }],
-                    [{ color: [] }, { background: [] }],
-                    [{ align: [] }],
-                    ['link', 'image', 'video'],
-                    ['clean'],
-                ],
+                toolbar: {
+                    container: [
+                        [{ header: [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ list: 'ordered' }, { list: 'bullet' }],
+                        ['blockquote', 'code-block'],
+                        [{ script: 'sub' }, { script: 'super' }],
+                        [{ indent: '-1' }, { indent: '+1' }],
+                        [{ direction: 'rtl' }],
+                        [{ color: [] }, { background: [] }],
+                        [{ align: [] }],
+                        ['link', 'image', 'video'],
+                        ['clean'],
+                        ['html']
+                    ],
+                    handlers: {
+                        'html': function () {
+                            toggleHtmlEdit();
+                        }
+                    }
+                }
             },
         });
+
+        let isHtmlView = false;
+        const htmlEditor = document.createElement('textarea');
+        htmlEditor.className = 'w-full h-64 p-4 font-mono text-sm border border-gray-300 rounded-b-md focus:outline-blue-600 hidden bg-gray-50';
+        htmlEditor.placeholder = 'Paste your raw HTML here...';
+
+        // We append textarea right after the Quill container.
+        const quillContainer = document.querySelector('.ql-container');
+        quillContainer.insertAdjacentElement('afterend', htmlEditor);
+
+        function toggleHtmlEdit() {
+            isHtmlView = !isHtmlView;
+            const toolbarHtmlButton = document.querySelector('.ql-html');
+
+            if (isHtmlView) {
+                // Switch to HTML View
+                htmlEditor.value = window.quill.root.innerHTML;
+                quillContainer.style.display = 'none';
+                htmlEditor.classList.remove('hidden');
+                if (toolbarHtmlButton) toolbarHtmlButton.classList.add('ql-active');
+            } else {
+                // Switch back to Rich Text
+                htmlEditor.classList.add('hidden');
+                quillContainer.style.display = 'block';
+
+                // Let the browser paint the block display before we execute Quill API 
+                // so that the editor has valid dimensions and can parse safely.
+                setTimeout(() => {
+                    // Strip out <script> tags to avoid XSS execution if arbitrary HTML is written
+                    let pasteHTML = htmlEditor.value;
+                    pasteHTML = pasteHTML.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+                    
+                    try {
+                        if (window.quill.clipboard.dangerouslyPasteHTML) {
+                            window.quill.setContents([]);
+                            window.quill.clipboard.dangerouslyPasteHTML(0, pasteHTML);
+                        } else if (window.quill.clipboard.convert) {
+                            // Fallback for newer Quill if dangerouslyPasteHTML is missing
+                            const delta = window.quill.clipboard.convert({ html: pasteHTML });
+                            window.quill.setContents(delta, 'silent');
+                        } else {
+                            window.quill.root.innerHTML = pasteHTML;
+                        }
+                    } catch (e) {
+                        // Safe ultimate fallback
+                        window.quill.root.innerHTML = pasteHTML;
+                    }
+                }, 0);
+
+                if (toolbarHtmlButton) toolbarHtmlButton.classList.remove('ql-active');
+            }
+        }
+
         document.querySelector('#postForm').addEventListener('submit', function () {
             const contentInput = document.querySelector('#content');
-            contentInput.value = quill.root.innerHTML;
+            if (isHtmlView) {
+                contentInput.value = htmlEditor.value;
+            } else {
+                contentInput.value = window.quill.root.innerHTML;
+            }
         });
     });
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-    const categorySelect = document.getElementById('category');
-    const subcategorySelect = document.getElementById('subcategory');
+        const categorySelect = document.getElementById('category');
+        const subcategorySelect = document.getElementById('subcategory');
 
-    categorySelect.addEventListener('change', function () {
-        const categoryId = this.value;
+        categorySelect.addEventListener('change', function () {
+            const categoryId = this.value;
 
-        // Clear existing subcategories
-        subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
+            // Clear existing subcategories
+            subcategorySelect.innerHTML = '<option value="">Select a subcategory</option>';
 
-        if (categoryId) {
-            // Fetch subcategories from the API
-            fetch(`/admin/cms/subcategories/${categoryId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Fetched subcategories:', data);
+            if (categoryId) {
+                // Fetch subcategories from the API
+                fetch(`/admin/cms/subcategories/${categoryId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Fetched subcategories:', data);
 
-                    if (data.subcategories && Array.isArray(data.subcategories)) {
-                        data.subcategories.forEach(sub => {
-                            const option = document.createElement('option');
-                            option.value = sub.id;
-                            option.textContent = sub.subcategory;
-                            subcategorySelect.appendChild(option);
-                        });
-                    } else {
-                        console.error('No subcategories found or invalid format:', data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching subcategories:', error);
-                });
-        }
+                        if (data.subcategories && Array.isArray(data.subcategories)) {
+                            data.subcategories.forEach(sub => {
+                                const option = document.createElement('option');
+                                option.value = sub.id;
+                                option.textContent = sub.subcategory;
+                                subcategorySelect.appendChild(option);
+                            });
+                        } else {
+                            console.error('No subcategories found or invalid format:', data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching subcategories:', error);
+                    });
+            }
+        });
     });
-});
 </script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const toggleButton = document.querySelector('[role="switch"]');
-      const toggleThumb = toggleButton.querySelector('span[aria-hidden="true"]');
-      const hiddenInput = document.getElementById('send_newsletter');
-  
-      toggleButton.addEventListener('click', () => {
-        const isChecked = toggleButton.getAttribute('aria-checked') === 'true';
-        const newChecked = !isChecked;
-  
-        toggleButton.setAttribute('aria-checked', newChecked);
-  
-        // Toggle background color
-        toggleButton.classList.toggle('bg-gray-200', isChecked);
-        toggleButton.classList.toggle('bg-purple-500', !isChecked);
-  
-        // Toggle thumb position
-        toggleThumb.classList.toggle('translate-x-0', isChecked);
-        toggleThumb.classList.toggle('translate-x-5', !isChecked);
-  
-        // Set hidden input value
-        hiddenInput.value = newChecked ? "true" : "false";
-      });
+        const toggleButton = document.querySelector('[role="switch"]');
+        const toggleThumb = toggleButton.querySelector('span[aria-hidden="true"]');
+        const hiddenInput = document.getElementById('send_newsletter');
+
+        toggleButton.addEventListener('click', () => {
+            const isChecked = toggleButton.getAttribute('aria-checked') === 'true';
+            const newChecked = !isChecked;
+
+            toggleButton.setAttribute('aria-checked', newChecked);
+
+            // Toggle background color
+            toggleButton.classList.toggle('bg-gray-200', isChecked);
+            toggleButton.classList.toggle('bg-purple-500', !isChecked);
+
+            // Toggle thumb position
+            toggleThumb.classList.toggle('translate-x-0', isChecked);
+            toggleThumb.classList.toggle('translate-x-5', !isChecked);
+
+            // Set hidden input value
+            hiddenInput.value = newChecked ? "true" : "false";
+        });
     });
-  </script>
-  
-  <script>
+</script>
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         const imageInput = document.querySelector('input[name="featured_image"]');
-    
+
         imageInput.addEventListener('change', function () {
             const file = this.files[0];
             const maxSize = 2 * 1024 * 1024; // 2MB in bytes
-    
+
             if (file && file.size > maxSize) {
                 alert("The selected image is larger than 2MB. Please choose a smaller file.");
                 this.value = ""; // Clear the file input
             }
         });
     });
-    </script>
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const generateButton = document.getElementById('generate-from-ai');
@@ -214,36 +307,36 @@
         const shortDescInput = document.querySelector('textarea[name="short_description"]');
         const contentInput = document.getElementById('content');
         const quillEditor = document.getElementById('quill-editor');
-    
+
         generateButton.addEventListener('click', async function (e) {
             e.preventDefault();
             const title = titleInput?.value.trim();
-    
+
             if (!title) {
                 alert("Please enter a blog title first.");
                 return;
             }
-    
+
             generateButton.disabled = true;
             generateButton.textContent = "Generating...";
-    
+
             try {
                 const response = await fetch('/generate-ai-blog-post', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: title })
                 });
-    
+
                 const result = await response.json();
-    
+
                 if (result.success) {
                     const content = result.content;
                     console.log(content)
                     tagsInput.value = content.tags || "";
                     shortDescInput.value = content.short_description || "";
                     if (window.quill) {
-                            window.quill.root.innerHTML = content.content || "";
-                        }
+                        window.quill.root.innerHTML = content.content || "";
+                    }
                 } else {
                     alert("Failed to generate content: " + (result.error || "Unknown error"));
                 }
@@ -256,8 +349,8 @@
             }
         });
     });
-    </script>
-    
+</script>
+
 
 
 {% endblock %}
