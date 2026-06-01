@@ -1,5 +1,37 @@
 {% extends 'common_base.html' %}
 
+{% block metatags %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "HireGen AI Recruitment Software",
+  "operatingSystem": "All",
+  "applicationCategory": "BusinessApplication",
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD",
+    "priceSpecification": {
+      "@type": "UnitPriceSpecification",
+      "price": "0.00",
+      "priceCurrency": "USD",
+      "referenceQuantity": {
+        "@type": "QuantitativeValue",
+        "value": "1",
+        "unitCode": "MON"
+      }
+    }
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "ratingCount": "154"
+  }
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <style>
   p, ul li {font-size:1.125rem;}

@@ -361,21 +361,26 @@ table tr:nth-child(even) {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "{{ post.title | escape }}",
-  "description": "{{ post.content[:300] | striptags | escape }}",
+  "description": "{{ post.short_description | default(post.content[:200] | striptags) | escape }}",
   "author": {
     "@type": "Person",
-    "name": "{{ post.author_name | default('Anonymous') | escape }}"
+    "name": "{{ post.username | default(post.author_name | default('HireGen Author')) | escape }}"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "HireGen"
+    "name": "HireGen",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ url_for('static', filename='images/logo.webp', _external=True) }}"
+    }
   },
   "datePublished": "{{ post.created_at if post.created_at else '' }}",
+  "dateModified": "{{ post.updated_at if post.updated_at else (post.created_at if post.created_at else '') }}",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "{{ url_for('read_post', slug=post.slug, _external=True) }}"
   },
-  "image": "https://via.placeholder.com/800x400?text=Default+Image"
+  "image": "{{ post.featured_image if post.featured_image else url_for('static', filename='images/blog-bg.jpg', _external=True) }}"
 }
 </script>
 

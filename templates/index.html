@@ -68,6 +68,54 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://hiregen.com/#organization",
+        "name": "HireGen",
+        "url": "https://hiregen.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://hiregen.com/#logo",
+          "url": "https://hiregen.com/static/images/logo.webp",
+          "caption": "HireGen Logo"
+        },
+        "image": {
+          "@id": "https://hiregen.com/#logo"
+        },
+        "description": "Streamline your hiring process with AI—save time, attract top talent, and simplify recruitment effortlessly.",
+        "sameAs": [
+          "https://facebook.com/",
+          "https://twitter.com/",
+          "https://linkedin.com/",
+          "https://youtube.com/"
+        ]
+      },
+      {
+        "@type": "Product",
+        "@id": "https://hiregen.com/#product",
+        "name": "HireGen AI Recruitment Software",
+        "image": "https://hiregen.com/static/images/featured.png",
+        "description": "Streamline hiring with AI recruiting tools like resume parsing, ATS, retainer CRM, and online interviews.",
+        "brand": {
+          "@type": "Brand",
+          "name": "HireGen"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": "154",
+          "reviewCount": "154"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 
 

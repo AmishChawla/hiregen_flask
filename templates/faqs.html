@@ -1,5 +1,88 @@
 {% extends 'common_base.html' %}
 
+{% block metatags %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What services do you offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We offer advanced AI recruitment tools including an ATS, resume parsing, customizable career pages, and more to streamline your hiring process."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I get started with Hiregen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Simply click the \"Get Started\" button on our homepage to sign up for a free 30-day trial. No credit card is required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What sets Hiregen apart from competitors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our advanced AI technology and user-friendly interface make recruitment efficient and effective, helping you attract, evaluate, and hire top talent seamlessly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I customize my career pages?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Hiregen provides customizable career page options to showcase your brand and company culture, attracting the best talent."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Hiregen suitable for small businesses?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely! Hiregen is designed to be scalable and user-friendly, making it ideal for businesses of all sizes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Hiregen integrate with other platforms?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Hiregen integrates seamlessly with popular HR tools, job boards, and productivity platforms to streamline your workflow."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What kind of support does Hiregen offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We provide 24/7 customer support via chat, email, and phone, along with detailed documentation and tutorials."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I track recruitment analytics with Hiregen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Hiregen offers comprehensive analytics to help you monitor hiring performance, track metrics, and make data-driven decisions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data secure with Hiregen?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely! Hiregen uses advanced encryption and follows strict data protection protocols to ensure your information remains safe and confidential."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
 {% block content %}
 
 <section class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
