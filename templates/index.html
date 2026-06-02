@@ -95,14 +95,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         ]
       },
       {
-        "@type": "Product",
-        "@id": "https://hiregen.com/#product",
+        "@type": "SoftwareApplication",
+        "@id": "https://hiregen.com/#software",
         "name": "HireGen AI Recruitment Software",
+        "operatingSystem": "All",
+        "applicationCategory": "BusinessApplication",
         "image": "https://hiregen.com/static/images/featured.png",
         "description": "Streamline hiring with AI recruiting tools like resume parsing, ATS, retainer CRM, and online interviews.",
-        "brand": {
-          "@type": "Brand",
-          "name": "HireGen"
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "USD",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": "0.00",
+            "priceCurrency": "USD",
+            "referenceQuantity": {
+              "@type": "QuantitativeValue",
+              "value": "1",
+              "unitCode": "MON"
+            }
+          }
         },
         "aggregateRating": {
           "@type": "AggregateRating",
@@ -111,7 +124,132 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           "worstRating": "1",
           "ratingCount": "154",
           "reviewCount": "154"
-        }
+        },
+        "review": [
+          {
+            "@type": "Review",
+            "author": {
+              "@type": "Person",
+              "name": "James T."
+            },
+            "datePublished": "2026-01-15",
+            "reviewBody": "AIRecruit has transformed our hiring process. We now find qualified candidates in half the time with better results.",
+            "reviewRating": {
+              "@type": "Rating",
+              "bestRating": "5",
+              "ratingValue": "5",
+              "worstRating": "1"
+            }
+          },
+          {
+            "@type": "Review",
+            "author": {
+              "@type": "Person",
+              "name": "Mark R."
+            },
+            "datePublished": "2026-02-10",
+            "reviewBody": "The AI matching technology is incredibly accurate. We've seen a 40% increase in successful hires since implementing this platform.",
+            "reviewRating": {
+              "@type": "Rating",
+              "bestRating": "5",
+              "ratingValue": "5",
+              "worstRating": "1"
+            }
+          },
+          {
+            "@type": "Review",
+            "author": {
+              "@type": "Person",
+              "name": "Sarah M."
+            },
+            "datePublished": "2026-03-01",
+            "reviewBody": "As a small business, our recruiting resources are limited. AIRecruit gives us enterprise-level recruitment capabilities at a fraction of the cost.",
+            "reviewRating": {
+              "@type": "Rating",
+              "bestRating": "5",
+              "ratingValue": "5",
+              "worstRating": "1"
+            }
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://hiregen.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What services do you offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We offer advanced AI recruitment tools including an ATS, resume parsing, customizable career pages, and more to streamline your hiring process."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I get started with Hiregen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Simply click the \"Get Started\" button on our homepage to sign up for a free 30-day trial. No credit card is required."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What sets Hiregen apart from competitors?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our advanced AI technology and user-friendly interface make recruitment efficient and effective, helping you attract, evaluate, and hire top talent seamlessly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I customize my career pages?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Hiregen provides customizable career page options to showcase your brand and company culture, attracting the best talent."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Hiregen suitable for small businesses?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely! Hiregen is designed to be scalable and user-friendly, making it ideal for businesses of all sizes."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Hiregen integrate with other platforms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Hiregen integrates seamlessly with popular HR tools, job boards, and productivity platforms to streamline your workflow."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What kind of support does Hiregen offer?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We provide 24/7 customer support via chat, email, and phone, along with detailed documentation and tutorials."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I track recruitment analytics with Hiregen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, Hiregen offers comprehensive analytics to help you monitor hiring performance, track metrics, and make data-driven decisions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data secure with Hiregen?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Absolutely! Hiregen uses advanced encryption and follows strict data protection protocols to ensure your information remains safe and confidential."
+            }
+          }
+        ]
       }
     ]
   }
