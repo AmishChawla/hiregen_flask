@@ -1050,7 +1050,7 @@ def company_register():
         response = api_calls.company_register(name, website_url, logo=payload, location=location, description=description, company_subdomain=company_subdomain, access_token=current_user.id)
         print("inside")
 
-        if (response.status_code == 200):
+        if (response and response.status_code == 200):
             flash('Registration Successful', category='info')
             if (current_user.role == 'user'):
                 current_user.company = dict(response.json())
@@ -1060,7 +1060,16 @@ def company_register():
             else:
                 return redirect(url_for('list_of_companies'))
         else:
-            flash('Registration unsuccessful.', category='error')
+            error_detail = ""
+            if response:
+                try:
+                    error_detail = response.json().get("detail", "")
+                except Exception:
+                    pass
+            if "Subdomain already registered" in error_detail:
+                form.company_subdomain.errors.append("Subdomain already registered, please choose another.")
+            else:
+                flash('Registration unsuccessful.', category='error')
 
     return render_template('company_register.html', form=form)
 

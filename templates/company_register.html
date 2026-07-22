@@ -130,7 +130,7 @@
                 <label for="company_subdomain" class="block text-md font-semibold text-gray-900 dark:text-gray-300">Company Subdomain:</label>
                 <div class="mt-2">
                     <div class="flex items-center rounded-md bg-white dark:bg-gray-700 px-3 py-1 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-                        <input type="text" name="company_subdomain" id="company_subdomain" class="lowercase font-medium block min-w-0 grow py-2 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 placeholder-gray-400 focus:outline-none sm:text-sm" placeholder="your-company-name" required>
+                        <input type="text" name="company_subdomain" id="company_subdomain" class="lowercase font-medium block min-w-0 grow py-2 pl-1 pr-3 text-base text-gray-900 dark:bg-gray-700 placeholder-gray-400 focus:outline-none sm:text-sm" placeholder="your-company-name" value="{{ form.company_subdomain.data or '' }}" required>
                         <span class="shrink-0 select-none text-base text-gray-500 dark:text-gray-400 sm:text-sm">.hiregen.com</span>
                     </div>
                 </div>
