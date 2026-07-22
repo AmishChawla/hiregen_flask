@@ -513,14 +513,15 @@ def company_register(name, website_url, company_subdomain, logo, description, lo
         response = requests.post(constants.BASE_URL + f'/companies/create-company',data=data, params=params,files=logo, headers=headers)
         print(response.text)
         return response
-    except requests.exceptions.HTTPError as errh:
-        print(f"HTTP Error: {errh}")
-    except requests.exceptions.ConnectionError as errc:
-        print(f"Error Connecting: {errc}")
-    except requests.exceptions.Timeout as errt:
-        print(f"Timeout Error: {errt}")
-    except requests.exceptions.RequestException as err:
-        print(f"An unexpected error occurred: {err}")
+    except Exception as err:
+        print(f"Request Exception in company_register: {err}")
+        class MockResponse:
+            def __init__(self, err_msg):
+                self.status_code = 599
+                self.text = f"Requests Exception: {err_msg}"
+            def json(self):
+                return {"detail": self.text}
+        return MockResponse(str(err))
 
 
 def services():
