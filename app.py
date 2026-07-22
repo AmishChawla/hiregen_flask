@@ -1072,7 +1072,8 @@ def company_register():
             elif error_detail:
                 form.company_subdomain.errors.append(f"Error: {error_detail}")
             else:
-                form.company_subdomain.errors.append("Registration unsuccessful. Please verify all details and try again.")
+                raw_info = f" (Status: {response.status_code}, Body: {response.text})" if response else " (No Response)"
+                form.company_subdomain.errors.append(f"Registration unsuccessful. Please verify all details and try again.{raw_info}")
 
     return render_template('company_register.html', form=form)
 
