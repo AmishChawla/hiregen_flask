@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Google tag (gtag.js) -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  {% block metatags %} 
+  {% block metatags %}
   {% endblock %}
 
   <title>{% block title %}HireGen{% endblock %}</title>
@@ -13,29 +14,56 @@
     body {
       font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
       font-feature-settings: normal;
-    font-variation-settings: normal;
-    -webkit-tap-highlight-color: transparent;
+      font-variation-settings: normal;
+      -webkit-tap-highlight-color: transparent;
       min-height: 100dvh;
     }
+
     .submenu-content {
-  transition: all 0.3s ease;
-}
-.submenu-toggle.open .submenu-icon {
-  transform: rotate(90deg);
-}
+      transition: all 0.3s ease;
+    }
+
+    .submenu-toggle.open .submenu-icon {
+      transform: rotate(90deg);
+    }
+
     /* Responsive tables */
-    .table-responsive { overflow-x: auto; width: 100%; }
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
   </style>
   <style>
     /* Responsive media */
-    img { max-width: 100%; height: auto; }
-    .responsive-embed { position: relative; width: 100%; }
-    .responsive-embed::before { content: ""; display: block; padding-top: 56.25%; }
-    .responsive-embed > iframe, .responsive-embed > video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .responsive-embed {
+      position: relative;
+      width: 100%;
+    }
+
+    .responsive-embed::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%;
+    }
+
+    .responsive-embed>iframe,
+    .responsive-embed>video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -44,28 +72,31 @@
     };
   </script>
   <!-- Icons -->
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
-<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
-<meta name="theme-color" content="#ffffff">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <meta name="theme-color" content="#ffffff">
 
   {% block styles %}{% endblock %}
 
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-TDQPMPQ9');</script>
-<!-- End Google Tag Manager -->
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TDQPMPQ9');</script>
+  <!-- End Google Tag Manager -->
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LHWC5ZME1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
   gtag('config', 'G-2LHWC5ZME1');
@@ -73,323 +104,442 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<div class="flex min-h-screen">
-  <!-- Sidebar -->
-  {% if current_user.is_authenticated %}
-  <aside class="sidebar fixed top-0 left-0 z-[10000] flex h-screen w-[255px] flex-col overflow-y-auto border-r border-gray-200 bg-gray-100 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
-    <!-- Mobile close button -->
-    <button type="button" id="sidebarClose" class="lg:hidden absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600">
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-<div class="flex flex-col gap-2 px-6 py-3 border-b border-gray-200"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center">
-  {% if current_user and current_user.firstname and current_user.lastname %}
-    {{ current_user.firstname[0] | upper }}{{ current_user.lastname[0] | upper }}
-  {% elif current_user and current_user.firstname %}
-    {{ current_user.firstname[0] | upper }}
-  {% elif current_user and current_user.username %}
-    {{ current_user.username[0] | upper }}
-  {% else %}
-    HG
-  {% endif %}
-</div><div class="font-semibold text-gray-900">Welcome</h2><p class="text-xs text-gray-500 font-thin">Employer Portal</p></div></div></div>
-  <nav class="flex flex-1 flex-col px-5 mt-5">
-        <div class="duration-200 flex h-8 shrink-0 items-center rounded-md px-2 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
-        Main Menu</div>
-
-    <ul role="list" class="flex w-full min-w-0 flex-col gap-1 space-y-1 p-2">
-      <!-- Dashboard -->
-      <li>
-        <a href="{{ url_for('user_dashboard') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'user_dashboard' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house w-4 h-4" data-lov-id="src/components/AppSidebar.tsx:98:22" data-lov-name="item.icon" data-component-path="src/components/AppSidebar.tsx" data-component-line="98" data-component-file="AppSidebar.tsx" data-component-name="item.icon" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
-          Dashboard
-        </a>
-      </li>
-
-      <!-- Jobs Section -->
-      {% if current_user.has_permission(['can_manage_jobs']) %}
-      <li>
-        <a href="{{ url_for('user_all_post') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'user_all_post' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16" data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx" data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path><rect width="20" height="14" x="2" y="6" rx="2"></rect></svg>
-            Jobs
-        </a>
-
-      </li>
-      {% endif %}
-
-      <!-- Applicant Tracking -->
-      {% if current_user.has_permission(['can_track_applicants']) %}
-      <li>
-        <a href="{{ url_for('all_applicants') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'all_applicants' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl' }}">
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16" data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx" data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          Candidates
-        </a>
-      </li>
-      {% endif %}
-
-      {% if current_user.has_permission(['can_track_applicants']) %}
-      <li>
-        <a href="{{ url_for('applicant_tracking') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'applicant_tracking' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl' }}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-column w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16" data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx" data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg>
-              Hiring Pipeline
-        </a>
-      </li>
-      {% endif %}
-
-
-      <!-- Search Applicants -->
-      {% if current_user.has_permission(['can_track_applicants']) %}
-      <li>
-        <a href="{{ url_for('employer_applicants_filter') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_applicants_filter' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16" data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx" data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon" data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
-          Search Applicants
-        </a>
-      </li>
-      {% endif %}
-      {% if current_user.has_permission(['can_manage_team']) %}
-      <li>
-        <a href="{{ url_for('my_team') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'my_team' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus h-5 w-5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
-          Team
-        </a>
-      </li>
-      {% endif %}
-      <li>
-        <a href="{{ url_for('ai_chat') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_settings' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
-          </svg>
-          
-          AI Agent
-        </a>
-      </li>
-
-      <li>
-        <a href="{{ url_for('employer_settings') }}" class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_settings' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus h-5 w-5" data-lov-id="src/components/AppSidebar.tsx:143:12" data-lov-name="Settings" data-component-path="src/components/AppSidebar.tsx" data-component-line="143" data-component-file="AppSidebar.tsx" data-component-name="Settings" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-        Settings
-        </a>
-      </li>
-    </ul>
-  </nav>
-    <!--Sidebar Bottom-->
-  <div class="flex flex-col gap-2 p-4 border-t border-gray-200">
-    <div class="flex items-center gap-3 p-2">
-      <span class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
-        <img class="aspect-square h-full w-full" src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
-          </span>
-        <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-gray-900 truncate">{{current_user.username}}</p>
-        </div><a href="{{ url_for('employer_settings') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-gray-400 hover:text-gray-600" data-lov-id="src/components/AppSidebar.tsx:143:12" data-lov-name="Settings" data-component-path="src/components/AppSidebar.tsx" data-component-line="143" data-component-file="AppSidebar.tsx" data-component-name="Settings" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-</a>
-    </div>
-</div>
-  </aside>
-  {% endif %}
-
-  <!-- Mobile backdrop (full screen; sidebar has higher z-index) -->
-  <div id="sidebarBackdrop" class="fixed inset-0 bg-black bg-opacity-50 z-[9998] lg:hidden hidden"></div>
-
-  <!-- Main Content -->
-
-  <div class="flex-1 flex flex-col overflow-y-auto relative">
-<!-- Navbar -->
-      {% if current_user.is_authenticated %}
-
-<nav class="sticky top-0 z-99999 w-full border-slate-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
-  <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-4">
-    <div class="relative flex h-16 items-center gap-3">
-      <!-- Mobile menu button (inline, left of search) -->
-      <div class="flex items-center sm:hidden">
-        <button type="button" id="sidebarToggle" class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-300">
-          <span class="sr-only">Open sidebar</span>
-          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-        </button>
-      </div>
-
-
-
-    <div class="flex items-center gap-3 flex-1 min-w-0">
-        <div class="relative flex-1 min-w-0"><svg
-                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
-                data-lov-id="src/components/DashboardHeader.tsx:14:10" data-lov-name="Search"
-                data-component-path="src/components/DashboardHeader.tsx" data-component-line="14"
-                data-component-file="DashboardHeader.tsx" data-component-name="Search"
-                data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-            </svg><a href="{{ url_for('employer_applicants_filter') }}"><input class="block h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-gray-50 border-gray-200 focus:bg-white"
-                placeholder="Search candidates, jobs..."></a>
-        </div>
-    </div>
-
-      <!-- Navigation -->
-      <div class="flex flex-1 items-center justify-center sm:justify-end mr-4">
-      <a href="{{ url_for('add_post') }}" class="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-4 h-4 mr-2" data-lov-id="src/pages/Jobs.tsx:145:14" data-lov-name="Plus" data-component-path="src/pages/Jobs.tsx" data-component-line="145" data-component-file="Jobs.tsx" data-component-name="Plus" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg>
-        Post Job
-      </a>
-      </div>
-
-      <!-- Profile and notifications -->
-      <div class="ml-auto flex items-center">
-
-        <!-- Profile dropdown -->
-        <div class="relative ml-3">
-          <button type="button" class="flex rounded-full bg-white dark:bg-purple-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" id="profileDropdown">
-            <span class="sr-only">Open user menu</span>
-            <img class="h-11 w-11 overflow-hidden rounded-full" src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
-          </button>
-          <div class="hidden absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark" id="profileMenu">
-            <a href="{{ url_for('profile') }}" class="block px-4 py-2 text-md text-gray-500 font-semibold dark:text-gray-200">Profile</a>
-            <a href="{{ url_for('logout') }}" class="block px-4 py-2 text-md text-gray-500 font-semibold dark:text-gray-200">Log out</a>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQPMPQ9" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    {% if current_user.is_authenticated %}
+    <aside
+      class="sidebar fixed top-0 left-0 z-[10000] flex h-screen w-[255px] flex-col overflow-y-auto border-r border-gray-200 bg-gray-100 transition-all duration-300 lg:static lg:translate-x-0 dark:border-gray-800 dark:bg-black -translate-x-full">
+      <!-- Mobile close button -->
+      <button type="button" id="sidebarClose"
+        class="lg:hidden absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      <div class="flex flex-col gap-2 px-6 py-3 border-b border-gray-200">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center">
+            {% if current_user and current_user.firstname and current_user.lastname %}
+            {{ current_user.firstname[0] | upper }}{{ current_user.lastname[0] | upper }}
+            {% elif current_user and current_user.firstname %}
+            {{ current_user.firstname[0] | upper }}
+            {% elif current_user and current_user.username %}
+            {{ current_user.username[0] | upper }}
+            {% else %}
+            HG
+            {% endif %}
+          </div>
+          <div class="font-semibold text-gray-900">Welcome</h2>
+            <p class="text-xs text-gray-500 font-thin">Employer Portal</p>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</nav>
-  {% endif %}
-  
-  <!-- Demo User Alert -->
-  {% if current_user.is_authenticated and current_user.is_demo_user %}
-  <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
-    <div class="flex">
-      <div class="shrink-0">
-        <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true" class="size-5 text-yellow-400">
-          <path d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" fill-rule="evenodd" />
-        </svg>
+      <nav class="flex flex-1 flex-col px-5 mt-5">
+        <div
+          class="duration-200 flex h-8 shrink-0 items-center rounded-md px-2 outline-none ring-sidebar-ring transition-[margin,opa] ease-linear focus-visible:ring-2 [&amp;&gt;svg]:size-4 [&amp;&gt;svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0 text-xs font-medium text-gray-500 uppercase tracking-wide mb-3">
+          Main Menu</div>
+
+        <ul role="list" class="flex w-full min-w-0 flex-col gap-1 space-y-1 p-2">
+          <!-- Dashboard -->
+          <li>
+            <a href="{{ url_for('user_dashboard') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'user_dashboard' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-house w-4 h-4" data-lov-id="src/components/AppSidebar.tsx:98:22"
+                data-lov-name="item.icon" data-component-path="src/components/AppSidebar.tsx" data-component-line="98"
+                data-component-file="AppSidebar.tsx" data-component-name="item.icon"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                <path
+                  d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+                </path>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+
+          <!-- Jobs Section -->
+          {% if current_user.has_permission(['can_manage_jobs']) %}
+          <li>
+            <a href="{{ url_for('user_all_post') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'user_all_post' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-briefcase w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16"
+                data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx"
+                data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                <rect width="20" height="14" x="2" y="6" rx="2"></rect>
+              </svg>
+              Jobs
+            </a>
+
+          </li>
+          {% endif %}
+
+          <!-- Applicant Tracking -->
+          {% if current_user.has_permission(['can_track_applicants']) %}
+          <li>
+            <a href="{{ url_for('all_applicants') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'all_applicants' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-users w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16"
+                data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx"
+                data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              Candidates
+            </a>
+          </li>
+          {% endif %}
+
+          {% if current_user.has_permission(['can_track_applicants']) %}
+          <li>
+            <a href="{{ url_for('applicant_tracking') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'applicant_tracking' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-chart-column w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16"
+                data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx"
+                data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                <path d="M3 3v16a2 2 0 0 0 2 2h16"></path>
+                <path d="M18 17V9"></path>
+                <path d="M13 17V5"></path>
+                <path d="M8 17v-3"></path>
+              </svg>
+              Hiring Pipeline
+            </a>
+          </li>
+          {% endif %}
+
+
+          <!-- Search Applicants -->
+          {% if current_user.has_permission(['can_track_applicants']) %}
+          <li>
+            <a href="{{ url_for('employer_applicants_filter') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_applicants_filter' else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl'}}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-search w-4 h-4" data-lov-id="src/components/DashboardSidebar.tsx:59:16"
+                data-lov-name="item.icon" data-component-path="src/components/DashboardSidebar.tsx"
+                data-component-line="59" data-component-file="DashboardSidebar.tsx" data-component-name="item.icon"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              Search Applicants
+            </a>
+          </li>
+          {% endif %}
+          {% if current_user.has_permission(['can_manage_team']) %}
+          <li>
+            <a href="{{ url_for('my_team') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'my_team' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-user-plus h-5 w-5">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <line x1="19" x2="19" y1="8" y2="14"></line>
+                <line x1="22" x2="16" y1="11" y2="11"></line>
+              </svg>
+              Team
+            </a>
+          </li>
+          {% endif %}
+          <li>
+            <a href="{{ url_for('ai_chat') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_settings' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+              </svg>
+
+              AI Agent
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('employer_settings') }}"
+              class="peer/menu-button flex w-full items-center gap-4 overflow-hidden p-2 text-left outline-none ring-sidebar-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-[[data-sidebar=menu-action]]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:!size-8 group-data-[collapsible=icon]:!p-2 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground h-8 text-sm flex items-center space-x-3 {{ 'bg-blue-100 text-blue-700 font-medium rounded-xl' if request.endpoint == 'employer_settings' }} else 'text-slate-700 font-medium hover:bg-blue-100 hover:text-blue-700 rounded-xl hover:rounded-xl'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-user-plus h-5 w-5" data-lov-id="src/components/AppSidebar.tsx:143:12"
+                data-lov-name="Settings" data-component-path="src/components/AppSidebar.tsx" data-component-line="143"
+                data-component-file="AppSidebar.tsx" data-component-name="Settings"
+                data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D">
+                <path
+                  d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!--Sidebar Bottom-->
+      <div class="flex flex-col gap-2 p-4 border-t border-gray-200">
+        <div class="flex items-center gap-3 p-2">
+          <span class="relative flex shrink-0 overflow-hidden rounded-full w-8 h-8">
+            <img class="aspect-square h-full w-full"
+              src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
+          </span>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-gray-900 truncate">{{current_user.username}}</p>
+          </div><a href="{{ url_for('employer_settings') }}"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" class="lucide lucide-settings w-4 h-4 text-gray-400 hover:text-gray-600"
+              data-lov-id="src/components/AppSidebar.tsx:143:12" data-lov-name="Settings"
+              data-component-path="src/components/AppSidebar.tsx" data-component-line="143"
+              data-component-file="AppSidebar.tsx" data-component-name="Settings"
+              data-component-content="%7B%22className%22%3A%22w-4%20h-4%20text-gray-400%20hover%3Atext-gray-600%22%7D">
+              <path
+                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+              </path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </a>
+        </div>
       </div>
-      <div class="ml-3">
-        <p class="text-sm text-yellow-700">
-          You are currently using a demo account. This is a shared account and it resets automatically. 
-          <a href="{{ url_for('register') }}" class="font-medium text-yellow-700 underline hover:text-yellow-600">Register Now.</a>
-        </p>
+    </aside>
+    {% endif %}
+
+    <!-- Mobile backdrop (full screen; sidebar has higher z-index) -->
+    <div id="sidebarBackdrop" class="fixed inset-0 bg-black bg-opacity-50 z-[9998] lg:hidden hidden"></div>
+
+    <!-- Main Content -->
+
+    <div class="flex-1 flex flex-col overflow-y-auto relative">
+      <!-- Navbar -->
+      {% if current_user.is_authenticated %}
+
+      <nav
+        class="sticky top-0 z-99999 w-full border-slate-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
+        <div class="mx-auto max-w-full px-2 sm:px-6 lg:px-4">
+          <div class="relative flex h-16 items-center gap-3">
+            <!-- Mobile menu button (inline, left of search) -->
+            <div class="flex items-center sm:hidden">
+              <button type="button" id="sidebarToggle"
+                class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 bg-white border border-gray-200 shadow-sm hover:bg-gray-50 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-300">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+              </button>
+            </div>
+
+
+
+            <div class="flex items-center gap-3 flex-1 min-w-0">
+              <div class="relative flex-1 min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
+                  data-lov-id="src/components/DashboardHeader.tsx:14:10" data-lov-name="Search"
+                  data-component-path="src/components/DashboardHeader.tsx" data-component-line="14"
+                  data-component-file="DashboardHeader.tsx" data-component-name="Search"
+                  data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg><a href="{{ url_for('employer_applicants_filter') }}"><input
+                    class="block h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-gray-50 border-gray-200 focus:bg-white"
+                    placeholder="Search candidates, jobs..."></a>
+              </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex flex-1 items-center justify-center sm:justify-end mr-4">
+              <a href="{{ url_for('add_post') }}"
+                class="hidden sm:inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-plus w-4 h-4 mr-2" data-lov-id="src/pages/Jobs.tsx:145:14" data-lov-name="Plus"
+                  data-component-path="src/pages/Jobs.tsx" data-component-line="145" data-component-file="Jobs.tsx"
+                  data-component-name="Plus" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5v14"></path>
+                </svg>
+                Post Job
+              </a>
+            </div>
+
+            <!-- Profile and notifications -->
+            <div class="ml-auto flex items-center">
+
+              <!-- Profile dropdown -->
+              <div class="relative ml-3">
+                <button type="button"
+                  class="flex rounded-full bg-white dark:bg-purple-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+                  id="profileDropdown">
+                  <span class="sr-only">Open user menu</span>
+                  <img class="h-11 w-11 overflow-hidden rounded-full"
+                    src="{{ current_user.profile_picture or url_for('static', filename='images/man.png') }}" alt="User">
+                </button>
+                <div
+                  class="hidden absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-theme-lg dark:border-gray-800 dark:bg-gray-dark"
+                  id="profileMenu">
+                  <a href="{{ url_for('profile') }}"
+                    class="block px-4 py-2 text-md text-gray-500 font-semibold dark:text-gray-200">Profile</a>
+                  <a href="{{ url_for('logout') }}"
+                    class="block px-4 py-2 text-md text-gray-500 font-semibold dark:text-gray-200">Log out</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      {% endif %}
+
+      <!-- Demo User Alert -->
+      {% if current_user.is_authenticated and current_user.is_demo_user %}
+      <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4">
+        <div class="flex">
+          <div class="shrink-0">
+            <svg viewBox="0 0 20 20" fill="currentColor" data-slot="icon" aria-hidden="true"
+              class="size-5 text-yellow-400">
+              <path
+                d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+                clip-rule="evenodd" fill-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-yellow-700">
+              You are currently using a demo account. This is a shared account and it resets automatically.
+              <a href="{{ url_for('register') }}"
+                class="font-medium text-yellow-700 underline hover:text-yellow-600">Register Now.</a>
+            </p>
+          </div>
+        </div>
       </div>
+      {% endif %}
+
+      {% block content %}{% endblock %}
     </div>
-  </div>
-  {% endif %}
-  
-     {% block content %}{% endblock %}
+
+
   </div>
 
+  <script>
+    // Sidebar toggle functionality
+    function toggleSidebar() {
+      const sidebar = document.querySelector('aside');
+      const backdrop = document.getElementById('sidebarBackdrop');
 
-</div>
+      if (sidebar.classList.contains('-translate-x-full')) {
+        // Open sidebar
+        sidebar.classList.remove('-translate-x-full');
+        sidebar.classList.add('translate-x-0');
+        backdrop.classList.remove('hidden');
+      } else {
+        // Close sidebar
+        sidebar.classList.add('-translate-x-full');
+        sidebar.classList.remove('translate-x-0');
+        backdrop.classList.add('hidden');
+      }
+    }
 
-<script>
-  // Sidebar toggle functionality
-  function toggleSidebar() {
-    const sidebar = document.querySelector('aside');
-    const backdrop = document.getElementById('sidebarBackdrop');
-    
-    if (sidebar.classList.contains('-translate-x-full')) {
-      // Open sidebar
-      sidebar.classList.remove('-translate-x-full');
-      sidebar.classList.add('translate-x-0');
-      backdrop.classList.remove('hidden');
-    } else {
-      // Close sidebar
+    function closeSidebar() {
+      const sidebar = document.querySelector('aside');
+      const backdrop = document.getElementById('sidebarBackdrop');
+
       sidebar.classList.add('-translate-x-full');
       sidebar.classList.remove('translate-x-0');
       backdrop.classList.add('hidden');
     }
-  }
 
-  function closeSidebar() {
-    const sidebar = document.querySelector('aside');
-    const backdrop = document.getElementById('sidebarBackdrop');
-    
-    sidebar.classList.add('-translate-x-full');
-    sidebar.classList.remove('translate-x-0');
-    backdrop.classList.add('hidden');
-  }
+    // Event listeners (guarded, after DOM ready)
+    document.addEventListener('DOMContentLoaded', function () {
+      var toggleBtn = document.getElementById('sidebarToggle');
+      var closeBtn = document.getElementById('sidebarClose');
+      var backdropEl = document.getElementById('sidebarBackdrop');
 
-  // Event listeners (guarded, after DOM ready)
-  document.addEventListener('DOMContentLoaded', function () {
-    var toggleBtn = document.getElementById('sidebarToggle');
-    var closeBtn = document.getElementById('sidebarClose');
-    var backdropEl = document.getElementById('sidebarBackdrop');
-
-    if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
-    if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
-    if (backdropEl) backdropEl.addEventListener('click', closeSidebar);
-  });
-
-  // Profile dropdown toggle
-  document.addEventListener('DOMContentLoaded', function () {
-    var profileDropdown = document.getElementById('profileDropdown');
-    var profileMenu = document.getElementById('profileMenu');
-    if (profileDropdown && profileMenu) {
-      profileDropdown.addEventListener('click', function () {
-        profileMenu.classList.toggle('hidden');
-      });
-    }
-  });
-
-  // Submenu toggle
-  document.querySelectorAll('.submenu-toggle').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const content = button.nextElementSibling;
-      const icon = button.querySelector('.submenu-icon');
-      content.classList.toggle('hidden');
-      icon.classList.toggle('rotate-90');
+      if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
+      if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+      if (backdropEl) backdropEl.addEventListener('click', closeSidebar);
     });
-  });
-</script>
+
+    // Profile dropdown toggle
+    document.addEventListener('DOMContentLoaded', function () {
+      var profileDropdown = document.getElementById('profileDropdown');
+      var profileMenu = document.getElementById('profileMenu');
+      if (profileDropdown && profileMenu) {
+        profileDropdown.addEventListener('click', function () {
+          profileMenu.classList.toggle('hidden');
+        });
+      }
+    });
+
+    // Submenu toggle
+    document.querySelectorAll('.submenu-toggle').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.submenu-icon');
+        content.classList.toggle('hidden');
+        icon.classList.toggle('rotate-90');
+      });
+    });
+  </script>
 
 
-<script>
-  document.getElementById('darkModeToggle').addEventListener('click', () => {
-    const html = document.documentElement;
-    const isDarkMode = html.classList.toggle('dark');
+  <script>
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDarkMode = html.classList.toggle('dark');
 
-    // Update icon visibility
-    document.getElementById('lightIcon').classList.toggle('hidden', !isDarkMode);
-    document.getElementById('darkIcon').classList.toggle('hidden', isDarkMode);
+      // Update icon visibility
+      document.getElementById('lightIcon').classList.toggle('hidden', !isDarkMode);
+      document.getElementById('darkIcon').classList.toggle('hidden', isDarkMode);
 
-    // Save preference in localStorage
-    localStorage.setItem('darkMode', isDarkMode);
-});
+      // Save preference in localStorage
+      localStorage.setItem('darkMode', isDarkMode);
+    });
 
-// Load saved preference on page load
-window.addEventListener('DOMContentLoaded', () => {
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    const html = document.documentElement;
+    // Load saved preference on page load
+    window.addEventListener('DOMContentLoaded', () => {
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      const html = document.documentElement;
 
-    if (isDarkMode) {
+      if (isDarkMode) {
         html.classList.add('dark');
         document.getElementById('lightIcon').classList.remove('hidden');
         document.getElementById('darkIcon').classList.add('hidden');
-    } else {
+      } else {
         html.classList.remove('dark');
         document.getElementById('lightIcon').classList.add('hidden');
         document.getElementById('darkIcon').classList.remove('hidden');
-    }
-});
-</script>
-
-<script>
-  // Wrap all tables in a responsive container
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('table').forEach(function (tbl) {
-      if (!tbl.closest('.table-responsive')) {
-        var wrapper = document.createElement('div');
-        wrapper.className = 'table-responsive';
-        tbl.parentNode.insertBefore(wrapper, tbl);
-        wrapper.appendChild(tbl);
       }
     });
-  });
-</script>
+  </script>
+
+  <script>
+    // Wrap all tables in a responsive container
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('table').forEach(function (tbl) {
+        if (!tbl.closest('.table-responsive')) {
+          var wrapper = document.createElement('div');
+          wrapper.className = 'table-responsive';
+          tbl.parentNode.insertBefore(wrapper, tbl);
+          wrapper.appendChild(tbl);
+        }
+      });
+    });
+  </script>
 
 </body>
+
 </html>

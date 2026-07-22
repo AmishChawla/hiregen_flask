@@ -1066,10 +1066,13 @@ def company_register():
                     error_detail = response.json().get("detail", "")
                 except Exception:
                     pass
+            
             if "Subdomain already registered" in error_detail:
                 form.company_subdomain.errors.append("Subdomain already registered, please choose another.")
+            elif error_detail:
+                form.company_subdomain.errors.append(f"Error: {error_detail}")
             else:
-                flash('Registration unsuccessful.', category='error')
+                form.company_subdomain.errors.append("Registration unsuccessful. Please verify all details and try again.")
 
     return render_template('company_register.html', form=form)
 
