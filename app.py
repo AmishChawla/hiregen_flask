@@ -911,7 +911,10 @@ def reset_password(token):
         print(response.status_code)
         if (response.status_code == 200):
             flash("Password updated successfully")
-            return redirect(url_for('logout'))
+            if current_user.is_authenticated:
+                return redirect(url_for('logout'))
+            else:
+                return redirect(url_for('login'))
     return render_template('reset_password.html', form=form, token=token)
 
 
