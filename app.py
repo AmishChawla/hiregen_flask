@@ -239,6 +239,8 @@ def empty_folder(folder):
 @app.route("/employer/login", methods=['GET', 'POST'])
 def login():
     session.pop('_flashes', None)
+    if request.args.get('status') == 'password_reset_success':
+        flash("Password updated successfully")
     print('trying')
     if current_user.is_authenticated:
         next_page = request.args.get('next')
@@ -910,11 +912,11 @@ def reset_password(token):
         response = api_calls.reset_password(token, new_password)
         print(response.status_code)
         if (response.status_code == 200):
-            flash("Password updated successfully")
             if current_user.is_authenticated:
+                flash("Password updated successfully")
                 return redirect(url_for('logout'))
             else:
-                return redirect(url_for('login'))
+                return redirect(url_for('login', status='password_reset_success'))
     return render_template('reset_password.html', form=form, token=token)
 
 
