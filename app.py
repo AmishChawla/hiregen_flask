@@ -535,19 +535,31 @@ def employer_demo_login():
 @app.route("/dashboard")
 @login_required
 def user_dashboard():
-    stats = api_calls.get_stats(access_token=current_user.id)
-    total_jobs = stats["total_jobs"]
-    total_views = stats["total_views"]
-    applicants_count = stats["applicants_count"]
-    in_progress_jobs = stats["in_progress_jobs"]
-    mid_stage_applicants_count = stats["mid_stage_applicants_count"] # these are applicants that are in either interview or assessment stage 
-    hiring_rate = stats["hiring_rate"]
-    statuses = stats["statuses"]
-    mid_stage_applicants = stats["mid_stage_applicants"]
+    if not getattr(current_user, 'company', None):
+        total_jobs = 0
+        total_views = 0
+        applicants_count = 0
+        in_progress_jobs = 0
+        mid_stage_applicants_count = 0
+        hiring_rate = 0
+        statuses = []
+        mid_stage_applicants = []
+        latest_jobs = []
+    else:
+        stats = api_calls.get_stats(access_token=current_user.id)
+        if not stats:
+            stats = {}
+        total_jobs = stats.get("total_jobs", 0)
+        total_views = stats.get("total_views", 0)
+        applicants_count = stats.get("applicants_count", 0)
+        in_progress_jobs = stats.get("in_progress_jobs", 0)
+        mid_stage_applicants_count = stats.get("mid_stage_applicants_count", 0)
+        hiring_rate = stats.get("hiring_rate", 0)
+        statuses = stats.get("statuses", [])
+        mid_stage_applicants = stats.get("mid_stage_applicants", [])
 
-    latest_jobs = api_calls.get_user_all_job_openings(maximum_posts=5, access_token=current_user.id)
-    latest_jobs = latest_jobs['jobs'] if latest_jobs else []
-    print("MID STAGE APPLICANTS: ", mid_stage_applicants)
+        latest_jobs = api_calls.get_user_all_job_openings(maximum_posts=5, access_token=current_user.id)
+        latest_jobs = latest_jobs['jobs'] if latest_jobs else []
 
     return render_template('dashboard.html', total_jobs=total_jobs, total_views=total_views, applicants_count=applicants_count, in_progress_jobs=in_progress_jobs, statuses=statuses, latest_jobs=latest_jobs, mid_stage_applicants=mid_stage_applicants, hiring_rate=hiring_rate, mid_stage_applicants_count=mid_stage_applicants_count)
 
