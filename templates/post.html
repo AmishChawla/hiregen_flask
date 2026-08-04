@@ -421,7 +421,6 @@ job_slug=job_details["slug"], _external=True) %}
     }
   }
 
-  // Save job functionality
   document.addEventListener('DOMContentLoaded', function () {
     const saveJobBtn = document.getElementById('save-job-btn');
 
@@ -432,17 +431,16 @@ job_slug=job_details["slug"], _external=True) %}
 
         // Check if current user is a jobseeker
         const userRole = '{{ current_user.role if current_user.is_authenticated else "none" }}';
-        const isAuthenticated = {{ 'true' if current_user.is_authenticated else 'false' }
-      };
+        const isAuthenticated = {{ 'true' if current_user.is_authenticated else 'false' }};
 
-      if (isAuthenticated && userRole === 'jobseeker') {
-        // User is a jobseeker, proceed with saving job
-        saveJob(jobId, button);
-      } else {
-        // User is not a jobseeker or not authenticated, redirect to jobseeker login
-        window.location.href = "{{ url_for('jobseeker_login') }}";
-      }
-    });
+        if (isAuthenticated && userRole === 'jobseeker') {
+          // User is a jobseeker, proceed with saving job
+          saveJob(jobId, button);
+        } else {
+          // User is not a jobseeker or not authenticated, redirect to jobseeker login
+          window.location.href = "{{ url_for('jobseeker_login') }}";
+        }
+      });
     }
   });
 
