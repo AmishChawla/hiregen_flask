@@ -1,229 +1,243 @@
 {% if current_user %}
-    {% if current_user.role == 'jobseeker' %}
-        {% extends 'jobseeker/jobseeker_base.html' %}
-    {% elif current_user.role == 'user' %}
-        {% extends 'base.html' %}
-    {% elif current_user.role == 'admin' %}
-        {% extends 'admin_base.html' %}
-    {% else %}
-        {% extends 'common_base.html' %}
-    {% endif %}
+{% if current_user.role == 'jobseeker' %}
+{% extends 'jobseeker/jobseeker_base.html' %}
+{% elif current_user.role == 'user' %}
+{% extends 'base.html' %}
+{% elif current_user.role == 'admin' %}
+{% extends 'admin_base.html' %}
+{% else %}
+{% extends 'company_base.html' %}
+{% endif %}
 {% endif %}
 
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    };
-  </script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+  };
+</script>
 
 
 {% block title %}{{ job_details.job_title }}{% endblock %}
 
 <!-- Job Detail -->
-{% set job_url = url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details["company_subdomain"], job_slug=job_details["slug"], _external=True) %}
+{% set job_url = url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details["company_subdomain"],
+job_slug=job_details["slug"], _external=True) %}
 
 
 {% block content %}
 
-<div class="max-w-4xl mx-auto space-y-6"><button onclick="goBack()" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mb-4"><svg
-            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-arrow-left w-4 h-4 mr-2" data-lov-id="src/pages/JobDetails.tsx:73:16"
-            data-lov-name="ArrowLeft" data-component-path="src/pages/JobDetails.tsx" data-component-line="73"
-            data-component-file="JobDetails.tsx" data-component-name="ArrowLeft"
-            data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
-            <path d="m12 19-7-7 7-7"></path>
-            <path d="M19 12H5"></path>
-        </svg>Back to Jobs</button>
-    <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
-        <div class="p-6">
-            <div class="flex items-start gap-4">
-                <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><span
-                        class="text-xl font-bold text-blue-700">
-                      {% if job_details.company_logo %}
-                      <img src="{{ job_details.company_logo }}" alt="Company Logo" >
-                      {% endif %}
-                      </span></div>
-                <div class="flex-1">
-                    <div class="flex items-start justify-between mb-4">
-                        <div>
-                            <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ job_details.job_title }}</h1>
-                            <div class="flex items-center gap-4 text-gray-600 mb-3"><span
-                                    class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-building w-4 h-4"
-                                        data-lov-id="src/pages/JobDetails.tsx:91:30" data-lov-name="Building"
-                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="91"
-                                        data-component-file="JobDetails.tsx" data-component-name="Building"
-                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                        <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
-                                        <path d="M9 22v-4h6v4"></path>
-                                        <path d="M8 6h.01"></path>
-                                        <path d="M16 6h.01"></path>
-                                        <path d="M12 6h.01"></path>
-                                        <path d="M12 10h.01"></path>
-                                        <path d="M12 14h.01"></path>
-                                        <path d="M16 10h.01"></path>
-                                        <path d="M16 14h.01"></path>
-                                        <path d="M8 10h.01"></path>
-                                        <path d="M8 14h.01"></path>
-                                    </svg>{{job_details.company_name}}</span><span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-map-pin w-4 h-4"
-                                        data-lov-id="src/pages/JobDetails.tsx:95:30" data-lov-name="MapPin"
-                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="95"
-                                        data-component-file="JobDetails.tsx" data-component-name="MapPin"
-                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                        <path
-                                            d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
-                                        </path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>{% if job_details.address_city or job_details.address_province or job_details.address_country %}
-      {{ job_details.address_city }}, {{ job_details.address_province }}, {{ job_details.address_country }}
-      {% endif %}</span>
-      {% if job_details.min_salary and job_details.max_salary %}
-      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}} - {{job_details.salary_currency}}{{job_details.max_salary}} {{job_details.salary_time_unit}}</span>
-      {% elif job_details.min_salary %}
-      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}} {{job_details.salary_time_unit}}</span>
-      {% elif job_details.max_salary %}
-      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.max_salary}} {{job_details.salary_time_unit}}</span>
-      {% elif job_details.salary %}
-      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary}}</span>
-      {% else %}
-      <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">Not specified</span>
-      {% endif %}</div>
-                            <div class="flex items-center gap-4 text-sm text-gray-500"><span
-                                    class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-clock w-4 h-4"
-                                        data-lov-id="src/pages/JobDetails.tsx:105:30" data-lov-name="Clock"
-                                        data-component-path="src/pages/JobDetails.tsx" data-component-line="105"
-                                        data-component-file="JobDetails.tsx" data-component-name="Clock"
-                                        data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                        <circle cx="12" cy="12" r="10"></circle>
-                                        <polyline points="12 6 12 12 16 14"></polyline>
-                                    </svg>Posted <span class="created-time" data-created="{{ job_details.created_at }}"></span></div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                        {% if job_details.saved == False %}
-                          <button id="save-job-btn" data-job-id="{{ job_details.id }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-heart w-4 h-4"
-                                    data-lov-id="src/pages/JobDetails.tsx:117:28" data-lov-name="Heart"
-                                    data-component-path="src/pages/JobDetails.tsx" data-component-line="117"
-                                    data-component-file="JobDetails.tsx" data-component-name="Heart"
-                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                    <path
-                                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                                    </path>
-                                </svg></button>
-                                {% else %}
-                                <button disabled class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3"><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500"
-                                            data-lov-id="src/pages/JobDetails.tsx:117:28" data-lov-name="Heart"
-                                            data-component-path="src/pages/JobDetails.tsx" data-component-line="117"
-                                            data-component-file="JobDetails.tsx" data-component-name="Heart"
-                                            data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                            <path
-                                                d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
-                                            </path>
-                                        </svg></button>        
-                                {%endif%}
-                                <button onclick="shareJob('{{ job_url }}')" title="Share Job" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-share2 w-4 h-4"
-                                    data-lov-id="src/pages/JobDetails.tsx:120:28" data-lov-name="Share2"
-                                    data-component-path="src/pages/JobDetails.tsx" data-component-line="120"
-                                    data-component-file="JobDetails.tsx" data-component-name="Share2"
-                                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
-                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
-                                </svg></button>
-                                
-{% if current_user.role == 'jobseeker' and job_details.applied == False %}
-    <button type="button" id="apply-btn" class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">Apply</button>
-      {% elif current_user.role == 'jobseeker' and job_details.applied == True %}
-      <button type="button" id="apply-btn" class="flex rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-not-allowed gap-x-2" disabled>
-        <svg class="-ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd"></path>
-      </svg> Applied </button>
-      {% elif current_user.role == 'user' or current_user.role == 'admin' %}
-    {% else %}
-    <a type="button" id="login-btn" href="{{url_for('jobseeker_login')}}" class="inline-flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login to Apply</a>
-    {% endif %}
-</div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-600 text-white hover:bg-primary/80">
-                            {% if job_details.job_type %}
-      {{ job_details.job_type }}
-      {% endif %}</div>
-                            {% for skill in job_details.job_skills %}
-                        <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
-                            {{skill}}</div>
-                            {%endfor%}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-3 space-y-6">
-            <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
-                <div class="flex flex-col space-y-1.5 p-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Job Description</h3>
-                </div>
-                <div class="p-6 pt-0 space-y-4">
-                    {% if job_details.job_description and job_details.job_description|striptags|trim %}
-                    {{ job_details.job_description | safe }}
-                    {% else %}
-                    <p class="text-gray-500 italic">No description available</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
-                <div class="flex flex-col space-y-1.5 p-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Requirements</h3>
-                </div>
-                <div class="p-6 pt-0">
-                {% if job_details.job_requirements and job_details.job_requirements|striptags|trim %} 
-                {{ job_details.job_requirements | safe }}
+<div class="max-w-4xl mx-auto space-y-6"><button onclick="goBack()"
+    class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 mb-4"><svg
+      xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left w-4 h-4 mr-2"
+      data-lov-id="src/pages/JobDetails.tsx:73:16" data-lov-name="ArrowLeft"
+      data-component-path="src/pages/JobDetails.tsx" data-component-line="73" data-component-file="JobDetails.tsx"
+      data-component-name="ArrowLeft" data-component-content="%7B%22className%22%3A%22w-4%20h-4%20mr-2%22%7D">
+      <path d="m12 19-7-7 7-7"></path>
+      <path d="M19 12H5"></path>
+    </svg>Back to Jobs</button>
+  <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+    <div class="p-6">
+      <div class="flex items-start gap-4">
+        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0"><span
+            class="text-xl font-bold text-blue-700">
+            {% if job_details.company_logo %}
+            <img src="{{ job_details.company_logo }}" alt="Company Logo">
+            {% endif %}
+          </span></div>
+        <div class="flex-1">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ job_details.job_title }}</h1>
+              <div class="flex items-center gap-4 text-gray-600 mb-3"><span class="flex items-center gap-1"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-building w-4 h-4" data-lov-id="src/pages/JobDetails.tsx:91:30"
+                    data-lov-name="Building" data-component-path="src/pages/JobDetails.tsx" data-component-line="91"
+                    data-component-file="JobDetails.tsx" data-component-name="Building"
+                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                    <rect width="16" height="20" x="4" y="2" rx="2" ry="2"></rect>
+                    <path d="M9 22v-4h6v4"></path>
+                    <path d="M8 6h.01"></path>
+                    <path d="M16 6h.01"></path>
+                    <path d="M12 6h.01"></path>
+                    <path d="M12 10h.01"></path>
+                    <path d="M12 14h.01"></path>
+                    <path d="M16 10h.01"></path>
+                    <path d="M16 14h.01"></path>
+                    <path d="M8 10h.01"></path>
+                    <path d="M8 14h.01"></path>
+                  </svg>{{job_details.company_name}}</span><span class="flex items-center gap-1"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-map-pin w-4 h-4" data-lov-id="src/pages/JobDetails.tsx:95:30"
+                    data-lov-name="MapPin" data-component-path="src/pages/JobDetails.tsx" data-component-line="95"
+                    data-component-file="JobDetails.tsx" data-component-name="MapPin"
+                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                    <path
+                      d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0">
+                    </path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>{% if job_details.address_city or job_details.address_province or job_details.address_country %}
+                  {{ job_details.address_city }}, {{ job_details.address_province }}, {{ job_details.address_country }}
+                  {% endif %}</span>
+                {% if job_details.min_salary and job_details.max_salary %}
+                <span
+                  class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}}
+                  - {{job_details.salary_currency}}{{job_details.max_salary}} {{job_details.salary_time_unit}}</span>
+                {% elif job_details.min_salary %}
+                <span
+                  class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.min_salary}}
+                  {{job_details.salary_time_unit}}</span>
+                {% elif job_details.max_salary %}
+                <span
+                  class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary_currency}}{{job_details.max_salary}}
+                  {{job_details.salary_time_unit}}</span>
+                {% elif job_details.salary %}
+                <span
+                  class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">{{job_details.salary}}</span>
                 {% else %}
-                <p class="text-gray-500 italic">No requirements specified</p>
+                <span class="flex items-center gap-1 border border-blue-600 rounded-full px-2 py-1 text-xs">Not
+                  specified</span>
                 {% endif %}
-                </div>
+              </div>
+              <div class="flex items-center gap-4 text-sm text-gray-500"><span class="flex items-center gap-1"><svg
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-clock w-4 h-4" data-lov-id="src/pages/JobDetails.tsx:105:30"
+                    data-lov-name="Clock" data-component-path="src/pages/JobDetails.tsx" data-component-line="105"
+                    data-component-file="JobDetails.tsx" data-component-name="Clock"
+                    data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>Posted <span class="created-time" data-created="{{ job_details.created_at }}"></span></div>
             </div>
-            <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
-                <div class="flex flex-col space-y-1.5 p-6">
-                    <h3 class="text-2xl font-semibold leading-none tracking-tight">Benefits &amp; Perks</h3>
-                </div>
-                <div class="p-6 pt-0">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {% if job_details.job_benefits and job_details.job_benefits|striptags|trim %}
-                        <div class="flex items-start gap-2">
-                            <span class="text-gray-600">{{ job_details.job_benefits | safe }}</span>
-                        </div>
-                      {% else %}
-                        <p class="text-gray-500 italic">No benefits specified</p>
-                      {% endif %}
-                    </div>
-                </div>
+            <div class="flex items-center gap-2">
+              {% if job_details.saved == False %}
+              <button id="save-job-btn" data-job-id="{{ job_details.id }}"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-heart w-4 h-4" data-lov-id="src/pages/JobDetails.tsx:117:28"
+                  data-lov-name="Heart" data-component-path="src/pages/JobDetails.tsx" data-component-line="117"
+                  data-component-file="JobDetails.tsx" data-component-name="Heart"
+                  data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                  <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                  </path>
+                </svg></button>
+              {% else %}
+              <button disabled
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-heart w-4 h-4 text-red-500" data-lov-id="src/pages/JobDetails.tsx:117:28"
+                  data-lov-name="Heart" data-component-path="src/pages/JobDetails.tsx" data-component-line="117"
+                  data-component-file="JobDetails.tsx" data-component-name="Heart"
+                  data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                  <path
+                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z">
+                  </path>
+                </svg></button>
+              {%endif%}
+              <button onclick="shareJob('{{ job_url }}')" title="Share Job"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3"><svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-share2 w-4 h-4" data-lov-id="src/pages/JobDetails.tsx:120:28"
+                  data-lov-name="Share2" data-component-path="src/pages/JobDetails.tsx" data-component-line="120"
+                  data-component-file="JobDetails.tsx" data-component-name="Share2"
+                  data-component-content="%7B%22className%22%3A%22w-4%20h-4%22%7D">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                </svg></button>
+
+              {% if current_user.role == 'jobseeker' and job_details.applied == False %}
+              <button type="button" id="apply-btn"
+                class="flex items-center justify-center gap-2 rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-theme-xs hover:bg-blue-500 hover:text-white dark:border-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-white/[0.03] dark:hover:text-gray-200 lg:inline-flex lg:w-auto">Apply</button>
+              {% elif current_user.role == 'jobseeker' and job_details.applied == True %}
+              <button type="button" id="apply-btn"
+                class="flex rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-green-500 focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-green-600 cursor-not-allowed gap-x-2"
+                disabled>
+                <svg class="-ml-0.5 size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                  <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                    clip-rule="evenodd"></path>
+                </svg> Applied </button>
+              {% elif current_user.role == 'user' or current_user.role == 'admin' %}
+              {% else %}
+              <a type="button" id="login-btn" href="{{url_for('jobseeker_login')}}"
+                class="inline-flex justify-center text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login
+                to Apply</a>
+              {% endif %}
             </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <div
+              class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-600 text-white hover:bg-primary/80">
+              {% if job_details.job_type %}
+              {{ job_details.job_type }}
+              {% endif %}</div>
+            {% for skill in job_details.job_skills %}
+            <div
+              class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground">
+              {{skill}}</div>
+            {%endfor%}
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-3 space-y-6">
+      <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">Job Description</h3>
+        </div>
+        <div class="p-6 pt-0 space-y-4">
+          {% if job_details.job_description and job_details.job_description|striptags|trim %}
+          {{ job_details.job_description | safe }}
+          {% else %}
+          <p class="text-gray-500 italic">No description available</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">Requirements</h3>
+        </div>
+        <div class="p-6 pt-0">
+          {% if job_details.job_requirements and job_details.job_requirements|striptags|trim %}
+          {{ job_details.job_requirements | safe }}
+          {% else %}
+          <p class="text-gray-500 italic">No requirements specified</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="rounded-lg border bg-white text-card-foreground shadow-sm">
+        <div class="flex flex-col space-y-1.5 p-6">
+          <h3 class="text-2xl font-semibold leading-none tracking-tight">Benefits &amp; Perks</h3>
+        </div>
+        <div class="p-6 pt-0">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {% if job_details.job_benefits and job_details.job_benefits|striptags|trim %}
+            <div class="flex items-start gap-2">
+              <span class="text-gray-600">{{ job_details.job_benefits | safe }}</span>
+            </div>
+            {% else %}
+            <p class="text-gray-500 italic">No benefits specified</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
@@ -235,22 +249,27 @@
   <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
     <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
       <!-- Modal panel -->
-      <div class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+      <div
+        class="relative transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
         <div>
           <div class="flex justify-between items-center">
             <h3 class="text-base font-semibold text-gray-900 dark:text-gray-200" id="modal-title">Apply</h3>
             <button type="button" id="closeModal" class="text-gray-400 hover:text-slate-800 dark:hover:text-gray-400">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <form method="POST" action="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details.company_subdomain, job_slug=job_slug) }}">
+          <form method="POST"
+            action="{{ url_for('get_post_by_company_subdomain_and_slug', company_subdomain=job_details.company_subdomain, job_slug=job_slug) }}">
             <input type="hidden" name="job_id" value="{{ job_id }}">
             <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-              <button type="button" id="closeModalBtn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">Close</button>
-              <button type="submit" id="applyModalBtn" class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply</button>
+              <button type="button" id="closeModalBtn"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-blue-50 hover:text-accent-foreground h-10 px-4 py-2 flex-1">Close</button>
+              <button type="submit" id="applyModalBtn"
+                class="text-white inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 px-4 py-2 flex-1 bg-blue-600 hover:bg-blue-700">Apply</button>
             </div>
           </form>
         </div>
@@ -259,7 +278,8 @@
   </div>
 </div>
 
-<div id="notification-container" aria-live="assertive" class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6 z-50">
+<div id="notification-container" aria-live="assertive"
+  class="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:items-start sm:p-6 z-50">
   <div class="flex w-full flex-col items-center space-y-4 sm:items-end"></div>
 </div>
 
@@ -287,26 +307,27 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const messages = {{ get_flashed_messages(with_categories=true) | tojson }};
-    const container = document.querySelector("#notification-container > div");
+    const messages = {{ get_flashed_messages(with_categories = true) | tojson
+  }};
+  const container = document.querySelector("#notification-container > div");
 
-    messages.forEach(([category, message], index) => {
-      const notification = document.createElement("div");
-      notification.className = "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5 transition transform ease-out duration-300 opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-2";
-      notification.id = `flash-message-${index}`;
+  messages.forEach(([category, message], index) => {
+    const notification = document.createElement("div");
+    notification.className = "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5 transition transform ease-out duration-300 opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-2";
+    notification.id = `flash-message-${index}`;
 
-      let iconClass = "text-blue-400";
-      let iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />`; // Default info icon
+    let iconClass = "text-blue-400";
+    let iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />`; // Default info icon
 
-      if (category === "success") {
-        iconClass = "text-green-400";
-        iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />`;
-      } else if (category === "error") {
-        iconClass = "text-red-400";
-        iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />`;
-      }
+    if (category === "success") {
+      iconClass = "text-green-400";
+      iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />`;
+    } else if (category === "error") {
+      iconClass = "text-red-400";
+      iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />`;
+    }
 
-      notification.innerHTML = `
+    notification.innerHTML = `
         <div class="p-4 flex items-start">
           <div class="shrink-0">
             <svg class="size-6 ${iconClass}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -327,19 +348,19 @@
         </div>
       `;
 
-      container.appendChild(notification);
+    container.appendChild(notification);
 
-      // Show with animation
-      setTimeout(() => {
-        notification.classList.remove("opacity-0", "translate-y-2", "sm:translate-x-2");
-        notification.classList.add("opacity-100", "translate-y-0", "sm:translate-x-0");
-      }, 100);
+    // Show with animation
+    setTimeout(() => {
+      notification.classList.remove("opacity-0", "translate-y-2", "sm:translate-x-2");
+      notification.classList.add("opacity-100", "translate-y-0", "sm:translate-x-0");
+    }, 100);
 
-      // Hide after 5 seconds
-      setTimeout(() => {
-        closeNotification(index);
-      }, 5000);
-    });
+    // Hide after 5 seconds
+    setTimeout(() => {
+      closeNotification(index);
+    }, 5000);
+  });
   });
 
   function closeNotification(index) {
@@ -382,45 +403,46 @@
 
 <script>
   function shareJob(url) {
-      if (navigator.share) {
-          navigator.share({
-              title: "Check out this job on HireGen",
-              text: "A job you might be interested in.",
-              url: url
-          }).catch((error) => {
-              console.error("Sharing failed:", error);
-              alert("Sharing failed: " + error.message);
-          });
-      } else {
-          navigator.clipboard.writeText(url).then(() => {
-              alert("Link copied to clipboard!");
-          }).catch(() => {
-              alert("Unable to copy the link.");
-          });
-      }
+    if (navigator.share) {
+      navigator.share({
+        title: "Check out this job on HireGen",
+        text: "A job you might be interested in.",
+        url: url
+      }).catch((error) => {
+        console.error("Sharing failed:", error);
+        alert("Sharing failed: " + error.message);
+      });
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert("Link copied to clipboard!");
+      }).catch(() => {
+        alert("Unable to copy the link.");
+      });
+    }
   }
 
   // Save job functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     const saveJobBtn = document.getElementById('save-job-btn');
-    
+
     if (saveJobBtn) {
-      saveJobBtn.addEventListener('click', function() {
+      saveJobBtn.addEventListener('click', function () {
         const jobId = this.getAttribute('data-job-id');
         const button = this;
-        
+
         // Check if current user is a jobseeker
         const userRole = '{{ current_user.role if current_user.is_authenticated else "none" }}';
-        const isAuthenticated = {{ 'true' if current_user.is_authenticated else 'false' }};
-        
-        if (isAuthenticated && userRole === 'jobseeker') {
-          // User is a jobseeker, proceed with saving job
-          saveJob(jobId, button);
-        } else {
-          // User is not a jobseeker or not authenticated, redirect to jobseeker login
-          window.location.href = "{{ url_for('jobseeker_login') }}";
-        }
-      });
+        const isAuthenticated = {{ 'true' if current_user.is_authenticated else 'false' }
+      };
+
+      if (isAuthenticated && userRole === 'jobseeker') {
+        // User is a jobseeker, proceed with saving job
+        saveJob(jobId, button);
+      } else {
+        // User is not a jobseeker or not authenticated, redirect to jobseeker login
+        window.location.href = "{{ url_for('jobseeker_login') }}";
+      }
+    });
     }
   });
 
@@ -428,7 +450,7 @@
     // Disable button to prevent multiple clicks
     button.disabled = true;
     button.style.opacity = '0.5';
-    
+
     fetch(`/jobseeker/save-job/${jobId}`, {
       method: 'POST',
       headers: {
@@ -436,39 +458,39 @@
         'X-Requested-With': 'XMLHttpRequest'
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        // Update button appearance to show saved state
-        button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Update button appearance to show saved state
+          button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart w-4 h-4 text-red-500">
           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path>
         </svg>`;
-        button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
-        button.disabled = true;
-        
-        // Show success notification
-        showNotification('Job saved successfully!', 'success');
-      } else {
-        showNotification(data.message || 'Failed to save job', 'error');
+          button.className = 'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-red-200 bg-red-50 text-red-600 cursor-not-allowed h-9 rounded-md px-3';
+          button.disabled = true;
+
+          // Show success notification
+          showNotification('Job saved successfully!', 'success');
+        } else {
+          showNotification(data.message || 'Failed to save job', 'error');
+          // Re-enable button on error
+          button.disabled = false;
+          button.style.opacity = '1';
+        }
+      })
+      .catch(error => {
+        console.error('Error saving job:', error);
+        showNotification('Failed to save job. Please try again.', 'error');
         // Re-enable button on error
         button.disabled = false;
         button.style.opacity = '1';
-      }
-    })
-    .catch(error => {
-      console.error('Error saving job:', error);
-      showNotification('Failed to save job. Please try again.', 'error');
-      // Re-enable button on error
-      button.disabled = false;
-      button.style.opacity = '1';
-    });
+      });
   }
 
   function showNotification(message, type) {
     const container = document.querySelector("#notification-container > div");
     const notification = document.createElement("div");
     notification.className = "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black/5 transition transform ease-out duration-300 opacity-0 translate-y-2 sm:translate-y-0 sm:translate-x-2";
-    
+
     let iconClass = "text-blue-400";
     let iconPath = `<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />`;
 
@@ -525,39 +547,39 @@
       window.location.href = "{{ url_for('jobs_search') }}";
     }
   }
-  </script>
-  
-  
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const elements = document.querySelectorAll(".created-time");
-  
-      elements.forEach(el => {
-        const createdAt = new Date(el.dataset.created);
-        const now = new Date();
-  
-        const diffTime = now - createdAt;
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        const diffMonths = Math.floor(diffDays / 30);
-        const diffYears = Math.floor(diffDays / 365);
-  
-        let result;
-  
-        if (diffDays === 0) {
-          result = "Today";
-        } else if (diffDays === 1) {
-          result = "1 day ago";
-        } else if (diffDays < 30) {
-          result = `${diffDays} days ago`;
-        } else if (diffDays < 365) {
-          result = diffMonths === 1 ? "1 month ago" : `${diffMonths} months ago`;
-        } else {
-          result = diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
-        }
-  
-        el.innerText = result;
-      });
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".created-time");
+
+    elements.forEach(el => {
+      const createdAt = new Date(el.dataset.created);
+      const now = new Date();
+
+      const diffTime = now - createdAt;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const diffMonths = Math.floor(diffDays / 30);
+      const diffYears = Math.floor(diffDays / 365);
+
+      let result;
+
+      if (diffDays === 0) {
+        result = "Today";
+      } else if (diffDays === 1) {
+        result = "1 day ago";
+      } else if (diffDays < 30) {
+        result = `${diffDays} days ago`;
+      } else if (diffDays < 365) {
+        result = diffMonths === 1 ? "1 month ago" : `${diffMonths} months ago`;
+      } else {
+        result = diffYears === 1 ? "1 year ago" : `${diffYears} years ago`;
+      }
+
+      el.innerText = result;
     });
-  </script>
+  });
+</script>
 
 {% endblock %}
