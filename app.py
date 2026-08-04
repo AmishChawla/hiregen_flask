@@ -2702,7 +2702,8 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
             flash('Failed to apply for the job. Please try again.', 'error')
         return redirect(url_for('get_post_by_company_subdomain_and_slug', company_subdomain=company_subdomain, job_slug=job_slug))
 
-    return render_template('post.html',job_details=job_details, job_id=id, job_slug=job_slug, form=apply_form)
+    company = api_calls.get_company_details_by_subdomain(company_subdomain=company_subdomain)
+    return render_template('post.html', job_details=job_details, job_id=job_details["id"], job_slug=job_slug, form=apply_form, company=company)
 
 
 ###################################form builder################
