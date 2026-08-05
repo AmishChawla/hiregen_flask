@@ -3694,7 +3694,15 @@ def jobseeker_logout():
 def jobseeker_applications():
     result = api_calls.get_jobseeker_applications(access_token=current_user.id)
     if result is None:
-        result = {}  # Set result to an empty list
+        result = {
+            'application_metrics': {
+                'total_applied': 0,
+                'interviews': 0,
+                'response_rate': 0,
+                'pending': 0
+            },
+            'applications': []
+        }
 
     return render_template('jobseeker/job_applications.html', result=result)
 
