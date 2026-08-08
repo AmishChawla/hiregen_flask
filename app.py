@@ -390,7 +390,8 @@ def verify_recaptcha(token):
     }
     response = requests.post(url, data=data)
     result = response.json()
-    return result.get("success", False)  # Returns True if valid
+    # Return True only if verification succeeded and the score indicates a human (>= 0.5)
+    return result.get("success", False) and result.get("score", 0.0) >= 0.5
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
