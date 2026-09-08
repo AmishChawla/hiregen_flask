@@ -422,9 +422,9 @@ def update_user_profile(
 
 
 
-def get_companies():
+def get_companies(skip: int = 0, limit: int = 500):
     try:
-        response = requests.get(constants.BASE_URL + f'/all/companies/')
+        response = requests.get(constants.BASE_URL + f'/all/companies/?skip={skip}&limit={limit}')
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:

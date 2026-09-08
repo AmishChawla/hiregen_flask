@@ -4653,9 +4653,10 @@ def about_us():
     return render_template('aboutus.html')
 
 @app.route('/all-companies')
+@app.route('/companies')
 def all_companies():
 
-    companies = api_calls.get_companies() or []
+    companies = api_calls.get_companies(limit=500) or []
     return render_template('all_companies.html', companies=companies)
 
 ################## ADMIN CmS ####################################################
@@ -5104,19 +5105,21 @@ def admin_update_cms_post(post_id):
                     title=title,
                     content=content,
                     short_description=short_description,
-                    featured_image=featured_img or None,
+                    featured_image=featured_image,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='draft',
                     access_token=current_user.id,
-                    tags=tags_list
+                    tags= tags_list
                 )
                 return redirect(url_for('admin_all_cms_post'))
             except Exception as e:
                 print(f"Error updating post: {e}")
     tags_string = ""
-    for t in post.get('tags', []):
-        tags_string += t["name"] + ","
+    for t in post['tags']:
+        tags_string+=t["name"]+","
+
+
 
     if request.method == 'GET':
         form.title.data = post.get('title', '')
