@@ -5104,33 +5104,31 @@ def admin_update_cms_post(post_id):
                     title=title,
                     content=content,
                     short_description=short_description,
-                    featured_image=featured_image,
+                    featured_image=featured_img or None,
                     category_id=category,
                     subcategory_id=subcategory,
                     status='draft',
                     access_token=current_user.id,
-                    tags= tags_list
+                    tags=tags_list
                 )
                 return redirect(url_for('admin_all_cms_post'))
             except Exception as e:
                 print(f"Error updating post: {e}")
     tags_string = ""
-    for t in post['tags']:
-        tags_string+=t["name"]+","
-
-
+    for t in post.get('tags', []):
+        tags_string += t["name"] + ","
 
     if request.method == 'GET':
-        form.title.data = post['title']
+        form.title.data = post.get('title', '')
         try:
             form.subcategory.data = int(post['subcategory_id']) if post and post.get('subcategory_id') is not None else 0
         except Exception:
             form.subcategory.data = 0
-    form.short_description.data = post['short_description']
-    form.content.data = post['content']
-    form.tags.data= tags_string
+        form.short_description.data = post.get('short_description', '')
+        form.content.data = post.get('content', '')
+        form.tags.data = tags_string
 
-    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id,post=post)
+    return render_template('admin/admin_cms/cms_update_post.html', form=form, post_id=post_id, post=post)
 
 
 @app.route("/blog/<slug>", methods=['GET', 'POST'])

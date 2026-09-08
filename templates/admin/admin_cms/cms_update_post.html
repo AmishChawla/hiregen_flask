@@ -93,7 +93,7 @@
                                 <div id="quill-editor"
                                     class="block w-full rounded-md bg-white px-3 py-10 text-base text-gray-900 outline outline-1 outline-gray-300 focus:outline-blue-600">
                                 </div>
-                                {{ form.content(class="hidden") }}
+                                {{ form.content(class="hidden", id="content") }}
                             </div>
                         </div>
                     </div>
@@ -198,13 +198,23 @@
             window.quill.root.innerHTML = contentInput.value;
         }
 
-        // Sync Quill data to hidden input on form submission
-        document.querySelector('#postForm').addEventListener('submit', function () {
-            if (isHtmlView) {
-                contentInput.value = htmlEditor.value;
-            } else {
-                contentInput.value = window.quill.root.innerHTML;
+        function syncContent() {
+            if (contentInput) {
+                if (isHtmlView) {
+                    contentInput.value = htmlEditor.value;
+                } else if (window.quill && window.quill.root) {
+                    contentInput.value = window.quill.root.innerHTML;
+                }
             }
+        }
+
+        // Sync Quill data to hidden input on form submission and button click
+        const formEl = document.querySelector('#postForm');
+        if (formEl) {
+            formEl.addEventListener('submit', syncContent);
+        }
+        document.querySelectorAll('#postForm button[type="submit"], #postForm input[type="submit"]').forEach(btn => {
+            btn.addEventListener('click', syncContent);
         });
     });
 
