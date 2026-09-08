@@ -4868,6 +4868,13 @@ def add_category():
 @login_required
 def update_category(category_id):
     form = forms.AddCategory()
+    if request.method == 'GET':
+        categories = api_calls.get_cms_all_categories(access_token=current_user.id) or []
+        for cat in categories:
+            if str(cat.get('id')) == str(category_id):
+                form.category.data = cat.get('category')
+                break
+
     if form.validate_on_submit():
         category = form.category.data
         response = api_calls.update_category(category_id, category, access_token=current_user.id)
