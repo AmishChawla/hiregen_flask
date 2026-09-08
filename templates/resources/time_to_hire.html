@@ -1,106 +1,408 @@
 {% extends 'common_base.html' %}
-{% block title %}Time-to-Hire Calculator{% endblock %}
-{% block content %}
-<section class="bg-gray-50 border-b">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
-    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2">
-        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
-        <li>/</li>
-        <li><span>Resources</span></li>
-        <li>/</li>
-        <li class="text-slate-700">Time-to-Hire</li>
-      </ol>
-    </nav>
-    <h1 class="mt-4 text-3xl font-semibold">Time-to-Hire Calculator</h1>
-    <p class="mt-2 text-slate-600 max-w-2xl">Measure how long it takes from job posting to offer acceptance. Benchmark speed and spot bottlenecks.</p>
 
-    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div>
-      <label class="block text-sm mb-1">Job post date</label>
-      <input id="postDate" type="date" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" aria-label="Job post date">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Offer accepted date</label>
-      <input id="offerDate" type="date" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" aria-label="Offer accepted date">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Number of hires</label>
-      <input id="hires" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 3" aria-label="Number of hires">
-      <p id="error" class="hidden text-xs text-red-600 mt-1">Post date must be before offer date; hires must be at least 1.</p>
-    </div>
-        </div>
+{% block title %}Time-to-Hire Calculator: Formula, Benchmarks & Free Tool | HireGen{% endblock %}
 
-        <div class="mt-4">
-          <button id="calc" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
-        </div>
+{% block metatags %}
+<meta name="description" content="Calculate your time-to-hire in seconds with a free calculator. See the formula, benchmarks, and proven ways to shorten your hiring timeline.">
+<link rel="canonical" href="https://hiregen.com/resources/time-to-hire">
+<meta property="og:title" content="Time-to-Hire Calculator | HireGen">
+<meta property="og:description" content="Measure days from job post to offer acceptance. Free calculator, formula breakdown, benchmarks, and ways to speed up hiring.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hiregen.com/resources/time-to-hire">
+<meta property="og:image" content="https://hiregen.com/static/images/recruitment_process_illustration.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Time-to-Hire Calculator | HireGen">
+<meta name="twitter:description" content="Measure days from job post to offer acceptance with a free calculator, formula, and benchmarks.">
+<meta name="twitter:image" content="https://hiregen.com/static/images/recruitment_process_illustration.jpeg">
+<meta name="robots" content="index, follow">
 
-        <div id="result" class="mt-6 hidden">
-          <h2 class="text-xl font-semibold">Results</h2>
-          <p class="mt-2">Average Time-to-Hire: <span id="tth" class="font-bold"></span> days</p>
-          <p class="text-sm text-gray-500 mt-1">Benchmark: 30–45 days typical; top teams often under 25 days.</p>
-          <div id="resultTips" class="mt-4 hidden">
-            <p class="text-sm text-slate-600">Tip: Shorten feedback loops, automate scheduling, and pre-align compensation bands.</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-1 rounded-xl border border-gray-200 bg-white p-4 md:p-6 flex items-center justify-center">
-        <img src="{{ url_for('static', filename='images/recruitment_process_illustration.jpeg') }}" alt="Time to hire illustration" class="max-h-56 w-auto">
-      </div>
-    </div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Time-to-Hire Calculator: Formula, Benchmarks & How to Shorten Your Hiring Timeline",
+  "description": "A complete guide to measuring and reducing time-to-hire, including a free interactive calculator, the underlying formula, industry benchmarks, and process fixes.",
+  "author": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "logo": { "@type": "ImageObject", "url": "https://hiregen.com/static/images/logo.webp" }
+  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hiregen.com/resources/time-to-hire" },
+  "datePublished": "2026-09-07",
+  "dateModified": "2026-09-08"
+}
+</script>
 
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">How it works</h3>
-        <p class="text-slate-600 text-sm">We compute days between the posting date and the offer-accepted date.</p>
-        <p class="text-slate-700 text-sm mt-2"><strong>Formula:</strong> Time-to-Hire = Offer Accepted Date − Job Post Date</p>
-      </div>
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">Reduce time-to-hire</h3>
-        <p class="text-slate-600 text-sm">Automate screening, optimize pipelines, and remove approval delays.</p>
-        <a href="#" class="inline-block mt-3 text-blue-600 underline">See how HireGen reduces time-to-hire by 40%</a>
-      </div>
-    </div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Time-to-Hire Calculator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (Web-based)",
+  "url": "https://hiregen.com/resources/time-to-hire",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "A free calculator that measures time-to-hire, the number of days between a job posting date and offer acceptance date.",
+  "publisher": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" }
+}
+</script>
 
-    <div class="mt-10 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-      <h3 class="text-lg font-semibold mb-3">Other calculators</h3>
-      <div class="flex flex-wrap gap-2 text-sm">
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_cost_per_hire') }}">Cost-per-Hire</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_recruitment_roi') }}">Recruitment ROI</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_attrition_cost') }}">Attrition Cost</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_job_board_effectiveness') }}">Job Board Effectiveness</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  function daysBetween(a,b){
-    const ms = new Date(b) - new Date(a);
-    return Math.max(0, Math.round(ms / (1000*60*60*24)));
-  }
-  document.getElementById('calc').addEventListener('click', () => {
-    const d = daysBetween(document.getElementById('postDate').value, document.getElementById('offerDate').value);
-    const hires = Math.max(1, Number(document.getElementById('hires').value) || 1);
-    const avg = d;
-    const start = document.getElementById('postDate').value;
-    const end = document.getElementById('offerDate').value;
-    if (!start || !end || new Date(end) < new Date(start) || hires < 1){
-      const err = document.getElementById('error');
-      if (err) err.classList.remove('hidden');
-      return;
-    } else {
-      const err = document.getElementById('error');
-      if (err) err.classList.add('hidden');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is time-to-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time-to-hire is the number of days between when a job is posted (or a candidate first enters the pipeline) and when that candidate accepts an offer. It measures how fast your hiring process moves once a role is open, and is one of the most-tracked recruiting efficiency metrics."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is time-to-hire calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time-to-hire is calculated by subtracting the job post date from the offer accepted date: Time-to-Hire = Offer Accepted Date minus Job Post Date. The result is expressed in calendar days. Some teams calculate it in business days instead, which excludes weekends and holidays."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between time-to-hire and time-to-fill?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Time-to-fill measures from the day a requisition is approved or opened to the day an offer is accepted, capturing the full internal approval and sourcing cycle. Time-to-hire measures from the day a candidate enters the pipeline, usually via application or sourcing, to offer acceptance, so it is typically shorter and more focused on process speed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good time-to-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Many organizations treat 30 to 45 days as a typical range for professional roles, with high-performing teams often completing hires in under 25 days. Highly specialized, senior, or executive roles commonly take longer due to smaller candidate pools and multi-stage interviews, while high-volume or entry-level roles can close much faster."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does time-to-hire matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A slow time-to-hire increases the risk of losing strong candidates to competing offers, leaves roles vacant longer which hurts team productivity, and increases cost-per-hire through extended recruiter and interviewer time. Tracking it helps teams find and fix bottlenecks in screening, interview scheduling, and approvals."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What causes a long time-to-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Common causes include slow feedback loops between interview stages, too many interview rounds or approvers, manual scheduling back-and-forth, unclear or shifting job requirements, and misaligned compensation bands discovered late in the process."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can a company reduce time-to-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Companies reduce time-to-hire by pre-aligning compensation and role requirements before sourcing, automating interview scheduling, setting a 24 to 48 hour feedback deadline for interviewers, trimming unnecessary interview rounds, and using an applicant tracking system to flag stalled candidates automatically."
+      }
     }
-    document.getElementById('tth').textContent = avg.toString();
-    document.getElementById('result').classList.remove('hidden');
-    const tips = document.getElementById('resultTips');
-    if (tips) tips.classList.remove('hidden');
-  });
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hiregen.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://hiregen.com/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Time-to-Hire", "item": "https://hiregen.com/resources/time-to-hire" }
+  ]
+}
 </script>
 {% endblock %}
 
+{% block content %}
+<style>
+  :root{
+    --ink:#1a1d1f;
+    --ink-soft:#4b5257;
+    --line:#e4e4e0;
+    --accent:#2f5c4b;
+    --accent-soft:#eaf1ed;
+    --bg:#ffffff;
+    --warn-bg:#fbf3e6;
+  }
+  .res-wrap{max-width:820px; margin:0 auto; padding:32px 24px 80px;}
+  .crumb{font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
+  .crumb a{color:var(--ink-soft); text-decoration:none;}
+  .crumb a:hover{text-decoration:underline;}
+  .res-wrap h1{font-size:34px; line-height:1.2; margin:0 0 12px;}
+  .dek{font-size:18px; color:var(--ink-soft); margin:0 0 32px; max-width:640px;}
+  .res-wrap h2{font-size:24px; margin:44px 0 14px;}
+  .res-wrap h3{font-size:18px; margin:24px 0 8px;}
+  .res-wrap p{margin:0 0 16px; max-width:720px;}
+  .res-wrap ul, .res-wrap ol{margin:0 0 16px; padding-left:22px;}
+  .res-wrap li{margin-bottom:6px;}
 
+  .calc{border:1px solid var(--line); border-radius:10px; padding:28px; margin:8px 0 40px; background:#fafaf9;}
+  .calc h2{margin-top:0;}
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-bottom:20px;}
+  @media (max-width:560px){ .field-grid{grid-template-columns:1fr;} }
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--ink);}
+  .field .hint{font-size:12px; color:var(--ink-soft); font-weight:400; display:block; margin-top:4px;}
+  .field input{width:100%; padding:10px 12px; border:1px solid #c9cbc7; border-radius:6px; font-size:15px; font-family:inherit; color:var(--ink); background:#fff;}
+  .field input:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .calc-actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  #calcBtn{background:var(--accent); color:#fff; border:none; padding:11px 22px; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer;}
+  #calcBtn:hover{background:#254a3d;}
+  #errMsg{color:#b3261e; font-size:13px; display:none;}
+  .result{margin-top:22px; padding:20px; border-radius:8px; background:var(--accent-soft); display:none;}
+  .result.show{display:block;}
+  .result .label{font-size:13px; color:var(--ink-soft); margin-bottom:4px;}
+  .result .amount{font-size:32px; font-weight:700; color:var(--accent); margin-bottom:6px;}
+  .result .breakdown{font-size:13px; color:var(--ink-soft); border-top:1px solid #d3e0d9; margin-top:12px; padding-top:12px;}
+  .result .breakdown div{display:flex; justify-content:space-between; padding:3px 0;}
+  .tip{font-size:13px; color:#6b6f6c; margin-top:14px;}
+
+  .formula-box{background:var(--warn-bg); border:1px solid #ecd9b8; border-radius:8px; padding:16px 20px; font-size:15px; color:#5c4315; margin:16px 0 24px;}
+  .formula-box code{display:block; font-family:"SFMono-Regular", Consolas, Menlo, monospace; font-size:14px; margin-top:6px; color:#463107;}
+
+  .res-wrap table{width:100%; border-collapse:collapse; margin:16px 0 28px; font-size:14px;}
+  .res-wrap th, .res-wrap td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+  .res-wrap th{font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600;}
+
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%; text-align:left; background:none; border:none; padding:16px 0; font-size:16px; font-weight:600; color:var(--ink); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px; font-family:inherit;}
+  .faq-q .icon{font-size:18px; color:var(--accent); flex-shrink:0;}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{padding-bottom:16px; margin:0; color:var(--ink-soft);}
+  .faq-item.open .faq-a{max-height:400px;}
+
+  .res-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0 28px;}
+  @media (max-width:560px){ .res-grid{grid-template-columns:1fr;} }
+  .res-card{border:1px solid var(--line); border-radius:8px; padding:16px; text-decoration:none; color:var(--ink); display:block;}
+  .res-card:hover{border-color:var(--accent);}
+  .res-card .name{font-weight:600; margin-bottom:4px; color:var(--accent);}
+  .res-card .desc{font-size:13px; color:var(--ink-soft);}
+
+  .cta{margin:44px 0 8px; padding:28px; border-radius:10px; background:var(--ink); color:#fff;}
+  .cta h2{color:#fff; margin-top:0; font-size:22px;}
+  .cta p{color:#d7dbd8; margin-bottom:20px;}
+  .cta a.btn{display:inline-block; background:#fff; color:var(--ink); text-decoration:none; padding:11px 22px; border-radius:6px; font-weight:600; font-size:15px;}
+  .cta a.btn:hover{background:#eee;}
+
+  .refs{font-size:12px; color:#8a8e8b; margin-top:36px;}
+</style>
+
+<div class="res-wrap">
+
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> / <span>Resources</span> / Time-to-Hire
+  </nav>
+
+  <h1>Time-to-Hire Calculator</h1>
+  <p class="dek">Every extra day a role stays open is a day your best candidates can accept a competing offer. Use the calculator below to measure your time-to-hire, then see the formula, benchmarks, and process fixes that consistently shorten hiring timelines.</p>
+  <p style="font-size:12px; color:#8a8e8b; margin:-24px 0 32px;">Last updated September 8, 2026</p>
+
+  <section class="calc" aria-labelledby="calc-heading">
+    <h2 id="calc-heading">Calculate your time-to-hire</h2>
+    <div class="field-grid">
+      <div class="field">
+        <label for="postDate">Job post date</label>
+        <input type="date" id="postDate">
+      </div>
+      <div class="field">
+        <label for="offerDate">Offer accepted date</label>
+        <input type="date" id="offerDate">
+      </div>
+      <div class="field" style="grid-column:1/-1; max-width:340px;">
+        <label for="hires">Number of hires
+          <span class="hint">how many roles this timeline covers</span>
+        </label>
+        <input type="number" id="hires" inputmode="numeric" min="1" step="1" placeholder="e.g. 1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button id="calcBtn" type="button">Calculate</button>
+      <span id="errMsg">Post date must be before offer date; hires must be at least 1.</span>
+    </div>
+
+    <div class="result" id="resultBox" aria-live="polite">
+      <div class="label">Average time-to-hire</div>
+      <div class="amount" id="resultAmount">0 days</div>
+      <div class="breakdown">
+        <div><span>Calendar days</span><span id="brkDays">0</span></div>
+        <div><span>Business days (approx.)</span><span id="brkBizDays">0</span></div>
+        <div><span>Hires covered</span><span id="brkHires">1</span></div>
+      </div>
+      <div class="tip">Benchmark: 30–45 days is typical for professional roles; top teams often close in under 25 days.</div>
+    </div>
+  </section>
+
+  <h2>How the formula works</h2>
+  <p>Time-to-hire is a simple date difference, but it's the single clearest signal of how fast your process moves once a candidate is in the pipeline.</p>
+  <div class="formula-box">
+    Time-to-Hire formula
+    <code>Time-to-Hire = Offer Accepted Date − Job Post Date</code>
+  </div>
+  <p>If a job post produces several hires over time — for example a rolling requisition — track each hire's individual timeline rather than averaging a single post date across all of them, since candidates entering the pipeline at different points will have genuinely different durations.</p>
+  <p><strong>Example:</strong> A role posted January 1 with an offer accepted February 15 has a <strong>45-day time-to-hire</strong> — right at the edge of the typical 30–45 day range for professional roles.</p>
+
+  <h3>Typical time-to-hire benchmarks</h3>
+  <table>
+    <thead>
+      <tr><th>Role type</th><th>Typical range</th><th>Top-performer pace</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>High-volume / entry-level</td><td>15 – 25 days</td><td>Under 15 days</td></tr>
+      <tr><td>Professional / mid-level</td><td>30 – 45 days</td><td>Under 25 days</td></tr>
+      <tr><td>Specialized / technical</td><td>40 – 60 days</td><td>Under 35 days</td></tr>
+      <tr><td>Leadership / executive</td><td>60 – 90+ days</td><td>Under 50 days</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Time-to-hire vs. time-to-fill</h2>
+  <p>These two metrics get mixed up often. <strong>Time-to-fill</strong> starts when a requisition is approved, capturing internal sign-off delays before sourcing even begins. <strong>Time-to-hire</strong> starts once a candidate enters the pipeline, so it isolates how efficient your actual interview-to-offer process is. Tracking both separately tells you whether a slow hire is an approvals problem or a process problem.</p>
+
+  <h2>What causes a long time-to-hire</h2>
+  <ul>
+    <li><strong>Slow interviewer feedback:</strong> scorecards sitting for days between rounds stall momentum and cost you candidates.</li>
+    <li><strong>Too many rounds or approvers:</strong> each additional stage adds scheduling friction on top of its own delay.</li>
+    <li><strong>Manual scheduling:</strong> email back-and-forth to find a shared interview slot routinely adds days per stage.</li>
+    <li><strong>Shifting requirements:</strong> a role redefined mid-search resets the candidate pool and the clock.</li>
+    <li><strong>Late compensation alignment:</strong> discovering a budget mismatch at offer stage undoes weeks of process.</li>
+  </ul>
+
+  <h2>How to reduce time-to-hire</h2>
+  <ol>
+    <li><strong>Align before you post.</strong> Lock role requirements and compensation bands with the hiring manager before the req goes live.</li>
+    <li><strong>Set a feedback SLA.</strong> Require interviewer scorecards within 24–48 hours of each interview.</li>
+    <li><strong>Automate scheduling.</strong> Remove manual back-and-forth with self-serve interview booking.</li>
+    <li><strong>Trim the funnel.</strong> Audit whether every interview round is adding signal or just adding days.</li>
+    <li><strong>Flag stalled candidates automatically.</strong> An ATS that surfaces candidates sitting idle in a stage stops silent drop-off before it costs you the hire.</li>
+  </ol>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is time-to-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Time-to-hire is the number of days between when a job is posted, or a candidate enters the pipeline, and when that candidate accepts an offer. It's one of the most-tracked recruiting efficiency metrics.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How is time-to-hire calculated?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Subtract the job post date from the offer accepted date: Time-to-Hire = Offer Accepted Date minus Job Post Date, expressed in calendar days. Some teams use business days instead, excluding weekends and holidays.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What's the difference between time-to-hire and time-to-fill?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Time-to-fill measures from requisition approval to offer acceptance, including internal sign-off delays. Time-to-hire measures from when a candidate enters the pipeline to offer acceptance, so it's typically shorter and isolates process speed.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is a good time-to-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>30 to 45 days is typical for professional roles, with top-performing teams often under 25 days. Specialized or executive roles commonly take longer; high-volume or entry-level roles can close much faster.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>Why does time-to-hire matter?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>A slow time-to-hire raises the risk of losing candidates to competing offers, leaves roles vacant longer, and increases cost-per-hire through extended recruiter and interviewer time.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What causes a long time-to-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Common causes include slow interviewer feedback, too many interview rounds, manual scheduling, shifting job requirements, and compensation misalignment discovered late in the process.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How can a company reduce time-to-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Align requirements and compensation before posting, set a feedback SLA for interviewers, automate scheduling, trim unnecessary interview rounds, and use an ATS to flag stalled candidates automatically.</p></div>
+    </div>
+  </div>
+
+  <h2>Related resources</h2>
+  <div class="res-grid">
+    <a class="res-card" href="{{ url_for('resources_cost_per_hire') }}"><div class="name">Cost-per-Hire Calculator</div><div class="desc">Calculate your average cost per hire</div></a>
+    <a class="res-card" href="{{ url_for('resources_recruitment_roi') }}"><div class="name">Recruitment ROI Calculator</div><div class="desc">Estimate the ROI of your hiring spend</div></a>
+    <a class="res-card" href="{{ url_for('resources_attrition_cost') }}"><div class="name">Attrition Cost Calculator</div><div class="desc">Quantify yearly turnover cost</div></a>
+    <a class="res-card" href="{{ url_for('resources_job_board_effectiveness') }}"><div class="name">Job Board Effectiveness</div><div class="desc">Compare sources by cost and hires</div></a>
+  </div>
+
+  <div class="cta">
+    <h2>Cut time-to-hire without cutting corners</h2>
+    <p>HireGen's AI-powered recruitment CRM and ATS automates scheduling, flags stalled candidates, and speeds up screening — teams using it report cutting time-to-hire by up to 40%.</p>
+    <a class="btn" href="{{ url_for('company_register') }}">Try HireGen for free</a>
+  </div>
+
+  <p class="refs">Benchmark ranges above are general industry guidance for directional planning. For a number specific to your team, use your own posting and offer dates in the calculator.</p>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('calcBtn');
+  var err = document.getElementById('errMsg');
+  var resultBox = document.getElementById('resultBox');
+
+  ['postDate','offerDate','hires'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); btn.click(); }
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    var postVal = document.getElementById('postDate').value;
+    var offerVal = document.getElementById('offerDate').value;
+    var hiresVal = document.getElementById('hires').value;
+    var hires = hiresVal === '' ? 1 : parseInt(hiresVal, 10);
+
+    var postDate = postVal ? new Date(postVal + 'T00:00:00') : null;
+    var offerDate = offerVal ? new Date(offerVal + 'T00:00:00') : null;
+
+    var valid = postDate && offerDate && !isNaN(postDate.getTime()) && !isNaN(offerDate.getTime())
+                && offerDate.getTime() > postDate.getTime() && hires >= 1;
+
+    if (!valid) {
+      err.style.display = 'inline';
+      resultBox.classList.remove('show');
+      return;
+    }
+    err.style.display = 'none';
+
+    var msPerDay = 1000 * 60 * 60 * 24;
+    var days = Math.round((offerDate.getTime() - postDate.getTime()) / msPerDay);
+
+    var bizDays = 0;
+    var cursor = new Date(postDate.getTime());
+    while (cursor.getTime() < offerDate.getTime()) {
+      cursor.setDate(cursor.getDate() + 1);
+      var dow = cursor.getDay();
+      if (dow !== 0 && dow !== 6) bizDays++;
+    }
+
+    document.getElementById('resultAmount').textContent = days + (days === 1 ? ' day' : ' days');
+    document.getElementById('brkDays').textContent = days;
+    document.getElementById('brkBizDays').textContent = bizDays;
+    document.getElementById('brkHires').textContent = hires;
+    resultBox.classList.add('show');
+  });
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      var item = q.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        el.querySelector('.icon').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        item.querySelector('.icon').textContent = '\u2212';
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}

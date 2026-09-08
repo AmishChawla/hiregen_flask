@@ -1,145 +1,461 @@
 {% extends 'common_base.html' %}
-{% block title %}Job Board Effectiveness Calculator{% endblock %}
-{% block content %}
-<section class="bg-gray-50 border-b">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
-    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2">
-        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
-        <li>/</li>
-        <li><span>Resources</span></li>
-        <li>/</li>
-        <li class="text-slate-700">Job Board Effectiveness</li>
-      </ol>
-    </nav>
-    <h1 class="mt-4 text-3xl font-semibold">Job Board Effectiveness Calculator</h1>
-    <p class="mt-2 text-slate-600 max-w-3xl">Compare spend, applications, and hires across job boards to calculate cost per hire and conversion for each source.</p>
 
-    <div class="mt-6 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-      <div id="boards" class="space-y-4">
-        <!-- rows will be added dynamically -->
-      </div>
-      <div class="flex items-center gap-3">
-        <button id="addRow" class="mt-2 bg-gray-200 px-3 py-1 rounded">Add Job Board</button>
-        <button id="calc" class="mt-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
-      </div>
+{% block title %}Job Board Effectiveness Calculator | HireGen{% endblock %}
 
-      <div id="result" class="mt-6 hidden">
-        <h2 class="text-xl font-semibold">Results</h2>
-        <div id="tableWrap" class="mt-2 overflow-x-auto"></div>
-        <p class="text-sm text-slate-600 mt-3">Sort by lowest cost per hire and highest conversion to pick winners.</p>
-      </div>
-    </div>
+{% block metatags %}
+<meta name="description" content="Compare job boards side by side with a free calculator. See cost per hire and hire conversion rate for each source, plus the formulas and how to pick winners.">
+<link rel="canonical" href="https://hiregen.com/resources/job-board-effectiveness">
+<meta property="og:title" content="Job Board Effectiveness Calculator | HireGen">
+<meta property="og:description" content="Compare spend, applications, and hires across job boards to find your best-performing sources. Free calculator, formulas, and optimization tips.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hiregen.com/resources/job-board-effectiveness">
+<meta property="og:image" content="https://hiregen.com/static/images/logo.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Job Board Effectiveness Calculator | HireGen">
+<meta name="twitter:description" content="Compare job boards side by side by cost per hire and conversion rate with a free calculator.">
+<meta name="twitter:image" content="https://hiregen.com/static/images/logo.webp">
+<meta name="robots" content="index, follow">
 
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">How it works</h3>
-        <p class="text-slate-700 text-sm"><strong>Cost per Hire</strong> = Spend ÷ Hires</p>
-        <p class="text-slate-700 text-sm"><strong>Hire Conversion %</strong> = (Hires ÷ Applications) × 100</p>
-      </div>
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">Choose the best boards</h3>
-        <p class="text-slate-600 text-sm">Double down on high-conversion, low-cost sources and cut underperformers.</p>
-        <a href="#" class="inline-block mt-3 text-blue-600 underline">Top 10 Job Boards for 2025</a>
-      </div>
-    </div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Job Board Effectiveness Calculator: Compare Sources by Cost per Hire and Conversion",
+  "description": "A complete guide to comparing job board performance, including a free interactive calculator, the underlying formulas, and how to reallocate spend toward winning sources.",
+  "author": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "logo": { "@type": "ImageObject", "url": "https://hiregen.com/static/images/logo.webp" }
+  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hiregen.com/resources/job-board-effectiveness" },
+  "datePublished": "2026-09-08",
+  "dateModified": "2026-09-08"
+}
+</script>
 
-    <div class="mt-10 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-      <h3 class="text-lg font-semibold mb-3">Other calculators</h3>
-      <div class="flex flex-wrap gap-2 text-sm">
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_cost_per_hire') }}">Cost-per-Hire</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_time_to_hire') }}">Time-to-Hire</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_recruitment_roi') }}">Recruitment ROI</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_attrition_cost') }}">Attrition Cost</a>
-      </div>
-    </div>
-  </div>
-</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Job Board Effectiveness Calculator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (Web-based)",
+  "url": "https://hiregen.com/resources/job-board-effectiveness",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "A free calculator that compares job boards by cost per hire and hire conversion rate, using spend, application, and hire counts for each source.",
+  "publisher": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" }
+}
+</script>
 
-<script>
-  const boards = document.getElementById('boards');
-  function rowTemplate(i){
-    return `<div class="grid grid-cols-1 md:grid-cols-5 gap-2 items-end" data-row="${i}">
-      <div>
-        <label class="block text-sm mb-1">Board name</label>
-        <input type="text" class="w-full border rounded p-2" placeholder="e.g., Indeed">
-      </div>
-      <div>
-        <label class="block text-sm mb-1">Postings</label>
-        <input type="number" class="w-full border rounded p-2" placeholder="e.g., 10">
-      </div>
-      <div>
-        <label class="block text-sm mb-1">Applications</label>
-        <input type="number" class="w-full border rounded p-2" placeholder="e.g., 200">
-      </div>
-      <div>
-        <label class="block text-sm mb-1">Hires</label>
-        <input type="number" class="w-full border rounded p-2" placeholder="e.g., 3">
-      </div>
-      <div>
-        <label class="block text-sm mb-1">Spend ($)</label>
-        <input type="number" class="w-full border rounded p-2" placeholder="e.g., 1500">
-      </div>
-    </div>`
-  }
-  function addRow(){
-    const i = boards.children.length;
-    const div = document.createElement('div');
-    div.innerHTML = rowTemplate(i);
-    boards.appendChild(div.firstChild);
-  }
-  document.getElementById('addRow').addEventListener('click', addRow);
-  addRow(); addRow();
-
-  function getRows(){
-    return [...boards.querySelectorAll('[data-row]')].map(row => {
-      const [name, postings, applications, hires, spend] = row.querySelectorAll('input');
-      return {
-        name: name.value || 'Board',
-        postings: Number(postings.value) || 0,
-        applications: Number(applications.value) || 0,
-        hires: Number(hires.value) || 0,
-        spend: Number(spend.value) || 0,
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is job board effectiveness?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Job board effectiveness measures how well a job posting source converts spend into hires. It is typically assessed using two metrics side by side: cost per hire, which shows how much each hire from that source cost, and hire conversion rate, which shows what share of applicants from that source turned into hires."
       }
-    });
-  }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you calculate cost per hire by job board?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cost per hire by source is calculated as: Cost per Hire = Spend / Hires. Divide the total amount spent on that job board by the number of hires that came from it during the same period."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you calculate hire conversion rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hire conversion rate is calculated as: Hire Conversion % = (Hires / Applications) x 100. It shows what percentage of applicants from a given source ultimately became hires, which reflects both source quality and screening fit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good hire conversion rate for a job board?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Conversion rates vary widely by role type and source, but general-purpose high-traffic job boards commonly convert well under 1 percent of applicants to hires, while targeted or niche sources and employee referrals often convert at several times that rate because the applicant pool is more pre-qualified."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why compare cost per hire and conversion together instead of separately?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A source can look cheap on cost per hire simply because it produces very few hires from a huge, low-quality applicant pool, or look efficient on conversion while still being expensive per hire. Comparing both together shows which sources are genuinely efficient rather than winning on just one dimension."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often should job board performance be reviewed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most teams review job board performance quarterly, or after each major hiring cycle, since performance shifts with seasonality, role mix, and changes to a board's own traffic and pricing. Reviewing too infrequently risks continued spend on an underperforming source."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can a company improve job board ROI?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Reallocate spend toward sources with the lowest cost per hire and highest conversion, cut or renegotiate underperforming boards, use role-specific or niche boards for specialized positions instead of general-purpose ones, and track performance by role type since a source that works for one role may underperform for another."
+      }
+    }
+  ]
+}
+</script>
 
-  document.getElementById('calc').addEventListener('click', () => {
-    const rows = getRows();
-    const results = rows.map(r => ({
-      ...r,
-      cph: r.hires > 0 ? (r.spend / r.hires) : 0,
-      conv: r.applications > 0 ? (r.hires / r.applications) * 100 : 0,
-    }));
-    results.sort((a,b) => a.cph - b.cph);
-    const html = `<table class="min-w-full border text-sm">
-      <thead class="bg-gray-100">
-        <tr>
-          <th class="p-2 border">Board</th>
-          <th class="p-2 border">Postings</th>
-          <th class="p-2 border">Applications</th>
-          <th class="p-2 border">Hires</th>
-          <th class="p-2 border">Spend</th>
-          <th class="p-2 border">Cost/Hire</th>
-          <th class="p-2 border">Hire Conv%</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${results.map(r => `<tr>
-          <td class="p-2 border">${r.name}</td>
-          <td class="p-2 border">${r.postings}</td>
-          <td class="p-2 border">${r.applications}</td>
-          <td class="p-2 border">${r.hires}</td>
-          <td class="p-2 border">$${r.spend.toFixed(2)}</td>
-          <td class="p-2 border">$${r.cph.toFixed(2)}</td>
-          <td class="p-2 border">${r.conv.toFixed(2)}%</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>`;
-    document.getElementById('tableWrap').innerHTML = html;
-    document.getElementById('result').classList.remove('hidden');
-  });
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hiregen.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://hiregen.com/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Job Board Effectiveness", "item": "https://hiregen.com/resources/job-board-effectiveness" }
+  ]
+}
 </script>
 {% endblock %}
 
+{% block content %}
+<style>
+  :root{
+    --ink:#1a1d1f;
+    --ink-soft:#4b5257;
+    --line:#e4e4e0;
+    --accent:#2f5c4b;
+    --accent-soft:#eaf1ed;
+    --bg:#ffffff;
+    --warn-bg:#fbf3e6;
+    --win-bg:#e9f5ec;
+  }
+  .res-wrap{max-width:900px; margin:0 auto; padding:32px 24px 80px;}
+  .crumb{font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
+  .crumb a{color:var(--ink-soft); text-decoration:none;}
+  .crumb a:hover{text-decoration:underline;}
+  .res-wrap h1{font-size:34px; line-height:1.2; margin:0 0 12px;}
+  .dek{font-size:18px; color:var(--ink-soft); margin:0 0 32px; max-width:680px;}
+  .res-wrap h2{font-size:24px; margin:44px 0 14px;}
+  .res-wrap h3{font-size:18px; margin:24px 0 8px;}
+  .res-wrap p{margin:0 0 16px; max-width:720px;}
+  .res-wrap ul, .res-wrap ol{margin:0 0 16px; padding-left:22px;}
+  .res-wrap li{margin-bottom:6px;}
 
+  .calc{border:1px solid var(--line); border-radius:10px; padding:28px; margin:8px 0 40px; background:#fafaf9;}
+  .calc h2{margin-top:0;}
+  .board-table{width:100%; border-collapse:collapse; margin-bottom:14px;}
+  .board-table th{font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); text-align:left; padding:0 8px 6px; font-weight:600;}
+  .board-table td{padding:4px 8px 4px 0; vertical-align:middle;}
+  .board-table input{width:100%; padding:8px 10px; border:1px solid #c9cbc7; border-radius:6px; font-size:14px; font-family:inherit; color:var(--ink); background:#fff;}
+  .board-table input:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .rm-btn{background:none; border:none; color:#b3261e; font-size:18px; cursor:pointer; padding:4px 8px; line-height:1;}
+  .rm-btn:hover{color:#7a1a15;}
+  #addRowBtn{background:#fff; color:var(--accent); border:1px solid var(--accent); padding:8px 16px; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; margin-bottom:18px;}
+  #addRowBtn:hover{background:var(--accent-soft);}
+  .calc-actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  #calcBtn{background:var(--accent); color:#fff; border:none; padding:11px 22px; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer;}
+  #calcBtn:hover{background:#254a3d;}
+  #errMsg{color:#b3261e; font-size:13px; display:none;}
+
+  .result{margin-top:22px; display:none;}
+  .result.show{display:block;}
+  .result-table{width:100%; border-collapse:collapse; font-size:14px;}
+  .result-table th{text-align:left; padding:8px 10px; font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); border-bottom:1px solid var(--line);}
+  .result-table td{padding:10px; border-bottom:1px solid var(--line);}
+  .result-table tr.winner td{background:var(--win-bg);}
+  .result-table .badge{font-size:11px; font-weight:700; color:var(--accent); background:var(--accent-soft); padding:2px 8px; border-radius:10px; margin-left:6px;}
+  .tip{font-size:13px; color:#6b6f6c; margin-top:14px;}
+
+  .formula-box{background:var(--warn-bg); border:1px solid #ecd9b8; border-radius:8px; padding:16px 20px; font-size:15px; color:#5c4315; margin:16px 0 24px;}
+  .formula-box code{display:block; font-family:"SFMono-Regular", Consolas, Menlo, monospace; font-size:14px; margin-top:6px; color:#463107;}
+  .formula-box code + code{margin-top:10px;}
+
+  .res-wrap table.info{width:100%; border-collapse:collapse; margin:16px 0 28px; font-size:14px;}
+  .res-wrap table.info th, .res-wrap table.info td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+  .res-wrap table.info th{font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600;}
+
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%; text-align:left; background:none; border:none; padding:16px 0; font-size:16px; font-weight:600; color:var(--ink); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px; font-family:inherit;}
+  .faq-q .icon{font-size:18px; color:var(--accent); flex-shrink:0;}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{padding-bottom:16px; margin:0; color:var(--ink-soft);}
+  .faq-item.open .faq-a{max-height:400px;}
+
+  .res-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0 28px;}
+  @media (max-width:560px){ .res-grid{grid-template-columns:1fr;} }
+  .res-card{border:1px solid var(--line); border-radius:8px; padding:16px; text-decoration:none; color:var(--ink); display:block;}
+  .res-card:hover{border-color:var(--accent);}
+  .res-card .name{font-weight:600; margin-bottom:4px; color:var(--accent);}
+  .res-card .desc{font-size:13px; color:var(--ink-soft);}
+
+  .cta{margin:44px 0 8px; padding:28px; border-radius:10px; background:var(--ink); color:#fff;}
+  .cta h2{color:#fff; margin-top:0; font-size:22px;}
+  .cta p{color:#d7dbd8; margin-bottom:20px;}
+  .cta a.btn{display:inline-block; background:#fff; color:var(--ink); text-decoration:none; padding:11px 22px; border-radius:6px; font-weight:600; font-size:15px;}
+  .cta a.btn:hover{background:#eee;}
+
+  .refs{font-size:12px; color:#8a8e8b; margin-top:36px;}
+  @media (max-width:640px){
+    .board-table thead{display:none;}
+    .board-table tr{display:block; border-bottom:1px solid var(--line); padding:10px 0;}
+    .board-table td{display:block; padding:4px 0;}
+    .board-table td::before{content:attr(data-label); display:block; font-size:11px; color:var(--ink-soft); margin-bottom:2px;}
+  }
+</style>
+
+<div class="res-wrap">
+
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> / <span>Resources</span> / Job Board Effectiveness
+  </nav>
+
+  <h1>Job Board Effectiveness Calculator</h1>
+  <p class="dek">Not all job boards are worth the spend. Add your sources below to compare cost per hire and conversion rate side by side, then see the formulas and how to reallocate budget toward what's actually working.</p>
+  <p style="font-size:12px; color:#8a8e8b; margin:-24px 0 32px;">Last updated September 8, 2026</p>
+
+  <section class="calc" aria-labelledby="calc-heading">
+    <h2 id="calc-heading">Compare your job boards</h2>
+    <table class="board-table" id="boardTable">
+      <thead>
+        <tr>
+          <th style="width:26%">Job board</th>
+          <th style="width:20%">Spend ($)</th>
+          <th style="width:22%">Applications</th>
+          <th style="width:18%">Hires</th>
+          <th style="width:6%"></th>
+        </tr>
+      </thead>
+      <tbody id="boardBody"></tbody>
+    </table>
+    <button id="addRowBtn" type="button">+ Add job board</button>
+
+    <div class="calc-actions">
+      <button id="calcBtn" type="button">Calculate</button>
+      <span id="errMsg">Enter a name and non-negative numbers for at least one job board (hires and applications can be 0).</span>
+    </div>
+
+    <div class="result" id="resultBox" aria-live="polite">
+      <table class="result-table">
+        <thead>
+          <tr><th>Job board</th><th>Spend</th><th>Cost per hire</th><th>Applications</th><th>Hires</th><th>Conversion %</th></tr>
+        </thead>
+        <tbody id="resultBody"></tbody>
+      </table>
+      <div class="tip">Sorted by lowest cost per hire. Double down on high-conversion, low-cost sources and cut underperformers.</div>
+    </div>
+  </section>
+
+  <h2>How the formulas work</h2>
+  <p>Job board effectiveness comes down to two numbers looked at together — what each hire cost, and what share of applicants actually converted.</p>
+  <div class="formula-box">
+    Job board effectiveness formulas
+    <code>Cost per Hire = Spend ÷ Hires</code>
+    <code>Hire Conversion % = (Hires ÷ Applications) × 100</code>
+  </div>
+  <p>Looking at either metric alone can mislead you. A source with a low cost per hire might simply be producing very few hires from a huge, low-quality applicant pool. A source with a high conversion rate might still be expensive per hire if application volume is low. Comparing both together separates genuinely efficient sources from ones that only look good on one dimension.</p>
+  <p><strong>Example:</strong> $500 spent on a niche board that produces 3 hires from 60 applications works out to a $167 cost per hire and 5% conversion. $2,000 spent on a broad job board producing 4 hires from 400 applications works out to a $500 cost per hire and 1% conversion — the niche board is the better source even though it produced fewer total hires.</p>
+
+  <h3>General conversion benchmarks by source type</h3>
+  <table class="info">
+    <thead>
+      <tr><th>Source type</th><th>Typical conversion range</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>General-purpose high-traffic job boards</td><td>Under 1%</td></tr>
+      <tr><td>Niche or role-specific job boards</td><td>1% – 3%</td></tr>
+      <tr><td>Employee referrals</td><td>3% – 8%+</td></tr>
+      <tr><td>Direct sourcing / talent pipelines</td><td>Varies widely by pipeline quality</td></tr>
+    </tbody>
+  </table>
+
+  <h2>How to choose the best job boards</h2>
+  <ol>
+    <li><strong>Rank by cost per hire first, conversion second.</strong> Cost per hire tells Finance what they need to know; conversion tells you why.</li>
+    <li><strong>Reallocate, don't just add.</strong> Shift budget away from underperforming sources rather than layering on new ones.</li>
+    <li><strong>Segment by role type.</strong> A board that performs well for entry-level roles may perform poorly for specialized or senior roles — compare within role categories, not across them.</li>
+    <li><strong>Review quarterly.</strong> Board performance shifts with seasonality, pricing changes, and traffic quality, so a one-time comparison goes stale.</li>
+    <li><strong>Don't ignore quality of hire.</strong> The cheapest source per hire isn't a win if those hires underperform or leave early — pair this data with retention and performance signals where you can.</li>
+  </ol>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is job board effectiveness?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>It measures how well a job posting source converts spend into hires, typically assessed using cost per hire and hire conversion rate side by side.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How do you calculate cost per hire by job board?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Cost per Hire = Spend ÷ Hires. Divide total spend on that board by the number of hires it produced in the same period.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How do you calculate hire conversion rate?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Hire Conversion % = (Hires ÷ Applications) × 100 — the percentage of applicants from a source who ultimately became hires.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is a good hire conversion rate for a job board?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>General high-traffic boards commonly convert well under 1% of applicants; niche boards and employee referrals often convert several times higher because the applicant pool is more pre-qualified.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>Why compare cost per hire and conversion together?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>A source can look good on one metric while being weak on the other — comparing both together shows which sources are genuinely efficient rather than winning on a single dimension.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How often should job board performance be reviewed?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Most teams review quarterly or after each major hiring cycle, since performance shifts with seasonality, role mix, and changes to a board's traffic and pricing.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How can a company improve job board ROI?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Reallocate spend toward the lowest-cost, highest-conversion sources, cut or renegotiate underperformers, use niche boards for specialized roles, and track performance by role type.</p></div>
+    </div>
+  </div>
+
+  <h2>Related resources</h2>
+  <div class="res-grid">
+    <a class="res-card" href="{{ url_for('resources_cost_per_hire') }}"><div class="name">Cost-per-Hire Calculator</div><div class="desc">Calculate your average cost per hire</div></a>
+    <a class="res-card" href="{{ url_for('resources_time_to_hire') }}"><div class="name">Time-to-Hire Calculator</div><div class="desc">Measure days from job post to offer</div></a>
+    <a class="res-card" href="{{ url_for('resources_recruitment_roi') }}"><div class="name">Recruitment ROI Calculator</div><div class="desc">Estimate the ROI of your hiring spend</div></a>
+    <a class="res-card" href="{{ url_for('resources_attrition_cost') }}"><div class="name">Attrition Cost Calculator</div><div class="desc">Quantify yearly turnover cost</div></a>
+  </div>
+
+  <div class="cta">
+    <h2>See source performance without the spreadsheet</h2>
+    <p>HireGen's AI-powered recruitment CRM and ATS tracks cost per hire and conversion by source automatically, so you always know which job boards are earning their spend.</p>
+    <a class="btn" href="{{ url_for('company_register') }}">Try HireGen for free</a>
+  </div>
+
+  <p class="refs">Benchmark ranges above are general industry guidance for directional planning. For numbers specific to your hiring, use your own spend, application, and hire data in the calculator.</p>
+
+</div>
+
+<script>
+(function(){
+  var tbody = document.getElementById('boardBody');
+  var addRowBtn = document.getElementById('addRowBtn');
+  var calcBtn = document.getElementById('calcBtn');
+  var err = document.getElementById('errMsg');
+  var resultBox = document.getElementById('resultBox');
+  var resultBody = document.getElementById('resultBody');
+  var rowCount = 0;
+
+  function addRow(name, spend, apps, hires){
+    rowCount++;
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td data-label="Job board"><input type="text" class="jb-name" placeholder="e.g. LinkedIn" value="' + (name || '') + '"></td>' +
+      '<td data-label="Spend ($)"><input type="number" class="jb-spend" min="0" step="50" placeholder="0" value="' + (spend != null ? spend : '') + '"></td>' +
+      '<td data-label="Applications"><input type="number" class="jb-apps" min="0" step="1" placeholder="0" value="' + (apps != null ? apps : '') + '"></td>' +
+      '<td data-label="Hires"><input type="number" class="jb-hires" min="0" step="1" placeholder="0" value="' + (hires != null ? hires : '') + '"></td>' +
+      '<td><button type="button" class="rm-btn" title="Remove row">\u2715</button></td>';
+    tr.querySelector('.rm-btn').addEventListener('click', function(){
+      if (tbody.children.length > 1) tr.remove();
+    });
+    tbody.appendChild(tr);
+  }
+
+  addRow('LinkedIn', 2000, 400, 4);
+  addRow('Indeed', 900, 900, 3);
+  addRow('Niche Board', 500, 60, 3);
+
+  addRowBtn.addEventListener('click', function(){ addRow(); });
+
+  tbody.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+      e.preventDefault();
+      calcBtn.click();
+    }
+  });
+
+  function fmtUSD(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  calcBtn.addEventListener('click', function(){
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    var data = [];
+    var hasError = false;
+
+    rows.forEach(function(tr){
+      var name = tr.querySelector('.jb-name').value.trim();
+      var spendVal = tr.querySelector('.jb-spend').value;
+      var appsVal = tr.querySelector('.jb-apps').value;
+      var hiresVal = tr.querySelector('.jb-hires').value;
+
+      if (name === '' && spendVal === '' && appsVal === '' && hiresVal === '') return;
+
+      var spend = spendVal === '' ? NaN : parseFloat(spendVal);
+      var apps = appsVal === '' ? NaN : parseFloat(appsVal);
+      var hires = hiresVal === '' ? NaN : parseFloat(hiresVal);
+
+      if (name === '' || isNaN(spend) || spend < 0 || isNaN(apps) || apps < 0 || isNaN(hires) || hires < 0) {
+        hasError = true;
+        return;
+      }
+      data.push({ name: name, spend: spend, apps: apps, hires: hires });
+    });
+
+    if (hasError || data.length === 0) {
+      err.style.display = 'inline';
+      resultBox.classList.remove('show');
+      return;
+    }
+    err.style.display = 'none';
+
+    data.forEach(function(d){
+      d.cph = d.hires > 0 ? d.spend / d.hires : null;
+      d.conv = d.apps > 0 ? (d.hires / d.apps) * 100 : null;
+    });
+
+    var sorted = data.slice().sort(function(a, b){
+      if (a.cph === null && b.cph === null) return 0;
+      if (a.cph === null) return 1;
+      if (b.cph === null) return -1;
+      return a.cph - b.cph;
+    });
+
+    resultBody.innerHTML = '';
+    sorted.forEach(function(d, i){
+      var tr = document.createElement('tr');
+      if (i === 0 && d.cph !== null) tr.className = 'winner';
+      var cphText = d.cph !== null ? fmtUSD(d.cph) : '\u2014';
+      var convText = d.conv !== null ? (Math.round(d.conv * 10) / 10) + '%' : '\u2014';
+      tr.innerHTML =
+        '<td>' + d.name + (i === 0 && d.cph !== null ? '<span class="badge">Best CPH</span>' : '') + '</td>' +
+        '<td>' + fmtUSD(d.spend) + '</td>' +
+        '<td>' + cphText + '</td>' +
+        '<td>' + d.apps + '</td>' +
+        '<td>' + d.hires + '</td>' +
+        '<td>' + convText + '</td>';
+      resultBody.appendChild(tr);
+    });
+
+    resultBox.classList.add('show');
+  });
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      var item = q.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        el.querySelector('.icon').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        item.querySelector('.icon').textContent = '\u2212';
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}

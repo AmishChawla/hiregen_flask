@@ -1,103 +1,581 @@
 {% extends 'common_base.html' %}
-{% block title %}Attrition Cost Calculator{% endblock %}
-{% block content %}
-<section class="bg-gray-50 border-b">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
-    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2">
-        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
-        <li>/</li>
-        <li><span>Resources</span></li>
-        <li>/</li>
-        <li class="text-slate-700">Attrition Cost</li>
-      </ol>
-    </nav>
-    <h1 class="mt-4 text-3xl font-semibold">Attrition Cost Calculator</h1>
-    <p class="mt-2 text-slate-600 max-w-2xl">Quantify the annual cost of employee turnover to guide retention strategy and investment.</p>
 
-    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div>
-      <label class="block text-sm mb-1">Average salary</label>
-      <input id="salary" type="number" class="w-full border rounded p-2" placeholder="e.g., 70000">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Replacement cost multiplier (e.g., 0.5 = 50%)</label>
-      <input id="replaceMul" type="number" step="0.01" class="w-full border rounded p-2" placeholder="e.g., 0.5">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Turnover rate (%)</label>
-      <input id="turnover" type="number" class="w-full border rounded p-2" placeholder="e.g., 20">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Training investment per hire</label>
-      <input id="training" type="number" class="w-full border rounded p-2" placeholder="e.g., 1500">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Total employees</label>
-      <input id="employees" type="number" class="w-full border rounded p-2" placeholder="e.g., 100">
-    </div>
-          <p id="error" class="hidden text-xs text-red-600 mt-1">Provide non-negative values; employees must be at least 1.</p>
-        </div>
+{% block title %}Attrition Cost Calculator: Formula & Benchmarks | HireGen{% endblock %}
 
-        <div class="mt-4">
-          <button id="calc" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
-        </div>
+{% block metatags %}
+<meta name="description" content="Calculate the true cost of employee attrition with a free calculator. See the formula, benchmarks, and strategies to reduce turnover costs.">
+<link rel="canonical" href="https://hiregen.com/resources/attrition-cost">
+<meta property="og:title" content="Employee Attrition Cost Calculator | HireGen">
+<meta property="og:description" content="Quantify the true annual cost of employee turnover in seconds. Free calculator, formula breakdown, benchmarks, and retention strategies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hiregen.com/resources/attrition-cost">
+<meta property="og:image" content="https://hiregen.com/static/images/logo.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Attrition Cost Calculator | HireGen">
+<meta name="twitter:description" content="Calculate the true cost of employee attrition with a free calculator, formula, and benchmarks.">
+<meta name="twitter:image" content="https://hiregen.com/static/images/logo.webp">
+<meta name="robots" content="index, follow">
 
-        <div id="result" class="mt-6 hidden">
-          <h2 class="text-xl font-semibold">Results</h2>
-          <p class="mt-2">Estimated Yearly Attrition Cost: <span id="cost" class="font-bold"></span></p>
-          <div id="resultTips" class="mt-4 hidden">
-            <p class="text-sm text-slate-600">Tip: Target the top drivers of turnover; improve onboarding and manager enablement.</p>
-          </div>
-        </div>
-      </div>
-      <div class="lg:col-span-1 rounded-xl border border-gray-200 bg-white p-4 md:p-6 flex items-center justify-center">
-        <img src="{{ url_for('static', filename='images/Analytics.png') }}" alt="Attrition cost illustration" class="max-h-56 w-auto">
-      </div>
-    </div>
-
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">How it works</h3>
-        <p class="text-slate-600 text-sm">We estimate separations and multiply by the per-hire replacement cost.</p>
-        <p class="text-slate-700 text-sm mt-2"><strong>Formula:</strong> Attrition Cost = (Employees × Turnover%) × (Salary × Replacement Multiplier + Training)</p>
-      </div>
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">Cut attrition costs</h3>
-        <p class="text-slate-600 text-sm">Boost retention with better screening, onboarding, and career paths.</p>
-        <a href="#" class="inline-block mt-3 text-blue-600 underline">See how predictive hiring helps</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script>
-  document.getElementById('calc').addEventListener('click', () => {
-    const salary = Number(document.getElementById('salary').value) || 0;
-    const repMul = Number(document.getElementById('replaceMul').value) || 0;
-    const turnoverRate = (Number(document.getElementById('turnover').value) || 0) / 100;
-    const training = Number(document.getElementById('training').value) || 0;
-    const employees = Math.max(1, Number(document.getElementById('employees').value) || 1);
-    const hasNegative = [salary, repMul, turnoverRate, training, employees].some(v => v < 0);
-    if (hasNegative || employees < 1){
-      const err = document.getElementById('error');
-      if (err) err.classList.remove('hidden');
-      return;
-    } else {
-      const err = document.getElementById('error');
-      if (err) err.classList.add('hidden');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Employee Attrition Cost Calculator: Formula, Benchmarks & How to Reduce Turnover Costs",
+  "description": "A complete guide to calculating and reducing the cost of employee attrition, including a free interactive calculator, the underlying formula, industry context, and retention strategies.",
+  "author": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "url": "https://hiregen.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hiregen.com/static/images/logo.webp"
     }
-    const separations = employees * turnoverRate;
-    const perHireCost = salary * repMul + training;
-    const total = separations * perHireCost;
-    document.getElementById('cost').textContent = `$${total.toFixed(2)}`;
-    document.getElementById('result').classList.remove('hidden');
-    const tips = document.getElementById('resultTips');
-    if (tips) tips.classList.remove('hidden');
-  });
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://hiregen.com/resources/attrition-cost"
+  },
+  "datePublished": "2026-09-07",
+  "dateModified": "2026-09-08"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Attrition Cost Calculator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (Web-based)",
+  "url": "https://hiregen.com/resources/attrition-cost",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "A free calculator that estimates the yearly cost of employee attrition based on headcount, turnover rate, average salary, replacement cost multiplier, and training investment per hire.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "url": "https://hiregen.com"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the average cost of employee attrition?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Replacement cost is commonly expressed as a percentage of the departing employee's annual salary, and estimates in workforce research typically range from about half of one year's salary for entry-level roles to well over a full year's salary for specialized or leadership roles. The exact figure depends on recruiting costs, lost productivity during the vacancy, onboarding time, and training investment, which is why using a calculator with your own inputs is more accurate than a single industry-wide number."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is attrition cost calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Attrition cost is calculated by multiplying the number of departures in a period by the fully loaded cost of replacing each employee. A common formula is: Attrition Cost = (Total Employees x Turnover Rate) x (Average Salary x Replacement Cost Multiplier + Training Investment per Hire). This captures both the direct cost of recruiting and training a replacement and the indirect cost tied to the departing employee's salary level."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a replacement cost multiplier and what value should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The replacement cost multiplier expresses replacement cost as a fraction of annual salary. A multiplier of 0.5 assumes replacement costs half of a year's salary, while 1.0 assumes a full year's salary. Lower multipliers (0.3 to 0.6) are typically used for entry-level or high-volume roles, and higher multipliers (0.75 to 2.0) are used for specialized, technical, or leadership roles where sourcing and ramp-up time are longer."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as a hidden cost of turnover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hidden costs of turnover include lost productivity while a role sits vacant, reduced output from the new hire during ramp-up, manager and team time spent interviewing and onboarding, overtime or contractor costs to cover the gap, knowledge and client-relationship loss, and lower morale or engagement among remaining staff. These indirect costs often exceed the direct costs of recruiting and training a replacement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good turnover rate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A healthy annual turnover rate varies widely by industry, role type, and company stage, but many organizations treat overall voluntary turnover in the range of roughly 10 percent to 15 percent as manageable, while industries with high-volume or frontline roles, such as retail and hospitality, typically run higher. What matters most is tracking your own trend over time and comparing regretted turnover in critical roles separately from expected turnover in high-churn positions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can a company reduce attrition costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Companies reduce attrition costs by improving candidate-role fit during screening, strengthening structured onboarding, investing in manager training, offering clear career paths and internal mobility, running regular stay interviews and engagement surveys, benchmarking compensation, and using data from an applicant tracking system or recruitment CRM to identify which sourcing channels and hiring managers produce the longest-tenured hires."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this attrition cost calculator account for every industry?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The calculator uses a general-purpose formula that applies across industries, but the replacement cost multiplier and training investment should be adjusted to reflect your own role mix. A company with mostly frontline or entry-level roles should use a lower multiplier, while one with specialized, technical, or leadership-heavy roles should use a higher multiplier to reflect longer sourcing and ramp-up time."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://hiregen.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Resources",
+      "item": "https://hiregen.com/resources"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Attrition Cost",
+      "item": "https://hiregen.com/resources/attrition-cost"
+    }
+  ]
+}
 </script>
 {% endblock %}
 
+{% block content %}
+<style>
+  :root{
+    --ink:#1a1d1f;
+    --ink-soft:#4b5257;
+    --line:#e4e4e0;
+    --accent:#2f5c4b;
+    --accent-soft:#eaf1ed;
+    --bg:#ffffff;
+    --warn:#8a5a1c;
+    --warn-bg:#fbf3e6;
+  }
+  .res-wrap{max-width:820px; margin:0 auto; padding:32px 24px 80px;}
+  .crumb{font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
+  .crumb a{color:var(--ink-soft); text-decoration:none;}
+  .crumb a:hover{text-decoration:underline;}
+  .res-wrap h1{font-size:34px; line-height:1.2; margin:0 0 12px;}
+  .dek{font-size:18px; color:var(--ink-soft); margin:0 0 32px; max-width:640px;}
+  .res-wrap h2{font-size:24px; margin:44px 0 14px;}
+  .res-wrap h3{font-size:18px; margin:24px 0 8px;}
+  .res-wrap p{margin:0 0 16px; max-width:720px;}
+  .res-wrap ul, .res-wrap ol{margin:0 0 16px; padding-left:22px;}
+  .res-wrap li{margin-bottom:6px;}
 
+  /* Calculator card */
+  .calc{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:28px;
+    margin:8px 0 40px;
+    background:#fafaf9;
+  }
+  .calc h2{margin-top:0;}
+  .field-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 20px;
+    margin-bottom:20px;
+  }
+  @media (max-width:560px){ .field-grid{grid-template-columns:1fr;} }
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .field .hint{font-size:12px; color:var(--ink-soft); font-weight:400; display:block; margin-top:4px;}
+  .field input{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid #c9cbc7;
+    border-radius:6px;
+    font-size:15px;
+    font-family:inherit;
+    color:var(--ink);
+    background:#fff;
+  }
+  .field input:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .calc-actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  #calcBtn{
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:11px 22px;
+    border-radius:6px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  #calcBtn:hover{background:#254a3d;}
+  #errMsg{color:#b3261e; font-size:13px; display:none;}
+  .result{
+    margin-top:22px;
+    padding:20px;
+    border-radius:8px;
+    background:var(--accent-soft);
+    display:none;
+  }
+  .result.show{display:block;}
+  .result .label{font-size:13px; color:var(--ink-soft); margin-bottom:4px;}
+  .result .amount{font-size:32px; font-weight:700; color:var(--accent); margin-bottom:6px;}
+  .result .breakdown{font-size:13px; color:var(--ink-soft); border-top:1px solid #d3e0d9; margin-top:12px; padding-top:12px;}
+  .result .breakdown div{display:flex; justify-content:space-between; padding:3px 0;}
+  .tip{font-size:13px; color:#6b6f6c; margin-top:14px;}
+
+  /* Formula box */
+  .formula-box{
+    background:var(--warn-bg);
+    border:1px solid #ecd9b8;
+    border-radius:8px;
+    padding:16px 20px;
+    font-size:15px;
+    color:#5c4315;
+    margin:16px 0 24px;
+  }
+  .formula-box code{
+    display:block;
+    font-family:"SFMono-Regular", Consolas, Menlo, monospace;
+    font-size:14px;
+    margin-top:6px;
+    color:#463107;
+  }
+
+  /* Table */
+  .res-wrap table{width:100%; border-collapse:collapse; margin:16px 0 28px; font-size:14px;}
+  .res-wrap th, .res-wrap td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+  .res-wrap th{font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600;}
+
+  /* FAQ */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:16px 0;
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    font-family:inherit;
+  }
+  .faq-q .icon{font-size:18px; color:var(--accent); flex-shrink:0;}
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .25s ease;
+  }
+  .faq-a p{padding-bottom:16px; margin:0; color:var(--ink-soft);}
+  .faq-item.open .faq-a{max-height:400px;}
+
+  /* Related resources */
+  .res-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin:16px 0 28px;
+  }
+  @media (max-width:560px){ .res-grid{grid-template-columns:1fr;} }
+  .res-card{
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:16px;
+    text-decoration:none;
+    color:var(--ink);
+    display:block;
+  }
+  .res-card:hover{border-color:var(--accent);}
+  .res-card .name{font-weight:600; margin-bottom:4px; color:var(--accent);}
+  .res-card .desc{font-size:13px; color:var(--ink-soft);}
+
+  /* CTA */
+  .cta{
+    margin:44px 0 8px;
+    padding:28px;
+    border-radius:10px;
+    background:var(--ink);
+    color:#fff;
+  }
+  .cta h2{color:#fff; margin-top:0; font-size:22px;}
+  .cta p{color:#d7dbd8; margin-bottom:20px;}
+  .cta a.btn{
+    display:inline-block;
+    background:#fff;
+    color:var(--ink);
+    text-decoration:none;
+    padding:11px 22px;
+    border-radius:6px;
+    font-weight:600;
+    font-size:15px;
+  }
+  .cta a.btn:hover{background:#eee;}
+
+  .refs{font-size:12px; color:#8a8e8b; margin-top:36px;}
+</style>
+
+<div class="res-wrap">
+
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> / <span>Resources</span> / Attrition Cost
+  </nav>
+
+  <h1>Employee Attrition Cost Calculator</h1>
+  <p class="dek">Turnover doesn't just cost a salary line — it costs sourcing time, ramp-up productivity, and institutional knowledge. Use the calculator below to put a real number on what attrition is costing your organization this year, then see the formula, benchmarks, and strategies to bring that number down.</p>
+  <p style="font-size:12px; color:#8a8e8b; margin:-24px 0 32px;">Last updated September 8, 2026</p>
+
+  <section class="calc" aria-labelledby="calc-heading">
+    <h2 id="calc-heading">Calculate your annual attrition cost</h2>
+    <div class="field-grid">
+      <div class="field">
+        <label for="salary">Average salary ($)</label>
+        <input type="number" id="salary" inputmode="decimal" min="0" step="1000" placeholder="e.g. 65000">
+      </div>
+      <div class="field">
+        <label for="multiplier">Replacement cost multiplier
+          <span class="hint">e.g. 0.5 = 50% of salary</span>
+        </label>
+        <input type="number" id="multiplier" inputmode="decimal" min="0" step="0.05" placeholder="e.g. 0.5">
+      </div>
+      <div class="field">
+        <label for="turnover">Turnover rate (%)</label>
+        <input type="number" id="turnover" inputmode="decimal" min="0" step="0.1" placeholder="e.g. 15">
+      </div>
+      <div class="field">
+        <label for="training">Training investment per hire ($)</label>
+        <input type="number" id="training" inputmode="decimal" min="0" step="100" placeholder="e.g. 2000">
+      </div>
+      <div class="field" style="grid-column:1/-1; max-width:340px;">
+        <label for="headcount">Total employees</label>
+        <input type="number" id="headcount" inputmode="numeric" min="1" step="1" placeholder="e.g. 250">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button id="calcBtn" type="button">Calculate</button>
+      <span id="errMsg">Please provide non-negative values; employees must be at least 1.</span>
+    </div>
+
+    <div class="result" id="resultBox" aria-live="polite">
+      <div class="label">Estimated yearly attrition cost</div>
+      <div class="amount" id="resultAmount">$0</div>
+      <div class="breakdown">
+        <div><span>Estimated departures</span><span id="brkDepartures">0</span></div>
+        <div><span>Cost per departure</span><span id="brkPerHead">$0</span></div>
+      </div>
+      <div class="tip">Tip: target the top drivers of turnover in your highest-cost roles first — improving onboarding and manager enablement usually moves the number fastest.</div>
+    </div>
+  </section>
+
+  <h2>How the formula works</h2>
+  <p>The calculator estimates how many employees will leave in a year, then multiplies that by the fully loaded cost of replacing each one — direct replacement cost (recruiting, interviewing, lost productivity) plus training investment.</p>
+  <div class="formula-box">
+    Attrition Cost formula
+    <code>Attrition Cost = (Total Employees × Turnover Rate) × (Average Salary × Replacement Cost Multiplier + Training Investment per Hire)</code>
+  </div>
+  <p>The <strong>replacement cost multiplier</strong> is the part most teams get wrong. It's meant to capture everything beyond training: job ad spend, recruiter and interviewer time, the productivity gap while a seat is vacant, and lower output while the new hire ramps up. A low-complexity, high-volume role might use 0.3–0.5; a specialized or leadership role often justifies 0.75–2.0.</p>
+  <p><strong>Example:</strong> A 250-person company with 15% annual turnover, a $65,000 average salary, a 0.5 replacement multiplier, and $2,000 in training investment per hire loses roughly <strong>$1,293,750 a year</strong> to attrition — try your own numbers in the calculator above.</p>
+
+  <h3>What the multiplier typically covers</h3>
+  <table>
+    <thead>
+      <tr><th>Role type</th><th>Typical multiplier range</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Entry-level / high-volume</td><td>0.3 – 0.5</td><td>Fast sourcing, short ramp-up, standardized onboarding</td></tr>
+      <tr><td>Skilled professional</td><td>0.5 – 0.9</td><td>Longer sourcing cycle, more interview rounds, moderate ramp-up</td></tr>
+      <tr><td>Specialized / technical</td><td>0.9 – 1.5</td><td>Niche skills, longer time-to-productivity</td></tr>
+      <tr><td>Leadership / executive</td><td>1.5 – 2.0+</td><td>Extended search, higher salary base, strategic disruption cost</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The hidden costs most teams miss</h2>
+  <p>The direct line items — job ads, agency fees, sign-on bonuses — are the easiest to track and usually the smallest part of the total. The larger cost tends to sit in what's harder to see:</p>
+  <ul>
+    <li><strong>Vacancy drag:</strong> unfilled work that still has to get done, absorbed by the remaining team or left undone.</li>
+    <li><strong>Ramp-up productivity gap:</strong> new hires typically operate below full productivity for weeks or months.</li>
+    <li><strong>Manager and interviewer time:</strong> hours spent screening, interviewing, and onboarding are rarely costed against the role.</li>
+    <li><strong>Knowledge and relationship loss:</strong> client relationships, tribal knowledge, and process context that leave with the employee.</li>
+    <li><strong>Team morale and secondary attrition:</strong> a departure that triggers more departures on the same team.</li>
+  </ul>
+
+  <h2>How to reduce attrition costs</h2>
+  <ol>
+    <li><strong>Fix the front door.</strong> A large share of early turnover traces back to mis-set expectations or weak role fit during screening. Structured interviews and clearer job previews reduce early exits.</li>
+    <li><strong>Invest in the first 90 days.</strong> Structured onboarding with clear milestones consistently correlates with longer tenure than ad hoc onboarding.</li>
+    <li><strong>Train managers, not just employees.</strong> Manager quality is one of the most cited drivers of voluntary turnover — equip managers to run stay interviews and give real-time feedback.</li>
+    <li><strong>Build visible career paths.</strong> Internal mobility keeps tenured employees rather than losing them to external moves for growth.</li>
+    <li><strong>Track leading indicators.</strong> Engagement surveys, manager 1:1 cadence, and exit interview themes flag risk before it shows up in turnover numbers.</li>
+    <li><strong>Use hiring data to close the loop.</strong> A recruitment CRM or applicant tracking system can show which sourcing channels and hiring managers consistently produce longer-tenured hires, so you can double down on what's working.</li>
+  </ol>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>What is the average cost of employee attrition?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Replacement cost is commonly expressed as a percentage of the departing employee's annual salary, with estimates ranging from roughly half a year's salary for entry-level roles to well over a full year's salary for specialized or leadership roles. The exact figure depends on recruiting cost, vacancy length, and training investment, which is why calculating it with your own numbers is more accurate than relying on a single industry average.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>How is attrition cost calculated?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Multiply the number of expected departures (headcount × turnover rate) by the fully loaded replacement cost per departure (average salary × replacement cost multiplier, plus training investment per hire). This captures both direct recruiting and training costs and indirect costs tied to salary level.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>What replacement cost multiplier should I use?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Use 0.3–0.5 for entry-level or high-volume roles, 0.5–0.9 for skilled professional roles, 0.9–1.5 for specialized or technical roles, and 1.5–2.0+ for leadership roles. Higher multipliers reflect longer sourcing cycles and slower ramp-up to full productivity.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>What counts as a hidden cost of turnover?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Hidden costs include lost productivity during a vacancy, reduced output while a new hire ramps up, manager and interviewer time, overtime or contractor costs to cover the gap, lost client relationships and institutional knowledge, and lower morale among remaining staff.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>What is a good turnover rate?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Many organizations treat overall voluntary turnover in the 10–15% range as manageable, though frontline and high-volume industries typically run higher. Track your own trend over time and separate regretted turnover in critical roles from expected turnover in high-churn positions.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>How can a company reduce attrition costs?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Improve candidate-role fit during screening, strengthen structured onboarding, train managers, offer clear career paths, run regular stay interviews, benchmark compensation, and use hiring data to identify which sources and managers produce the longest-tenured hires.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        <span>Does this calculator work for any industry?</span><span class="icon">+</span>
+      </button>
+      <div class="faq-a"><p>Yes — the formula is general-purpose. Adjust the replacement cost multiplier and training investment to reflect your own role mix: lower for frontline or entry-level roles, higher for specialized or leadership-heavy organizations.</p></div>
+    </div>
+  </div>
+
+  <h2>Related resources</h2>
+  <div class="res-grid">
+    <a class="res-card" href="{{ url_for('resources_cost_per_hire') }}">
+      <div class="name">Cost-per-Hire Calculator</div>
+      <div class="desc">Calculate your average cost per hire</div>
+    </a>
+    <a class="res-card" href="{{ url_for('resources_time_to_hire') }}">
+      <div class="name">Time-to-Hire Calculator</div>
+      <div class="desc">Measure days from job post to offer</div>
+    </a>
+    <a class="res-card" href="{{ url_for('resources_recruitment_roi') }}">
+      <div class="name">Recruitment ROI Calculator</div>
+      <div class="desc">Estimate the ROI of your hiring spend</div>
+    </a>
+    <a class="res-card" href="{{ url_for('resources_job_board_effectiveness') }}">
+      <div class="name">Job Board Effectiveness</div>
+      <div class="desc">Compare sources by cost and hires</div>
+    </a>
+  </div>
+
+  <div class="cta">
+    <h2>Turn retention data into fewer replacements</h2>
+    <p>HireGen's AI-powered recruitment CRM and ATS helps you screen for fit, track hiring-source performance, and see which managers and channels produce hires who stay — so the number above gets smaller every quarter.</p>
+    <a class="btn" href="{{ url_for('company_register') }}">Try HireGen for free</a>
+  </div>
+
+  <p class="refs">Benchmark ranges above are general industry guidance for directional planning, not a guarantee for any specific organization. For a number specific to your workforce, use your own salary, turnover, and cost data in the calculator.</p>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('calcBtn');
+  var err = document.getElementById('errMsg');
+  var resultBox = document.getElementById('resultBox');
+
+  function num(id){
+    var v = document.getElementById(id).value;
+    return v === '' ? NaN : parseFloat(v);
+  }
+
+  function fmtUSD(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  ['salary','multiplier','turnover','training','headcount'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); btn.click(); }
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    var salary = num('salary');
+    var multiplier = num('multiplier');
+    var turnover = num('turnover');
+    var training = num('training');
+    var headcount = num('headcount');
+
+    var values = [salary, multiplier, turnover, training, headcount];
+    var allValid = values.every(function(v){ return !isNaN(v) && v >= 0; });
+    var headcountValid = !isNaN(headcount) && headcount >= 1;
+
+    if (!allValid || !headcountValid) {
+      err.style.display = 'inline';
+      resultBox.classList.remove('show');
+      return;
+    }
+    err.style.display = 'none';
+
+    var departures = headcount * (turnover / 100);
+    var perHeadCost = (salary * multiplier) + training;
+    var totalCost = departures * perHeadCost;
+
+    document.getElementById('resultAmount').textContent = fmtUSD(totalCost);
+    document.getElementById('brkDepartures').textContent = (Math.round(departures * 10) / 10).toString();
+    document.getElementById('brkPerHead').textContent = fmtUSD(perHeadCost);
+    resultBox.classList.add('show');
+  });
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      var item = q.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        el.querySelector('.icon').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        item.querySelector('.icon').textContent = '\u2212';
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}

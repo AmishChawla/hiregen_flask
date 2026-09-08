@@ -1,108 +1,411 @@
 {% extends 'common_base.html' %}
-{% block title %}Cost-per-Hire Calculator{% endblock %}
-{% block content %}
-<section class="bg-gray-50 border-b">
-  <div class="container mx-auto px-6 sm:px-6 lg:px-8 py-10">
-    <nav class="text-sm text-slate-500" aria-label="Breadcrumb">
-      <ol class="flex items-center space-x-2">
-        <li><a href="{{ url_for('index') }}" class="hover:text-slate-700">Home</a></li>
-        <li>/</li>
-        <li><span>Resources</span></li>
-        <li>/</li>
-        <li class="text-slate-700">Cost-per-Hire</li>
-      </ol>
-    </nav>
-    <h1 class="mt-4 text-3xl font-semibold">Cost-per-Hire Calculator</h1>
-    <p class="mt-2 text-slate-600 max-w-2xl">Calculate your average cost per hire using your recruiting, onboarding, and tooling expenses. Use this to benchmark efficiency and identify savings.</p>
 
-    <div class="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <div class="lg:col-span-2 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div>
-      <label class="block text-sm mb-1">Advertising spend</label>
-          <input id="advertising" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 1200" aria-label="Advertising spend">
-          <p class="text-xs text-slate-500 mt-1">Total paid media and sponsorship budget.</p>
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Recruiter salaries (allocation)</label>
-          <input id="recruiter" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 3500" aria-label="Recruiter salaries allocation">
-          <p class="text-xs text-slate-500 mt-1">Allocate recruiter costs to this hiring period.</p>
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Onboarding/training costs</label>
-          <input id="onboarding" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 800" aria-label="Onboarding and training costs">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Technology/tools</label>
-          <input id="tools" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 400" aria-label="Technology and tools costs">
-    </div>
-    <div>
-      <label class="block text-sm mb-1">Number of hires</label>
-          <input id="hires" type="number" class="w-full border rounded p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300" placeholder="e.g., 5" aria-label="Number of hires">
-          <p id="error" class="hidden text-xs text-red-600 mt-1">Enter at least one hire and non-negative costs.</p>
-    </div>
-        </div>
-        <div class="mt-4">
-        <button id="calc" class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">Calculate</button>
-        </div>
+{% block title %}Cost-per-Hire Calculator: SHRM Formula & Benchmarks | HireGen{% endblock %}
 
-        <div id="result" class="mt-6 hidden">
-        <h2 class="text-xl font-semibold">Results</h2>
-        <p class="mt-2">Average Cost per Hire: <span id="cph" class="font-bold"></span></p>
-        <p class="text-sm text-gray-500 mt-1">Benchmark range: $3,000 - $5,000 (varies by seniority, location, and channel mix).</p>
-        <div id="resultTips" class="mt-4 hidden">
-          <p class="text-sm text-slate-600">Tip: If your CPH is above benchmark, review sourcing mix and reduce manual steps.</p>
-        </div>
-        </div>
-      </div>
-      <div class="lg:col-span-1 rounded-xl border border-gray-200 bg-white p-4 md:p-6 flex items-center justify-center">
-        <img src="{{ url_for('static', filename='images/Analytics.png') }}" alt="Cost per Hire illustration" class="max-h-56 w-auto">
-      </div>
-    </div>
+{% block metatags %}
+<meta name="description" content="Calculate your cost-per-hire with a free interactive calculator using the SHRM-standard formula. See benchmarks by role level and proven ways to lower CPH.">
+<link rel="canonical" href="https://hiregen.com/resources/cost-per-hire">
+<meta property="og:title" content="Cost-per-Hire Calculator | HireGen">
+<meta property="og:description" content="Calculate your average cost per hire from advertising, recruiter time, onboarding, and tooling costs. Free calculator, formula, and benchmarks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hiregen.com/resources/cost-per-hire">
+<meta property="og:image" content="https://hiregen.com/static/images/Analytics.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cost-per-Hire Calculator | HireGen">
+<meta name="twitter:description" content="Calculate your cost-per-hire with a free calculator using the SHRM-standard formula and benchmarks.">
+<meta name="twitter:image" content="https://hiregen.com/static/images/Analytics.png">
+<meta name="robots" content="index, follow">
 
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">How it works</h3>
-        <p class="text-slate-600 text-sm">We sum all recruiting-related costs and divide by number of hires.</p>
-        <p class="text-slate-700 text-sm mt-2"><strong>Formula:</strong> (Advertising + Recruiter salaries allocation + Onboarding/training + Tools) / Hires</p>
-      </div>
-      <div class="rounded-xl border border-gray-200 p-4 md:p-6 bg-white">
-        <h3 class="text-lg font-semibold mb-2">Reduce your CPH</h3>
-        <p class="text-slate-600 text-sm">Optimize channels, automate screening, and streamline onboarding.</p>
-        <a href="#" class="inline-block mt-3 text-blue-600 underline">Download the Recruitment Cost Optimization Guide</a>
-      </div>
-    </div>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Cost-per-Hire Calculator: SHRM Formula, Benchmarks & How to Lower Your CPH",
+  "description": "A complete guide to calculating and reducing cost-per-hire, including a free interactive calculator, the SHRM-standard formula, benchmarks by role level, and cost-saving strategies.",
+  "author": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "HireGen",
+    "logo": { "@type": "ImageObject", "url": "https://hiregen.com/static/images/logo.webp" }
+  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://hiregen.com/resources/cost-per-hire" },
+  "datePublished": "2026-09-08",
+  "dateModified": "2026-09-08"
+}
+</script>
 
-    <div class="mt-10 rounded-xl border border-gray-200 bg-white p-4 md:p-6">
-      <h3 class="text-lg font-semibold mb-3">Other calculators</h3>
-      <div class="flex flex-wrap gap-2 text-sm">
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_time_to_hire') }}">Time-to-Hire</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_recruitment_roi') }}">Recruitment ROI</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_attrition_cost') }}">Attrition Cost</a>
-        <a class="px-3 py-1 rounded-full border hover:bg-slate-50" href="{{ url_for('resources_job_board_effectiveness') }}">Job Board Effectiveness</a>
-      </div>
-    </div>
-  </div>
-</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Cost-per-Hire Calculator",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (Web-based)",
+  "url": "https://hiregen.com/resources/cost-per-hire",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "A free calculator that computes cost-per-hire from advertising spend, recruiter salary allocation, onboarding and training costs, and technology or tooling costs, divided by number of hires.",
+  "publisher": { "@type": "Organization", "name": "HireGen", "url": "https://hiregen.com" }
+}
+</script>
 
-<script>
-  function toNum(id){ return Number(document.getElementById(id).value) || 0 }
-  document.getElementById('calc').addEventListener('click', () => {
-    const total = toNum('advertising') + toNum('recruiter') + toNum('onboarding') + toNum('tools');
-    const hires = Math.max(1, toNum('hires'));
-    const hasNegative = ['advertising','recruiter','onboarding','tools'].some(id => toNum(id) < 0);
-    if (hasNegative || hires < 1){
-      document.getElementById('error').classList.remove('hidden');
-      return;
-    } else {
-      document.getElementById('error').classList.add('hidden');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is cost-per-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cost-per-hire (CPH) is a recruiting metric that measures the average total expense an organization incurs to fill one open position. It combines both internal costs, such as recruiter salaries and technology, and external costs, such as advertising and agency fees, divided by the number of hires made in a given period."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is cost-per-hire calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cost-per-hire is calculated using the SHRM/ANSI-standard formula: Cost per Hire = (Internal Recruiting Costs + External Recruiting Costs) / Number of Hires. Internal costs include recruiter salary allocation, technology, and internal overhead. External costs include advertising spend, agency fees, and background checks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a good cost-per-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cost-per-hire varies widely by role level. Industry benchmarks commonly cited by SHRM and other workforce research place average cost-per-hire for nonexecutive roles in the range of roughly $3,000 to $5,500, with individual-contributor professional roles often between $3,000 and $6,000, manager and director roles between $6,000 and $15,000, and executive-level hires frequently exceeding $15,000 to $30,000 or more due to search fees and longer processes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does cost-per-hire include onboarding and training costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under the strict SHRM/ANSI standard, cost-per-hire is limited to recruiting-specific costs and excludes onboarding, training, and the new hire's own salary. Many organizations, including this calculator, optionally include onboarding and training as a line item to capture a fuller total cost of hiring; if you want a number directly comparable to published SHRM benchmarks, set that field to zero."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What counts as an internal vs. external recruiting cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Internal costs are expenses your organization incurs itself, such as the allocated portion of recruiter and sourcer salaries, HR overhead, and recruiting technology or ATS subscriptions. External costs are payments to third parties, such as job board and advertising spend, agency or headhunter fees, background checks, and assessment tools."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can a company reduce cost-per-hire?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Companies reduce cost-per-hire by shifting spend toward higher-yield channels such as employee referrals and organic sourcing, reducing reliance on paid agencies for roles that can be filled internally, automating screening and scheduling to cut recruiter time per hire, and using an applicant tracking system to see which channels produce hires at the lowest cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does cost-per-hire vary so much by role level?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Executive and specialized roles typically require longer searches, more interview stages, higher agency fees as a percentage of salary, and more stakeholder time, which pushes cost-per-hire much higher than high-volume or entry-level roles that can be filled quickly through low-cost channels like job boards or referrals."
+      }
     }
-    const cph = total / hires;
-    document.getElementById('cph').textContent = `$${cph.toFixed(2)}`;
-    document.getElementById('result').classList.remove('hidden');
-    document.getElementById('resultTips').classList.remove('hidden');
-  });
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hiregen.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://hiregen.com/resources" },
+    { "@type": "ListItem", "position": 3, "name": "Cost-per-Hire", "item": "https://hiregen.com/resources/cost-per-hire" }
+  ]
+}
 </script>
 {% endblock %}
 
+{% block content %}
+<style>
+  :root{
+    --ink:#1a1d1f;
+    --ink-soft:#4b5257;
+    --line:#e4e4e0;
+    --accent:#2f5c4b;
+    --accent-soft:#eaf1ed;
+    --bg:#ffffff;
+    --warn-bg:#fbf3e6;
+  }
+  .res-wrap{max-width:820px; margin:0 auto; padding:32px 24px 80px;}
+  .crumb{font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
+  .crumb a{color:var(--ink-soft); text-decoration:none;}
+  .crumb a:hover{text-decoration:underline;}
+  .res-wrap h1{font-size:34px; line-height:1.2; margin:0 0 12px;}
+  .dek{font-size:18px; color:var(--ink-soft); margin:0 0 32px; max-width:640px;}
+  .res-wrap h2{font-size:24px; margin:44px 0 14px;}
+  .res-wrap h3{font-size:18px; margin:24px 0 8px;}
+  .res-wrap p{margin:0 0 16px; max-width:720px;}
+  .res-wrap ul, .res-wrap ol{margin:0 0 16px; padding-left:22px;}
+  .res-wrap li{margin-bottom:6px;}
 
+  .calc{border:1px solid var(--line); border-radius:10px; padding:28px; margin:8px 0 40px; background:#fafaf9;}
+  .calc h2{margin-top:0;}
+  .field-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-bottom:20px;}
+  @media (max-width:560px){ .field-grid{grid-template-columns:1fr;} }
+  .field label{display:block; font-size:13px; font-weight:600; margin-bottom:6px; color:var(--ink);}
+  .field .hint{font-size:12px; color:var(--ink-soft); font-weight:400; display:block; margin-top:4px;}
+  .field input{width:100%; padding:10px 12px; border:1px solid #c9cbc7; border-radius:6px; font-size:15px; font-family:inherit; color:var(--ink); background:#fff;}
+  .field input:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent);}
+  .calc-actions{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  #calcBtn{background:var(--accent); color:#fff; border:none; padding:11px 22px; border-radius:6px; font-size:15px; font-weight:600; cursor:pointer;}
+  #calcBtn:hover{background:#254a3d;}
+  #errMsg{color:#b3261e; font-size:13px; display:none;}
+  .result{margin-top:22px; padding:20px; border-radius:8px; background:var(--accent-soft); display:none;}
+  .result.show{display:block;}
+  .result .label{font-size:13px; color:var(--ink-soft); margin-bottom:4px;}
+  .result .amount{font-size:32px; font-weight:700; color:var(--accent); margin-bottom:6px;}
+  .result .breakdown{font-size:13px; color:var(--ink-soft); border-top:1px solid #d3e0d9; margin-top:12px; padding-top:12px;}
+  .result .breakdown div{display:flex; justify-content:space-between; padding:3px 0;}
+  .tip{font-size:13px; color:#6b6f6c; margin-top:14px;}
+
+  .formula-box{background:var(--warn-bg); border:1px solid #ecd9b8; border-radius:8px; padding:16px 20px; font-size:15px; color:#5c4315; margin:16px 0 24px;}
+  .formula-box code{display:block; font-family:"SFMono-Regular", Consolas, Menlo, monospace; font-size:14px; margin-top:6px; color:#463107;}
+
+  .res-wrap table{width:100%; border-collapse:collapse; margin:16px 0 28px; font-size:14px;}
+  .res-wrap th, .res-wrap td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+  .res-wrap th{font-size:12px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft); font-weight:600;}
+
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{width:100%; text-align:left; background:none; border:none; padding:16px 0; font-size:16px; font-weight:600; color:var(--ink); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:12px; font-family:inherit;}
+  .faq-q .icon{font-size:18px; color:var(--accent); flex-shrink:0;}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{padding-bottom:16px; margin:0; color:var(--ink-soft);}
+  .faq-item.open .faq-a{max-height:400px;}
+
+  .res-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0 28px;}
+  @media (max-width:560px){ .res-grid{grid-template-columns:1fr;} }
+  .res-card{border:1px solid var(--line); border-radius:8px; padding:16px; text-decoration:none; color:var(--ink); display:block;}
+  .res-card:hover{border-color:var(--accent);}
+  .res-card .name{font-weight:600; margin-bottom:4px; color:var(--accent);}
+  .res-card .desc{font-size:13px; color:var(--ink-soft);}
+
+  .cta{margin:44px 0 8px; padding:28px; border-radius:10px; background:var(--ink); color:#fff;}
+  .cta h2{color:#fff; margin-top:0; font-size:22px;}
+  .cta p{color:#d7dbd8; margin-bottom:20px;}
+  .cta a.btn{display:inline-block; background:#fff; color:var(--ink); text-decoration:none; padding:11px 22px; border-radius:6px; font-weight:600; font-size:15px;}
+  .cta a.btn:hover{background:#eee;}
+
+  .refs{font-size:12px; color:#8a8e8b; margin-top:36px;}
+</style>
+
+<div class="res-wrap">
+
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="{{ url_for('index') }}">Home</a> / <span>Resources</span> / Cost-per-Hire
+  </nav>
+
+  <h1>Cost-per-Hire Calculator</h1>
+  <p class="dek">Cost-per-hire is the number Finance actually asks about. Use the calculator below to get your CPH using the SHRM-standard formula, then see benchmarks by role level and the levers that move the number fastest.</p>
+  <p style="font-size:12px; color:#8a8e8b; margin:-24px 0 32px;">Last updated September 8, 2026</p>
+
+  <section class="calc" aria-labelledby="calc-heading">
+    <h2 id="calc-heading">Calculate your cost-per-hire</h2>
+    <div class="field-grid">
+      <div class="field">
+        <label for="advertising">Advertising spend ($)
+          <span class="hint">total paid media and sponsorship budget</span>
+        </label>
+        <input type="number" id="advertising" inputmode="decimal" min="0" step="100" placeholder="e.g. 8000">
+      </div>
+      <div class="field">
+        <label for="recruiter">Recruiter salaries — allocation ($)
+          <span class="hint">recruiter cost allocated to this period</span>
+        </label>
+        <input type="number" id="recruiter" inputmode="decimal" min="0" step="100" placeholder="e.g. 15000">
+      </div>
+      <div class="field">
+        <label for="onboarding">Onboarding / training costs ($)</label>
+        <input type="number" id="onboarding" inputmode="decimal" min="0" step="100" placeholder="e.g. 4000">
+      </div>
+      <div class="field">
+        <label for="tools">Technology / tools ($)</label>
+        <input type="number" id="tools" inputmode="decimal" min="0" step="100" placeholder="e.g. 2000">
+      </div>
+      <div class="field" style="grid-column:1/-1; max-width:340px;">
+        <label for="hires">Number of hires</label>
+        <input type="number" id="hires" inputmode="numeric" min="1" step="1" placeholder="e.g. 10">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button id="calcBtn" type="button">Calculate</button>
+      <span id="errMsg">Enter at least one hire and non-negative costs.</span>
+    </div>
+
+    <div class="result" id="resultBox" aria-live="polite">
+      <div class="label">Average cost per hire</div>
+      <div class="amount" id="resultAmount">$0</div>
+      <div class="breakdown">
+        <div><span>Total recruiting spend</span><span id="brkTotal">$0</span></div>
+        <div><span>Hires</span><span id="brkHires">0</span></div>
+      </div>
+      <div class="tip">Benchmark range: $3,000–$5,000 for nonexecutive roles (varies by seniority, location, and channel mix). If your CPH is above benchmark, review sourcing mix and reduce manual steps.</div>
+    </div>
+  </section>
+
+  <h2>How the formula works</h2>
+  <p>Cost-per-hire follows the SHRM/ANSI-standard formula: total recruiting-related spend divided by the number of people hired in that period. It's meant to answer one question — how much did it cost, on average, to fill each seat.</p>
+  <div class="formula-box">
+    Cost-per-Hire formula
+    <code>Cost per Hire = (Advertising + Recruiter Salary Allocation + Onboarding/Training + Tools) / Number of Hires</code>
+  </div>
+  <p>The strict SHRM/ANSI standard limits cost-per-hire to recruiting-specific spend and excludes onboarding, training, and the new hire's own compensation. This calculator includes an optional onboarding/training field so you can see a fuller total cost of hiring — set it to zero if you want a number directly comparable to published SHRM benchmarks.</p>
+  <p><strong>Example:</strong> $8,000 in advertising, $15,000 in recruiter salary allocation, $4,000 in onboarding, and $2,000 in tools across 10 hires works out to a <strong>$2,900 cost per hire</strong> — under the $3,000–$5,000 benchmark range.</p>
+
+  <h3>Cost-per-hire benchmarks by role level</h3>
+  <table>
+    <thead>
+      <tr><th>Role level</th><th>Typical CPH range</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>High-volume / entry-level</td><td>$500 – $2,500</td></tr>
+      <tr><td>Individual contributor / professional</td><td>$3,000 – $6,000</td></tr>
+      <tr><td>Manager / director</td><td>$6,000 – $15,000</td></tr>
+      <tr><td>Executive / VP and above</td><td>$15,000 – $30,000+</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Internal vs. external recruiting costs</h2>
+  <p>Getting an accurate cost-per-hire depends on capturing both cost categories completely, since undercounting either one skews the metric.</p>
+  <ul>
+    <li><strong>Internal costs:</strong> the allocated portion of recruiter and sourcer salaries, HR overhead, internal job posting systems, and recruiting technology or ATS subscriptions.</li>
+    <li><strong>External costs:</strong> job board and advertising spend, third-party agency or headhunter fees, background checks and assessments, and career fair expenses.</li>
+  </ul>
+
+  <h2>How to lower your cost-per-hire</h2>
+  <ol>
+    <li><strong>Shift spend toward high-yield channels.</strong> Employee referrals and organic applicant flow typically cost far less per hire than paid agencies.</li>
+    <li><strong>Reduce agency reliance where possible.</strong> Reserve agency fees for roles that genuinely need external search reach.</li>
+    <li><strong>Automate screening and scheduling.</strong> Every hour of manual recruiter time saved lowers the internal cost side of the formula.</li>
+    <li><strong>Track cost by channel, not just in aggregate.</strong> Knowing which sources produce hires at the lowest cost lets you reallocate budget with evidence instead of guesswork.</li>
+    <li><strong>Benchmark by role level, not company-wide.</strong> Comparing an executive search cost to an entry-level average will make efficient hiring look inefficient.</li>
+  </ol>
+
+  <h2>Frequently asked questions</h2>
+  <div class="faq" id="faqList">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is cost-per-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Cost-per-hire (CPH) measures the average total expense to fill one open position, combining internal costs like recruiter salaries and external costs like advertising and agency fees, divided by the number of hires in a period.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How is cost-per-hire calculated?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Using the SHRM/ANSI-standard formula: Cost per Hire = (Internal Recruiting Costs + External Recruiting Costs) / Number of Hires.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What is a good cost-per-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>It varies by role level: roughly $3,000–$5,500 average for nonexecutive roles, $3,000–$6,000 for professional individual contributors, $6,000–$15,000 for manager/director roles, and $15,000–$30,000+ for executive hires.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>Does cost-per-hire include onboarding and training?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>The strict SHRM standard excludes onboarding and training. This calculator includes it as an optional field for a fuller total-cost view — set it to zero for a number comparable to published SHRM benchmarks.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>What counts as internal vs. external recruiting cost?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Internal costs are expenses your organization incurs itself, like recruiter salary allocation and technology. External costs are payments to third parties, like job board fees, agency commissions, and background checks.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>How can a company reduce cost-per-hire?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Shift spend toward referrals and organic sourcing, limit agency use to roles that need it, automate screening and scheduling to cut recruiter time, and track cost by channel to reallocate budget toward what works.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false"><span>Why does cost-per-hire vary so much by role level?</span><span class="icon">+</span></button>
+      <div class="faq-a"><p>Executive and specialized roles need longer searches, more interview stages, and higher agency fees as a percentage of salary, which pushes CPH well above high-volume or entry-level roles filled through low-cost channels.</p></div>
+    </div>
+  </div>
+
+  <h2>Related resources</h2>
+  <div class="res-grid">
+    <a class="res-card" href="{{ url_for('resources_time_to_hire') }}"><div class="name">Time-to-Hire Calculator</div><div class="desc">Measure days from job post to offer</div></a>
+    <a class="res-card" href="{{ url_for('resources_recruitment_roi') }}"><div class="name">Recruitment ROI Calculator</div><div class="desc">Estimate the ROI of your hiring spend</div></a>
+    <a class="res-card" href="{{ url_for('resources_attrition_cost') }}"><div class="name">Attrition Cost Calculator</div><div class="desc">Quantify yearly turnover cost</div></a>
+    <a class="res-card" href="{{ url_for('resources_job_board_effectiveness') }}"><div class="name">Job Board Effectiveness</div><div class="desc">Compare sources by cost and hires</div></a>
+  </div>
+
+  <div class="cta">
+    <h2>Lower your CPH without lowering hire quality</h2>
+    <p>HireGen's AI-powered recruitment CRM and ATS automates screening and scheduling and shows you exactly which channels produce hires at the lowest cost — so every dollar of recruiting spend works harder.</p>
+    <a class="btn" href="{{ url_for('company_register') }}">Try HireGen for free</a>
+  </div>
+
+  <p class="refs">Benchmark ranges above are general industry guidance for directional planning, not a guarantee for any specific organization or role. For a number specific to your team, use your own cost and hire data in the calculator.</p>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('calcBtn');
+  var err = document.getElementById('errMsg');
+  var resultBox = document.getElementById('resultBox');
+
+  function num(id){
+    var v = document.getElementById(id).value;
+    return v === '' ? 0 : parseFloat(v);
+  }
+
+  function fmtUSD(n){
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  ['advertising','recruiter','onboarding','tools','hires'].forEach(function(id){
+    document.getElementById(id).addEventListener('keydown', function(e){
+      if (e.key === 'Enter') { e.preventDefault(); btn.click(); }
+    });
+  });
+
+  btn.addEventListener('click', function(){
+    var advertising = num('advertising');
+    var recruiter = num('recruiter');
+    var onboarding = num('onboarding');
+    var tools = num('tools');
+    var hiresVal = document.getElementById('hires').value;
+    var hires = hiresVal === '' ? NaN : parseInt(hiresVal, 10);
+
+    var costsValid = [advertising, recruiter, onboarding, tools].every(function(v){ return !isNaN(v) && v >= 0; });
+    var hiresValid = !isNaN(hires) && hires >= 1;
+
+    if (!costsValid || !hiresValid) {
+      err.style.display = 'inline';
+      resultBox.classList.remove('show');
+      return;
+    }
+    err.style.display = 'none';
+
+    var total = advertising + recruiter + onboarding + tools;
+    var cph = total / hires;
+
+    document.getElementById('resultAmount').textContent = fmtUSD(cph);
+    document.getElementById('brkTotal').textContent = fmtUSD(total);
+    document.getElementById('brkHires').textContent = hires;
+    resultBox.classList.add('show');
+  });
+
+  document.querySelectorAll('.faq-q').forEach(function(q){
+    q.addEventListener('click', function(){
+      var item = q.closest('.faq-item');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(el){
+        el.classList.remove('open');
+        el.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        el.querySelector('.icon').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        item.querySelector('.icon').textContent = '\u2212';
+      }
+    });
+  });
+})();
+</script>
+{% endblock %}
