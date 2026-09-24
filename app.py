@@ -5856,6 +5856,9 @@ def sitemap_by_key(sitemap_key):
     elif sitemap_key == 'pages':
         return send_file('templates/sitemap.xml', mimetype='application/xml')
 
+    elif sitemap_key == 'academy':
+        return send_file('templates/academy_sitemap.xml', mimetype='application/xml')
+
     # Return the sitemap as an XML response
     return Response(sitemap_xml, mimetype="application/xml")
 
