@@ -1,0 +1,206 @@
+{% extends "academy_base.html" %}
+
+{% block academy_title %}A worked run: screening 500 resumes, with the numbers{% endblock %}
+
+{% block academy_meta %}
+<meta content="A real screening pass over 500 resumes: two runs that failed, 169 candidates tied at the top score, and a pass-rate gap caused by file format alone." name="description"/>
+<meta content="https://hiregen.com/academy/worked-run.html" property="og:url"/>
+<meta content="A worked run: screening 500 resumes, with the numbers" property="og:title"/>
+<meta content="A real screening pass over 500 resumes: two runs that failed, 169 candidates tied at the top score, and a pass-rate gap caused by file format alone." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://hiregen.com/academy/assets/social-card.png" property="og:image"/>
+<meta content="HireGen Academy" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+{% endblock %}
+
+{% block academy_content %}
+<div class="shell">
+<div class="grid">
+<nav aria-label="Course contents" class="side"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="/academy/module-1/lesson-1">1. What AI actually changes in the hiring funnel</a></li><li><a href="/academy/module-1/lesson-2">2. The AI recruiting stack: seven layers</a></li><li><a href="/academy/module-1/lesson-3">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="/academy/module-1/lesson-4">4. Build, buy, or bolt onto your ATS</a></li><li><a href="/academy/module-1/lesson-5">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="/academy/module-2/lesson-1">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="/academy/module-2/lesson-2">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="/academy/module-2/lesson-3">3. Job descriptions that convert and rank</a></li><li><a href="/academy/module-2/lesson-4">4. Scorecards and competency models</a></li><li><a href="/academy/module-2/lesson-5">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="/academy/module-2/lesson-6">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="/academy/module-3/lesson-1">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="/academy/module-3/lesson-2">2. Boolean that still works</a></li><li><a href="/academy/module-3/lesson-3">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="/academy/module-3/lesson-4">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="/academy/module-3/lesson-5">5. Talent mapping and market intelligence</a></li><li><a href="/academy/module-3/lesson-6">6. Building your reusable sourcing prompt library</a></li><li><a href="/academy/module-3/lesson-7">7. Scraping, parsing and the legal line</a></li><li><a href="/academy/module-3/lesson-8">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)"><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="/academy/module-4/lesson-1">1. How resume parsing actually works</a></li><li><a href="/academy/module-4/lesson-2">2. Why field accuracy decides everything downstream</a></li><li><a href="/academy/module-4/lesson-3">3. Setting screening criteria that do not over-filter</a></li><li><a href="/academy/module-4/lesson-4">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="/academy/module-4/lesson-5">5. Reading AI screening scores critically</a></li><li><a href="/academy/module-4/lesson-6">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="/academy/module-4/lesson-7">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="/academy/module-5/lesson-1">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="/academy/module-5/lesson-2">2. Building a match profile that reflects the scorecard</a></li><li><a href="/academy/module-5/lesson-3">3. Silver medallists: re-matching your existing database</a></li><li><a href="/academy/module-5/lesson-4">4. Explainability: why did this candidate rank third?</a></li><li><a href="/academy/module-5/lesson-5">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="/academy/module-6/lesson-1">1. Why most recruiter outreach is ignored</a></li><li><a href="/academy/module-6/lesson-2">2. Personalisation at scale that does not read like a bot</a></li><li><a href="/academy/module-6/lesson-3">3. The five-touch sequence</a></li><li><a href="/academy/module-6/lesson-4">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="/academy/module-6/lesson-5">5. Rejections that protect your employer brand</a></li><li><a href="/academy/module-6/lesson-6">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="/academy/module-7/lesson-1">1. Structured interviewing: what the evidence says</a></li><li><a href="/academy/module-7/lesson-2">2. Generating competency question banks</a></li><li><a href="/academy/module-7/lesson-3">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="/academy/module-7/lesson-4">4. Interview scheduling automation</a></li><li><a href="/academy/module-7/lesson-5">5. From transcript to evidence to scorecard</a></li><li><a href="/academy/module-7/lesson-6">6. Debrief facilitation and bias interrupts</a></li><li><a href="/academy/module-7/lesson-7">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="/academy/module-8/lesson-1">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="/academy/module-8/lesson-2">2. Migrating off spreadsheets without losing history</a></li><li><a href="/academy/module-8/lesson-3">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="/academy/module-8/lesson-4">4. Career site and job board setup</a></li><li><a href="/academy/module-8/lesson-5">5. Job distribution and multi-posting</a></li><li><a href="/academy/module-8/lesson-6">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="/academy/module-9/lesson-1">1. The ladder: prompt, workflow, agent</a></li><li><a href="/academy/module-9/lesson-2">2. Writing an AI recruiting agent brief</a></li><li><a href="/academy/module-9/lesson-3">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="/academy/module-9/lesson-4">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="/academy/module-9/lesson-5">5. Cost control and failure modes</a></li><li><a href="/academy/module-9/lesson-6">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="/academy/module-10/lesson-1">1. The funnel model every recruiting report is built on</a></li><li><a href="/academy/module-10/lesson-2">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="/academy/module-10/lesson-3">3. Source effectiveness and channel ROI</a></li><li><a href="/academy/module-10/lesson-4">4. Forecasting hiring capacity</a></li><li><a href="/academy/module-10/lesson-5">5. Building a weekly hiring dashboard</a></li><li><a href="/academy/module-10/lesson-6">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="/academy/module-11/lesson-1">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="/academy/module-11/lesson-2">2. Running a bias audit in practice</a></li><li><a href="/academy/module-11/lesson-3">3. Disclosure and consent language</a></li><li><a href="/academy/module-11/lesson-4">4. Data retention and candidate rights</a></li><li><a href="/academy/module-11/lesson-5">5. The documentation your legal team will ask for</a></li><li><a href="/academy/module-11/lesson-6">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="/academy/module-12/lesson-1">1. Your 30-60-90 rollout plan</a></li><li><a href="/academy/module-12/lesson-2">2. Getting hiring managers to actually use it</a></li><li><a href="/academy/module-12/lesson-3">3. The business case and ROI model for your CFO</a></li><li><a href="/academy/module-12/lesson-4">4. Capstone: run one requisition end to end</a></li><li><a href="/academy/module-12/lesson-5">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="/academy/resources">Templates</a> · <a href="/academy/course-map">Course map</a> · <a href="/academy/glossary">Glossary</a> · <a href="/academy/changelog">What’s changed</a> · <a href="/academy/about">About</a><span class="lic"><a href="/academy/license">Open source licence</a></span></div></div></nav>
+<main>
+<p class="crumb"><a href="/academy/">Course</a> › A worked run</p>
+<h1>A worked run: 500 resumes, with the numbers</h1>
+<p class="meta">Companion to Module 4  ·  9 min read  · 
+<span class="upd">Updated 21 September 2026</span></p>
+<article>
+<p class="lede">The rest of this course tells you what to do. This page is us doing it, on the
+500-resume dataset, reporting whatever came out — including two runs that failed and the reason
+each one failed.</p>
+<p class="alt"><strong>What this is and is not.</strong> Every number below was produced by
+extracting text from all 500 dataset files and scoring them against criteria written from the job
+brief. The extraction is real — <code>pdftotext</code> and <code>python-docx</code>, the same
+mechanics any parser uses — so the format effects are measured rather than modelled. What it is
+not is a real hire: the candidates are synthetic, so nothing here tells you how these criteria
+would perform against real people. Read it as a worked example with honest arithmetic, not as
+evidence that the method works.</p>
+<h2>Setup</h2>
+<p>Criteria written from <code>job-brief.md</code>, following <a href="/academy/module-4/lesson-3">Module 4, Lesson 3</a>. Two must-haves,
+because the brief says orchestration and warehouse experience must arrive intact and does not
+insist on anything else:</p>
+<ul>
+<li><strong>Must-have 1:</strong> names an orchestration tool.</li>
+<li><strong>Must-have 2:</strong> names a warehouse or lakehouse platform.</li>
+</ul>
+<p>Then five weighted signals: pipeline ownership language, stated outcomes, streaming work,
+finance-adjacent domain, and mentoring or on-call.</p>
+<h2>Step 1 — Ingestion</h2>
+<table>
+<thead><tr><th>Result</th><th>Count</th></tr></thead>
+<tbody>
+<tr><td>Files submitted</td><td>500</td></tr>
+<tr><td>Text extracted</td><td>498</td></tr>
+<tr><td>Extraction failed (password-protected)</td><td>2</td></tr>
+<tr><td>Extracted but near-empty (scans, no text layer)</td><td>3</td></tr>
+</tbody>
+</table>
+<p>So five candidates were effectively invisible before any criterion was applied. Two never
+arrived; three arrived as blank pages. On a score-ordered list all five sit at the bottom,
+indistinguishable from weak candidates.</p>
+<h2>Step 2 — First run, and why it failed</h2>
+<p>446 of 498 candidates cleared the must-haves. The score distribution:</p>
+<table>
+<thead><tr><th>Score band</th><th>Candidates</th></tr></thead>
+<tbody>
+<tr><td>90–100</td><td>267</td></tr>
+<tr><td>80–89</td><td>101</td></tr>
+<tr><td>70–79</td><td>49</td></tr>
+<tr><td>60–69</td><td>22</td></tr>
+<tr><td>Below 60</td><td>7</td></tr>
+</tbody>
+</table>
+<p>That is the flat distribution <a href="/academy/module-4/lesson-4">Module 4, Lesson 4</a> describes at Step 5: <em>everyone scoring
+similarly means your criteria are not distinguishing anything.</em> Six out of every ten
+candidates were in the top band. A "shortlist" drawn from that is a random sample with extra
+steps.</p>
+<p>The cause was the scoring rule rather than the criteria themselves. Each signal awarded full
+points for two keyword matches, and in a pool where every candidate is a data engineer, almost
+everyone hits two keywords on almost every signal. The scoring measured <em>membership of the
+category</em>, which the must-haves had already established.</p>
+<h2>Step 3 — Second run: distinct evidence instead of keyword presence</h2>
+<p>Same criteria, different scoring. Points now come from the number of <em>distinct</em> pieces of
+evidence — how many different systems they describe owning, how many separate stated outcomes —
+each capped so no single signal can dominate.</p>
+<table>
+<thead><tr><th>Score band</th><th>Candidates</th></tr></thead>
+<tbody>
+<tr><td>80–89</td><td>169</td></tr>
+<tr><td>70–79</td><td>203</td></tr>
+<tr><td>60–69</td><td>30</td></tr>
+<tr><td>50–59</td><td>10</td></tr>
+<tr><td>40–49</td><td>10</td></tr>
+<tr><td>30–39</td><td>3</td></tr>
+</tbody>
+</table>
+<p>Better spread, and still not good. Which brings us to the finding that matters most on this
+page.</p>
+<h2>The finding: 169 candidates tied at the top</h2>
+<p>The maximum score was 81. <strong>169 candidates scored exactly 81.</strong> 273 scored within
+three points of the maximum.</p>
+<p>So "the top 20" is a slice of 169 identical scores, ordered by nothing. Had we sorted the list
+differently — by filename, by upload order, by candidate ID — we would have produced a completely
+different shortlist with exactly the same defensibility.</p>
+<p>This is what <a href="/academy/module-4/lesson-5">Module 4, Lesson 5</a> means by precision theatre, and we did not expect it to be this
+severe. Any tool displaying that list ranked 1 to 169 would look authoritative. The honest
+presentation is three bands:</p>
+<table>
+<thead><tr><th>Band</th><th>Candidates</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>Strong match (78+)</td><td>273</td><td>Cannot be separated by these criteria</td></tr>
+<tr><td>Worth reading (65–77)</td><td>123</td><td>Partial evidence</td></tr>
+<tr><td>Weak (below 65)</td><td>29</td><td>Little evidence in the document</td></tr>
+</tbody>
+</table>
+<p>The correct conclusion is not "pick 20 from the top band". It is that the criteria are too
+coarse for this pool and need a signal that actually separates 273 people — scale, seniority of
+ownership, or something the job brief did not specify and the hiring manager would have to decide.
+That is a conversation, not a scoring change.</p>
+<h2>Document format predicted the outcome</h2>
+<p>This is the result we would most want a recruiter to see.</p>
+<table>
+<thead><tr><th>Format</th><th>Files</th><th>Cleared must-haves</th><th>Pass rate</th><th>Average score</th></tr></thead>
+<tbody>
+<tr><td>DOCX</td><td>155</td><td>142</td><td>91.6%</td><td>76.5</td></tr>
+<tr><td>PDF, single column</td><td>300</td><td>253</td><td>84.3%</td><td>74.8</td></tr>
+<tr><td>PDF, two-column</td><td>40</td><td>30</td><td>75.0%</td><td>71.1</td></tr>
+<tr><td>Scanned PDF</td><td>3</td><td>0</td><td>0%</td><td>0</td></tr>
+<tr><td>Password-protected</td><td>2</td><td>0</td><td>0%</td><td>0</td></tr>
+</tbody>
+</table>
+<p>The candidates are synthetic and identically distributed across formats — the generator assigns
+career shapes independently of file type. There is no reason a two-column CV should belong to a
+weaker candidate. The 16-point gap between DOCX and two-column is entirely an artefact of reading
+order, and the scanned resumes were excluded outright.</p>
+<p>In a real pool, resume template choice is not random. It correlates with country, career stage,
+whether someone used a university careers service, and whether they bought a template. A pipeline
+with this property is selecting on something adjacent to those things, and it shows up in the
+funnel as a low score — indistinguishable from a weak candidate.</p>
+<p>Nothing in a score-based bias audit would catch it. You catch it by auditing the parse, which is
+why <a href="/academy/module-11/lesson-2">Module 11, Lesson 2</a> puts that step in.</p>
+<h2>Comparing against the human shortlist</h2>
+<p>Overlap with the 20-candidate human shortlist: <strong>2</strong>.</p>
+<p>Module 4, Lab 3 says 10 to 14 is healthy and under 6 means something is broken. Two means
+something is broken. Here is what the two shortlists were actually made of:</p>
+<table>
+<thead><tr><th>Career shape</th><th>Human shortlist</th><th>Our shortlist</th><th>In the pool</th></tr></thead>
+<tbody>
+<tr><td>Senior</td><td>12</td><td>1</td><td>48</td></tr>
+<tr><td>Standard</td><td>7</td><td>5</td><td>200</td></tr>
+<tr><td>Career changer</td><td>1</td><td>5</td><td>58</td></tr>
+<tr><td>Employment gap</td><td>0</td><td>3</td><td>52</td></tr>
+<tr><td>Contractor</td><td>0</td><td>3</td><td>59</td></tr>
+<tr><td>Junior</td><td>0</td><td>2</td><td>48</td></tr>
+<tr><td>Project-only evidence</td><td>0</td><td>1</td><td>35</td></tr>
+</tbody>
+</table>
+<p>Two processes optimising different things. The human reviewer weighted seniority heavily and
+had a documented bias against career changers and scanned documents. Our criteria weighted density
+of described evidence, which rewards people who wrote more bullet points — and career changers,
+who tend to over-explain their relevant work because they know it is not obvious from their job
+titles.</p>
+<p><strong>Both are defective, in opposite directions.</strong> The human was screening for a
+proxy (seniority) rather than for the requirement. we were screening for verbosity. Module 5, Lesson
+1 warns that semantic and evidence-density scoring rewards longer documents; We built that failure
+ourselves without noticing, on our own dataset, after writing the lesson about it.</p>
+<p>That is the most useful thing on this page, and the reason it is worth publishing a run that
+went badly.</p>
+<h2>The disagreement check</h2>
+<p>The three highest-scoring rejects all failed the same must-have — no warehouse platform named —
+while scoring at the ceiling on everything else. Two of the human reviewer's picks failed our
+must-haves outright.</p>
+<p>Reading them, the pattern is that experienced engineers sometimes describe what they built
+without naming the platform it ran on. The must-have was doing something other than what it said:
+it was testing whether someone lists tools, not whether they have warehouse experience.</p>
+<h2>The second pass</h2>
+<p>Full-text search of the rejected pool for orchestration or pipeline language, as Module 4,
+Lesson 6 prescribes: <strong>49 candidates recovered</strong> — roughly one in six of everyone
+rejected.</p>
+<p>Five minutes of work. On a real search, those are 49 people who would have been silently
+dropped.</p>
+<h2>What we would change before running it again</h2>
+<ol>
+<li><strong>Drop the warehouse must-have to a weighted signal.</strong> It was excluding people
+      for a documentation habit rather than a capability gap.</li>
+<li><strong>Add a signal the pool can actually differentiate on</strong> — scale, team size,
+      or breadth of systems owned. Without one, 273 candidates are genuinely indistinguishable
+      and no scoring change will fix that.</li>
+<li><strong>Normalise for document length</strong>, or stop counting distinct evidence, because
+      right now the score partly measures how much someone wrote.</li>
+<li><strong>Handle scans and unreadable files as a separate queue</strong> before scoring, not
+      as bottom-of-list candidates.</li>
+<li><strong>Report bands, never a rank</strong>, for this pool. The ranking is not real.</li>
+</ol>
+<h2>If you run it yourself</h2>
+<p>You have the same dataset. Your criteria will be different from mine, and your results should
+be too — if you get exactly these numbers, you have copied our criteria rather than written your
+own from the brief.</p>
+<p>The two things worth comparing: how flat your first distribution is, and whether your format
+pass-rates are as uneven as mine. Both are failures of the method rather than of any tool, and
+both are invisible unless you go looking.</p>
+<p class="tmpl"><a href="/academy/resources/09-screening-criteria-sheet.csv">Criteria sheet used
+here</a> · <a href="https://hiregen.com/academy/dataset/ai-recruitment-dataset.zip">the dataset</a> ·
+<a href="/academy/module-4/lesson-4">the lesson this run follows</a></p>
+</article>
+</main>
+</div>
+</div>
+{% endblock %}

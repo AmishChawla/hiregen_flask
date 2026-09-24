@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why field accuracy decides everything downstream</title>
+<meta name="description" content="How one badly read field becomes an invisible rejection, which fields do the most damage, and a 30-minute check you can run on any tool.">
+<link rel="canonical" href="https://hiregen.com/academy/module-4/lesson-2.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<meta property="og:url" content="https://hiregen.com/academy/module-4/lesson-2.html">
+<meta property="og:title" content="Why field accuracy decides everything downstream">
+<meta property="og:description" content="How one badly read field becomes an invisible rejection, which fields do the most damage, and a 30-minute check you can run on any tool.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hiregen.com/academy/assets/social-card.png">
+<meta property="og:site_name" content="HireGen Academy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<link rel="stylesheet" href="../assets/course.css">
+<style>:root{--accent:var(--m4);--accent-soft:#fdf0e8}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Why field accuracy decides everything downstream", "author": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "publisher": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "educationalLevel": "Beginner to intermediate", "teaches": "The anchor module: how parsing works, why fields matter more than scores, and a full 500-resume run.", "timeRequired": "PT5M", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AI Recruitment Masterclass", "item": "https://hiregen.com/academy/"}, {"@type": "ListItem", "position": 2, "name": "Module 4: Resume parsing and AI screening"}, {"@type": "ListItem", "position": 3, "name": "Why field accuracy decides everything downstream", "item": "https://hiregen.com/academy/module-4/lesson-2.html"}]}], "learningResourceType": "Lesson", "isPartOf": {"@type": "Course", "name": "AI Recruitment Masterclass", "url": "https://hiregen.com/academy/"}, "position": 21, "datePublished": "2026-09-21", "dateModified": "2026-09-21", "inLanguage": "en"}</script>
+</head>
+<body>
+<div class="shell">
+<div class="grid">
+<nav class="side" aria-label="Course contents"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="../module-1/lesson-1.html">1. What AI actually changes in the hiring funnel</a></li><li><a href="../module-1/lesson-2.html">2. The AI recruiting stack: seven layers</a></li><li><a href="../module-1/lesson-3.html">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="../module-1/lesson-4.html">4. Build, buy, or bolt onto your ATS</a></li><li><a href="../module-1/lesson-5.html">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="../module-2/lesson-1.html">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="../module-2/lesson-2.html">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="../module-2/lesson-3.html">3. Job descriptions that convert and rank</a></li><li><a href="../module-2/lesson-4.html">4. Scorecards and competency models</a></li><li><a href="../module-2/lesson-5.html">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="../module-2/lesson-6.html">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="../module-3/lesson-1.html">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="../module-3/lesson-2.html">2. Boolean that still works</a></li><li><a href="../module-3/lesson-3.html">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="../module-3/lesson-4.html">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="../module-3/lesson-5.html">5. Talent mapping and market intelligence</a></li><li><a href="../module-3/lesson-6.html">6. Building your reusable sourcing prompt library</a></li><li><a href="../module-3/lesson-7.html">7. Scraping, parsing and the legal line</a></li><li><a href="../module-3/lesson-8.html">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)" open><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="../module-4/lesson-1.html">1. How resume parsing actually works</a></li><li><a href="../module-4/lesson-2.html" class="here">2. Why field accuracy decides everything downstream</a></li><li><a href="../module-4/lesson-3.html">3. Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">5. Reading AI screening scores critically</a></li><li><a href="../module-4/lesson-6.html">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="../module-4/lesson-7.html">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="../module-5/lesson-1.html">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="../module-5/lesson-2.html">2. Building a match profile that reflects the scorecard</a></li><li><a href="../module-5/lesson-3.html">3. Silver medallists: re-matching your existing database</a></li><li><a href="../module-5/lesson-4.html">4. Explainability: why did this candidate rank third?</a></li><li><a href="../module-5/lesson-5.html">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="../module-6/lesson-1.html">1. Why most recruiter outreach is ignored</a></li><li><a href="../module-6/lesson-2.html">2. Personalisation at scale that does not read like a bot</a></li><li><a href="../module-6/lesson-3.html">3. The five-touch sequence</a></li><li><a href="../module-6/lesson-4.html">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="../module-6/lesson-5.html">5. Rejections that protect your employer brand</a></li><li><a href="../module-6/lesson-6.html">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="../module-7/lesson-1.html">1. Structured interviewing: what the evidence says</a></li><li><a href="../module-7/lesson-2.html">2. Generating competency question banks</a></li><li><a href="../module-7/lesson-3.html">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="../module-7/lesson-4.html">4. Interview scheduling automation</a></li><li><a href="../module-7/lesson-5.html">5. From transcript to evidence to scorecard</a></li><li><a href="../module-7/lesson-6.html">6. Debrief facilitation and bias interrupts</a></li><li><a href="../module-7/lesson-7.html">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="../module-8/lesson-1.html">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="../module-8/lesson-2.html">2. Migrating off spreadsheets without losing history</a></li><li><a href="../module-8/lesson-3.html">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="../module-8/lesson-4.html">4. Career site and job board setup</a></li><li><a href="../module-8/lesson-5.html">5. Job distribution and multi-posting</a></li><li><a href="../module-8/lesson-6.html">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="../module-9/lesson-1.html">1. The ladder: prompt, workflow, agent</a></li><li><a href="../module-9/lesson-2.html">2. Writing an AI recruiting agent brief</a></li><li><a href="../module-9/lesson-3.html">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="../module-9/lesson-4.html">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="../module-9/lesson-5.html">5. Cost control and failure modes</a></li><li><a href="../module-9/lesson-6.html">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="../module-10/lesson-1.html">1. The funnel model every recruiting report is built on</a></li><li><a href="../module-10/lesson-2.html">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="../module-10/lesson-3.html">3. Source effectiveness and channel ROI</a></li><li><a href="../module-10/lesson-4.html">4. Forecasting hiring capacity</a></li><li><a href="../module-10/lesson-5.html">5. Building a weekly hiring dashboard</a></li><li><a href="../module-10/lesson-6.html">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="../module-11/lesson-1.html">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="../module-11/lesson-2.html">2. Running a bias audit in practice</a></li><li><a href="../module-11/lesson-3.html">3. Disclosure and consent language</a></li><li><a href="../module-11/lesson-4.html">4. Data retention and candidate rights</a></li><li><a href="../module-11/lesson-5.html">5. The documentation your legal team will ask for</a></li><li><a href="../module-11/lesson-6.html">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="../module-12/lesson-1.html">1. Your 30-60-90 rollout plan</a></li><li><a href="../module-12/lesson-2.html">2. Getting hiring managers to actually use it</a></li><li><a href="../module-12/lesson-3.html">3. The business case and ROI model for your CFO</a></li><li><a href="../module-12/lesson-4.html">4. Capstone: run one requisition end to end</a></li><li><a href="../module-12/lesson-5.html">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="../resources.html">Templates</a> &middot; <a href="../course-map.html">Course map</a> &middot; <a href="../glossary.html">Glossary</a> &middot; <a href="../changelog.html">What&rsquo;s changed</a> &middot; <a href="../about.html">About</a><span class="lic"><a href="../license.html">Open source licence</a></span></div></div></nav>
+<main class="lesson">
+<p class="crumb"><a href="../index.html">Course</a> &rsaquo; Module 4 · Resume parsing and AI screening</p>
+<h1>Why field accuracy decides everything downstream</h1>
+<p class="meta">Module 4, Lesson 2 &nbsp;·&nbsp; 5 min read&nbsp;·&nbsp; <span class="upd">Updated 21 September 2026</span><button type="button" class="readbtn" data-read-toggle data-lesson="4-2">Mark as read</button></p>
+<span class="modtag">Module 4 &middot; Lesson 2</span>
+<aside class="inshort"><h2>In short</h2><ul><li>Every screening score is built on the fields the parser pulled out.</li><li>If one field is wrong, the score is wrong and the candidate quietly disappears.</li><li>Check 25 resumes by hand before you trust any tool. It takes 30 minutes.</li></ul></aside>
+<article>
+
+<p class="lede">A screening score is just arithmetic done on the data pulled out of a CV. If that
+data is wrong, the score is wrong, the ranking is wrong, and a good candidate quietly disappears.
+Nothing tells you.</p>
+<figure class="fig"><svg viewBox="0 0 700 346" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-bls d-bls" style="width:100%;height:auto;max-width:860px;display:block;margin:0 auto"><title id="t-bls">How one badly read field loses a candidate</title><desc id="d-bls">Five narrowing steps: one date read wrongly leads to wrong experience, a wrong score, a low rank, and a candidate nobody opens. No error is raised.</desc><style>.lab{font:600 13px "IBM Plex Sans",Arial,sans-serif;fill:#14171a}.sub{font:400 11.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}.num{font:600 12px "IBM Plex Sans",Arial,sans-serif;fill:#fff}.cap{font:600 11px "IBM Plex Sans",Arial,sans-serif;fill:#8c1d3f}.sml{font:400 10.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}</style><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#8c1d3f"/></marker></defs><rect x="60" y="34" width="520" height="40" rx="8" fill="#fff" stroke="var(--accent)" stroke-width="1"/><text x="78" y="59" class="lab" style="font-size:12.5px">One date read wrongly</text><path d="M320 75 L320 86" stroke="#8c1d3f" stroke-width="1.4" marker-end="url(#ar)"/><rect x="74" y="92" width="492" height="40" rx="8" fill="#fff" stroke="var(--accent)" stroke-width="1"/><text x="92" y="117" class="lab" style="font-size:12.5px">Total experience wrong</text><path d="M320 133 L320 144" stroke="#8c1d3f" stroke-width="1.4" marker-end="url(#ar)"/><rect x="88" y="150" width="464" height="40" rx="8" fill="#fff" stroke="var(--accent)" stroke-width="1"/><text x="106" y="175" class="lab" style="font-size:12.5px">Score wrong</text><path d="M320 191 L320 202" stroke="#8c1d3f" stroke-width="1.4" marker-end="url(#ar)"/><rect x="102" y="208" width="436" height="40" rx="8" fill="#fff" stroke="var(--accent)" stroke-width="1"/><text x="120" y="233" class="lab" style="font-size:12.5px">Ranked in the bottom third</text><path d="M320 249 L320 260" stroke="#8c1d3f" stroke-width="1.4" marker-end="url(#ar)"/><rect x="116" y="266" width="408" height="40" rx="8" fill="var(--accent-soft)" stroke="#8c1d3f" stroke-width="2"/><text x="134" y="291" class="lab" style="font-size:12.5px">Never opened</text><text x="60" y="330" class="cap">No error appears at any point</text></svg><figcaption>One badly read field, followed all the way to an invisible rejection.</figcaption></figure>
+
+<h2>How one wrong field loses a candidate</h2>
+<p>Follow one mistake all the way through.</p>
+<p>A candidate lists a contract job as "Jun 2021 – Present" in a sidebar. The software reads the
+sidebar in the wrong order and misses that job. Their total experience drops from six years to two
+and a half. Your rules weight experience heavily, so they land in the bottom third. Nobody opens the
+bottom third of 500.</p>
+<p>Look at what happened there. No error appeared. The tool did what it was built to do. Your rules
+were sensible. The person simply vanished, and the only trace is a low score that looks like every
+other low score.</p>
+<p>This is the difference between software being <em>wrong</em> and software being
+<em>unreliable</em>. Software that crashes tells you something. Software that produces a confident
+number from bad data does not.</p>
+
+<h2>Which fields matter most</h2>
+<table>
+  <thead><tr><th>Field</th><th>How much damage</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Dates</td><td>Severe</td><td>They decide total experience, gaps, how recent the work is — several rules at once</td></tr>
+    <tr><td>Job titles</td><td>Severe</td><td>They decide how senior the tool thinks someone is</td></tr>
+    <tr><td>Employer names</td><td>Medium</td><td>Used for industry and company size</td></tr>
+    <tr><td>Skills</td><td>Medium</td><td>Usually findable by searching the full text anyway</td></tr>
+    <tr><td>Education</td><td>Low</td><td>Only matters if you filter on it, which you mostly should not</td></tr>
+    <tr><td>Email, phone</td><td>Low for scoring</td><td>But you cannot contact someone you cannot email</td></tr>
+  </tbody>
+</table>
+<p>The pattern: fields used by several rules do the most damage. Dates are the single most important
+thing a tool does, and also one of the hardest.</p>
+
+<h2>Check 25 CVs by hand</h2>
+<p>Do this once for any tool, and again whenever the vendor updates it. Half an hour.</p>
+<ol>
+  <li>Pick 25 CVs at random. Not the tidy ones. Include the scans and the two-column ones.</li>
+  <li>For each, put the original next to the extracted data.</li>
+  <li>Mark every field: right, partly right, wrong, missing.</li>
+  <li>Count by field, not by CV. You want to know <em>which field</em> fails.</li>
+  <li>Note the layout of any CV that failed badly. Patterns show up fast, and they are usually
+      template families rather than individual documents.</li>
+</ol>
+
+<h2>What your results mean</h2>
+<table>
+  <thead><tr><th>What you found</th><th>What it means</th><th>What to do</th></tr></thead>
+  <tbody>
+    <tr><td>Dates wrong more than 1 in 10</td><td>Experience numbers cannot be trusted</td><td>Never filter on experience with this tool</td></tr>
+    <tr><td>Titles wrong more than 1 in 7</td><td>Seniority guesses are unreliable</td><td>Look for responsibilities in the text instead</td></tr>
+    <tr><td>One CV template failing again and again</td><td>A pattern, not bad luck</td><td>Treat it as a fairness problem, not just a quality one</td></tr>
+    <tr><td>Scans failing completely</td><td>Expected</td><td>Handle them as a separate manual pile</td></tr>
+    <tr><td>Everything above 95%</td><td>Your sample was too tidy</td><td>Try again with harder CVs</td></tr>
+  </tbody>
+</table>
+
+<h2>Why a layout problem is a fairness problem</h2>
+<p>CV templates are not chosen at random. Which one someone uses depends on their country, how long
+they have been working, whether their university careers service gave them one, whether they paid
+for one, and what language they wrote in.</p>
+<p>So if your tool reliably fails on one kind of template, it reliably disadvantages whoever uses
+it. And that disadvantage shows up in your results as a low score — which looks exactly like a weak
+candidate.</p>
+<p>This is the most common way a purely technical fault turns into an unfair outcome. No check that
+only looks at scores will ever catch it.</p>
+
+<h2>When the tool gets it wrong</h2>
+<p>Fix the field by hand, and find out whether your tool learns from corrections. Some do. Most do
+not. If it does not, correcting is just tidying up one record — so fix it for people you are moving
+forward, not for the whole pile.</p>
+
+<p class="tmpl"><a href="../resources/08-parse-audit-25.csv">Download the 25-CV checking
+sheet</a> &middot; <a href="../resources.html">all templates</a></p>
+
+<div class="callout warn">
+  <h3>The rule</h3>
+  <p>Never use a field to reject people until you have checked it. Use it to sort, to score, to rank
+  — but do not let an unchecked field remove a person from your pile.</p>
+</div>
+
+</article>
+
+
+
+<section class="related"><h2>More in this module</h2><ul><li><a href="../module-4/lesson-1.html">How resume parsing actually works</a></li><li><a href="../module-4/lesson-3.html">Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">Reading AI screening scores critically</a></li></ul><p><a href="../index.html">Full curriculum</a> &middot; <a href="../resources.html">Templates</a> &middot; <a href="../worked-run.html">A worked run with real numbers</a></p></section>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY='hga.progress.v1';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+
+  // ---- mark-as-read
+  var btn=document.querySelector('[data-read-toggle]');
+  if(btn){
+    var id=btn.getAttribute('data-lesson'), st=load();
+    var paint=function(){
+      var done=!!st[id];
+      btn.textContent=done?'\u2713 Read':'Mark as read';
+      btn.classList.toggle('done',done);
+      btn.setAttribute('aria-pressed',done?'true':'false');
+    };
+    paint();
+    btn.addEventListener('click',function(){
+      st=load(); if(st[id]){delete st[id]}else{st[id]=Date.now()} save(st); paint();
+    });
+  }
+
+  // ---- progress summary
+  var bar=document.querySelector('[data-progress]');
+  if(bar){
+    var total=parseInt(bar.getAttribute('data-total'),10),st2=load();
+    var n=Object.keys(st2).length;
+    var pct=total?Math.round(100*n/total):0;
+    bar.querySelector('.pnum').textContent=n+' of '+total+' lessons read';
+    bar.querySelector('.pfill').style.width=pct+'%';
+    if(n===0){bar.querySelector('.pnum').textContent='No lessons marked read yet';}
+    var reset=bar.querySelector('[data-reset]');
+    if(reset){reset.addEventListener('click',function(){
+      if(confirm('Clear your reading progress on this device?')){save({});location.reload();}
+    });}
+  }
+
+  // ---- sidebar ticks
+  var st3=load();
+  document.querySelectorAll('.side .les a').forEach(function(a){
+    var m=a.getAttribute('href').match(/module-(\d+)\/lesson-(\d+)/);
+    if(m&&st3[m[1]+'-'+m[2]]){a.classList.add('read');}
+  });
+
+  // ---- quiz
+  document.querySelectorAll('.quiz').forEach(function(qz){
+    var items=qz.querySelectorAll('.qitem'), answered=0, right=0;
+    items.forEach(function(it){
+      it.querySelectorAll('.qopt').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(it.classList.contains('answered'))return;
+          it.classList.add('answered');
+          var ok=b.getAttribute('data-c')==='1';
+          b.classList.add(ok?'right':'wrong');
+          if(!ok){it.querySelector('.qopt[data-c="1"]').classList.add('right');}
+          it.querySelector('.qwhy').hidden=false;
+          answered++; if(ok)right++;
+          if(answered===items.length){
+            var s=qz.querySelector('.qscore');
+            s.hidden=false;
+            s.textContent=right+' of '+items.length+'. '+
+              (right===items.length?'Nothing to revisit.':
+               right>=items.length-1?'Worth re-reading the one you missed.':
+               'Worth another pass through this module.');
+          }
+        });
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

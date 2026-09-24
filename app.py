@@ -27,9 +27,10 @@ from functools import wraps
 from flask_cors import CORS
 import phonenumbers
 from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
-from typing import List, Dict, Any
+from academy_routes import academy_bp
 
 app = Flask(__name__)
+app.register_blueprint(academy_bp)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)

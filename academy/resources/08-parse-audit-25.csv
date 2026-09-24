@@ -1,0 +1,32 @@
+#,filename,layout_type,name,email,phone,employer,job_title,employment_dates,skills,education,notes
+,,single/two-column/scan,correct/partial/wrong/missing,,,,,,,,
+1,,,,,,,,,,,
+2,,,,,,,,,,,
+3,,,,,,,,,,,
+4,,,,,,,,,,,
+5,,,,,,,,,,,
+6,,,,,,,,,,,
+7,,,,,,,,,,,
+8,,,,,,,,,,,
+9,,,,,,,,,,,
+10,,,,,,,,,,,
+11,,,,,,,,,,,
+12,,,,,,,,,,,
+13,,,,,,,,,,,
+14,,,,,,,,,,,
+15,,,,,,,,,,,
+16,,,,,,,,,,,
+17,,,,,,,,,,,
+18,,,,,,,,,,,
+19,,,,,,,,,,,
+20,,,,,,,,,,,
+21,,,,,,,,,,,
+22,,,,,,,,,,,
+23,,,,,,,,,,,
+24,,,,,,,,,,,
+25,,,,,,,,,,,
+
+"TALLY BY FIELD — count 'correct' per column, not per resume"
+Dates below ~90% correct,→ never hard-filter on experience with this tool
+Titles below ~85%,→ screen on responsibilities in the text instead
+One layout family failing repeatedly,"→ treat as a fairness issue, not just quality"

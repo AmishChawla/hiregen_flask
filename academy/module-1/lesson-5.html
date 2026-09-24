@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set up your workspace and course dataset | HireGen Academy</title>
+<meta name="description" content="Download the 500-resume course dataset and set up a screening workspace. Fifteen minutes, and the rest of the course is hands-on.">
+<link rel="canonical" href="https://hiregen.com/academy/module-1/lesson-5.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<meta property="og:url" content="https://hiregen.com/academy/module-1/lesson-5.html">
+<meta property="og:title" content="Set up your workspace and course dataset | HireGen Academy">
+<meta property="og:description" content="Download the 500-resume course dataset and set up a screening workspace. Fifteen minutes, and the rest of the course is hands-on.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hiregen.com/academy/assets/social-card.png">
+<meta property="og:site_name" content="HireGen Academy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<link rel="stylesheet" href="../assets/course.css">
+<style>:root{--accent:var(--m1);--accent-soft:#e9f3ee}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Set up your workspace and course dataset", "author": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "publisher": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "educationalLevel": "Beginner to intermediate", "teaches": "What AI actually changes, the seven-layer stack, the five failure modes, and your workspace setup.", "timeRequired": "PT5M", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AI Recruitment Masterclass", "item": "https://hiregen.com/academy/"}, {"@type": "ListItem", "position": 2, "name": "Module 1: Foundations of AI recruiting"}, {"@type": "ListItem", "position": 3, "name": "Set up your workspace and course dataset", "item": "https://hiregen.com/academy/module-1/lesson-5.html"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does AI screening actually save time?", "acceptedAnswer": {"@type": "Answer", "text": "It relocates time rather than removing it. Screening 400 applications manually at two minutes each is about thirteen hours, and in practice most teams spend four and read 150. AI screening takes that to roughly ninety minutes and covers all 400 \u2014 but it adds an hour of defining criteria you were not previously spending. The honest saving is large; the coverage gain is larger."}}, {"@type": "Question", "name": "What is an applicant tracking system (ATS)?", "acceptedAnswer": {"@type": "Answer", "text": "An ATS is the system of record for hiring: it holds candidates, roles, pipeline stages and decision history. Everything else in an AI recruiting stack \u2014 parsing, matching, messaging, reporting \u2014 reads from it or writes to it. If two people asking the same question about a candidate get different answers, you do not have a working system of record."}}, {"@type": "Question", "name": "Can AI make hiring decisions?", "acceptedAnswer": {"@type": "Answer", "text": "It should not, and in several jurisdictions decisions based solely on automated processing carry specific legal obligations. The workable line is that a system may order and annotate a pile of applications; a person decides who leaves it. Automate the reading, never the rejection."}}, {"@type": "Question", "name": "Is AI in recruitment legal?", "acceptedAnswer": {"@type": "Answer", "text": "Using it is legal; using it without disclosure, records and human review increasingly is not. The EU AI Act classifies recruitment systems as high-risk, New York City requires an annual independent bias audit and candidate notice, and Illinois regulates AI video interviews. The rules differ by where your candidates are, not where you are."}}, {"@type": "Question", "name": "Do I need a paid tool to follow this course?", "acceptedAnswer": {"@type": "Answer", "text": "No. Eight of the ten labs assume a screening tool, and each of those has a spreadsheet-only variant. The parsing layer is `pdftotext` and a spreadsheet; the scoring layer is a weighted sum. Doing it manually once teaches you more about where screening fails than any tool demo."}}]}], "learningResourceType": "Lesson", "isPartOf": {"@type": "Course", "name": "AI Recruitment Masterclass", "url": "https://hiregen.com/academy/"}, "position": 5, "datePublished": "2026-09-21", "dateModified": "2026-09-21", "inLanguage": "en"}</script>
+</head>
+<body>
+<div class="shell">
+<div class="grid">
+<nav class="side" aria-label="Course contents"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)" open><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="../module-1/lesson-1.html">1. What AI actually changes in the hiring funnel</a></li><li><a href="../module-1/lesson-2.html">2. The AI recruiting stack: seven layers</a></li><li><a href="../module-1/lesson-3.html">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="../module-1/lesson-4.html">4. Build, buy, or bolt onto your ATS</a></li><li><a href="../module-1/lesson-5.html" class="here">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="../module-2/lesson-1.html">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="../module-2/lesson-2.html">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="../module-2/lesson-3.html">3. Job descriptions that convert and rank</a></li><li><a href="../module-2/lesson-4.html">4. Scorecards and competency models</a></li><li><a href="../module-2/lesson-5.html">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="../module-2/lesson-6.html">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="../module-3/lesson-1.html">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="../module-3/lesson-2.html">2. Boolean that still works</a></li><li><a href="../module-3/lesson-3.html">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="../module-3/lesson-4.html">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="../module-3/lesson-5.html">5. Talent mapping and market intelligence</a></li><li><a href="../module-3/lesson-6.html">6. Building your reusable sourcing prompt library</a></li><li><a href="../module-3/lesson-7.html">7. Scraping, parsing and the legal line</a></li><li><a href="../module-3/lesson-8.html">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)"><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="../module-4/lesson-1.html">1. How resume parsing actually works</a></li><li><a href="../module-4/lesson-2.html">2. Why field accuracy decides everything downstream</a></li><li><a href="../module-4/lesson-3.html">3. Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">5. Reading AI screening scores critically</a></li><li><a href="../module-4/lesson-6.html">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="../module-4/lesson-7.html">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="../module-5/lesson-1.html">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="../module-5/lesson-2.html">2. Building a match profile that reflects the scorecard</a></li><li><a href="../module-5/lesson-3.html">3. Silver medallists: re-matching your existing database</a></li><li><a href="../module-5/lesson-4.html">4. Explainability: why did this candidate rank third?</a></li><li><a href="../module-5/lesson-5.html">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="../module-6/lesson-1.html">1. Why most recruiter outreach is ignored</a></li><li><a href="../module-6/lesson-2.html">2. Personalisation at scale that does not read like a bot</a></li><li><a href="../module-6/lesson-3.html">3. The five-touch sequence</a></li><li><a href="../module-6/lesson-4.html">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="../module-6/lesson-5.html">5. Rejections that protect your employer brand</a></li><li><a href="../module-6/lesson-6.html">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="../module-7/lesson-1.html">1. Structured interviewing: what the evidence says</a></li><li><a href="../module-7/lesson-2.html">2. Generating competency question banks</a></li><li><a href="../module-7/lesson-3.html">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="../module-7/lesson-4.html">4. Interview scheduling automation</a></li><li><a href="../module-7/lesson-5.html">5. From transcript to evidence to scorecard</a></li><li><a href="../module-7/lesson-6.html">6. Debrief facilitation and bias interrupts</a></li><li><a href="../module-7/lesson-7.html">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="../module-8/lesson-1.html">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="../module-8/lesson-2.html">2. Migrating off spreadsheets without losing history</a></li><li><a href="../module-8/lesson-3.html">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="../module-8/lesson-4.html">4. Career site and job board setup</a></li><li><a href="../module-8/lesson-5.html">5. Job distribution and multi-posting</a></li><li><a href="../module-8/lesson-6.html">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="../module-9/lesson-1.html">1. The ladder: prompt, workflow, agent</a></li><li><a href="../module-9/lesson-2.html">2. Writing an AI recruiting agent brief</a></li><li><a href="../module-9/lesson-3.html">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="../module-9/lesson-4.html">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="../module-9/lesson-5.html">5. Cost control and failure modes</a></li><li><a href="../module-9/lesson-6.html">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="../module-10/lesson-1.html">1. The funnel model every recruiting report is built on</a></li><li><a href="../module-10/lesson-2.html">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="../module-10/lesson-3.html">3. Source effectiveness and channel ROI</a></li><li><a href="../module-10/lesson-4.html">4. Forecasting hiring capacity</a></li><li><a href="../module-10/lesson-5.html">5. Building a weekly hiring dashboard</a></li><li><a href="../module-10/lesson-6.html">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="../module-11/lesson-1.html">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="../module-11/lesson-2.html">2. Running a bias audit in practice</a></li><li><a href="../module-11/lesson-3.html">3. Disclosure and consent language</a></li><li><a href="../module-11/lesson-4.html">4. Data retention and candidate rights</a></li><li><a href="../module-11/lesson-5.html">5. The documentation your legal team will ask for</a></li><li><a href="../module-11/lesson-6.html">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="../module-12/lesson-1.html">1. Your 30-60-90 rollout plan</a></li><li><a href="../module-12/lesson-2.html">2. Getting hiring managers to actually use it</a></li><li><a href="../module-12/lesson-3.html">3. The business case and ROI model for your CFO</a></li><li><a href="../module-12/lesson-4.html">4. Capstone: run one requisition end to end</a></li><li><a href="../module-12/lesson-5.html">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="../resources.html">Templates</a> &middot; <a href="../course-map.html">Course map</a> &middot; <a href="../glossary.html">Glossary</a> &middot; <a href="../changelog.html">What&rsquo;s changed</a> &middot; <a href="../about.html">About</a><span class="lic"><a href="../license.html">Open source licence</a></span></div></div></nav>
+<main class="lesson">
+<p class="crumb"><a href="../index.html">Course</a> &rsaquo; Module 1 · Foundations of AI recruiting</p>
+<h1>Set up your workspace and course dataset</h1>
+<p class="meta">Module 1, Lesson 5 &nbsp;·&nbsp; 5 min read&nbsp;·&nbsp; <span class="upd">Updated 21 September 2026</span><button type="button" class="readbtn" data-read-toggle data-lesson="1-5">Mark as read</button></p>
+<span class="modtag">Module 1 &middot; Lesson 5</span>
+<aside class="inshort"><h2>In short</h2><ul><li>Download the 500 practice resumes and set up a tool to read them.</li><li>Fifteen minutes now, and every later lesson is hands-on.</li><li>You need a tool that shows you the fields it pulled out, not just a score.</li></ul></aside>
+<article>
+
+<p class="lede">Everything from here uses the same practice CVs and the same kind of tool. Fifteen
+minutes now, and the rest of the course is hands-on.</p>
+
+<h2>1. Download the practice CVs</h2>
+<p>You get 500 made-up CVs for one type of job, a job brief, and a shortlist of 20 chosen by a
+person. Nobody in the file is real. The email addresses use a reserved domain that cannot receive
+mail. Reuse all of it however you like.</p>
+<p>The CVs are deliberately messy, because tidy ones teach you nothing:</p>
+<table>
+  <thead><tr><th>What is in there</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>455 normal CVs — 300 PDF, 155 Word</td><td>The baseline any tool should handle</td></tr>
+    <tr><td>40 two-column CVs with a sidebar</td><td>The most common reason a tool reads a CV wrongly</td></tr>
+    <tr><td>3 scanned CVs</td><td>The worst case. These are photos, not text</td></tr>
+    <tr><td>2 password-protected files</td><td>So your count will not match. That is the point</td></tr>
+    <tr><td>5 different date styles</td><td>Dates are the field tools get wrong most often</td></tr>
+    <tr><td>59 contractors, some with overlapping jobs</td><td>Often read as duplicate or impossible work history</td></tr>
+    <tr><td>52 career gaps, 58 career changers</td><td>The people most often lost by over-filtering</td></tr>
+    <tr><td>35 whose relevant work is only in a projects section</td><td>Rewards searching the full text, not just the fields</td></tr>
+    <tr><td><code>manifest.csv</code> — the answer key</td><td>Use it after the exercises, not during</td></tr>
+  </tbody>
+</table>
+<p><a class="btn" href="https://hiregen.com/academy/dataset/ai-recruitment-dataset.zip">Download the practice CVs (ZIP)</a></p>
+
+<h2>2. Get a tool that can read them</h2>
+<p>You need something that can take a few hundred CVs, show you the data it pulled out, score them
+against rules you write, and explain a ranking.</p>
+<p>Where this course describes a screen, it is describing HireGen on the free plan, which covers
+every exercise here. That is the one we use because we build it, and because it shows you the
+extracted data rather than only a score.</p>
+<p><a class="btn" href="https://hiregen.com">Open HireGen</a></p>
+<p class="alt">You do not have to. Any tool works if it shows you the extracted data and lets you
+write your own rules. Several established hiring systems do. What will not work is a tool that only
+gives you a score, because half this course is about checking what sits underneath the score.</p>
+
+<h2>3. Load the CVs</h2>
+<ol>
+  <li>Create a job and name it after the job brief in the folder.</li>
+  <li>Upload the whole <code>/resumes</code> folder. 500 files takes a few minutes.</li>
+  <li>Wait for it to finish before touching anything. Half-loaded results look like real results.</li>
+  <li>Check the count. You should see 498, not 500 — two files are password-protected and will
+      fail. Find them in the log rather than assuming they were weak candidates.</li>
+  <li>Open any candidate and switch to the view showing the extracted data.</li>
+</ol>
+
+<h2>If something goes wrong</h2>
+<table>
+  <thead><tr><th>What you see</th><th>Why</th><th>What to do</th></tr></thead>
+  <tbody>
+    <tr><td>Upload stops partway</td><td>Batch size limit</td><td>Upload 100 at a time</td></tr>
+    <tr><td>Fewer than 498 candidates</td><td>More files were rejected</td><td>Check the log; handle them separately</td></tr>
+    <tr><td>Missing names or sections</td><td>The scanned CVs</td><td>Expected. You study these in Module 4</td></tr>
+    <tr><td>Dates that make no sense</td><td>The tool misread the date style</td><td>Also expected. Note which layouts cause it</td></tr>
+    <tr><td>No way to see extracted data</td><td>The tool only gives scores</td><td>Switch tools before Module 4</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Check your screen</h2>
+<p>You are set up correctly when you can see three things for one candidate: the original CV, the
+data pulled out of it, and a way to correct that data by hand.</p>
+
+<div class="callout">
+  <h3>One thing before you move on</h3>
+  <p>Open three candidates at random — not the tidy ones — and compare the extracted data against
+  the original CV. Do not fix anything yet. Just notice how often something is slightly off.</p>
+  <p>Noticing that is the skill this whole course is built on.</p>
+</div>
+
+</article>
+<section class="faq"><h2>Common questions</h2><div class="fq"><h3>Does AI screening actually save time?</h3><p>It relocates time rather than removing it. Screening 400 applications manually at two minutes each is about thirteen hours, and in practice most teams spend four and read 150. AI screening takes that to roughly ninety minutes and covers all 400 — but it adds an hour of defining criteria you were not previously spending. The honest saving is large; the coverage gain is larger.</p></div><div class="fq"><h3>What is an applicant tracking system (ATS)?</h3><p>An ATS is the system of record for hiring: it holds candidates, roles, pipeline stages and decision history. Everything else in an AI recruiting stack — parsing, matching, messaging, reporting — reads from it or writes to it. If two people asking the same question about a candidate get different answers, you do not have a working system of record.</p></div><div class="fq"><h3>Can AI make hiring decisions?</h3><p>It should not, and in several jurisdictions decisions based solely on automated processing carry specific legal obligations. The workable line is that a system may order and annotate a pile of applications; a person decides who leaves it. Automate the reading, never the rejection.</p></div><div class="fq"><h3>Is AI in recruitment legal?</h3><p>Using it is legal; using it without disclosure, records and human review increasingly is not. The EU AI Act classifies recruitment systems as high-risk, New York City requires an annual independent bias audit and candidate notice, and Illinois regulates AI video interviews. The rules differ by where your candidates are, not where you are.</p></div><div class="fq"><h3>Do I need a paid tool to follow this course?</h3><p>No. Eight of the ten labs assume a screening tool, and each of those has a spreadsheet-only variant. The parsing layer is `pdftotext` and a spreadsheet; the scoring layer is a weighted sum. Doing it manually once teaches you more about where screening fails than any tool demo.</p></div></section>
+<section class="quiz" data-module="1"><h2>Check yourself</h2><p class="qlead">Four questions. Nothing is recorded anywhere but your own browser — this is for you, not for a score.</p><ol class="qlist"><li class="qitem"><p class="qq"><span class="qn">1</span>A team deploys AI screening and their screen-in rate drops from 22% to 9% in a month. What is the most likely explanation?</p><ul class="qopts"><li><button type="button" class="qopt" data-c="0">The candidate pool got weaker</button></li><li><button type="button" class="qopt" data-c="1">The criteria are over-filtering</button></li><li><button type="button" class="qopt" data-c="0">The tool is working as intended</button></li><li><button type="button" class="qopt" data-c="0">Application volume increased</button></li></ul><p class="qwhy" hidden>A sharp drop in screen-in rate after deployment is the classic over-filtering signal. It looks like better filtering and is usually a criteria problem — and because rejections generate no feedback, nothing else will tell you.</p></li><li class="qitem"><p class="qq"><span class="qn">2</span>Which layer of the stack do vendor demos almost always skip, and why does it matter?</p><ul class="qopts"><li><button type="button" class="qopt" data-c="0">Communication — it is not impressive</button></li><li><button type="button" class="qopt" data-c="1">Ingestion and parsing — every number above it depends on it</button></li><li><button type="button" class="qopt" data-c="0">Orchestration — it is too technical</button></li><li><button type="button" class="qopt" data-c="0">Governance — it is legally sensitive</button></li></ul><p class="qwhy" hidden>Demos start at matching and ranking because ranked lists look like intelligence. But a ranking is arithmetic over parsed fields, and a ranking built on corrupted input looks identical to a correct one.</p></li><li class="qitem"><p class="qq"><span class="qn">3</span>Why are false negatives more dangerous than false positives in AI screening?</p><ul class="qopts"><li><button type="button" class="qopt" data-c="0">They are more common</button></li><li><button type="button" class="qopt" data-c="0">They are more expensive to fix</button></li><li><button type="button" class="qopt" data-c="1">They generate no feedback, so the loop pushes you to filter harder</button></li><li><button type="button" class="qopt" data-c="0">Regulators focus on them</button></li></ul><p class="qwhy" hidden>A weak candidate reaching interview costs you thirty minutes and is visible. A good candidate rejected produces no event at all — so the natural feedback loop pushes you to tighten criteria in the one direction you cannot observe.</p></li><li class="qitem"><p class="qq"><span class="qn">4</span>A vendor cannot show you the parsed fields, only the match score. What does that tell you?</p><ul class="qopts"><li><button type="button" class="qopt" data-c="0">Nothing — scores are what matter</button></li><li><button type="button" class="qopt" data-c="1">They own layer 4 on top of a layer 2 they would rather you did not inspect</button></li><li><button type="button" class="qopt" data-c="0">Their parsing is proprietary</button></li><li><button type="button" class="qopt" data-c="0">You need a higher pricing tier</button></li></ul><p class="qwhy" hidden>It is not necessarily disqualifying, but it tells you where to concentrate your testing. Half of this course is about inspecting what sits underneath the score.</p></li></ol><p class="qscore" hidden></p></section>
+
+<section class="related"><h2>More in this module</h2><ul><li><a href="../module-1/lesson-1.html">What AI actually changes in the hiring funnel</a></li><li><a href="../module-1/lesson-2.html">The AI recruiting stack: seven layers</a></li><li><a href="../module-1/lesson-3.html">Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="../module-1/lesson-4.html">Build, buy, or bolt onto your ATS</a></li></ul><p><a href="../index.html">Full curriculum</a> &middot; <a href="../resources.html">Templates</a> &middot; <a href="../worked-run.html">A worked run with real numbers</a></p></section>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY='hga.progress.v1';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+
+  // ---- mark-as-read
+  var btn=document.querySelector('[data-read-toggle]');
+  if(btn){
+    var id=btn.getAttribute('data-lesson'), st=load();
+    var paint=function(){
+      var done=!!st[id];
+      btn.textContent=done?'\u2713 Read':'Mark as read';
+      btn.classList.toggle('done',done);
+      btn.setAttribute('aria-pressed',done?'true':'false');
+    };
+    paint();
+    btn.addEventListener('click',function(){
+      st=load(); if(st[id]){delete st[id]}else{st[id]=Date.now()} save(st); paint();
+    });
+  }
+
+  // ---- progress summary
+  var bar=document.querySelector('[data-progress]');
+  if(bar){
+    var total=parseInt(bar.getAttribute('data-total'),10),st2=load();
+    var n=Object.keys(st2).length;
+    var pct=total?Math.round(100*n/total):0;
+    bar.querySelector('.pnum').textContent=n+' of '+total+' lessons read';
+    bar.querySelector('.pfill').style.width=pct+'%';
+    if(n===0){bar.querySelector('.pnum').textContent='No lessons marked read yet';}
+    var reset=bar.querySelector('[data-reset]');
+    if(reset){reset.addEventListener('click',function(){
+      if(confirm('Clear your reading progress on this device?')){save({});location.reload();}
+    });}
+  }
+
+  // ---- sidebar ticks
+  var st3=load();
+  document.querySelectorAll('.side .les a').forEach(function(a){
+    var m=a.getAttribute('href').match(/module-(\d+)\/lesson-(\d+)/);
+    if(m&&st3[m[1]+'-'+m[2]]){a.classList.add('read');}
+  });
+
+  // ---- quiz
+  document.querySelectorAll('.quiz').forEach(function(qz){
+    var items=qz.querySelectorAll('.qitem'), answered=0, right=0;
+    items.forEach(function(it){
+      it.querySelectorAll('.qopt').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(it.classList.contains('answered'))return;
+          it.classList.add('answered');
+          var ok=b.getAttribute('data-c')==='1';
+          b.classList.add(ok?'right':'wrong');
+          if(!ok){it.querySelector('.qopt[data-c="1"]').classList.add('right');}
+          it.querySelector('.qwhy').hidden=false;
+          answered++; if(ok)right++;
+          if(answered===items.length){
+            var s=qz.querySelector('.qscore');
+            s.hidden=false;
+            s.textContent=right+' of '+items.length+'. '+
+              (right===items.length?'Nothing to revisit.':
+               right>=items.length-1?'Worth re-reading the one you missed.':
+               'Worth another pass through this module.');
+          }
+        });
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

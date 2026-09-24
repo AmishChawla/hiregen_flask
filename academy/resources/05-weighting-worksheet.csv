@@ -1,0 +1,15 @@
+type,criterion,evidence_note_what_counts,points_out_of_100,sanity_check
+MUST-HAVE,EXAMPLE — Right to work in [location],Stated or inferable from work history,n/a,Would I reject an outstanding candidate for missing this? YES
+MUST-HAVE,,,n/a,
+MUST-HAVE,,,n/a,
+SIGNAL,EXAMPLE — Orchestration experience,Names a specific orchestration tool and describes what they built with it,25,Under 30? yes
+SIGNAL,,,,
+SIGNAL,,,,
+SIGNAL,,,,
+SIGNAL,,,,
+,TOTAL,,must equal 100,
+,,,,
+CHECK,No single signal above 30,,,
+CHECK,Nothing below 5 — remove it,,,
+CHECK,Top three add to more than 60,,,
+CHECK,Tested against one good and one poor past hire,,,

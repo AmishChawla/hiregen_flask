@@ -1,0 +1,4 @@
+# Add this line to hiregen.com/robots.txt (the ROOT one).
+# A robots.txt inside /academy/ is ignored by crawlers.
+
+Sitemap: https://hiregen.com/academy/sitemap.xml

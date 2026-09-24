@@ -1,0 +1,82 @@
+{% extends "academy_base.html" %}
+
+{% block academy_title %}Licence: free to reuse, including commercially{% endblock %}
+
+{% block academy_meta %}
+<meta content="The AI Recruitment Masterclass is open: course text under CC BY 4.0, templates and the 500-resume dataset under CC0. Free to reuse, including commercially." name="description"/>
+<meta content="https://hiregen.com/academy/license.html" property="og:url"/>
+<meta content="Licence: free to reuse, including commercially" property="og:title"/>
+<meta content="The AI Recruitment Masterclass is open: course text under CC BY 4.0, templates and the 500-resume dataset under CC0. Free to reuse, including commercially." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://hiregen.com/academy/assets/social-card.png" property="og:image"/>
+<meta content="HireGen Academy" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+{% endblock %}
+
+{% block academy_content %}
+<div class="shell">
+<div class="grid">
+<nav aria-label="Course contents" class="side"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="/academy/module-1/lesson-1">1. What AI actually changes in the hiring funnel</a></li><li><a href="/academy/module-1/lesson-2">2. The AI recruiting stack: seven layers</a></li><li><a href="/academy/module-1/lesson-3">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="/academy/module-1/lesson-4">4. Build, buy, or bolt onto your ATS</a></li><li><a href="/academy/module-1/lesson-5">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="/academy/module-2/lesson-1">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="/academy/module-2/lesson-2">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="/academy/module-2/lesson-3">3. Job descriptions that convert and rank</a></li><li><a href="/academy/module-2/lesson-4">4. Scorecards and competency models</a></li><li><a href="/academy/module-2/lesson-5">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="/academy/module-2/lesson-6">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="/academy/module-3/lesson-1">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="/academy/module-3/lesson-2">2. Boolean that still works</a></li><li><a href="/academy/module-3/lesson-3">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="/academy/module-3/lesson-4">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="/academy/module-3/lesson-5">5. Talent mapping and market intelligence</a></li><li><a href="/academy/module-3/lesson-6">6. Building your reusable sourcing prompt library</a></li><li><a href="/academy/module-3/lesson-7">7. Scraping, parsing and the legal line</a></li><li><a href="/academy/module-3/lesson-8">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)"><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="/academy/module-4/lesson-1">1. How resume parsing actually works</a></li><li><a href="/academy/module-4/lesson-2">2. Why field accuracy decides everything downstream</a></li><li><a href="/academy/module-4/lesson-3">3. Setting screening criteria that do not over-filter</a></li><li><a href="/academy/module-4/lesson-4">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="/academy/module-4/lesson-5">5. Reading AI screening scores critically</a></li><li><a href="/academy/module-4/lesson-6">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="/academy/module-4/lesson-7">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="/academy/module-5/lesson-1">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="/academy/module-5/lesson-2">2. Building a match profile that reflects the scorecard</a></li><li><a href="/academy/module-5/lesson-3">3. Silver medallists: re-matching your existing database</a></li><li><a href="/academy/module-5/lesson-4">4. Explainability: why did this candidate rank third?</a></li><li><a href="/academy/module-5/lesson-5">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="/academy/module-6/lesson-1">1. Why most recruiter outreach is ignored</a></li><li><a href="/academy/module-6/lesson-2">2. Personalisation at scale that does not read like a bot</a></li><li><a href="/academy/module-6/lesson-3">3. The five-touch sequence</a></li><li><a href="/academy/module-6/lesson-4">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="/academy/module-6/lesson-5">5. Rejections that protect your employer brand</a></li><li><a href="/academy/module-6/lesson-6">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="/academy/module-7/lesson-1">1. Structured interviewing: what the evidence says</a></li><li><a href="/academy/module-7/lesson-2">2. Generating competency question banks</a></li><li><a href="/academy/module-7/lesson-3">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="/academy/module-7/lesson-4">4. Interview scheduling automation</a></li><li><a href="/academy/module-7/lesson-5">5. From transcript to evidence to scorecard</a></li><li><a href="/academy/module-7/lesson-6">6. Debrief facilitation and bias interrupts</a></li><li><a href="/academy/module-7/lesson-7">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="/academy/module-8/lesson-1">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="/academy/module-8/lesson-2">2. Migrating off spreadsheets without losing history</a></li><li><a href="/academy/module-8/lesson-3">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="/academy/module-8/lesson-4">4. Career site and job board setup</a></li><li><a href="/academy/module-8/lesson-5">5. Job distribution and multi-posting</a></li><li><a href="/academy/module-8/lesson-6">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="/academy/module-9/lesson-1">1. The ladder: prompt, workflow, agent</a></li><li><a href="/academy/module-9/lesson-2">2. Writing an AI recruiting agent brief</a></li><li><a href="/academy/module-9/lesson-3">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="/academy/module-9/lesson-4">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="/academy/module-9/lesson-5">5. Cost control and failure modes</a></li><li><a href="/academy/module-9/lesson-6">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="/academy/module-10/lesson-1">1. The funnel model every recruiting report is built on</a></li><li><a href="/academy/module-10/lesson-2">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="/academy/module-10/lesson-3">3. Source effectiveness and channel ROI</a></li><li><a href="/academy/module-10/lesson-4">4. Forecasting hiring capacity</a></li><li><a href="/academy/module-10/lesson-5">5. Building a weekly hiring dashboard</a></li><li><a href="/academy/module-10/lesson-6">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="/academy/module-11/lesson-1">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="/academy/module-11/lesson-2">2. Running a bias audit in practice</a></li><li><a href="/academy/module-11/lesson-3">3. Disclosure and consent language</a></li><li><a href="/academy/module-11/lesson-4">4. Data retention and candidate rights</a></li><li><a href="/academy/module-11/lesson-5">5. The documentation your legal team will ask for</a></li><li><a href="/academy/module-11/lesson-6">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="/academy/module-12/lesson-1">1. Your 30-60-90 rollout plan</a></li><li><a href="/academy/module-12/lesson-2">2. Getting hiring managers to actually use it</a></li><li><a href="/academy/module-12/lesson-3">3. The business case and ROI model for your CFO</a></li><li><a href="/academy/module-12/lesson-4">4. Capstone: run one requisition end to end</a></li><li><a href="/academy/module-12/lesson-5">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="/academy/resources">Templates</a> · <a href="/academy/course-map">Course map</a> · <a href="/academy/glossary">Glossary</a> · <a href="/academy/changelog">What’s changed</a> · <a href="/academy/about">About</a><span class="lic"><a href="/academy/license">Open source licence</a></span></div></div></nav>
+<main>
+<p class="crumb"><a href="/academy/">Course</a> › Licence</p>
+<h1>Open source licence</h1>
+<p class="meta">Course content, templates and dataset  ·  free to reuse, including commercially</p>
+<article>
+<p class="lede">Everything published here is open. You can read it, copy it, adapt it, teach
+from it and build on it — including inside a commercial product or a paid training programme.
+Three different licences apply, because the three kinds of material are used differently.</p>
+</article>
+<div class="tw">
+<table>
+<thead><tr><th style="width:26%">Material</th><th style="width:26%">Licence</th><th style="width:48%">What that means in practice</th></tr></thead>
+<tbody>
+<tr>
+<td>Course text — all 73 lessons, the worked run, FAQs and diagrams</td>
+<td><a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a></td>
+<td>Reuse and adapt freely, commercially included. Credit the source and link back. You
+          do not have to open-license your own additions.</td>
+</tr>
+<tr>
+<td>Templates and worksheets — the twenty-one files in the resource pack</td>
+<td><a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener">CC0 1.0</a></td>
+<td>Effectively public domain. Use them in client work, put your own branding on them,
+          sell services around them. No attribution required, though it is welcome.</td>
+</tr>
+<tr>
+<td>The 500-resume dataset</td>
+<td><a href="https://creativecommons.org/publicdomain/zero/1.0/" rel="noopener">CC0 1.0</a></td>
+<td>Use it to benchmark parsers, train staff, test your own tooling, or build a course of
+          your own. Every resume is synthetic.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<article>
+<h2>Attribution, if you are using the course text</h2>
+<p>A line like this is enough:</p>
+<p class="tmpl">Adapted from the <a href="/academy/">AI Recruitment Masterclass</a> by HireGen,
+licensed under CC BY 4.0.</p>
+<h2>What the licences do not cover</h2>
+<ul>
+<li><strong>The HireGen name and logo.</strong> Trademarks are not licensed here. Do not imply
+      that HireGen endorses your adaptation.</li>
+<li><strong>Linked third-party material.</strong> The regulations, standards and papers cited in
+      the lessons carry their own terms.</li>
+<li><strong>The web fonts.</strong> Literata and IBM Plex Sans are licensed under the
+      <a href="https://openfontlicense.org/" rel="noopener">SIL Open Font License</a> by their
+      respective designers, not by us.</li>
+</ul>
+<h2>Why open at all</h2>
+<p>The course argues throughout that you should be able to inspect what a system does rather than
+take a vendor's word for it. Publishing the material under a restrictive licence would sit badly
+with that. It also means a recruiter can take the scorecard template into work on Monday without
+asking anyone's permission, which is the point.</p>
+<h2>No warranty</h2>
+<p>The material is provided as is. Module 11 describes how AI hiring regulation generally works and
+is not legal advice — verify the current position for your jurisdiction before acting on it. The
+planning figures throughout are starting points to be replaced with your own data.</p>
+</article>
+</main>
+</div>
+</div>
+{% endblock %}

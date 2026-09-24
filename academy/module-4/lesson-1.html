@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How resume parsing actually works | HireGen Academy</title>
+<meta name="description" content="Resume parsing in seven steps, where each one breaks, why two-column CVs fail most often, and why a single accuracy figure means nothing.">
+<link rel="canonical" href="https://hiregen.com/academy/module-4/lesson-1.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<meta property="og:url" content="https://hiregen.com/academy/module-4/lesson-1.html">
+<meta property="og:title" content="How resume parsing actually works | HireGen Academy">
+<meta property="og:description" content="Resume parsing in seven steps, where each one breaks, why two-column CVs fail most often, and why a single accuracy figure means nothing.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hiregen.com/academy/assets/social-card.png">
+<meta property="og:site_name" content="HireGen Academy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<link rel="stylesheet" href="../assets/course.css">
+<style>:root{--accent:var(--m4);--accent-soft:#fdf0e8}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "How resume parsing actually works", "author": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "publisher": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "educationalLevel": "Beginner to intermediate", "teaches": "The anchor module: how parsing works, why fields matter more than scores, and a full 500-resume run.", "timeRequired": "PT6M", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AI Recruitment Masterclass", "item": "https://hiregen.com/academy/"}, {"@type": "ListItem", "position": 2, "name": "Module 4: Resume parsing and AI screening"}, {"@type": "ListItem", "position": 3, "name": "How resume parsing actually works", "item": "https://hiregen.com/academy/module-4/lesson-1.html"}]}], "learningResourceType": "Lesson", "isPartOf": {"@type": "Course", "name": "AI Recruitment Masterclass", "url": "https://hiregen.com/academy/"}, "position": 20, "datePublished": "2026-09-21", "dateModified": "2026-09-21", "inLanguage": "en"}</script>
+</head>
+<body>
+<div class="shell">
+<div class="grid">
+<nav class="side" aria-label="Course contents"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="../module-1/lesson-1.html">1. What AI actually changes in the hiring funnel</a></li><li><a href="../module-1/lesson-2.html">2. The AI recruiting stack: seven layers</a></li><li><a href="../module-1/lesson-3.html">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="../module-1/lesson-4.html">4. Build, buy, or bolt onto your ATS</a></li><li><a href="../module-1/lesson-5.html">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="../module-2/lesson-1.html">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="../module-2/lesson-2.html">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="../module-2/lesson-3.html">3. Job descriptions that convert and rank</a></li><li><a href="../module-2/lesson-4.html">4. Scorecards and competency models</a></li><li><a href="../module-2/lesson-5.html">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="../module-2/lesson-6.html">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="../module-3/lesson-1.html">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="../module-3/lesson-2.html">2. Boolean that still works</a></li><li><a href="../module-3/lesson-3.html">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="../module-3/lesson-4.html">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="../module-3/lesson-5.html">5. Talent mapping and market intelligence</a></li><li><a href="../module-3/lesson-6.html">6. Building your reusable sourcing prompt library</a></li><li><a href="../module-3/lesson-7.html">7. Scraping, parsing and the legal line</a></li><li><a href="../module-3/lesson-8.html">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)" open><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="../module-4/lesson-1.html" class="here">1. How resume parsing actually works</a></li><li><a href="../module-4/lesson-2.html">2. Why field accuracy decides everything downstream</a></li><li><a href="../module-4/lesson-3.html">3. Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">5. Reading AI screening scores critically</a></li><li><a href="../module-4/lesson-6.html">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="../module-4/lesson-7.html">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="../module-5/lesson-1.html">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="../module-5/lesson-2.html">2. Building a match profile that reflects the scorecard</a></li><li><a href="../module-5/lesson-3.html">3. Silver medallists: re-matching your existing database</a></li><li><a href="../module-5/lesson-4.html">4. Explainability: why did this candidate rank third?</a></li><li><a href="../module-5/lesson-5.html">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="../module-6/lesson-1.html">1. Why most recruiter outreach is ignored</a></li><li><a href="../module-6/lesson-2.html">2. Personalisation at scale that does not read like a bot</a></li><li><a href="../module-6/lesson-3.html">3. The five-touch sequence</a></li><li><a href="../module-6/lesson-4.html">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="../module-6/lesson-5.html">5. Rejections that protect your employer brand</a></li><li><a href="../module-6/lesson-6.html">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="../module-7/lesson-1.html">1. Structured interviewing: what the evidence says</a></li><li><a href="../module-7/lesson-2.html">2. Generating competency question banks</a></li><li><a href="../module-7/lesson-3.html">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="../module-7/lesson-4.html">4. Interview scheduling automation</a></li><li><a href="../module-7/lesson-5.html">5. From transcript to evidence to scorecard</a></li><li><a href="../module-7/lesson-6.html">6. Debrief facilitation and bias interrupts</a></li><li><a href="../module-7/lesson-7.html">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="../module-8/lesson-1.html">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="../module-8/lesson-2.html">2. Migrating off spreadsheets without losing history</a></li><li><a href="../module-8/lesson-3.html">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="../module-8/lesson-4.html">4. Career site and job board setup</a></li><li><a href="../module-8/lesson-5.html">5. Job distribution and multi-posting</a></li><li><a href="../module-8/lesson-6.html">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="../module-9/lesson-1.html">1. The ladder: prompt, workflow, agent</a></li><li><a href="../module-9/lesson-2.html">2. Writing an AI recruiting agent brief</a></li><li><a href="../module-9/lesson-3.html">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="../module-9/lesson-4.html">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="../module-9/lesson-5.html">5. Cost control and failure modes</a></li><li><a href="../module-9/lesson-6.html">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="../module-10/lesson-1.html">1. The funnel model every recruiting report is built on</a></li><li><a href="../module-10/lesson-2.html">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="../module-10/lesson-3.html">3. Source effectiveness and channel ROI</a></li><li><a href="../module-10/lesson-4.html">4. Forecasting hiring capacity</a></li><li><a href="../module-10/lesson-5.html">5. Building a weekly hiring dashboard</a></li><li><a href="../module-10/lesson-6.html">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="../module-11/lesson-1.html">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="../module-11/lesson-2.html">2. Running a bias audit in practice</a></li><li><a href="../module-11/lesson-3.html">3. Disclosure and consent language</a></li><li><a href="../module-11/lesson-4.html">4. Data retention and candidate rights</a></li><li><a href="../module-11/lesson-5.html">5. The documentation your legal team will ask for</a></li><li><a href="../module-11/lesson-6.html">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="../module-12/lesson-1.html">1. Your 30-60-90 rollout plan</a></li><li><a href="../module-12/lesson-2.html">2. Getting hiring managers to actually use it</a></li><li><a href="../module-12/lesson-3.html">3. The business case and ROI model for your CFO</a></li><li><a href="../module-12/lesson-4.html">4. Capstone: run one requisition end to end</a></li><li><a href="../module-12/lesson-5.html">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="../resources.html">Templates</a> &middot; <a href="../course-map.html">Course map</a> &middot; <a href="../glossary.html">Glossary</a> &middot; <a href="../changelog.html">What&rsquo;s changed</a> &middot; <a href="../about.html">About</a><span class="lic"><a href="../license.html">Open source licence</a></span></div></div></nav>
+<main class="lesson">
+<p class="crumb"><a href="../index.html">Course</a> &rsaquo; Module 4 · Resume parsing and AI screening</p>
+<h1>How resume parsing actually works</h1>
+<p class="meta">Module 4, Lesson 1 &nbsp;·&nbsp; 6 min read&nbsp;·&nbsp; <span class="upd">Updated 21 September 2026</span><button type="button" class="readbtn" data-read-toggle data-lesson="4-1">Mark as read</button></p>
+<span class="modtag">Module 4 &middot; Lesson 1</span>
+<aside class="inshort"><h2>In short</h2><ul><li>Resume parsing turns a document into data fields. It runs in seven steps.</li><li>Each step can go wrong, and two-column resumes break it most often.</li><li>When a vendor says &#x27;99% accurate&#x27;, ask: accurate on which field?</li></ul></aside>
+<article>
+
+<p class="lede">Before software can score a CV, it has to read it. That sounds simple. It is the
+step that goes wrong most often, and almost nobody checks it.</p>
+<figure class="fig"><svg viewBox="0 0 840 162" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-pip d-pip" style="width:100%;height:auto;max-width:860px;display:block;margin:0 auto"><title id="t-pip">The seven-stage resume parsing pipeline</title><desc id="d-pip">A left to right pipeline: file intake, text or OCR, layout, segmentation, extraction, normalisation and mapping, with the failure under each stage.</desc><style>.lab{font:600 13px "IBM Plex Sans",Arial,sans-serif;fill:#14171a}.sub{font:400 11.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}.num{font:600 12px "IBM Plex Sans",Arial,sans-serif;fill:#fff}.cap{font:600 11px "IBM Plex Sans",Arial,sans-serif;fill:#8c1d3f}.sml{font:400 10.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}</style><defs><marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#5b636b"/></marker></defs><rect x="24" y="34" width="104" height="54" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="76" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">File intake</text><circle cx="76" cy="72" r="9" fill="var(--accent)"/><text x="76" y="76" text-anchor="middle" class="num" style="font-size:11px">1</text><path d="M129 61 L136 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M76 90 L76 104" stroke="#dde1e5"/><text x="76" y="120" text-anchor="middle" class="sml">PDF, DOCX, scans</text><rect x="140" y="34" width="104" height="54" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="192" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Text or OCR</text><circle cx="192" cy="72" r="9" fill="var(--accent)"/><text x="192" y="76" text-anchor="middle" class="num" style="font-size:11px">2</text><path d="M245 61 L252 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M192 90 L192 104" stroke="#dde1e5"/><text x="192" y="120" text-anchor="middle" class="sml">scans fail here</text><rect x="256" y="34" width="104" height="54" rx="8" fill="#fff" stroke="var(--accent)"/><text x="308" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Layout</text><circle cx="308" cy="72" r="9" fill="var(--accent)"/><text x="308" y="76" text-anchor="middle" class="num" style="font-size:11px">3</text><path d="M361 61 L368 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M308 90 L308 104" stroke="#dde1e5"/><text x="308" y="120" text-anchor="middle" class="sml">reading order</text><rect x="372" y="34" width="104" height="54" rx="8" fill="#fff" stroke="var(--accent)"/><text x="424" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Segmentation</text><circle cx="424" cy="72" r="9" fill="var(--accent)"/><text x="424" y="76" text-anchor="middle" class="num" style="font-size:11px">4</text><path d="M477 61 L484 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M424 90 L424 104" stroke="#dde1e5"/><text x="424" y="120" text-anchor="middle" class="sml">creative headings</text><rect x="488" y="34" width="104" height="54" rx="8" fill="#fff" stroke="var(--accent)"/><text x="540" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Extraction</text><circle cx="540" cy="72" r="9" fill="var(--accent)"/><text x="540" y="76" text-anchor="middle" class="num" style="font-size:11px">5</text><path d="M593 61 L600 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M540 90 L540 104" stroke="#dde1e5"/><text x="540" y="120" text-anchor="middle" class="sml">concurrent roles</text><rect x="604" y="34" width="104" height="54" rx="8" fill="#fff" stroke="var(--accent)"/><text x="656" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Normalisation</text><circle cx="656" cy="72" r="9" fill="var(--accent)"/><text x="656" y="76" text-anchor="middle" class="num" style="font-size:11px">6</text><path d="M709 61 L716 61" stroke="#5b636b" stroke-width="1.2" marker-end="url(#ar)"/><path d="M656 90 L656 104" stroke="#dde1e5"/><text x="656" y="120" text-anchor="middle" class="sml">date formats</text><rect x="720" y="34" width="104" height="54" rx="8" fill="#fff" stroke="var(--accent)"/><text x="772" y="56" text-anchor="middle" class="lab" style="font-size:11.5px">Mapping</text><circle cx="772" cy="72" r="9" fill="var(--accent)"/><text x="772" y="76" text-anchor="middle" class="num" style="font-size:11px">7</text><path d="M772 90 L772 104" stroke="#dde1e5"/><text x="772" y="120" text-anchor="middle" class="sml">silent field drop</text><text x="24" y="144" class="cap">below each stage: how it fails</text></svg><figcaption>The parsing pipeline, and the characteristic failure at each stage.</figcaption></figure>
+
+<h2>What "reading a CV" actually means</h2>
+<p>A CV is designed to be looked at by a person. Columns, boxes, headings, icons. Software needs
+something different: a list of facts. Name here, employers here, dates here.</p>
+<p>Turning the first thing into the second is called <strong>parsing</strong>. It happens in seven
+steps, and each one can go wrong.</p>
+
+<h2>The seven steps</h2>
+<ol>
+  <li><strong>Open the file.</strong> PDF, Word, sometimes a photo saved as a PDF.</li>
+  <li><strong>Get the text out.</strong> Most PDFs already contain text. Scans do not — those are
+      pictures, so the computer has to recognise the letters from the image.</li>
+  <li><strong>Work out the reading order.</strong> A PDF does not store sentences. It stores bits of
+      text with positions on the page. The software has to guess what follows what.</li>
+  <li><strong>Find the sections.</strong> Where does work history end and education begin?</li>
+  <li><strong>Pull out the facts.</strong> Employers, job titles, dates, skills.</li>
+  <li><strong>Tidy them up.</strong> "Sr. SWE II" and "Senior Software Engineer" become one thing.
+      Eleven date styles become one.</li>
+  <li><strong>Save them.</strong> Put it all into the fields your system actually has.</li>
+</ol>
+
+<h2>Where each step breaks</h2>
+<p><strong>Getting text out of scans.</strong> Blurry scans, unusual fonts and coloured backgrounds
+all cause mistakes. The errors are usually small — one wrong letter in an email address. That is
+worse than a big obvious error, because nothing flags it.</p>
+
+<p><strong>Reading order.</strong> This is the most common failure, because most modern CV
+templates have two columns. The software has to decide whether text on the left continues on the
+right or below. Get it wrong and the skills sidebar gets mixed into the job history. The result
+reads like nonsense, one line at a time.</p>
+
+<p><strong>Finding sections.</strong> This depends on spotting headings. It fails when someone
+writes "Where I've Been" instead of "Experience", or uses a picture as a heading, or has no
+headings at all. Then a whole work history can land in the summary field, where nothing will look
+for it.</p>
+
+<p><strong>Pulling out facts.</strong> Struggles with anything that is not a straight line:
+freelance work, two jobs at once, a promotion inside one company. You get duplicate jobs, missing
+jobs, or one job that swallowed three.</p>
+
+<p><strong>Tidying up</strong> is where dates go wrong, and dates matter more than any other
+field:</p>
+<table>
+  <thead><tr><th>Written as</th><th>The problem</th></tr></thead>
+  <tbody>
+    <tr><td>03/04/2021</td><td>Is that 3 April or 4 March? Depends where the person is from</td></tr>
+    <tr><td>Spring 2019</td><td>No month. And spring is a different time in each hemisphere</td></tr>
+    <tr><td>2019 – Present</td><td>"Present" means the day they wrote it, not today</td></tr>
+    <tr><td>'19–'21</td><td>Two digits. Which century?</td></tr>
+    <tr><td>Other calendars</td><td>Converted wrongly, or dropped</td></tr>
+  </tbody>
+</table>
+
+<p><strong>Saving them.</strong> This one fails in silence. If the software pulls out something your
+system has no field for, it is thrown away. No error. The data was right until the moment it
+vanished.</p>
+
+<h2>Some fields are much harder than others</h2>
+<table>
+  <thead><tr><th>Field</th><th>How hard</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td>Email, phone</td><td>Easy</td><td>They look distinctive, anywhere on the page</td></tr>
+    <tr><td>Name</td><td>Medium</td><td>Harder for names the software has seen less often</td></tr>
+    <tr><td>Employer</td><td>Medium</td><td>Gets confused with clients, universities, project names</td></tr>
+    <tr><td>Job title</td><td>Hard</td><td>Every company invents its own</td></tr>
+    <tr><td>Dates</td><td>Hard</td><td>Many styles, plus messy careers</td></tr>
+    <tr><td>Skills</td><td>Easy to find, hard to judge</td><td>Listing a skill is not having it</td></tr>
+  </tbody>
+</table>
+
+<h2>Why "99% accurate" means nothing</h2>
+<p>Accurate on which field? Measured how? On whose CVs?</p>
+<p>Pulling out an email address is nearly a solved problem and scores brilliantly. Pulling out dates
+from a freelancer's CV does not. A single accuracy number has mixed an easy field with a hard one,
+and the easy fields win because there are more of them.</p>
+<p>The number you care about is accuracy per field, on CVs that look like the ones you actually
+receive. You will measure that yourself in the next lesson. It takes half an hour and is worth more
+than any vendor's figure.</p>
+
+<h2>Test any tool in ten minutes</h2>
+<ol>
+  <li>Give it a two-column CV. Did it read in the right order?</li>
+  <li>Give it a scan. Did the name and email survive?</li>
+  <li>Give it a freelancer with overlapping jobs. Count the jobs it found.</li>
+  <li>Give it a CV with dates written the other way round. Check the total years.</li>
+</ol>
+<p>Four documents will tell you more than an hour-long demo.</p>
+
+<div class="callout">
+  <h3>Try it now</h3>
+  <p>Open the scanned CVs in the practice folder (<code>/resumes/scanned/</code>) and compare what
+  the tool pulled out against the original. That is your worst case. Everything else is better than
+  this — and knowing where the floor is tells you how much to trust the middle.</p>
+</div>
+
+</article>
+
+
+
+<section class="related"><h2>More in this module</h2><ul><li><a href="../module-4/lesson-2.html">Why field accuracy decides everything downstream</a></li><li><a href="../module-4/lesson-3.html">Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">Reading AI screening scores critically</a></li></ul><p><a href="../index.html">Full curriculum</a> &middot; <a href="../resources.html">Templates</a> &middot; <a href="../worked-run.html">A worked run with real numbers</a></p></section>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY='hga.progress.v1';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+
+  // ---- mark-as-read
+  var btn=document.querySelector('[data-read-toggle]');
+  if(btn){
+    var id=btn.getAttribute('data-lesson'), st=load();
+    var paint=function(){
+      var done=!!st[id];
+      btn.textContent=done?'\u2713 Read':'Mark as read';
+      btn.classList.toggle('done',done);
+      btn.setAttribute('aria-pressed',done?'true':'false');
+    };
+    paint();
+    btn.addEventListener('click',function(){
+      st=load(); if(st[id]){delete st[id]}else{st[id]=Date.now()} save(st); paint();
+    });
+  }
+
+  // ---- progress summary
+  var bar=document.querySelector('[data-progress]');
+  if(bar){
+    var total=parseInt(bar.getAttribute('data-total'),10),st2=load();
+    var n=Object.keys(st2).length;
+    var pct=total?Math.round(100*n/total):0;
+    bar.querySelector('.pnum').textContent=n+' of '+total+' lessons read';
+    bar.querySelector('.pfill').style.width=pct+'%';
+    if(n===0){bar.querySelector('.pnum').textContent='No lessons marked read yet';}
+    var reset=bar.querySelector('[data-reset]');
+    if(reset){reset.addEventListener('click',function(){
+      if(confirm('Clear your reading progress on this device?')){save({});location.reload();}
+    });}
+  }
+
+  // ---- sidebar ticks
+  var st3=load();
+  document.querySelectorAll('.side .les a').forEach(function(a){
+    var m=a.getAttribute('href').match(/module-(\d+)\/lesson-(\d+)/);
+    if(m&&st3[m[1]+'-'+m[2]]){a.classList.add('read');}
+  });
+
+  // ---- quiz
+  document.querySelectorAll('.quiz').forEach(function(qz){
+    var items=qz.querySelectorAll('.qitem'), answered=0, right=0;
+    items.forEach(function(it){
+      it.querySelectorAll('.qopt').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(it.classList.contains('answered'))return;
+          it.classList.add('answered');
+          var ok=b.getAttribute('data-c')==='1';
+          b.classList.add(ok?'right':'wrong');
+          if(!ok){it.querySelector('.qopt[data-c="1"]').classList.add('right');}
+          it.querySelector('.qwhy').hidden=false;
+          answered++; if(ok)right++;
+          if(answered===items.length){
+            var s=qz.querySelector('.qscore');
+            s.hidden=false;
+            s.textContent=right+' of '+items.length+'. '+
+              (right===items.length?'Nothing to revisit.':
+               right>=items.length-1?'Worth re-reading the one you missed.':
+               'Worth another pass through this module.');
+          }
+        });
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

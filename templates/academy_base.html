@@ -1,0 +1,19 @@
+{% extends "common_base.html" %}
+
+{% block metatags %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/academy/assets/course.css">
+{% block academy_meta %}{% endblock %}
+{% endblock %}
+
+{% block title %}{% block academy_title %}AI Recruitment Masterclass | HireGen Academy{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="academy-root w-full bg-white text-[#14171a] min-h-screen">
+  {% block academy_content %}{% endblock %}
+</div>
+<script src="/academy/assets/course.js"></script>
+{% block academy_scripts %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,27 @@
+role,criteria_version,date,author
+,v1,,
+
+type,criterion,evidence_note,weight,source_scorecard_line
+HARD FILTER,,,n/a,
+HARD FILTER,,,n/a,
+HARD FILTER,,,n/a,
+SIGNAL,,,,
+SIGNAL,,,,
+SIGNAL,,,,
+SIGNAL,,,,
+
+NEVER HARD-FILTER ON,instead
+Years of experience,Weight it; cap the benefit above your target range
+Degree or institution,Filter on the capability the degree stands for
+Current job title,Match on responsibilities in the text
+Employment gaps,Ignore at screening; ask at interview if relevant
+"Location, for remote roles","Time-zone overlap only, if genuinely needed"
+Continuous tenure,"Weight relevant work, not the shape of it"
+
+DISAGREEMENT CHECK (every run),candidate,agree?,"if not, which criterion"
+Highest-scoring reject 1,,,
+Highest-scoring reject 2,,,
+Highest-scoring reject 3,,,
+Lowest-scoring accept 1,,,
+Lowest-scoring accept 2,,,
+Lowest-scoring accept 3,,,

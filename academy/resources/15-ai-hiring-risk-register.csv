@@ -1,0 +1,15 @@
+#,pipeline_step,risk_to_candidate,likelihood,impact,existing_control,gap,action,owner,due,accepted?
+1,Resume parsing,Parse failure excludes a template family before any scoring,Medium,High,,,,,,
+2,Screening criteria,Over-filtering removes qualified candidates invisibly,High,High,,,,,,
+3,Ranking,Learned ranking reproduces historical hiring patterns,,,,,,,,
+4,Ranking,Explanation is decoration rather than the actual reason,,,,,,,,
+5,Sourcing,Sourced data held with no lawful basis or retention period,,,,,,,,
+6,Chatbot,Pre-qualification performs screening candidates cannot see,,,,,,,,
+7,Automation,System acts on instructions embedded in a candidate document,,,,,,,,
+8,Data,Candidate data unreachable for a deletion request,,,,,,,,
+9,Async interview,"Assessment of appearance, tone or speech patterns",,,,,,,,
+10,Records,Cannot reconstruct why a candidate was rejected,,,,,,,,
+
+"Review quarterly, in the calendar, alongside the system inventory."
+Mark accepted risks explicitly. Every organisation accepts some;
+the ones in trouble are those that never wrote down which.

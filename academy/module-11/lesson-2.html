@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Running a bias audit in practice | HireGen Academy</title>
+<meta name="description" content="Run a bias audit yourself in an afternoon: selection rates, impact ratios, and the parse-quality check that almost every audit misses.">
+<link rel="canonical" href="https://hiregen.com/academy/module-11/lesson-2.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400;1,7..72,600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<meta property="og:url" content="https://hiregen.com/academy/module-11/lesson-2.html">
+<meta property="og:title" content="Running a bias audit in practice | HireGen Academy">
+<meta property="og:description" content="Run a bias audit yourself in an afternoon: selection rates, impact ratios, and the parse-quality check that almost every audit misses.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://hiregen.com/academy/assets/social-card.png">
+<meta property="og:site_name" content="HireGen Academy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="apple-touch-icon" href="../assets/favicon-180.png">
+<link rel="stylesheet" href="../assets/course.css">
+<style>:root{--accent:var(--m11);--accent-soft:#fbf4e1}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Running a bias audit in practice", "author": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "publisher": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "educationalLevel": "Beginner to intermediate", "teaches": "The regulatory map, running a bias audit, disclosure language, retention and documentation.", "timeRequired": "PT4M", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AI Recruitment Masterclass", "item": "https://hiregen.com/academy/"}, {"@type": "ListItem", "position": 2, "name": "Module 11: Compliance, bias and candidate experience"}, {"@type": "ListItem", "position": 3, "name": "Running a bias audit in practice", "item": "https://hiregen.com/academy/module-11/lesson-2.html"}]}], "learningResourceType": "Lesson", "isPartOf": {"@type": "Course", "name": "AI Recruitment Masterclass", "url": "https://hiregen.com/academy/"}, "position": 64, "datePublished": "2026-09-21", "dateModified": "2026-09-21", "inLanguage": "en"}</script>
+</head>
+<body>
+<div class="shell">
+<div class="grid">
+<nav class="side" aria-label="Course contents"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="../module-1/lesson-1.html">1. What AI actually changes in the hiring funnel</a></li><li><a href="../module-1/lesson-2.html">2. The AI recruiting stack: seven layers</a></li><li><a href="../module-1/lesson-3.html">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="../module-1/lesson-4.html">4. Build, buy, or bolt onto your ATS</a></li><li><a href="../module-1/lesson-5.html">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="../module-2/lesson-1.html">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="../module-2/lesson-2.html">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="../module-2/lesson-3.html">3. Job descriptions that convert and rank</a></li><li><a href="../module-2/lesson-4.html">4. Scorecards and competency models</a></li><li><a href="../module-2/lesson-5.html">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="../module-2/lesson-6.html">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="../module-3/lesson-1.html">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="../module-3/lesson-2.html">2. Boolean that still works</a></li><li><a href="../module-3/lesson-3.html">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="../module-3/lesson-4.html">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="../module-3/lesson-5.html">5. Talent mapping and market intelligence</a></li><li><a href="../module-3/lesson-6.html">6. Building your reusable sourcing prompt library</a></li><li><a href="../module-3/lesson-7.html">7. Scraping, parsing and the legal line</a></li><li><a href="../module-3/lesson-8.html">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)"><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="../module-4/lesson-1.html">1. How resume parsing actually works</a></li><li><a href="../module-4/lesson-2.html">2. Why field accuracy decides everything downstream</a></li><li><a href="../module-4/lesson-3.html">3. Setting screening criteria that do not over-filter</a></li><li><a href="../module-4/lesson-4.html">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="../module-4/lesson-5.html">5. Reading AI screening scores critically</a></li><li><a href="../module-4/lesson-6.html">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="../module-4/lesson-7.html">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="../module-5/lesson-1.html">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="../module-5/lesson-2.html">2. Building a match profile that reflects the scorecard</a></li><li><a href="../module-5/lesson-3.html">3. Silver medallists: re-matching your existing database</a></li><li><a href="../module-5/lesson-4.html">4. Explainability: why did this candidate rank third?</a></li><li><a href="../module-5/lesson-5.html">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="../module-6/lesson-1.html">1. Why most recruiter outreach is ignored</a></li><li><a href="../module-6/lesson-2.html">2. Personalisation at scale that does not read like a bot</a></li><li><a href="../module-6/lesson-3.html">3. The five-touch sequence</a></li><li><a href="../module-6/lesson-4.html">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="../module-6/lesson-5.html">5. Rejections that protect your employer brand</a></li><li><a href="../module-6/lesson-6.html">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="../module-7/lesson-1.html">1. Structured interviewing: what the evidence says</a></li><li><a href="../module-7/lesson-2.html">2. Generating competency question banks</a></li><li><a href="../module-7/lesson-3.html">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="../module-7/lesson-4.html">4. Interview scheduling automation</a></li><li><a href="../module-7/lesson-5.html">5. From transcript to evidence to scorecard</a></li><li><a href="../module-7/lesson-6.html">6. Debrief facilitation and bias interrupts</a></li><li><a href="../module-7/lesson-7.html">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="../module-8/lesson-1.html">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="../module-8/lesson-2.html">2. Migrating off spreadsheets without losing history</a></li><li><a href="../module-8/lesson-3.html">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="../module-8/lesson-4.html">4. Career site and job board setup</a></li><li><a href="../module-8/lesson-5.html">5. Job distribution and multi-posting</a></li><li><a href="../module-8/lesson-6.html">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="../module-9/lesson-1.html">1. The ladder: prompt, workflow, agent</a></li><li><a href="../module-9/lesson-2.html">2. Writing an AI recruiting agent brief</a></li><li><a href="../module-9/lesson-3.html">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="../module-9/lesson-4.html">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="../module-9/lesson-5.html">5. Cost control and failure modes</a></li><li><a href="../module-9/lesson-6.html">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="../module-10/lesson-1.html">1. The funnel model every recruiting report is built on</a></li><li><a href="../module-10/lesson-2.html">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="../module-10/lesson-3.html">3. Source effectiveness and channel ROI</a></li><li><a href="../module-10/lesson-4.html">4. Forecasting hiring capacity</a></li><li><a href="../module-10/lesson-5.html">5. Building a weekly hiring dashboard</a></li><li><a href="../module-10/lesson-6.html">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)" open><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="../module-11/lesson-1.html">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="../module-11/lesson-2.html" class="here">2. Running a bias audit in practice</a></li><li><a href="../module-11/lesson-3.html">3. Disclosure and consent language</a></li><li><a href="../module-11/lesson-4.html">4. Data retention and candidate rights</a></li><li><a href="../module-11/lesson-5.html">5. The documentation your legal team will ask for</a></li><li><a href="../module-11/lesson-6.html">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="../module-12/lesson-1.html">1. Your 30-60-90 rollout plan</a></li><li><a href="../module-12/lesson-2.html">2. Getting hiring managers to actually use it</a></li><li><a href="../module-12/lesson-3.html">3. The business case and ROI model for your CFO</a></li><li><a href="../module-12/lesson-4.html">4. Capstone: run one requisition end to end</a></li><li><a href="../module-12/lesson-5.html">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="../resources.html">Templates</a> &middot; <a href="../course-map.html">Course map</a> &middot; <a href="../glossary.html">Glossary</a> &middot; <a href="../changelog.html">What&rsquo;s changed</a> &middot; <a href="../about.html">About</a><span class="lic"><a href="../license.html">Open source licence</a></span></div></div></nav>
+<main class="lesson">
+<p class="crumb"><a href="../index.html">Course</a> &rsaquo; Module 11 · Compliance, bias and candidate experience</p>
+<h1>Running a bias audit in practice</h1>
+<p class="meta">Module 11, Lesson 2 &nbsp;·&nbsp; 4 min read&nbsp;·&nbsp; <span class="upd">Updated 21 September 2026</span><button type="button" class="readbtn" data-read-toggle data-lesson="11-2">Mark as read</button></p>
+<span class="modtag">Module 11 &middot; Lesson 2</span>
+<aside class="inshort"><h2>In short</h2><ul><li>A bias audit is simple maths on your own hiring data.</li><li>Compare the pass rate for each group at each stage.</li><li>Also check whether your parser fails more on certain CV formats. Most audits miss this.</li></ul></aside>
+<article>
+
+<p class="lede">A bias check is not a philosophical exercise. It is arithmetic on your own hiring
+data, and you can do a useful version in an afternoon.</p>
+<figure class="fig"><svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="t-bia d-bia" style="width:100%;height:auto;max-width:860px;display:block;margin:0 auto"><title id="t-bia">A bias audit comparing pass rates between groups</title><desc id="d-bia">Four bars showing the pass rate per group with a dashed line at four-fifths of the highest. One group falls below it. Counts are shown beneath each bar.</desc><style>.lab{font:600 13px "IBM Plex Sans",Arial,sans-serif;fill:#14171a}.sub{font:400 11.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}.num{font:600 12px "IBM Plex Sans",Arial,sans-serif;fill:#fff}.cap{font:600 11px "IBM Plex Sans",Arial,sans-serif;fill:#8c1d3f}.sml{font:400 10.5px "IBM Plex Sans",Arial,sans-serif;fill:#5b636b}</style><path d="M60 96 L600 96" stroke="#8c1d3f" stroke-dasharray="6 4" stroke-width="1.6"/><text x="606" y="100" class="cap">four-fifths</text><rect x="84" y="71" width="76" height="129" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/><text x="122" y="61" text-anchor="middle" class="lab" style="font-size:12px">86%</text><text x="122" y="220" text-anchor="middle" class="sub">Group A</text><text x="122" y="236" text-anchor="middle" class="sml">n=258</text><rect x="210" y="83" width="76" height="117" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/><text x="248" y="73" text-anchor="middle" class="lab" style="font-size:12px">78%</text><text x="248" y="220" text-anchor="middle" class="sub">Group B</text><text x="248" y="236" text-anchor="middle" class="sml">n=234</text><rect x="336" y="122" width="76" height="78" rx="6" fill="#fff" stroke="#8c1d3f" stroke-width="2"/><text x="374" y="112" text-anchor="middle" class="lab" style="font-size:12px">52%</text><text x="374" y="220" text-anchor="middle" class="sub">Group C</text><text x="374" y="236" text-anchor="middle" class="sml">n=156</text><rect x="462" y="78" width="76" height="121" rx="6" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1"/><text x="500" y="68" text-anchor="middle" class="lab" style="font-size:12px">81%</text><text x="500" y="220" text-anchor="middle" class="sub">Group D</text><text x="500" y="236" text-anchor="middle" class="sml">n=243</text><path d="M60 200 L600 200" stroke="#dde1e5"/><text x="60" y="262" class="cap">Always show the counts beside the rates</text></svg><figcaption>Pass rates by group, with the four-fifths line and the counts shown.</figcaption></figure>
+
+<h2>What it measures</h2>
+<p>Not what anyone intended. What actually happened.</p>
+<p>Specifically: does the proportion of people who get through a stage differ between groups, and by
+how much?</p>
+<p>Two numbers do the work:</p>
+<ul>
+  <li><strong>Pass rate</strong> — what share of a group got through a stage.</li>
+  <li><strong>Ratio</strong> — one group's pass rate divided by the pass rate of the group that did
+      best.</li>
+</ul>
+<p>In US practice a common rule of thumb treats a ratio below four-fifths as worth looking into. It
+is a starting point for asking questions, not a legal line, and not proof of anything either way.</p>
+
+<h2>How to run it</h2>
+<ol>
+  <li>Pick a stage with a clear pass or fail. Screening is the obvious one.</li>
+  <li>For each group, count how many entered and how many got through. Divide one by the other.</li>
+  <li>Find the highest pass rate. Divide every other group's rate by it.</li>
+  <li>Write the actual counts next to the ratios. Always.</li>
+  <li>Repeat for each stage, then for the whole process from start to finish.</li>
+</ol>
+<p>The whole-process version matters, because small differences at four stages add up to a large one
+overall while no single stage looks alarming.</p>
+
+<h2>Reading the result honestly</h2>
+<table>
+  <thead><tr><th>What you find</th><th>What it does and does not mean</th></tr></thead>
+  <tbody>
+    <tr><td>Low ratio, large numbers</td><td>A real difference. Find the rule causing it</td></tr>
+    <tr><td>Low ratio, tiny numbers</td><td>Might be chance. Report the counts. Do not declare innocence or guilt</td></tr>
+    <tr><td>All ratios near 1</td><td>No difference at this stage. Not proof the process is fair — check earlier stages</td></tr>
+    <tr><td>Difference only shows up overall</td><td>Small gaps adding up. The most commonly missed pattern</td></tr>
+  </tbody>
+</table>
+<p>Two traps. A clean result at interview stage tells you nothing if the difference happened at the
+search stage, because the affected people were never in the pool. And in most companies the group
+sizes are small enough that a handful of people moves a ratio — which is a reason to show the counts
+and combine several months, not a reason to dismiss what you found.</p>
+
+<h2>Check how well the CVs were read, too</h2>
+<p>Almost every bias check skips this, and Module 4 explained why it matters.</p>
+<p>Compare how well your tool reads CVs across groups and across file formats. If it fails more often
+on one kind of CV template, one alphabet, or one style of career history, that is people being
+removed by a technical fault before any scoring happens.</p>
+<p>It will never show up in a check that only looks at scores, because the affected people simply
+have worse data.</p>
+<p>In practice: take the CVs that were read badly, look at what they have in common, and ask whether
+that thing is spread evenly across your applicants. It usually is not.</p>
+
+<h2>Who should do it</h2>
+<p>Where the law requires an <em>independent</em> check — New York City is the clearest example —
+independence has a specific meaning and your own review will not satisfy it.</p>
+<p>Everywhere else, do it yourself, regularly. Treat any formal audit as a separate obligation rather
+than a replacement. A yearly external audit tells you about last year. A quarterly internal one tells
+you before it becomes a pattern.</p>
+
+<h2>Write it down</h2>
+<p>Record the date, the period covered, the stage, the groups and counts, how you did it, what you
+found, what you concluded and what you changed.</p>
+<p>A check with no recorded action is evidence that you knew — which is worse than not having
+looked.</p>
+
+<p class="tmpl"><a href="../resources/15-ai-hiring-risk-register.csv">Download the risk
+register</a> &middot; <a href="../resources.html">all templates</a></p>
+
+<div class="callout">
+  <h3>What to do when you find something</h3>
+  <p>Look at the rule, not the people. A difference usually traces back to one requirement acting as
+  a stand-in for something else — years of experience, unbroken employment, which university,
+  location. Change the rule and run it again.</p>
+  <p>Adjusting individual outcomes to fix the number treats the symptom and creates a new problem.</p>
+</div>
+
+</article>
+
+
+<section class="sources"><h2>Primary sources</h2><ul><li><a href="https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XIV/part-1607" rel="noopener" target="_blank">EEOC — Uniform Guidelines on Employee Selection Procedures (the four-fifths rule)</a></li><li><a href="https://www.nyc.gov/site/dca/about/automated-employment-decision-tools.page" rel="noopener" target="_blank">NYC DCWP bias audit requirements</a></li></ul><p style="margin-top:8px">Linked so you can check the claims in this lesson against the text rather than against me.</p></section>
+<section class="related"><h2>More in this module</h2><ul><li><a href="../module-11/lesson-1.html">The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="../module-11/lesson-3.html">Disclosure and consent language</a></li><li><a href="../module-11/lesson-4.html">Data retention and candidate rights</a></li><li><a href="../module-11/lesson-5.html">The documentation your legal team will ask for</a></li></ul><p><a href="../index.html">Full curriculum</a> &middot; <a href="../resources.html">Templates</a> &middot; <a href="../worked-run.html">A worked run with real numbers</a></p></section>
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var KEY='hga.progress.v1';
+  function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}}
+  function save(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+
+  // ---- mark-as-read
+  var btn=document.querySelector('[data-read-toggle]');
+  if(btn){
+    var id=btn.getAttribute('data-lesson'), st=load();
+    var paint=function(){
+      var done=!!st[id];
+      btn.textContent=done?'\u2713 Read':'Mark as read';
+      btn.classList.toggle('done',done);
+      btn.setAttribute('aria-pressed',done?'true':'false');
+    };
+    paint();
+    btn.addEventListener('click',function(){
+      st=load(); if(st[id]){delete st[id]}else{st[id]=Date.now()} save(st); paint();
+    });
+  }
+
+  // ---- progress summary
+  var bar=document.querySelector('[data-progress]');
+  if(bar){
+    var total=parseInt(bar.getAttribute('data-total'),10),st2=load();
+    var n=Object.keys(st2).length;
+    var pct=total?Math.round(100*n/total):0;
+    bar.querySelector('.pnum').textContent=n+' of '+total+' lessons read';
+    bar.querySelector('.pfill').style.width=pct+'%';
+    if(n===0){bar.querySelector('.pnum').textContent='No lessons marked read yet';}
+    var reset=bar.querySelector('[data-reset]');
+    if(reset){reset.addEventListener('click',function(){
+      if(confirm('Clear your reading progress on this device?')){save({});location.reload();}
+    });}
+  }
+
+  // ---- sidebar ticks
+  var st3=load();
+  document.querySelectorAll('.side .les a').forEach(function(a){
+    var m=a.getAttribute('href').match(/module-(\d+)\/lesson-(\d+)/);
+    if(m&&st3[m[1]+'-'+m[2]]){a.classList.add('read');}
+  });
+
+  // ---- quiz
+  document.querySelectorAll('.quiz').forEach(function(qz){
+    var items=qz.querySelectorAll('.qitem'), answered=0, right=0;
+    items.forEach(function(it){
+      it.querySelectorAll('.qopt').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(it.classList.contains('answered'))return;
+          it.classList.add('answered');
+          var ok=b.getAttribute('data-c')==='1';
+          b.classList.add(ok?'right':'wrong');
+          if(!ok){it.querySelector('.qopt[data-c="1"]').classList.add('right');}
+          it.querySelector('.qwhy').hidden=false;
+          answered++; if(ok)right++;
+          if(answered===items.length){
+            var s=qz.querySelector('.qscore');
+            s.hidden=false;
+            s.textContent=right+' of '+items.length+'. '+
+              (right===items.length?'Nothing to revisit.':
+               right>=items.length-1?'Worth re-reading the one you missed.':
+               'Worth another pass through this module.');
+          }
+        });
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+{% extends "academy_base.html" %}
+
+{% block academy_title %}Scraping, parsing and the legal line | HireGen Academy{% endblock %}
+
+{% block academy_meta %}
+<meta content="Scraping, platform terms and data protection when you source. What the tools actually do, where the account risk sits, and the test worth applying." name="description"/>
+<meta content="https://hiregen.com/academy/module-3/lesson-7.html" property="og:url"/>
+<meta content="Scraping, parsing and the legal line | HireGen Academy" property="og:title"/>
+<meta content="Scraping, platform terms and data protection when you source. What the tools actually do, where the account risk sits, and the test worth applying." property="og:description"/>
+<meta content="article" property="og:type"/>
+<meta content="https://hiregen.com/academy/assets/social-card.png" property="og:image"/>
+<meta content="HireGen Academy" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<style>:root{--accent:var(--m3);--accent-soft:#f2edf8}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Scraping, parsing and the legal line", "author": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "publisher": {"@type": "Organization", "name": "HireGen", "url": "https://hiregen.com"}, "educationalLevel": "Beginner to intermediate", "teaches": "Boolean, X-Ray, LLM query expansion, talent mapping and a reusable prompt library.", "timeRequired": "PT4M", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "AI Recruitment Masterclass", "item": "https://hiregen.com/academy/"}, {"@type": "ListItem", "position": 2, "name": "Module 3: Sourcing with AI"}, {"@type": "ListItem", "position": 3, "name": "Scraping, parsing and the legal line", "item": "https://hiregen.com/academy/module-3/lesson-7.html"}]}], "learningResourceType": "Lesson", "isPartOf": {"@type": "Course", "name": "AI Recruitment Masterclass", "url": "https://hiregen.com/academy/"}, "position": 18, "datePublished": "2026-09-21", "dateModified": "2026-09-21", "inLanguage": "en"}</script>
+{% endblock %}
+
+{% block academy_content %}
+<div class="shell">
+<div class="grid">
+<nav aria-label="Course contents" class="side"><div class="side-in"><h3>Course contents</h3><details class="mod" style="--m:var(--m1)"><summary><span class="n">1</span><span>Foundations of AI recruiting</span></summary><ol class="les"><li><a href="/academy/module-1/lesson-1">1. What AI actually changes in the hiring funnel</a></li><li><a href="/academy/module-1/lesson-2">2. The AI recruiting stack: seven layers</a></li><li><a href="/academy/module-1/lesson-3">3. Where AI fails: invention, proxy bias, over-filtering</a></li><li><a href="/academy/module-1/lesson-4">4. Build, buy, or bolt onto your ATS</a></li><li><a href="/academy/module-1/lesson-5">5. Set up your workspace and course dataset</a></li></ol></details><details class="mod" style="--m:var(--m2)"><summary><span class="n">2</span><span>Intake and the job blueprint</span></summary><ol class="les"><li><a href="/academy/module-2/lesson-1">1. The intake meeting: 12 questions that prevent bad hires</a></li><li><a href="/academy/module-2/lesson-2">2. Turning messy intake notes into a job profile with AI</a></li><li><a href="/academy/module-2/lesson-3">3. Job descriptions that convert and rank</a></li><li><a href="/academy/module-2/lesson-4">4. Scorecards and competency models</a></li><li><a href="/academy/module-2/lesson-5">5. Must-have vs nice-to-have: the weighting exercise</a></li><li><a href="/academy/module-2/lesson-6">6. Lab 1: build a full job blueprint</a></li></ol></details><details class="mod" open="" style="--m:var(--m3)"><summary><span class="n">3</span><span>Sourcing with AI</span></summary><ol class="les"><li><a href="/academy/module-3/lesson-1">1. Sourcing math: profiles per hire, by role type</a></li><li><a href="/academy/module-3/lesson-2">2. Boolean that still works</a></li><li><a href="/academy/module-3/lesson-3">3. X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="/academy/module-3/lesson-4">4. Using LLMs to expand titles, skills and synonyms</a></li><li><a href="/academy/module-3/lesson-5">5. Talent mapping and market intelligence</a></li><li><a href="/academy/module-3/lesson-6">6. Building your reusable sourcing prompt library</a></li><li><a class="here" href="/academy/module-3/lesson-7">7. Scraping, parsing and the legal line</a></li><li><a href="/academy/module-3/lesson-8">8. Lab 2: a 50-profile longlist in 40 minutes</a></li></ol></details><details class="mod" style="--m:var(--m4)"><summary><span class="n">4</span><span>Resume parsing and AI screening</span></summary><ol class="les"><li><a href="/academy/module-4/lesson-1">1. How resume parsing actually works</a></li><li><a href="/academy/module-4/lesson-2">2. Why field accuracy decides everything downstream</a></li><li><a href="/academy/module-4/lesson-3">3. Setting screening criteria that do not over-filter</a></li><li><a href="/academy/module-4/lesson-4">4. Screening 500 resumes: the full walkthrough</a></li><li><a href="/academy/module-4/lesson-5">5. Reading AI screening scores critically</a></li><li><a href="/academy/module-4/lesson-6">6. Edge cases: gaps, career changers, non-linear CVs</a></li><li><a href="/academy/module-4/lesson-7">7. Lab 3: screen the dataset, compare to a human shortlist</a></li></ol></details><details class="mod" style="--m:var(--m5)"><summary><span class="n">5</span><span>Candidate matching and ranking</span></summary><ol class="les"><li><a href="/academy/module-5/lesson-1">1. Keyword match vs semantic match vs learned ranking</a></li><li><a href="/academy/module-5/lesson-2">2. Building a match profile that reflects the scorecard</a></li><li><a href="/academy/module-5/lesson-3">3. Silver medallists: re-matching your existing database</a></li><li><a href="/academy/module-5/lesson-4">4. Explainability: why did this candidate rank third?</a></li><li><a href="/academy/module-5/lesson-5">5. Lab 4: rank and justify a shortlist of ten</a></li></ol></details><details class="mod" style="--m:var(--m6)"><summary><span class="n">6</span><span>Outreach and candidate communication</span></summary><ol class="les"><li><a href="/academy/module-6/lesson-1">1. Why most recruiter outreach is ignored</a></li><li><a href="/academy/module-6/lesson-2">2. Personalisation at scale that does not read like a bot</a></li><li><a href="/academy/module-6/lesson-3">3. The five-touch sequence</a></li><li><a href="/academy/module-6/lesson-4">4. Chatbots for candidate FAQs and pre-qualification</a></li><li><a href="/academy/module-6/lesson-5">5. Rejections that protect your employer brand</a></li><li><a href="/academy/module-6/lesson-6">6. Lab 5: write and QA a full sequence</a></li></ol></details><details class="mod" style="--m:var(--m7)"><summary><span class="n">7</span><span>Structured and AI interviews</span></summary><ol class="les"><li><a href="/academy/module-7/lesson-1">1. Structured interviewing: what the evidence says</a></li><li><a href="/academy/module-7/lesson-2">2. Generating competency question banks</a></li><li><a href="/academy/module-7/lesson-3">3. Async and AI interviews: when they help, when they hurt</a></li><li><a href="/academy/module-7/lesson-4">4. Interview scheduling automation</a></li><li><a href="/academy/module-7/lesson-5">5. From transcript to evidence to scorecard</a></li><li><a href="/academy/module-7/lesson-6">6. Debrief facilitation and bias interrupts</a></li><li><a href="/academy/module-7/lesson-7">7. Lab 6: run one structured interview loop</a></li></ol></details><details class="mod" style="--m:var(--m8)"><summary><span class="n">8</span><span>ATS and recruitment CRM operations</span></summary><ol class="les"><li><a href="/academy/module-8/lesson-1">1. ATS anatomy: stages, statuses, automations, permissions</a></li><li><a href="/academy/module-8/lesson-2">2. Migrating off spreadsheets without losing history</a></li><li><a href="/academy/module-8/lesson-3">3. Recruitment CRM: nurturing before the req exists</a></li><li><a href="/academy/module-8/lesson-4">4. Career site and job board setup</a></li><li><a href="/academy/module-8/lesson-5">5. Job distribution and multi-posting</a></li><li><a href="/academy/module-8/lesson-6">6. Lab 7: configure a pipeline end to end</a></li></ol></details><details class="mod" style="--m:var(--m9)"><summary><span class="n">9</span><span>Agents and automation</span></summary><ol class="les"><li><a href="/academy/module-9/lesson-1">1. The ladder: prompt, workflow, agent</a></li><li><a href="/academy/module-9/lesson-2">2. Writing an AI recruiting agent brief</a></li><li><a href="/academy/module-9/lesson-3">3. Human-in-the-loop checkpoints that catch errors</a></li><li><a href="/academy/module-9/lesson-4">4. Connecting ATS, calendar, email and Slack</a></li><li><a href="/academy/module-9/lesson-5">5. Cost control and failure modes</a></li><li><a href="/academy/module-9/lesson-6">6. Lab 8: build screening-to-scheduling automation</a></li></ol></details><details class="mod" style="--m:var(--m10)"><summary><span class="n">10</span><span>Recruiting analytics and KPIs</span></summary><ol class="les"><li><a href="/academy/module-10/lesson-1">1. The funnel model every recruiting report is built on</a></li><li><a href="/academy/module-10/lesson-2">2. Time to hire, cost per hire, quality of hire</a></li><li><a href="/academy/module-10/lesson-3">3. Source effectiveness and channel ROI</a></li><li><a href="/academy/module-10/lesson-4">4. Forecasting hiring capacity</a></li><li><a href="/academy/module-10/lesson-5">5. Building a weekly hiring dashboard</a></li><li><a href="/academy/module-10/lesson-6">6. Lab 9: build your dashboard</a></li></ol></details><details class="mod" style="--m:var(--m11)"><summary><span class="n">11</span><span>Compliance, bias and candidate experience</span></summary><ol class="les"><li><a href="/academy/module-11/lesson-1">1. The regulatory map: EU AI Act, NYC LL-144, GDPR, DPDP</a></li><li><a href="/academy/module-11/lesson-2">2. Running a bias audit in practice</a></li><li><a href="/academy/module-11/lesson-3">3. Disclosure and consent language</a></li><li><a href="/academy/module-11/lesson-4">4. Data retention and candidate rights</a></li><li><a href="/academy/module-11/lesson-5">5. The documentation your legal team will ask for</a></li><li><a href="/academy/module-11/lesson-6">6. Lab 10: complete an AI hiring risk register</a></li></ol></details><details class="mod" style="--m:var(--m12)"><summary><span class="n">12</span><span>Rollout and capstone</span></summary><ol class="les"><li><a href="/academy/module-12/lesson-1">1. Your 30-60-90 rollout plan</a></li><li><a href="/academy/module-12/lesson-2">2. Getting hiring managers to actually use it</a></li><li><a href="/academy/module-12/lesson-3">3. The business case and ROI model for your CFO</a></li><li><a href="/academy/module-12/lesson-4">4. Capstone: run one requisition end to end</a></li><li><a href="/academy/module-12/lesson-5">5. Your AI recruiting toolkit and next steps</a></li></ol></details><div class="side-foot"><a href="/academy/resources">Templates</a> · <a href="/academy/course-map">Course map</a> · <a href="/academy/glossary">Glossary</a> · <a href="/academy/changelog">What’s changed</a> · <a href="/academy/about">About</a><span class="lic"><a href="/academy/license">Open source licence</a></span></div></div></nav>
+<main class="lesson">
+<p class="crumb"><a href="/academy/">Course</a> › Module 3 · Sourcing with AI</p>
+<h1>Scraping, parsing and the legal line</h1>
+<p class="meta">Module 3, Lesson 7  ·  4 min read ·  <span class="upd">Updated 21 September 2026</span><button class="readbtn" data-lesson="3-7" data-read-toggle="" type="button">Mark as read</button></p>
+<span class="modtag">Module 3 · Lesson 7</span>
+<aside class="inshort"><h2>In short</h2><ul><li>Sourcing collects data about people who never applied to you. That comes with rules.</li><li>Most big sites ban automated scraping and close accounts that do it.</li><li>Tell people where you found them. It is both polite and usually required.</li></ul></aside>
+<article>
+<p class="lede">Searching collects information about people who never contacted you. That creates
+two duties — one to the websites, one to the people — and they work differently.</p>
+<p class="alt">This lesson explains how things generally work. It is not legal advice. The rules
+differ by country and change often, so check anything you plan to do at scale with someone qualified
+where you are.</p>
+<h2>What scraping tools actually do</h2>
+<p>Most sourcing extensions work by driving a browser that is logged in as you, reading pages faster
+than a person could, and saving the results. Some also match profiles against other databases to
+attach personal email addresses and phone numbers.</p>
+<p>Two things follow. The activity happens under <strong>your</strong> account, so the website's
+response lands on you, not on the tool company. And the extra contact details came from somewhere you
+did not choose and cannot check, which becomes your problem the moment you store them.</p>
+<h2>What the websites say</h2>
+<p>The big professional networks ban automated collection of profile data in their terms, and they
+enforce it. Usually by limiting or permanently closing accounts — automatically, often with no
+warning and no appeal. The systems that catch it look for behaviour that does not look human: too
+many pages, too fast, at regular intervals.</p>
+<p>In most countries this is a business risk rather than a criminal one. But it is a real one. A
+blocked recruiter account in the middle of a search costs more than the tool saved, and a personal
+account built over ten years cannot be replaced.</p>
+<p>Looking at public profiles yourself and copying what you need is a different activity. It is what
+the sites are built for.</p>
+<h2>Rules about people's data</h2>
+<p>A profile you have saved is personal data, and the duties start when you <strong>store</strong>
+it, not when you contact the person. Under European-style rules — and India's framework works
+similarly here — the practical duties are:</p>
+<ul>
+<li><strong>A reason for holding it.</strong> Recruitment usually relies on "legitimate interest",
+      which means you have to have actually weighed your interest against the person's rights, and be
+      able to show that you did.</li>
+<li><strong>Telling them.</strong> When you collect someone's details from somewhere other than
+      them, you generally have to tell them — including where you got them. Usually at first contact.
+      This is why a line in your message explaining how you found them is not just polite.</li>
+<li><strong>A deletion date.</strong> Keeping people who never applied forever is hard to justify.
+      Pick a period, apply it automatically, write it down.</li>
+<li><strong>Their rights.</strong> People can ask to see, correct or delete their data, and that
+      applies to sourced profiles exactly as it does to applicants. If you cannot find and delete one
+      person across all your tools, you have a problem waiting to happen.</li>
+</ul>
+<h2>Practical rules</h2>
+<table>
+<thead><tr><th>Do</th><th>Avoid</th></tr></thead>
+<tbody>
+<tr><td>Search and look at public profiles</td><td>Bulk automated downloading from sites that ban it</td></tr>
+<tr><td>Record where each profile came from</td><td>Storing personal contact details of unknown origin</td></tr>
+<tr><td>Say where you found them, in your first message</td><td>Calling personal phone numbers found through data brokers</td></tr>
+<tr><td>Set a deletion date and stick to it</td><td>A permanent database of everyone ever found</td></tr>
+<tr><td>Keep records where deletion requests can reach them</td><td>Private spreadsheets outside any process</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<h3>A simple test</h3>
+<p>Would you be comfortable telling this person exactly how you got their details? If the honest
+  answer makes you wince, that is your answer — and it lines up closely with what the rules say, in
+  most places, most of the time.</p>
+</div>
+</article>
+<section class="sources"><h2>Primary sources</h2><ul><li><a href="https://gdpr-info.eu/art-14-gdpr/" rel="noopener" target="_blank">GDPR Article 14 — information where data is not obtained from the data subject</a></li><li><a href="https://www.meity.gov.in/data-protection-framework" rel="noopener" target="_blank">India Digital Personal Data Protection Act 2023 (MeitY)</a></li></ul><p style="margin-top:8px">Linked so you can check the claims in this lesson against the text rather than against me.</p></section>
+<section class="related"><h2>More in this module</h2><ul><li><a href="/academy/module-3/lesson-1">Sourcing math: profiles per hire, by role type</a></li><li><a href="/academy/module-3/lesson-2">Boolean that still works</a></li><li><a href="/academy/module-3/lesson-3">X-Ray search: LinkedIn, GitHub, Behance, Stack Overflow</a></li><li><a href="/academy/module-3/lesson-4">Using LLMs to expand titles, skills and synonyms</a></li></ul><p><a href="/academy/">Full curriculum</a> · <a href="/academy/resources">Templates</a> · <a href="/academy/worked-run">A worked run with real numbers</a></p></section>
+</main>
+</div>
+</div>
+{% endblock %}
