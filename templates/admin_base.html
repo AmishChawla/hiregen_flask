@@ -12,12 +12,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    };
-  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+
 
 
 
@@ -48,6 +44,10 @@
 </style>
 
   {% block styles %}{% endblock %}
+
+  <meta name="description" content="{% block page_description %}{{ page_description|default('Recruitment tools and job opportunities on Hiregen.', true) }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url|default(request.base_url, true) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site-fixes.css') }}">
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
 <div class="lg:flex">

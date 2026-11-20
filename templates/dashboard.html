@@ -273,8 +273,8 @@
                 <!-- Top AI-Matched Candidates -->
                 <div class="bg-white rounded-lg shadow-sm border p-6">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Upcoming Interviews/Assessments</h3><button
-                            class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Upcoming Interviews/Assessments</h3>
+                        {% if mid_stage_applicants %}<a href="{{ url_for('applicant_tracking') }}" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</a>{% else %}<span class="text-sm text-gray-500">No upcoming interviews or assessments</span>{% endif %}
                     </div>
                     <div class="space-y-4">
                         {% for applicant in mid_stage_applicants %}
@@ -349,7 +349,9 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const jobsCtx = document.getElementById('jobsChart').getContext('2d');
+    const jobsCanvas = document.getElementById('jobsChart');
+    if (jobsCanvas && typeof Chart !== 'undefined') {
+    const jobsCtx = jobsCanvas.getContext('2d');
     new Chart(jobsCtx, {
         type: 'bar',
         data: {
@@ -390,7 +392,7 @@
                     color: '#6B7280', // Tailwind gray-500 for text
                     stepSize: 1, // Increment by 1
                     beginAtZero: true,
-                    max: Math.ceil(Math.max({{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }})) + 1, // Dynamically set max value
+                    max: Math.ceil(Math.max(0, {{ total_jobs }}, {{ in_progress_jobs }}, {{ applicants_count }})) + 1, // Dynamically set max value
                 },
             },
         },
@@ -402,7 +404,10 @@
     },
 });
 
-    const applicantsCtx = document.getElementById('applicantsChart').getContext('2d');
+    }
+    const applicantsCanvas = document.getElementById('applicantsChart');
+    if (applicantsCanvas && typeof Chart !== 'undefined') {
+    const applicantsCtx = applicantsCanvas.getContext('2d');
     new Chart(applicantsCtx, {
         type: 'bar',
         data: {
@@ -443,7 +448,7 @@
                     color: '#6B7280', // Tailwind gray-500 for text
                     stepSize: 1, // Increment by 1
                     beginAtZero: true,
-                    max: Math.ceil(Math.max({% for status in statuses %}{{ status.applicant_count }}, {% endfor %})) + 1, // Dynamically set max value
+                    max: Math.ceil(Math.max(0, {% for status in statuses %}{{ status.applicant_count }}, {% endfor %})) + 1, // Dynamically set max value
                 },
             },
         },
@@ -455,5 +460,6 @@
     },
 });
 
+    }
 </script>
 {% endblock %}

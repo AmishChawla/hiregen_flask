@@ -12,6 +12,11 @@ ACADEMY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'academy'
 TEMPLATES_ACADEMY_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates', 'academy')
 
 
+@academy_bp.route('/sitemap.xml', methods=['GET'])
+def sitemap():
+    return render_template('academy_sitemap.xml'), 200, {'Content-Type': 'application/xml; charset=utf-8'}
+
+
 @academy_bp.route('/', methods=['GET'])
 def index():
     """Renders main Academy homepage"""

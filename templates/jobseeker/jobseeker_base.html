@@ -51,12 +51,8 @@
     }
   </style>
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    };
-  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+
   <!-- Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
@@ -75,6 +71,10 @@
     })(window, document, 'script', 'dataLayer', 'GTM-TDQPMPQ9');</script>
   <!-- End Google Tag Manager -->
 
+
+  <meta name="description" content="{% block page_description %}{{ page_description|default('Recruitment tools and job opportunities on Hiregen.', true) }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url|default(request.base_url, true) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site-fixes.css') }}">
 </head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LHWC5ZME1"></script>
 <script>

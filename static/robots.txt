@@ -1,3 +1,6 @@
+Sitemap: https://hiregen.com/sitemap.xml
+Sitemap: https://hiregen.com/academy/sitemap.xml
+
 User-agent: *
 Disallow: /admin
 Disallow: /upload

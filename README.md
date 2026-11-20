@@ -84,3 +84,42 @@ Run `python app.py` to run this project
 Checkout demo at [Hiregen Demo](https://hiregen.com/demo-login)
 or
 Register at [Employer Registration](https://hiregen.com/register)
+
+
+## Offline regression checks
+
+These checks do not import the production app, load `constants.py`/secrets, or connect to the API/database. The Python suite blocks outgoing socket connections and exercises selected route definitions with synthetic fixtures.
+
+```sh
+python3 -m venv /tmp/hiregen-test-env
+/tmp/hiregen-test-env/bin/pip install -r requirements-test.txt
+PYTHONPATH=.:tests /tmp/hiregen-test-env/bin/pytest -q tests/test_flask_regressions.py
+node tests/test_browser_scripts.cjs
+```
+
+To preview synthetic pages locally (without production credentials):
+
+```sh
+PYTHONPATH=.:tests /tmp/hiregen-test-env/bin/python tests/offline_app.py
+```
+
+Open `http://127.0.0.1:5067/` for the homepage, `/__fixtures/login/jobseeker` for the synthetic profile, `/__fixtures/job` for a mock vacancy, and `/__fixtures/blog` for the mobile blog card. Fixture routes exist only in the offline app, not in `app.py`. Do not use the normal production app/configuration for offline checks.
+
+### Stylesheet build
+
+The active layouts use the checked-in `static/css/tailwind.css` instead of the Tailwind browser CDN. After changing template classes:
+
+```sh
+npm ci --ignore-scripts
+npm run build:css
+```
+
+Deploy the generated stylesheet with the Flask templates. Node is needed for rebuilding assets, not for serving Flask.
+
+### AI assistant model
+
+`HIREGEN_CHAT_MODEL` selects the model for the Flask chat agent (default `gpt-4.1`). Configure a model available to the deployment's OpenAI project. The offline tests mock provider calls; they do not verify live model access. Model/API compatibility reference: https://developers.openai.com/api/docs/guides/latest-model?model=gpt-4.1
+
+### Scope of the November 2026 fixes
+
+Security response headers, existing job/blog server errors (including deleted-job handling), test-company moderation, TLS certificates, currency storage/selection, job slug changes on save, and application progress calculations are intentionally unchanged. Draft visibility is filtered in Flask company pages, detail views, and company feeds; the backend API still needs its own publication enforcement. Existing API-generated dated application links are supported through a Flask redirect; backend link generation is unchanged.

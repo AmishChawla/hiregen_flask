@@ -1,0 +1,5 @@
+{% extends 'common_base.html' %}
+{% block title %}Recruitment software features | Hiregen{% endblock %}
+{% block content %}<main class="max-w-5xl mx-auto px-4 py-12"><h1 class="text-3xl font-bold mb-6">Recruitment software features</h1>
+<ul class="space-y-4">{% for slug, label in [('recruitment-software','Recruitment software'),('applicant-tracking','Applicant tracking'),('resume-parsing','Resume parsing'),('recruitment-crm','Recruitment CRM'),('candidate-matching','Candidate matching'),('ai-recruitment','AI recruitment')] %}
+<li><a class="text-blue-700 underline" href="/features/{{ slug }}">{{ label }}</a></li>{% endfor %}</ul></main>{% endblock %}

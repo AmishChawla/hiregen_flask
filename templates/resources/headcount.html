@@ -1,0 +1,6 @@
+{% extends 'common_base.html' %}
+{% block title %}Headcount planning template | Hiregen{% endblock %}
+{% block content %}<main class="max-w-3xl mx-auto px-4 py-12"><h1 class="text-3xl font-bold mb-4">Headcount planning template</h1>
+<p class="mb-6">Plan each department using current headcount, planned hires, and expected departures. Projected headcount equals current headcount plus planned hires minus departures.</p>
+<a class="text-blue-700 underline" href="{{ url_for('resource_pages.headcount_csv') }}">Download the CSV template</a>
+</main>{% endblock %}

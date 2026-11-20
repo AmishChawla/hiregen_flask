@@ -29,9 +29,12 @@
 
  <div class="rounded-lg border bg-white text-card-foreground shadow-sm mb-6">
     <form method="GET" action="{{ url_for('jobs_search') }}">
+      {% for filter in ['industry', 'job_type', 'date_filter', 'country', 'company_subdomain'] %}
+      {% if prefilled_data.get(filter) %}<input type="hidden" name="{{ filter }}" value="{{ prefilled_data.get(filter) }}">{% endif %}
+      {% endfor %}
     <div class="p-6">
         <div class="flex gap-4 flex-wrap">
-            <div class="flex-1 min-w-[300px]">
+            <div class="flex-1 min-w-0 w-full sm:min-w-[300px]">
                 <div class="relative"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -45,7 +48,7 @@
                     </svg><input type="text" id="keyword" name="keyword" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10"
                         placeholder="Job title, keywords, or company" value="{{ prefilled_data.keyword if prefilled_data.keyword is not none else '' }}"></div>
             </div>
-            <div class="flex-1 min-w-[200px]">
+            <div class="flex-1 min-w-0 w-full sm:min-w-[200px]">
                 <div class="relative"><svg
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

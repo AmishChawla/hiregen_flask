@@ -25,12 +25,23 @@ from flask_wtf.csrf import CSRFProtect
 import openai
 from functools import wraps
 from flask_cors import CORS
+from web_helpers import absolute_website_url, public_hiregen_url, is_public_job, sitemap_entries
 import phonenumbers
 from phonenumbers.phonenumberutil import COUNTRY_CODE_TO_REGION_CODE
 from academy_routes import academy_bp
+from resource_pages import resource_pages
 
 app = Flask(__name__)
+app.jinja_env.filters['absolute_website_url'] = absolute_website_url
+
+@app.context_processor
+def presentation_metadata():
+    endpoint = (request.endpoint or 'Hiregen').split('.')[-1].replace('_', ' ').title()
+    return {'page_description': f'{endpoint} on Hiregen. Recruitment tools and job opportunities for employers and jobseekers.',
+            'canonical_url': request.base_url}
+
 app.register_blueprint(academy_bp)
+app.register_blueprint(resource_pages)
 CORS(app, resources={r"/static/*": {"origins": "*"}})
 app.config['SECRET_KEY'] = 'your_secret_key'
 # csrf = CSRFProtect(app)
@@ -100,7 +111,7 @@ class User(UserMixin):
         self.username = username
         self.email = email
         self.company = company
-        self.group = group
+        self.group = group or {}
         self.profile_picture = profile_picture
         self.employer_permissions = employer_permissions or ''
         self.is_demo_user = is_demo_user
@@ -123,6 +134,10 @@ def requires_any_permission(*required_permissions):
             # Convert unpacked arguments to a list if needed
             permissions_list = list(required_permissions) if not isinstance(required_permissions,
                                                                             list) else required_permissions
+
+            if not current_user.is_authenticated:
+                endpoint = 'jobseeker_login' if request.path.startswith('/jobseeker') else 'login'
+                return redirect(url_for(endpoint, next=request.path))
 
             # Check if the current user has any of the required permissions
             if not current_user.has_permission(permissions_list):
@@ -1114,7 +1129,7 @@ def company_details_by_company_slug(company_slug):
     result = api_calls.get_company_details_by_slug(company_slug=company_slug)
 
     company_id = result["id"]
-    jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
+    jobs_by_company = [job for job in (api_calls.get_jobs_by_company_id(company_id=company_id) or []) if is_public_job(job)]
 
     return render_template('company_details.html', company=result, job_posts=jobs_by_company)
 
@@ -1133,7 +1148,7 @@ def company_details_by_company_subdomain(company_subdomain):
     # Retrieve jobs associated with the company
     company_id = result["id"]
     print("result: ", result)
-    jobs_by_company = api_calls.get_jobs_by_company_id(company_id=company_id)
+    jobs_by_company = [job for job in (api_calls.get_jobs_by_company_id(company_id=company_id) or []) if is_public_job(job)]
     print("jobs_by_company: ", jobs_by_company)
     
     # Generate RSS feed URL for this company
@@ -2695,6 +2710,16 @@ def delete_media(media_id):
 #     return render_template('post.html',job_details=job_details, job_id=id, job_date=job_date, job_slug=job_slug, form=apply_form)
 
 
+@app.route('/jobs/<int:year>-<int:month>-<int:day>/<job_slug>', subdomain='<company_subdomain>')
+def legacy_application_job_link(company_subdomain, year, month, day, job_slug):
+    try:
+        datetime(year, month, day)
+    except ValueError:
+        abort(404)
+    return redirect(url_for('get_post_by_company_subdomain_and_slug',
+                            company_subdomain=company_subdomain, job_slug=job_slug), code=301)
+
+
 @app.route('/jobs/<job_slug>', subdomain='<company_subdomain>', methods=['GET', 'POST'])
 def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
     access_token = current_user.id if current_user.is_authenticated else None
@@ -2704,6 +2729,14 @@ def get_post_by_company_subdomain_and_slug(company_subdomain, job_slug):
         slug=job_slug,
         access_token=access_token
     )
+    if isinstance(job_details, dict) and not is_public_job(job_details):
+        owner_company = getattr(current_user, 'company', None) if current_user.is_authenticated else None
+        can_preview = (current_user.is_authenticated and getattr(current_user, 'role', None) == 'user'
+                       and current_user.has_permission(['can_manage_jobs'])
+                       and isinstance(owner_company, dict)
+                       and owner_company.get('company_subdomain') == company_subdomain)
+        if not can_preview:
+            abort(404)
     print("job_details", job_details)
     apply_form = forms.ApplyToJob()
     apply_form.job_id.data = job_details["id"]
@@ -4473,6 +4506,8 @@ def applicants_search():
 
 
 @app.route('/employer/applicants/filter', methods=['GET', 'POST'])
+@login_required
+@requires_any_permission("can_track_applicants")
 def employer_applicants_filter():
     job_types = static_dropdowns.job_types
     industries = static_dropdowns.industries
@@ -4505,6 +4540,8 @@ def employer_applicants_filter():
 
 
 @app.route('/employer/applicants/search', methods=['GET', 'POST'])
+@login_required
+@requires_any_permission("can_track_applicants")
 def employer_applicants_search():
     job_types = static_dropdowns.job_types
     industries = static_dropdowns.industries
@@ -4545,7 +4582,7 @@ def employer_applicants_search():
         print('here')
         print(type(start_date))
         print(type(end_date))
-        applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id)
+        applicants = api_calls.get_filtered_applicants_for_employer(params = params,access_token=current_user.id) or []
         print(applicants)
         print(len(applicants))
     return render_template('cms/employer/applicant_results.html', job_types=job_types, industries=industries, result=applicants, statuses=statuses)
@@ -4648,6 +4685,43 @@ def homepage_contactus_submission():
     except Exception as e:
         return jsonify({'error': 'An error occurred while processing the form'}), 500
 
+
+@app.route('/about')
+def legacy_about():
+    return redirect(url_for('about_us'), code=301)
+
+@app.route('/contact')
+def legacy_contact():
+    return redirect(url_for('homepage_contactus_submission'), code=301)
+
+@app.route('/privacy')
+def legacy_privacy():
+    return redirect(url_for('privacy_policy'), code=301)
+
+@app.route('/signup')
+def legacy_signup():
+    return redirect('/register', code=301)
+
+@app.route('/cost-per-hire-calculator')
+def legacy_cost_per_hire():
+    return redirect(url_for('resources_cost_per_hire'), code=301)
+
+@app.route('/recruiting-roi-calculator')
+def legacy_recruiting_roi():
+    return redirect(url_for('resources_recruitment_roi'), code=301)
+
+@app.route('/cost-of-turnover-calculator')
+def legacy_turnover_cost():
+    return redirect(url_for('resources_attrition_cost'), code=301)
+
+@app.route('/features')
+def features_index():
+    return render_template('features_index.html')
+
+@app.route('/resources')
+@app.route('/calculators')
+def resources_index():
+    return render_template('resources/index.html')
 
 @app.route('/aboutus')
 def about_us():
@@ -5796,9 +5870,9 @@ def ai_chat():
 def sitemap_html():
     try:
         sitemap_data = api_calls.get_sitemap_data()
-        company_list = sitemap_data.get('companies', []) or []
-        jobs_list = sitemap_data.get('jobs', []) or []
-        posts_list = sitemap_data.get('posts', []) or []
+        company_list = sitemap_entries(sitemap_data.get('companies', []))
+        jobs_list = sitemap_entries(sitemap_data.get('jobs', []))
+        posts_list = sitemap_entries(sitemap_data.get('posts', []))
     except Exception:
         print(Exception)
     # Return the sitemap as an XML response
@@ -5810,102 +5884,62 @@ def sitemap_table():
 
 @app.route('/sitemap/<sitemap_key>/sitemap.xml')
 def sitemap_by_key(sitemap_key):
-    try:
-        sitemap_data = api_calls.get_sitemap_data()
-        company_list = sitemap_data.get('companies', []) or []
-        jobs_list = sitemap_data.get('jobs', []) or []
-        posts_list = sitemap_data.get('posts', []) or []
-    except Exception:
-        print(Exception)
-
-    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>\n"""
-    sitemap_xml += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
-
-    if sitemap_key == 'companies':
-        for entry in company_list:
-            sitemap_xml += f"""
-            <url>
-                <loc>{entry['url']}</loc>
-                <lastmod>{entry['lastmod']}</lastmod>
-                <priority>{entry['priority']}</priority>
-            </url>"""
-        sitemap_xml += "\n</urlset>"
-
-    elif sitemap_key == 'jobs':
-        for entry in jobs_list:
-            sitemap_xml += f"""
-            <url>
-                <loc>{entry['url']}</loc>
-                <lastmod>{entry['lastmod']}</lastmod>
-                <priority>{entry['priority']}</priority>
-            </url>"""
-        sitemap_xml += "\n</urlset>"
-
-    elif sitemap_key == 'posts':
-
-        for entry in posts_list:
-            sitemap_xml += f"""
-            <url>
-                <loc>{entry['url']}</loc>
-                <lastmod>{entry['lastmod']}</lastmod>
-                <priority>{entry['priority']}</priority>
-            </url>"""
-
-        sitemap_xml += "\n</urlset>"
-
-    elif sitemap_key == 'pages':
-        return send_file('templates/sitemap.xml', mimetype='application/xml')
-
-    elif sitemap_key == 'academy':
+    if sitemap_key == 'academy':
         return send_file('templates/academy_sitemap.xml', mimetype='application/xml')
-
-    # Return the sitemap as an XML response
-    return Response(sitemap_xml, mimetype="application/xml")
+    if sitemap_key == 'pages':
+        return sitemap()
+    if sitemap_key not in ('companies', 'jobs', 'posts'):
+        abort(404)
+    data = api_calls.get_sitemap_data() or {}
+    namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+    ET.register_namespace('', namespace)
+    root = ET.Element('{%s}urlset' % namespace)
+    for entry in sitemap_entries(data.get(sitemap_key)):
+        node = ET.SubElement(root, '{%s}url' % namespace)
+        ET.SubElement(node, '{%s}loc' % namespace).text = entry['url']
+        for field in ('lastmod', 'priority'):
+            if entry.get(field) is not None:
+                ET.SubElement(node, '{%s}%s' % (namespace, field)).text = str(entry[field])
+    return Response(ET.tostring(root, encoding='utf-8', xml_declaration=True), mimetype='application/xml')
 
 
 @app.route('/sitemap.xml')
 def sitemap():
+    namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9'
+    ET.register_namespace('', namespace)
+    root = ET.Element('{%s}urlset' % namespace)
     try:
-        sitemap_data = api_calls.get_sitemap_data()
-        company_list = sitemap_data.get('companies', []) or []
-        jobs_list = sitemap_data.get('jobs', []) or []
-        posts_list = sitemap_data.get('posts', []) or []
+        data = api_calls.get_sitemap_data() or {}
     except Exception:
-        print(Exception)
+        app.logger.exception('Unable to load dynamic sitemap entries')
+        data = {}
+    entries = [entry for key in ('companies', 'jobs', 'posts') for entry in (data.get(key) or [])]
+    public_endpoints = ['index', 'about_us', 'homepage_contactus_submission', 'privacy_policy',
+                        'terms_of_service', 'faqs', 'all_companies', 'all_cms_post', 'resources_index',
+                        'resources_cost_per_hire', 'resources_time_to_hire', 'resources_recruitment_roi',
+                        'resources_attrition_cost', 'resources_job_board_effectiveness', 'academy.index',
+                        'rss_feeds_index', 'features_index']
+    for endpoint in public_endpoints:
+        if endpoint in app.view_functions:
+            entries.append({'url': url_for(endpoint, _external=True, _scheme='https')})
+    from resource_pages import CALCULATORS
+    entries.extend({'url': 'https://hiregen.com/' + slug} for slug in CALCULATORS)
+    entries.append({'url': 'https://hiregen.com/headcount-planning-template'})
+    seen = set()
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        location = public_hiregen_url(entry.get('url'))
+        if not location or location in seen:
+            continue
+        seen.add(location)
+        node = ET.SubElement(root, '{%s}url' % namespace)
+        ET.SubElement(node, '{%s}loc' % namespace).text = location
+        for field in ('lastmod', 'priority'):
+            if entry.get(field) is not None:
+                ET.SubElement(node, '{%s}%s' % (namespace, field)).text = str(entry[field])
+    return Response(ET.tostring(root, encoding='utf-8', xml_declaration=True), mimetype='application/xml')
 
-    sitemap_xml = """<?xml version="1.0" encoding="UTF-8"?>\n"""
-    sitemap_xml += """<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n"""
-
-    for entry in company_list:
-        sitemap_xml += f"""
-    <url>
-        <loc>{entry['url']}</loc>
-        <lastmod>{entry['lastmod']}</lastmod>
-        <priority>{entry['priority']}</priority>
-    </url>"""
-
-    for entry in jobs_list:
-        sitemap_xml += f"""
-    <url>
-        <loc>{entry['url']}</loc>
-        <lastmod>{entry['lastmod']}</lastmod>
-        <priority>{entry['priority']}</priority>
-    </url>"""
-
-    for entry in posts_list:
-        sitemap_xml += f"""
-    <url>
-        <loc>{entry['url']}</loc>
-        <lastmod>{entry['lastmod']}</lastmod>
-        <priority>{entry['priority']}</priority>
-    </url>"""
-
-    sitemap_xml += "\n</urlset>"
-
-
-
-    # Return the sitemap as an XML response
-    return Response(sitemap_xml, mimetype="application/xml")
 
 @app.route('/robots.txt')
 def robots_txt():
@@ -6057,7 +6091,7 @@ def company_jobs_rss_feed(company_subdomain):
         company_id = company_info["id"]
 
         # Get jobs for specific company
-        jobs_data = api_calls.get_jobs_by_company_id(company_id=company_id)
+        jobs_data = [job for job in (api_calls.get_jobs_by_company_id(company_id=company_id) or []) if is_public_job(job)]
         
         if not jobs_data:
             jobs_data = []  # Empty list if no jobs found
@@ -6068,11 +6102,16 @@ def company_jobs_rss_feed(company_subdomain):
         print(f"RSS Feed Error: {str(e)}")  # Debug logging
         return f"Error generating company RSS feed: {str(e)}", 500
 
-@app.route('/rss/industry/<industry>/jobs.xml')
+@app.route('/rss/industry/<path:industry>/jobs.xml')
 def industry_jobs_rss_feed(industry):
     """RSS feed for jobs in specific industry"""
     try:
         # Get jobs for specific industry
+        from urllib.parse import unquote
+        raw_industry = unquote(industry)
+        industry_options = [item[0] if isinstance(item, (tuple, list)) else item for item in static_dropdowns.industries]
+        industry = next((name for name in industry_options
+                         if name.lower().replace(' ', '-') == raw_industry.lower().replace(' ', '-')), raw_industry)
         jobs_data = api_calls.get_filtered_jobs(industry=industry, limit=50)
         jobs_data = jobs_data['jobs']
         rss_content = generate_jobs_rss_feed(jobs_data, f"{industry} Industry")

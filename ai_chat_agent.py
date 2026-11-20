@@ -1,4 +1,5 @@
 import openai
+import os
 import json
 import datetime
 from typing import Dict, Any, List, Optional
@@ -62,6 +63,7 @@ class AIChatAgent:
     """AI Chat Agent that uses OpenAI for natural conversation and intent recognition"""
     
     def __init__(self):
+        self.model = os.getenv('HIREGEN_CHAT_MODEL', 'gpt-4.1')
         self.conversations: Dict[str, Dict[str, Any]] = {}
         
         # Available options for job creation
@@ -323,7 +325,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             
             # Call OpenAI with function calling
             response = openai.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=conversation["messages"],
                 tools=self.get_functions(),
                 tool_choice="auto",
@@ -362,7 +364,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             logger.error(f"Error processing message: {e}")
             return {
                 "success": False,
-                "message": f"I encountered an error: {str(e)}. Please try again.",
+                "message": "The assistant could not complete this request. Please try again shortly.",
                 "session_id": session_id
             }
     
@@ -406,7 +408,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             
             # Get the next response from OpenAI
             next_response = openai.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=conversation["messages"],
                 temperature=0.7,
                 max_tokens=1000
@@ -426,7 +428,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             logger.error(f"Error handling job details generation: {e}")
             return {
                 "success": False,
-                "message": f"Error generating job details: {str(e)}",
+                "message": "The assistant could not complete this request. Please try again shortly.",
                 "session_id": conversation.get("session_id")
             }
     
@@ -447,7 +449,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             
             # Get the next response from OpenAI
             next_response = openai.chat.completions.create(
-                model="gpt-4",
+                model=self.model,
                 messages=conversation["messages"],
                 temperature=0.7,
                 max_tokens=1000
@@ -471,7 +473,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             logger.error(f"Error handling job posting: {e}")
             return {
                 "success": False,
-                "message": f"Error preparing job for posting: {str(e)}",
+                "message": "The assistant could not complete this request. Please try again shortly.",
                 "session_id": conversation.get("session_id")
             }
     
@@ -503,7 +505,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             logger.error(f"Error handling get_user_jobs: {e}")
             return {
                 "success": False,
-                "message": f"Error fetching user's jobs: {str(e)}",
+                "message": "The assistant could not complete this request. Please try again shortly.",
                 "session_id": conversation.get("session_id")
             }
     
@@ -535,7 +537,7 @@ When a user asks to see their applicants, fetch their job applicants and display
             logger.error(f"Error handling get_user_applicants: {e}")
             return {
                 "success": False,
-                "message": f"Error fetching user's applicants: {str(e)}",
+                "message": "The assistant could not complete this request. Please try again shortly.",
                 "session_id": conversation.get("session_id")
             }
     

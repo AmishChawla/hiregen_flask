@@ -77,6 +77,8 @@
                             <button type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" onclick="openDrawer({{ data.application_id }}, '{{ data.applicant_name }}', '{{ data.applicant_email }}', '{{ data.application_date }}', '{{ data.resume }}', '{{data.similarity_scores.overall_score}}', '{{data.similarity_scores.experience_embedding}}', '{{data.similarity_scores.education_embedding}}', '{{data.similarity_scores.skill_embedding}}', '{{data.similarity_scores.leadership_embedding}}', '{{data.similarity_scores.industry_embedding}}')">Details</button>
                         </td>
                     </tr>
+                  {% else %}
+                    <tr><td colspan="6" class="p-6 text-center text-gray-500" role="status">No applicants match your search. Try changing or clearing the filters.</td></tr>
                   {% endfor %}
                 </tbody>
             </table>
@@ -87,12 +89,12 @@
 </div>
   </div>
 <div id="filterDrawer" class="fixed inset-0 z-10 hidden">
-  <div class="absolute inset-0 bg-gray-500/75 dark:bg-gray-900/75" onclick="closeFilterDrawer()"></div>
+  <div class="absolute inset-0 bg-gray-500/75 dark:bg-gray-900/75" onclick="closeFilterDrawer()" aria-label="Close search filters"></div>
   <div class="fixed inset-y-0 right-0 bg-white dark:bg-gray-800 shadow-xl" style="width:400px;">
     <div class="p-6">
       <div class="flex justify-between items-center">
         <h2 class="text-xl font-bold text-gray-900 dark:text-white">Filter Options</h2>
-        <button type="button" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300" onclick="closeFilterDrawer()">
+        <button type="button" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300" onclick="closeFilterDrawer()" aria-label="Close search filters" aria-label="Close search filters">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -132,7 +134,7 @@
                     <p class="mt-1 max-w-2xl text-sm text-gray-500">Personal details and application.</p>
                   </div>
                   <div class="flex h-7 items-center">
-                    <button type="button" class="relative text-gray-400 hover:text-gray-500" onclick="closeDrawer()">
+                    <button type="button" class="relative text-gray-400 hover:text-gray-500" onclick="closeDrawer()" aria-label="Close applicant details">
                       <span class="absolute -inset-2.5"></span>
                       <span class="sr-only">Close panel</span>
                       <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -247,7 +249,7 @@
             <!-- Close Button -->
             <div class="shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
               <div class="flex justify-end space-x-3">
-                <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="closeDrawer()">Close</button>
+                <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" onclick="closeDrawer()" aria-label="Close applicant details">Close</button>
               </div>
             </div>
 

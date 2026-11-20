@@ -6,12 +6,8 @@
     <title>{% block title %}{{ company.name }}{% endblock %}</title>
     
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        };
-    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+
     
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -62,6 +58,10 @@
     </style>
     
     {% block metatags %}{% endblock %}
+
+  <meta name="description" content="{% block page_description %}{{ page_description|default('Recruitment tools and job opportunities on Hiregen.', true) }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url|default(request.base_url, true) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site-fixes.css') }}">
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -318,8 +318,8 @@
                         © 2025 {{ company.name }}. All rights reserved.
                     </div>
                     <div class="flex space-x-4 sm:space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Terms of Service</a>
+                        <a href="{{ url_for('privacy_policy') }}" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Privacy Policy</a>
+                        <a href="{{ url_for('terms_of_service') }}" class="text-gray-400 hover:text-white text-xs sm:text-sm transition-colors">Terms of Service</a>
                     </div>
                 </div>
             </div>

@@ -182,10 +182,11 @@
                 <span class="text-sm font-medium text-gray-500">Location:</span>
                 <p class="text-gray-900">{{ application_data.company.location or 'Not specified' }}</p>
               </div>
-              {% if application_data.company.website_url %}
+              {% set website_url = application_data.company.website_url|absolute_website_url %}
+              {% if website_url %}
               <div>
                 <span class="text-sm font-medium text-gray-500">Website:</span>
-                <a href="{{ application_data.company.website_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">{{ application_data.company.website_url }}</a>
+                <a href="{{ website_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">{{ application_data.company.website_url }}</a>
               </div>
               {% endif %}
               {% if application_data.company.linkedin_url %}

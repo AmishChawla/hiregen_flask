@@ -1,0 +1,13 @@
+{% extends 'common_base.html' %}
+{% block title %}Recruitment calculators and resources | Hiregen{% endblock %}
+{% block content %}
+<main class="max-w-5xl mx-auto px-4 py-12"><h1 class="text-3xl font-bold mb-6">Recruitment calculators and resources</h1>
+<ul class="space-y-4">
+{% for endpoint, label in [('resources_cost_per_hire', 'Cost per hire'), ('resources_time_to_hire', 'Time to hire'), ('resources_recruitment_roi', 'Recruitment ROI'), ('resources_attrition_cost', 'Employee turnover cost'), ('resources_job_board_effectiveness', 'Job board effectiveness')] %}
+<li><a class="text-blue-700 underline" href="{{ url_for(endpoint) }}">{{ label }}</a></li>
+{% endfor %}
+<li><a class="text-blue-700 underline" href="{{ url_for('academy.index') }}">Recruitment academy</a></li>
+{% for slug, label in [('interview-cost-calculator','Interview cost'),('job-posting-cost-calculator','Job posting cost'),('offer-acceptance-rate','Offer acceptance rate'),('quality-of-hire-calculator','Quality of hire'),('recruitment-agency-fee-calculator','Recruitment agency fees'),('recruitment-budget-calculator','Recruitment budget'),('sourcing-channel-roi','Sourcing channel ROI'),('time-to-fill-calculator','Time to fill'),('pipeline-conversion-calculator','Pipeline conversion'),('cost-of-bad-hire-calculator','Cost of a bad hire'),('headcount-planning-template','Headcount planning template')] %}
+<li><a class="text-blue-700 underline" href="/{{ slug }}">{{ label }}</a></li>{% endfor %}
+</ul></main>
+{% endblock %}

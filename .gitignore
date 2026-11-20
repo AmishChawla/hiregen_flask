@@ -5,3 +5,7 @@ hiregen-flask/
 secrets.env
 deployment.txt
 
+
+node_modules/
+.pytest_cache/
+__pycache__/

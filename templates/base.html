@@ -65,12 +65,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
     rel="stylesheet">
   <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    };
-  </script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+
   <!-- Icons -->
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-16x16.png">
@@ -91,6 +87,10 @@
           'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-TDQPMPQ9');</script>
   <!-- End Google Tag Manager -->
+
+  <meta name="description" content="{% block page_description %}{{ page_description|default('Recruitment tools and job opportunities on Hiregen.', true) }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url|default(request.base_url, true) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site-fixes.css') }}">
 </head>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2LHWC5ZME1"></script>
@@ -346,7 +346,7 @@
 
 
             <div class="flex items-center gap-3 flex-1 min-w-0">
-              <div class="relative flex-1 min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              {% if current_user.has_permission(['can_track_applicants']) %}<div class="relative flex-1 min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round"
                   class="lucide lucide-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"
@@ -356,10 +356,8 @@
                   data-component-content="%7B%22className%22%3A%22absolute%20left-3%20top-1%2F2%20transform%20-translate-y-1%2F2%20text-gray-400%20w-4%20h-4%22%7D">
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
-                </svg><a href="{{ url_for('employer_applicants_filter') }}"><input
-                    class="block h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-gray-50 border-gray-200 focus:bg-white"
-                    placeholder="Search candidates, jobs..."></a>
-              </div>
+                </svg><a href="{{ url_for('employer_applicants_filter') }}" class="flex items-center h-10 w-full rounded-md border pl-10 pr-3 bg-gray-50 border-gray-200 text-gray-500">Search candidates, jobs...</a>
+              </div>{% endif %}
             </div>
 
             <!-- Navigation -->
@@ -497,13 +495,13 @@
 
 
   <script>
-    document.getElementById('darkModeToggle').addEventListener('click', () => {
+    document.getElementById('darkModeToggle')?.addEventListener('click', () => {
       const html = document.documentElement;
       const isDarkMode = html.classList.toggle('dark');
 
       // Update icon visibility
-      document.getElementById('lightIcon').classList.toggle('hidden', !isDarkMode);
-      document.getElementById('darkIcon').classList.toggle('hidden', isDarkMode);
+      document.getElementById('lightIcon')?.classList.toggle('hidden', !isDarkMode);
+      document.getElementById('darkIcon')?.classList.toggle('hidden', isDarkMode);
 
       // Save preference in localStorage
       localStorage.setItem('darkMode', isDarkMode);
@@ -516,12 +514,12 @@
 
       if (isDarkMode) {
         html.classList.add('dark');
-        document.getElementById('lightIcon').classList.remove('hidden');
-        document.getElementById('darkIcon').classList.add('hidden');
+        document.getElementById('lightIcon')?.classList.remove('hidden');
+        document.getElementById('darkIcon')?.classList.add('hidden');
       } else {
         html.classList.remove('dark');
-        document.getElementById('lightIcon').classList.add('hidden');
-        document.getElementById('darkIcon').classList.remove('hidden');
+        document.getElementById('lightIcon')?.classList.add('hidden');
+        document.getElementById('darkIcon')?.classList.remove('hidden');
       }
     });
   </script>

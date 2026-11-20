@@ -23,6 +23,7 @@
 
 {% endblock %}
 
+{% block page_description %}{{ (post.short_description or post.content or post.title)|striptags|truncate(160, true) }}{% endblock %}
 {% block content %}
 
 <style>

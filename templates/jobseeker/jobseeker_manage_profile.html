@@ -15,7 +15,7 @@
                   {% else %}
                   <img class="rounded-full w-24 h-24 mx-auto object-cover border-2 shadow-lg border-slate-400" src="{{ url_for('static', filename='images/man.png') }}" alt="User profile picture">
                   {% endif %}
-                  <button type="button" onclick="openModal('changePictureModal')" class="absolute top-20 right-0 bg-gray-100 hover:bg-gray-200 p-2 rounded-full shadow">
+                  <button type="button" onclick="openModal('changePictureModal')" class="absolute top-20 right-0 bg-gray-100 hover:bg-gray-200 p-2 rounded-full shadow" aria-label="Update profile picture">
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
                   </svg>
@@ -29,7 +29,7 @@
                     
                   </span>
                 </p>
-                <button type="button" onclick="openModal('updateNameModal')" class="absolute -top-2 -right-4 hover:bg-gray-200 p-2 rounded-full">
+                <button type="button" onclick="openModal('updateNameModal')" class="absolute -top-2 -right-4 hover:bg-gray-200 p-2 rounded-full" aria-label="Edit name">
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
                     <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
                   </svg>
@@ -148,7 +148,7 @@ Languages</h2>
   <div class="border-l-2 border-blue-200 pl-4">
     <h3 class="font-semibold text-lg text-gray-900">{{ experience.position }}</h3>
     <p class="text-blue-600 font-medium">{{ experience.company_name }}</p>
-    <p class="text-sm text-gray-500 mb-2">{{ experience.start_date }} - {{ experience.end_date or 'Present' }}</p>
+    <p class="text-sm text-gray-500 mb-2">{{ experience.start_date or 'Start date not specified' }}{% if experience.is_ongoing %} - Present{% elif experience.end_date %} - {{ experience.end_date }}{% else %} - End date not specified{% endif %}</p>
     <p class="text-gray-700">{{ experience.responsibilities }}</p>
 </div>
 {% endfor %}
@@ -162,7 +162,7 @@ Languages</h2>
   <div class="border-l-2 border-green-200 pl-4">
     <h3 class="font-semibold text-lg text-gray-900">{{ education.degree }} in {{ education.field_of_study }}</h3>
     <p class="text-green-600 font-medium">{{ education.institution_name }}</p>
-    <p class="text-sm text-gray-500">2015 - 2019 • GPA: 3.8/4.0</p>
+    <p class="text-sm text-gray-500">{{ education.start_date or 'Dates not specified' }}{% if education.is_ongoing %} - Present{% elif education.end_date %} - {{ education.end_date }}{% endif %}</p>
 </div>
 {% endfor %}
 </div>
@@ -180,7 +180,7 @@ Internships</h2>
   <div class="border-l-2 border-orange-200 pl-4">
     <h3 class="font-semibold text-lg text-gray-900">{{ internship.position }}</h3>
     <p class="text-orange-600 font-medium">{{ internship.company_name }}</p>
-    <p class="text-sm text-gray-500">{{ internship.start_date }} - {{ internship.end_date or 'Present' }}</p>
+    <p class="text-sm text-gray-500">{{ internship.start_date or 'Start date not specified' }}{% if internship.is_ongoing %} - Present{% elif internship.end_date %} - {{ internship.end_date }}{% else %} - End date not specified{% endif %}</p>
     <p class="text-gray-700">{{ internship.job_description }}</p>
 </div>
 {% endfor %}

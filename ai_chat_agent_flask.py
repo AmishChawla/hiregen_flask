@@ -96,7 +96,7 @@ def chat():
     except Exception as e:
         return jsonify({
             'success': False,
-            'error': f'Server error: {str(e)}'
+            'error': 'The assistant is temporarily unavailable. Please try again shortly.'
         }), 500
 
 @ai_chat_bp.route('/post-job', methods=['POST'])

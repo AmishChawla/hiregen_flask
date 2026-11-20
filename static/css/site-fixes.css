@@ -1,0 +1,11 @@
+/* Shrink flex/grid children instead of clipping mobile content. */
+*, *::before, *::after { box-sizing: border-box; }
+img, video { max-width: 100%; }
+h1, h2, h3, p, a { overflow-wrap: anywhere; }
+.flex-1 { min-width: 0; }
+.ql-editor { overflow-wrap: anywhere; }
+@media (max-width: 639px) {
+  .blog-post .flex-1 { width: 100%; }
+  #filterDrawer > div:last-child { max-width: 100vw; }
+  #applyModal [role="dialog"] { max-width: 100%; }
+}
