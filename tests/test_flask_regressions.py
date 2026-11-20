@@ -197,3 +197,10 @@ def test_guest_cannot_open_draft_detail(app):
     response=app.test_client().get('/jobs/qa-draft',base_url='http://qa.hiregen.test')
     assert response.status_code==404
     assert b'qa-draft' not in response.data
+
+@pytest.mark.parametrize('low,high,expected',[(None,None,'Salary not specified'),(0,100,'0 - 100'),(500,None,'From 500'),(None,900,'Up to 900')])
+def test_employer_salary_fallback(app,low,high,expected):
+    with app.app_context():
+        html=app.jinja_env.get_template('widgets/salary_range.html').render(job=dict(min_salary=low,max_salary=high,salary_currency='$',salary_time_unit='Yearly'))
+    assert expected in html
+    assert 'None' not in html

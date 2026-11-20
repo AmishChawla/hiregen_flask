@@ -1,0 +1,155 @@
+    <header
+      class="marketing-header container mx-auto px-6 lg:px-8 py-4">
+      <div class="marketing-brand flex items-center justify-between">
+        <div class="logo">
+          <a href="{{url_for('index')}}">
+            <img src="/static/images/logo.webp" alt="Logo" width="144" height="36" />
+          </a>
+        </div>
+
+        <!-- Toggle Button -->
+        <button class="ml-auto lg:hidden p-2" aria-label="Toggle menu" aria-controls="marketing-navigation" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navigation -->
+      <nav
+        class="marketing-nav" aria-label="Main navigation" id="marketing-navigation">
+        <ul class="marketing-menu">
+          <!-- Features -->
+          <li><details name="marketing-menus" class="marketing-dropdown"><summary class="marketing-trigger">Features <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" stroke="currentColor" stroke-width="1.5"/></svg></summary><ul class="marketing-dropdown-panel">
+              <li><a href="{{url_for('recruitment_software')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Software</a></li>
+              <li><a href="{{url_for('applicant_tracking_feature')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Applicant Tracking</a></li>
+              <li><a href="{{url_for('resume_parsing_feature')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Resume Parsing</a></li>
+              <li><a href="{{url_for('recruitment_crm')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment CRM</a></li>
+              <li><a href="{{url_for('candidate_matching')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+              <li><a href="{{url_for('ai_recruitment')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">AI
+                  Recruitment</a></li>
+            </ul></details></li>
+
+          <!-- AI -->
+          <li><details name="marketing-menus" class="marketing-dropdown"><summary class="marketing-trigger">AI <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" stroke="currentColor" stroke-width="1.5"/></svg></summary><ul class="marketing-dropdown-panel">
+              <li><a href="{{url_for('ai_resume_screening')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Resume
+                  Screening</a></li>
+              <li><a href="{{url_for('ai_candidate_matching')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Candidate Matching</a></li>
+              <li><a href="{{url_for('ai_chatbots')}}" class="block px-4 py-3 text-sm hover:bg-slate-100">Chatbots</a>
+              </li>
+              <li><a href="{{url_for('ai_recruitment_analytics')}}"
+                  class="block px-4 py-3 text-sm hover:bg-slate-100">Recruitment Analytics</a></li>
+            </ul></details></li>
+
+          <li><a href="{{url_for('user_view_plan')}}"
+              class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Pricing</a></li>
+          <li><a href="{{url_for('all_companies')}}"
+              class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Companies</a></li>
+
+          <li><details name="marketing-menus" class="marketing-dropdown marketing-resources"><summary class="marketing-trigger">Resources <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 7 5 5 5-5" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+            <div class="marketing-dropdown-panel marketing-resources-panel">                <div
+                  class="marketing-resources-grid">
+                  <div class="grid grid-cols-1 gap-1 p-2 sm:grid-cols-2">
+                    <!-- Calculators -->
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-coins text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('resources_cost_per_hire') }}"
+                          class="font-semibold text-gray-900">Cost-per-Hire<span class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Calculate average cost per hire</p>
+                      </div>
+                    </div>
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-hourglass-half text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('resources_time_to_hire') }}"
+                          class="font-semibold text-gray-900">Time-to-Hire<span class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Measure days from post to offer</p>
+                      </div>
+                    </div>
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-chart-line text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('resources_recruitment_roi') }}"
+                          class="font-semibold text-gray-900">Recruitment ROI<span class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Estimate ROI of your hiring</p>
+                      </div>
+                    </div>
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-arrows-rotate text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('resources_attrition_cost') }}"
+                          class="font-semibold text-gray-900">Attrition Cost<span class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Quantify yearly attrition cost</p>
+                      </div>
+                    </div>
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-bullseye text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('resources_job_board_effectiveness') }}"
+                          class="font-semibold text-gray-900">Job Board Effectiveness<span
+                            class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Compare sources by cost & hires</p>
+                      </div>
+                    </div>
+                    <!-- Blog/Docs -->
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-newspaper text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('all_cms_post') }}" class="font-semibold text-gray-900">Blog<span
+                            class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">Articles and updates</p>
+                      </div>
+                    </div>
+                    <!-- Academy -->
+                    <div class="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50">
+                      <div
+                        class="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
+                        <i class="fa-solid fa-graduation-cap text-gray-600 group-hover:text-indigo-600 text-lg"></i>
+                      </div>
+                      <div>
+                        <a href="{{ url_for('academy.index') }}" class="font-semibold text-gray-900">Academy<span
+                            class="absolute inset-0"></span></a>
+                        <p class="mt-1 text-gray-600">AI recruitment masterclass & guides</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+</div></details></li>
+
+          <li><a href="{{url_for('login')}}"
+              class="block py-2 text-base font-medium text-gray-700 hover:text-blue-600">Sign in</a></li>
+          <li>
+            <a href="{{url_for('register')}}"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-5 py-2 rounded-full">
+              Try for free
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+<script src="{{ url_for('static', filename='js/marketing-nav.js') }}" defer></script>

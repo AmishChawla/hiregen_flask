@@ -1,0 +1,5 @@
+{% set low = job.min_salary is defined and job.min_salary is not none %}
+{% set high = job.max_salary is defined and job.max_salary is not none %}
+{% if low or high %}
+{{ job.salary_currency or '' }} {% if low and high %}{{ job.min_salary }} - {{ job.max_salary }}{% elif low %}From {{ job.min_salary }}{% else %}Up to {{ job.max_salary }}{% endif %}{% if job.salary_time_unit %}/{{ job.salary_time_unit }}{% endif %}
+{% else %}Salary not specified{% endif %}

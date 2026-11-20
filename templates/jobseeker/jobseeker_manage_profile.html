@@ -373,7 +373,7 @@ Accomplishments</h2>
   document.addEventListener("click", function(event) {
     document.querySelectorAll(".relative.z-10").forEach((modal) => {
       let modalContent = modal.querySelector(".modal-content");
-      if (!modal.classList.contains("hidden") && !modalContent.contains(event.target)) {
+      if (modalContent && modal.id && !modal.classList.contains("hidden") && !modalContent.contains(event.target)) {
         closeModal(modal.id);
       }
     });
