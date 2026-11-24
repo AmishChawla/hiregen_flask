@@ -1,3 +1,4 @@
+from job_quota_client import JobPostingLimitError, raise_job_limit_error
 import json
 import pprint
 from flask import abort
@@ -1199,6 +1200,7 @@ def create_job_opening(job_detail, access_token):
 
     try:
         response = requests.post(constants.BASE_URL + '/job_opening/create-job', json=job_detail, headers=headers)
+        raise_job_limit_error(response)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -1209,6 +1211,8 @@ def create_job_opening(job_detail, access_token):
         print(f"Timeout Error: {errt}")
     except requests.exceptions.RequestException as err:
         print(f"An unexpected error occurred: {err}")
+    except JobPostingLimitError:
+        raise
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
@@ -1220,6 +1224,7 @@ def update_job(job_id, job_details: dict, access_token):
     try:
         response = requests.put(constants.BASE_URL + f'/job_opening/update-job/{job_id}', json=job_details, headers=headers)
         print(response.status_code)
+        raise_job_limit_error(response)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.HTTPError as errh:
@@ -3964,3 +3969,14 @@ def update_jobseeker_preferences(access_token, preferences_update):
         return response.json()
     else:
         raise Exception(f"Failed to update jobseeker preferences: {response.text}")
+
+
+def get_company_job_usage(access_token):
+    try:
+        response = requests.get(constants.BASE_URL + '/job_opening/usage',
+                                headers={'Authorization': f'Bearer {access_token}'}, timeout=10)
+        if response.status_code == 200:
+            return response.json()
+    except (requests.exceptions.RequestException, ValueError):
+        pass
+    return None

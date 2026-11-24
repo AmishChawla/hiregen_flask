@@ -25,3 +25,18 @@ for (const name of ['description','requirements','benefits']) editors['#job_'+na
 listeners.submit();
 for (const name of ['description','requirements','benefits']) assert.equal(fields['hidden_job_'+name].value,'<p>Edited '+name+'</p>');
 console.log('16 browser-script checks passed: calculations, invalid inputs, and all three rich-text fields.');
+
+// Quota rejection must restore all three bound create-form editors.
+{
+  const source = fs.readFileSync(require('node:path').join(__dirname, '../templates/add_post.html'), 'utf8');
+  const restore = source.match(/function restoreJobEditor\(editor, fieldId\) \{[\s\S]*?\n  \}/)[0];
+  const values = {hidden_job_description:'<p>Retained description</p>', hidden_job_requirements:'<p>Retained requirements</p>', hidden_job_benefits:'<p>Retained benefits</p>'};
+  const ctx = {document:{getElementById:id=>({value:values[id]})}};
+  vm.createContext(ctx);vm.runInContext(restore,ctx);
+  for (const [id,expected] of Object.entries(values)) {
+    let actual;
+    ctx.restoreJobEditor({clipboard:{dangerouslyPasteHTML:value=>{actual=value;}}},id);
+    assert.strictEqual(actual,expected);
+  }
+  console.log('3 additional checks passed: create-form rich text survives a quota rejection.');
+}

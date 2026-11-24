@@ -3,6 +3,9 @@
 {% block title %}Job Opening{% endblock %}
 
 {% block content %}
+{% if job_usage and job_usage.active_job_limit is not none %}
+<p role="status" class="p-4">{{ job_usage.active_jobs }} of {{ job_usage.active_job_limit }} active published jobs. All team members share this allowance. Drafts do not count.</p>
+{% endif %}
 <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" rel="stylesheet">
 <style>
     .card {

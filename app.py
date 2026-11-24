@@ -1371,7 +1371,8 @@ def user_all_post():
     metrics = result['metrics'] if result else {}
     if result is None:
         result = {}  # Set result to an empty list
-    return render_template('user_all_post.html', jobs=jobs, metrics=metrics)
+    job_usage = api_calls.get_company_job_usage(access_token=current_user.id)
+    return render_template('user_all_post.html', jobs=jobs, metrics=metrics, job_usage=job_usage)
 
 
 #['applied', 'shortlisted', 'assessment', 'interview', 'rejected', 'selected']
@@ -1653,6 +1654,8 @@ def add_post():
                     return redirect(url_for('user_all_post'))
                 else:
                     flash("Failed to create post", "danger")
+            except api_calls.JobPostingLimitError as e:
+                return render_template('add_post.html', form=form, job_limit_error=str(e)), 409
             except Exception as e:
                 flash(f"Error creating post: {e}", "danger")
         elif form.publish.data:
@@ -1693,6 +1696,8 @@ def add_post():
 
                 else:
                     flash("Failed to create post", "danger")
+            except api_calls.JobPostingLimitError as e:
+                return render_template('add_post.html', form=form, job_limit_error=str(e)), 409
             except Exception as e:
                 flash(f"Error creating post: {e}", "danger")
     else:
@@ -2213,6 +2218,8 @@ def admin_edit_post(job_id):
                     job_details=job_details,
                     access_token=current_user.id
                 )
+                if not result:
+                    return render_template('edit_post_form.html', form=form, job_id=job_id, job_limit_error='Could not save the job. Please try again.'), 502
                 print("redirecting")
                 return redirect(url_for('user_all_post'))
 
@@ -2236,6 +2243,8 @@ def admin_edit_post(job_id):
                 #         return redirect(url_for('all_post'))
                 # else:
                 #     print("Failed to update post")
+            except api_calls.JobPostingLimitError as e:
+                return render_template('edit_post_form.html', form=form, job_id=job_id, job_limit_error=str(e)), 409
             except Exception as e:
                 print(f"Error updating post: {e}")
         elif form.preview.data:
@@ -2306,8 +2315,12 @@ def admin_edit_post(job_id):
                     job_details=job_details,
                     access_token=current_user.id
                 )
+                if not result:
+                    return render_template('edit_post_form.html', form=form, job_id=job_id, job_limit_error='Could not save the job. Please try again.'), 502
                 print("redirecting")
                 return redirect(url_for('user_all_post'))
+            except api_calls.JobPostingLimitError as e:
+                return render_template('edit_post_form.html', form=form, job_id=job_id, job_limit_error=str(e)), 409
             except Exception as e:
                 print(f"Error updating post: {e}")
     else:

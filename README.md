@@ -123,3 +123,20 @@ Deploy the generated stylesheet with the Flask templates. Node is needed for reb
 ### Scope of the November 2026 fixes
 
 Security response headers, existing job/blog server errors (including deleted-job handling), test-company moderation, TLS certificates, currency storage/selection, job slug changes on save, and application progress calculations are intentionally unchanged. Draft visibility is filtered in Flask company pages, detail views, and company feeds; the backend API still needs its own publication enforcement. Existing API-generated dated application links are supported through a Flask redirect; backend link generation is unchanged.
+
+
+### Company-wide free-plan job allowance
+
+The Jobs page reads active-job usage from the backend. The shared free allowance
+is 50 published, active jobs per company, including team members' jobs. Closing
+or unpublishing a job frees a slot; drafts never consume a slot.
+
+Deploy the FastAPI quota implementation before this Flask update. Include the
+new `job_quota_client.py` module in the deployment. A structured backend HTTP 409
+quota response re-renders the bound job form with an accessible error message,
+so the employer can close an existing job or save the entered job as a draft.
+The backend migration `migrations/20261124_free_plan_50_active_jobs.sql` updates
+free plan ID 1's stored allowance; it must be applied through the normal database
+migration process. No production database update is performed by the Flask app.
+
+Offline validation: `PYTHONPATH=.:tests python -m pytest tests/test_job_quota_client.py tests/test_flask_regressions.py`.

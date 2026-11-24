@@ -3,6 +3,7 @@
 {% block title %}Add Job{% endblock %}
 
 {% block content %}
+{% if job_limit_error %}<p role="alert" class="p-4 text-red-600">{{ job_limit_error }}</p>{% endif %}
 
 
 
@@ -308,6 +309,17 @@
   var quillRequirements = new Quill('#job_requirements', quillOptions);
   var quillBenefits = new Quill('#job_benefits', quillOptions);
   var quillDescription = new Quill('#job_description', quillOptions);
+
+  // A rejected publication re-renders the submitted form. Restore its rich
+  // text too, so Save Draft does not replace the entered content with blanks.
+  function restoreJobEditor(editor, fieldId) {
+    const field = document.getElementById(fieldId);
+    if (field && field.value) editor.clipboard.dangerouslyPasteHTML(field.value);
+  }
+  restoreJobEditor(quillDescription, 'hidden_job_description');
+  restoreJobEditor(quillRequirements, 'hidden_job_requirements');
+  restoreJobEditor(quillBenefits, 'hidden_job_benefits');
+
 
   // Add validation function
   function validateForm() {

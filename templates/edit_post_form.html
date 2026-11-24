@@ -3,6 +3,7 @@
 {% block title %}Publish{% endblock %}
 
 {% block content %}
+{% if job_limit_error %}<p role="alert" class="p-4 text-red-600">{{ job_limit_error }}</p>{% endif %}
 <style>
   #job_description .ql-editor,
   #job_requirements .ql-editor,
