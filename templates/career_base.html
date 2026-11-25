@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {% block metatags %}
+  {% endblock %}
+
+  <title>{% block title %}HireGen{% endblock %}</title>
+  <style>
+    body {
+      font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+      font-feature-settings: normal;
+      font-variation-settings: normal;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 100dvh;
+    }
+
+    .submenu-content {
+      transition: all 0.3s ease;
+    }
+
+    .submenu-toggle.open .submenu-icon {
+      transform: rotate(90deg);
+    }
+
+    /* Responsive tables */
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+  </style>
+  <style>
+    /* Responsive media */
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .responsive-embed {
+      position: relative;
+      width: 100%;
+    }
+
+    .responsive-embed::before {
+      content: "";
+      display: block;
+      padding-top: 56.25%;
+    }
+
+    .responsive-embed>iframe,
+    .responsive-embed>video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+    rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tailwind.css') }}">
+
+  <!-- Icons -->
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <meta name="theme-color" content="#ffffff">
+
+  {% block styles %}{% endblock %}
+
+  <!-- Google Tag Manager -->
+  <script>(function (w, d, s, l, i) {
+      w[l] = w[l] || []; w[l].push({
+        'gtm.start':
+          new Date().getTime(), event: 'gtm.js'
+      }); var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-TDQPMPQ9');</script>
+  <!-- End Google Tag Manager -->
+
+  <meta name="description" content="{% block page_description %}{{ page_description|default('Recruitment tools and job opportunities on Hiregen.', true) }}{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url|default(request.base_url, true) }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site-fixes.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/employer-ui.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650;700&display=swap" rel="stylesheet">
+</head>
+<body class="hg-career">
+<header class="hg-career-header"><a href="{{ url_for('company_details_by_company_subdomain',company_subdomain=company.company_subdomain) }}" class="hg-career-brand"><img src="{{ url_for('static',filename='images/logo.webp') }}" width="144" height="28" alt="Hiregen"><span>{{ company.name }}</span></a><nav aria-label="Career site navigation"><a href="{{ url_for('company_details_by_company_subdomain',company_subdomain=company.company_subdomain) }}#open-roles">Jobs</a><a href="{{ url_for('company_details_by_company_subdomain',company_subdomain=company.company_subdomain) }}#about">About</a>{% if current_user.is_authenticated %}<a href="{{ url_for('jobseeker_dashboard') if current_user.role=='jobseeker' else url_for('user_dashboard') }}">My account</a>{% else %}<a href="{{ url_for('jobseeker_login') }}">Sign in</a>{% endif %}</nav></header>
+<main class="hg-career-main">{% block content %}{% endblock %}</main>
+<footer class="hg-career-footer"><span>{{ company.name }}</span><nav><a href="{{ url_for('privacy_policy') }}">Privacy policy</a><a href="{{ url_for('terms_of_service') }}">Terms of service</a><a href="{{ url_for('index') }}" class="hg-powered">Powered by <img src="{{ url_for('static',filename='images/logo.webp') }}" alt="Hiregen" width="96" height="20"></a></nav></footer>
+<script src="{{ url_for('static',filename='js/employer-ui.js') }}" defer></script></body></html>

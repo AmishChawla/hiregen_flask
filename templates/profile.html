@@ -1,233 +1,12 @@
-{% extends 'base.html' %}
-
-{% block title %}Profile{% endblock %}
-
-{% block styles %}
-    <style>
-        .img-upload {
-            position: relative;
-            display: inline-block;
-        }
-        .img-upload input {
-            display: none;
-        }
-        .img-upload:hover .edit-icon {
-            display: none;
-        }
-        .edit-icon {
-            display: none;
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px;
-            border-radius: 50%;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
-<div class="font-sans leading-tight m-h-screen bg-grey-lighter p-8">
-
-<div class="max-w-2xl mx-auto rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-0">
-<div class="relative">
-    <div class="absolute top-8 right-8">
-            <button type="button" id="editBtn" class="rounded-full bg-white px-3 py-2 text-sm font-semibold text-black ring-0 ring-inset ring-gray-300 hover:bg-white dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                    <path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.419a4 4 0 0 0-.885 1.343Z" />
-                  </svg>                  
-        </button>
-    </div>
-</div>
-
-<form method="POST" enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-
-
-<div class="px-4 sm:px-6 lg:px-8">
-
-<h2 class="text-xl font-semibold leading-none tracking-tight flex items-center gap-2 my-6">
-    <svg class="w-5 h-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM12 14c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" />
-</svg>
-
-    Personal Profile
-</h2>
-
-<div class="flex justify-center">
-    <img class="h-32 w-32 rounded-full border-2 bg-white border-blue-500 p-2" src="{{ profile_picture or url_for('static', filename='images/man.png') }}" alt="" id="profile_picture_img">
-</div>
-<div class="flex justify-center" style="position: relative;left: 45px;top: 2px; margin-bottom: 10px;">
-    <div class="img-upload">
-        <label for="{{ form.profile_picture.id }}" class="edit-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
-              </svg>
-        </label>
-        {{ form.profile_picture(class="hidden") }}
-    </div>
-</div>
-
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <div>
-                        {{ form.firstname.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                        {{ form.firstname(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        {{ form.lastname.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                        {{ form.lastname(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                <div>
-                    <div>
-                        {{ form.username.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                        {{ form.username(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        {{ form.email.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                        {{ form.email(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <div>
-                    {{ form.phone_number.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                    {{ form.phone_number(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <a href="{{ url_for('user_password_update') }}" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                    <i class="fas fa-lock"></i> Update Password?
-                </a>
-            </div>
-
-<h2 class="text-xl font-semibold leading-none tracking-tight flex items-center gap-2 my-6">
-    <svg class="w-5 h-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M4 21h16M4 21V3h8v6h8v12M9 17h2M9 13h2M9 9h2M13 17h2M13 13h2" />
-</svg>
-    Company Profile
-</h2>
-            {% if is_company_registered %}
-            <!-- Company Logo -->
-            <div class="flex justify-center">
-                <img class="h-32 w-32 rounded-full border-2 bg-white border-blue-500 p-2" src="{{ company['company_logo'] or url_for('static', filename='images/default-company.png') }}" alt="" id="company_logo_img">
-            </div>
-            <div class="flex justify-center" style="position: relative;left: 45px;top: 2px; margin-bottom: 10px;">
-                <div class="img-upload">
-                    <label for="{{ form.company_logo.id }}" class="edit-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                            <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
-                          </svg>
-                    </label>
-                    {{ form.company_logo(class="hidden") }}
-                </div>
-            </div>
-
-            <!-- Company Cover Image -->
-            <div class="mt-6">
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-300 mb-2">Company Cover Image</label>
-                <div class="flex justify-center">
-                    <img class="h-48 w-full object-cover rounded-lg border-2 bg-white border-blue-500" src="{{ company['company_cover_image'] or url_for('static', filename='images/company-bg.jpg') }}" alt="" id="company_cover_img">
-                </div>
-                <div class="flex justify-center mt-2">
-                    <div class="img-upload">
-                        <label for="{{ form.company_cover_image.id }}" class="edit-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                <path fill-rule="evenodd" d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z" clip-rule="evenodd" />
-                              </svg>
-                        </label>
-                        {{ form.company_cover_image(class="hidden") }}
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="">
-                <div>
-                    {{ form.company_name.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                    {{ form.company_name(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <div>
-                    {{ form.company_location.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                    {{ form.company_location(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <div>
-                    {{ form.company_website.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                    {{ form.company_website(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True) }}
-                </div>
-            </div>
-
-            <div class="mt-4">
-                <div>
-                    {{ form.company_description.label(class="block text-sm font-medium text-gray-900 dark:text-gray-300") }}
-                    {{ form.company_description(class="mt-2 block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-1 focus:-outline-offset-2 focus:outline-blue-600 dark:bg-gray-700 dark:text-gray-200 dark:outline-gray-600", disabled=True, rows=5) }}
-                </div>
-            </div>
-            {% else %}
-            <div class="mt-4">
-                <a href="{{ url_for('company_register') }}" class="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                    Add Company
-                </a>
-            </div>
-            {% endif %}
-
-<h2 class="text-xl font-semibold leading-none tracking-tight flex items-center gap-2 my-6">
-    <svg class="w-5 h-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-2 4h14m-9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-</svg>
-
-    Plan Details
-</h2>
-
-{% if current_plan %}
-    <p class="text-gray-700 dark:text-gray-300">
-        <strong>Current Plan:</strong> {{ current_plan.plan_name }}
-    </p>
-    <p class="text-gray-700 dark:text-gray-300">
-        <strong>Plan Status:</strong> {{ current_plan.status | capitalize }}
-    </p>
-    <p class="text-gray-700 dark:text-gray-300">
-        <strong>Next Billing Date:</strong> {{ current_plan.next_billing_date }}
-    </p>
-
-{% else %}
-    <a href="{{ url_for('user_view_plan') }}" class="rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-600">
-        View Plans
-    </a>
-{% endif %}
-            <div class="mb-4 flex justify-end space-x-4 mt-6">
-                {{ form.submit(class="hidden inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 text-primary-foreground h-10 py-2 bg-blue-600 hover:bg-blue-700 px-4 text-white", id="saveBtn") }}
-            <div class="flex justify-end">
-                {{ form.submit(class="hidden rounded-md bg-purple-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500 focus:outline focus:outline-1 focus:outline-offset-2 focus:outline-blue-600", id="saveBtn") }}
-                {{ form.cancel(class="hidden rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", id="cancelBtn") }}
-            </div>
-        </form>
-    </div>
-</div>
-</div>
-</div>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+{% extends 'employer_base.html' %}{% block title %}Profile{% endblock %}{% block content %}
+<section class="hg-page hg-profile"><header class="hg-page-header"><div><h1>Profile</h1><p>Manage your personal details and company information.</p></div><button type="button" id="editBtn" class="hg-button hg-primary">Edit profile</button></header><div class="hg-profile-layout"><form id="employerProfileForm" method="POST" enctype="multipart/form-data">{{form.hidden_tag()}}
+<section class="hg-profile-section"><h2>Personal profile</h2><div class="hg-profile-identity"><img id="profile_picture_img" src="{{profile_picture or url_for('static',filename='images/man.png')}}" alt="Profile photo"><div class="hg-profile-fields">{% for name in ['firstname','lastname','username','email','phone_number'] %}<div>{{form[name].label()}}{{form[name](disabled=true)}}{% for error in form[name].errors %}<small role="alert" class="text-red-600">{{error}}</small>{% endfor %}</div>{% endfor %}</div></div><label class="edit-icon hg-upload" for="{{form.profile_picture.id}}">Change photo</label>{{form.profile_picture(class='hidden')}}<a class="hg-link" href="{{url_for('user_password_update')}}">Change password</a></section>
+<section class="hg-profile-section"><h2>Company profile</h2>{% if is_company_registered %}<div class="hg-profile-identity"><img id="company_logo_img" src="{{company.company_logo or url_for('static',filename='images/empty_avatar.png')}}" alt="Company logo"><div class="hg-profile-fields">{% for name in ['company_name','company_location','company_website','company_description'] %}<div>{{form[name].label()}}{{form[name](disabled=true)}}{% for error in form[name].errors %}<small role="alert" class="text-red-600">{{error}}</small>{% endfor %}</div>{% endfor %}</div></div><label class="edit-icon hg-upload" for="{{form.company_logo.id}}">Change company logo</label>{{form.company_logo(class='hidden')}}<div class="hg-cover-editor"><img id="company_cover_img" src="{{company.cover_image or url_for('static',filename='images/company-bg.jpg')}}" alt="Company cover"><label class="edit-icon hg-upload" for="{{form.company_cover_image.id}}">Change company cover</label>{{form.company_cover_image(class='hidden')}}</div>{% else %}<p>Register your company to complete its profile.</p><a class="hg-button" href="{{url_for('company_register')}}">Register company</a>{% endif %}</section>
+<div class="hg-actions hg-profile-save">{{form.submit(class='hg-button hg-primary hidden',id='saveBtn')}}<button type="button" id="cancelBtn" class="hg-button hidden">Cancel</button></div></form>
+<aside class="hg-plan"><h2>Current plan</h2>{% if current_plan %}<h3>{{current_plan.plan_name}} <span class="hg-badge">{{current_plan.status|capitalize}}</span></h3><dl><dt>Next billing</dt><dd>{{current_plan.next_billing_date}}</dd></dl>{% if job_usage and job_usage.active_job_limit is not none %}<dl><dt>Active jobs usage</dt><dd>{{job_usage.active_jobs}} of {{job_usage.active_job_limit}} active jobs</dd></dl><progress aria-label="Active job allowance" max="{{job_usage.active_job_limit}}" value="{{job_usage.active_jobs}}"></progress>{% endif %}{% else %}<a class="hg-button" href="{{url_for('user_view_plan')}}">View plans</a>{% endif %}</aside></div></section>
 <script>
     document.getElementById('editBtn').addEventListener('click', function() {
-        var fields = document.querySelectorAll('input, textarea');
+        var fields = document.querySelectorAll('#employerProfileForm input:not([type=hidden]):not([type=submit]):not([type=button]), #employerProfileForm textarea');
         let editIcons = document.querySelectorAll(".edit-icon");
 
         // Change display property to inline-block when edit button is clicked
@@ -244,7 +23,8 @@
         document.getElementById('cancelBtn').classList.remove('hidden');
     });
 
-    document.getElementById('cancelBtn').addEventListener('click', function() {
+    document.getElementById('cancelBtn').addEventListener('click', function(event) {
+        event.preventDefault(); document.getElementById('employerProfileForm').reset();
         let editIcons = document.querySelectorAll(".edit-icon");
 
         // Change display property to inline-block when edit button is clicked
@@ -252,7 +32,7 @@
             editIcon.style.display = "none";
         });
 
-        var fields = document.querySelectorAll('input, textarea');
+        var fields = document.querySelectorAll('#employerProfileForm input:not([type=hidden]):not([type=submit]):not([type=button]), #employerProfileForm textarea');
         fields.forEach(function(field) {
             field.disabled = true;
         });

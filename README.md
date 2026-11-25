@@ -140,3 +140,15 @@ free plan ID 1's stored allowance; it must be applied through the normal databas
 migration process. No production database update is performed by the Flask app.
 
 Offline validation: `PYTHONPATH=.:tests python -m pytest tests/test_job_quota_client.py tests/test_flask_regressions.py`.
+
+
+Professional plan upgrade: 100 active published jobs per company, shared by
+all team members. The backend identifies the paid Professional plan by its
+trimmed, case-insensitive `plan_name` (not an assumed numeric ID). Free remains
+50; other paid tiers retain their existing behavior. The same company lock,
+draft exclusions and publication/reactivation checks apply to Professional.
+Deploy the backend and Flask changes and run the reviewed backend migration
+`migrations/20261124_professional_100_active_jobs.sql` through your normal
+migration process. It updates only paid plans named Professional and aborts
+if none exist. Runtime enforcement uses 100 even before this stored display
+allowance is updated. No production migration has been executed here.

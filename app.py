@@ -629,6 +629,10 @@ def profile():
     result = response.json()
     print(result)
 
+    current_plan = result.get('current_plan')
+    is_company_registered = bool(result.get('company'))
+    job_usage = api_calls.get_company_job_usage(access_token=current_user.id)
+
     # Populate the fields with data
     if request.method == 'GET':
         form.firstname.data = result["firstname"]
@@ -723,7 +727,7 @@ def profile():
             flash('Failed to update profile. Please try again.', 'danger')
 
     return render_template('profile.html', form=form, current_plans=result.get('current_plans', []),
-                           profile_picture=result.get('profile_picture'), company=result.get('company'), is_company_registered=is_company_registered, current_plan=current_plan)
+                           profile_picture=result.get('profile_picture'), company=result.get('company'), is_company_registered=is_company_registered, current_plan=current_plan, job_usage=job_usage)
 
 
 @app.route("/admin/users")
@@ -5225,11 +5229,21 @@ def admin_update_cms_post(post_id):
 @app.route("/blog/<slug>", methods=['GET', 'POST'])
 def read_post(slug):
     import html
-    response = api_calls.get_post_by_slug(slug)
-    print(response)
+    legacy_slugs = {
+        'what-is-recruitment': 'what-is-recruitment-process-funnel-and-metrics-with-formulas',
+        'best-ai-recruitment-software-2026': 'best-ai-recruitment-software-in-2026-ranked-and-compared',
+        'ai-recruitment-statistics-2026': 'ai-recruitment-statistics-2026-50-data-points-every-hr-leader-needs',
+        'what-is-an-ats-complete-guide-2026': 'what-is-an-ats-complete-guide-to-applicant-tracking-systems-2026',
+    }
+    if slug in legacy_slugs:
+        return redirect(url_for('read_post', slug=legacy_slugs[slug]), code=301)
 
-    response["content"] = html.unescape(response["content"])
-    # print(response["content"])
+    response = api_calls.get_post_by_slug(slug)
+    if not isinstance(response, dict) or not response:
+        abort(404)
+
+    response = dict(response)
+    response["content"] = html.unescape(response.get("content") or "")
     return render_template('read_cms_post.html', post=response)
 
 
